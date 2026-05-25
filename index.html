@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>IAT - Sistema de Vistorias</title>
+    <title>IAT - PRAD</title>
     
     <!-- Font Awesome via CDN (funciona offline após primeiro acesso) -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -34,7 +34,7 @@
                          class="logo-fallback"
                          onerror="this.style.display='none'">
                 </div>
-                <h1 class="iat-title">SISTEMA DE VISTORIAS TÉCNICAS</h1>
+                <h1 class="iat-title">PRAD</h1>
                 <div class="offline-badge" id="offlineBadge" style="display: none;">
                     <i class="fas fa-wifi-slash"></i> Modo Offline
                 </div>
@@ -44,17 +44,17 @@
         <!-- Cards de seleção - APENAS 2 BOTÕES -->
         <main class="selection-container">
             <div class="cards-grid">
-                <!-- Card 1: Relatório de Vistoria Técnica -->
-                <div class="select-card" onclick="abrirFormulario('formulario1.html')" role="button" tabindex="0">
+                <!-- Card 1: informação técnica do Prad -->
+                <div class="select-card" onclick="abrirFormulario('formulario.html')" role="button" tabindex="0">
                     <div class="card-content">
                         <div class="card-icon">
                             <i class="fas fa-clipboard-check"></i>
                         </div>
-                        <h2 class="card-title">RELATÓRIO DE VISTORIA TÉCNICA</h2>
-                        <p class="card-subtitle">Formulário completo para vistorias</p>
+                        <h2 class="card-title">INFORMAÇÃO TÉCNICA</h2>
+                        <p class="card-subtitle">Formulário de informação técnica do Prad</p>
                         <div class="card-features">
-                            <span class="feature"><i class="fas fa-check-circle"></i> Condicionantes</span>
-                            <span class="feature"><i class="fas fa-tasks"></i> Checklist</span>
+                            <span class="feature"><i class="fas fa-check-circle"></i> ANÁLISE DOS ITENS EXIGIDOS NO ANEXO I DA PORTARIA 17/2025</span>
+                            <span class="feature"><i class="fas fa-tasks"></i> ANEXOS EXIGIDOS PELA PORTARIA 17/2025 (ITEM 16 DO ANEXO I)</span>
                             <span class="feature"><i class="fas fa-file-pdf"></i> PDF</span>
                         </div>
                     </div>
@@ -67,14 +67,14 @@
                     </div>
                 </div>
 
-                <!-- Card 2: Relatório de Vistoria - Subestação -->
-                <div class="select-card" onclick="abrirFormulario('formulario2.html')" role="button" tabindex="0">
+                <!-- Card 2: RMA -->
+                <div class="select-card" onclick="abrirFormulario('formulario1.html')" role="button" tabindex="0">
                     <div class="card-content">
                         <div class="card-icon">
                             <i class="fas fa-bolt"></i>
                         </div>
-                        <h2 class="card-title">RELATÓRIO DE VISTORIA - SUBESTAÇÃO</h2>
-                        <p class="card-subtitle">Especializado para subestações</p>
+                        <h2 class="card-title">ANALISE DO RELATÓRIO DE MONITORAMENTO AMBIENTAL</h2>
+                        <p class="card-subtitle">RMA</p>
                         <div class="card-features">
                             <span class="feature"><i class="fas fa-fingerprint"></i> Identificação</span>
                             <span class="feature"><i class="fas fa-camera"></i> Fotos</span>
@@ -84,7 +84,7 @@
                     <div class="card-footer">
                         <span class="status-dot"></span>
                         <span class="status-text">Disponível offline</span>
-                        <button class="btn-acessar" onclick="event.stopPropagation(); abrirFormulario('formulario2.html')">
+                        <button class="btn-acessar" onclick="event.stopPropagation(); abrirFormulario('formulario1.html')">
                             Acessar <i class="fas fa-arrow-right"></i>
                         </button>
                     </div>
