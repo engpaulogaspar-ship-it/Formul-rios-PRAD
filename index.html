@@ -213,7 +213,7 @@
       padding: 10px 12px;
       width: 100%;
     }
-    .radio-group { display: flex; gap: 25px; align-items: center; }
+    .radio-group { display: flex; gap: 25px; align-items: center; flex-wrap: wrap; }
     .radio-option { display: flex; align-items: center; gap: 8px; cursor: pointer; }
     .radio-option input[type="radio"] { width: 18px; height: 18px; accent-color: var(--primary-color); }
     .btn-group-custom {
@@ -331,6 +331,18 @@
       color: var(--primary-color);
       margin-bottom: 5px;
     }
+    #razao_numero_container {
+      margin-top: 10px;
+    }
+    .razao-numero-input {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .razao-numero-input label {
+      font-weight: 600;
+      margin-bottom: 0;
+    }
   </style>
 </head>
 <body>
@@ -365,33 +377,56 @@
       <small class="text-muted">O ano será adicionado automaticamente</small>
     </div>
 
-    <!-- 1. INFORMAÇÕES GERAIS (SEM O NÚMERO DA INFORMAÇÃO TÉCNICA) -->
+    <!-- 1. INFORMAÇÕES GERAIS (SEM O CAMPO AIA) -->
     <h5 style="color: var(--primary-color); margin: 15px 0 10px 0;"><i class="fas fa-info-circle"></i> 1. INFORMAÇÕES GERAIS</h5>
     <table class="info-table-modern">
-      <tr><td style="width:250px">INTERESSADO:</td><td><input type="text" id="prad_interessado" class="form-control" value="ROSI LEDA TRZASKOS GITICOVSKI"></td></tr>
-      <tr><td>CPF:</td><td><input type="text" id="prad_cpf" class="form-control" value="008.048.109-40"></td></tr>
-      <tr><td>PROCESSO PRAD:</td><td><input type="text" id="prad_processo" class="form-control" value="25.813.328-5"></td></tr>
-      <tr><td>AIA:</td><td><input type="text" id="prad_aia" class="form-control" value="nº 142900 (26/10/2021) Danificar"></td></tr>
-      <tr><td>ÁREA DO DANO:</td><td><div class="area-input-group"><input type="text" id="prad_area" class="form-control" value="3,61" style="width: 100px;"> <span>ha</span></div></td></tr>
+      <tr><td style="width:250px">INTERESSADO:</td><td><input type="text" id="prad_interessado" class="form-control" value="ROSI LEDA TRZASKOS GITICOVSKI"></td> </tr>
+      <tr><td>CPF:</td><td><input type="text" id="prad_cpf" class="form-control" value="008.048.109-40"></td> </tr>
+      <tr><td>PROCESSO PRAD:</td><td><input type="text" id="prad_processo" class="form-control" value="25.813.328-5"></td> </tr>
+      <!-- RAZÃO DA APRESENTAÇÃO DO PRAD com campo de número -->
+      <tr>
+        <td>RAZÃO DA APRESENTAÇÃO DO PRAD:</td>
+        <td>
+          <div class="radio-group" id="razao-group">
+            <div class="radio-option"><input type="radio" name="prad_razao" value="AIA" id="razao_aia"> <label for="razao_aia">AIA</label></div>
+            <div class="radio-option"><input type="radio" name="prad_razao" value="TAC" id="razao_tac"> <label for="razao_tac">TAC</label></div>
+            <div class="radio-option"><input type="radio" name="prad_razao" value="Licenciamento" id="razao_lic"> <label for="razao_lic">Licenciamento</label></div>
+            <div class="radio-option"><input type="radio" name="prad_razao" value="Substituição de Exóticas" id="razao_exoticas"> <label for="razao_exoticas">Substituição de Exóticas em APP</label></div>
+            <div class="radio-option"><input type="radio" name="prad_razao" value="Regularização Ambiental" id="razao_reg_amb"> <label for="razao_reg_amb">Regularização Ambiental de Imóvel Rural não integrado ao PRA</label></div>
+            <div class="radio-option"><input type="radio" name="prad_razao" value="Voluntário" id="razao_voluntario"> <label for="razao_voluntario">Voluntário</label></div>
+            <div class="radio-option"><input type="radio" name="prad_razao" value="Outro" id="razao_outro"> <label for="razao_outro">Outro:</label></div>
+          </div>
+          <div id="razao_numero_container" style="display:none; margin-top:10px;">
+            <div class="razao-numero-input">
+              <label for="prad_razao_numero">Número/Identificação:</label>
+              <input type="text" id="prad_razao_numero" class="form-control" style="flex:1;" placeholder="Ex: 142900, 001/2025, etc.">
+            </div>
+            <div id="outro_razao_desc_container" style="margin-top:8px; display:none;">
+              <label for="prad_razao_outro_desc">Especificação (Outro):</label>
+              <input type="text" id="prad_razao_outro_desc" class="form-control" placeholder="Descreva a razão">
+            </div>
+          </div>
+        </td>
+      </tr>
+      <tr><td>ÁREA DO DANO:</td><td><div class="area-input-group"><input type="text" id="prad_area" class="form-control" value="3,61" style="width: 100px;"> <span>ha</span></div></td> </tr>
       <tr><td>RESPONSÁVEL TÉCNICO DO PRAD:</td>
         <td>
           <input type="text" id="prad_rt_nome" class="form-control" placeholder="Nome completo" value="Alexandro Banaszewski" style="margin-bottom: 8px;">
           <input type="text" id="prad_rt_curso" class="form-control" placeholder="Curso / Formação" value="Engenharia Florestal" style="margin-bottom: 8px;">
           <input type="text" id="prad_rt_crea" class="form-control" placeholder="Nº do CREA" value="82034/D">
-          </div>
         </td>
       </tr>
-      <tr><td>ART nº:</td><td><input type="text" id="prad_art" class="form-control" value="1720262445003 (quitada em 23/04/2026)"></td></tr>
-      <tr><td>MUNICÍPIO:</td><td><input type="text" id="prad_municipio" class="form-control" value="Rio Negro - PR"></td></tr>
+      <tr><td>ART nº:</td><td><input type="text" id="prad_art" class="form-control" value="1720262445003 (quitada em 23/04/2026)"></td> </tr>
+      <tr><td>MUNICÍPIO:</td><td><input type="text" id="prad_municipio" class="form-control" value="Rio Negro - PR"></td> </tr>
     </table>
 
     <!-- 2. ANÁLISE DOS ITENS EXIGIDOS NO ANEXO I -->
     <h5 style="color: var(--primary-color); margin: 15px 0 10px 0;"><i class="fas fa-clipboard-list"></i> 2. ANÁLISE DOS ITENS EXIGIDOS NO ANEXO I DA PORTARIA 17/2025</h5>
     <div class="table-container">
       <table class="custom-table">
-        <thead><tr><th>Item</th><th>Exigência</th><th>Atendeu?</th><th>Fls.</th><th>Observação</th><th style="width:50px"></th> </tr</thead>
+        <thead><tr><th>Item</th><th>Exigência</th><th>Atendeu?</th><th>Fls.</th><th>Observação</th><th style="width:50px"></th></tr></thead>
         <tbody id="analise-itens-body"></tbody>
-       </table>
+      </table>
     </div>
     <div class="table-footer no-print"><button type="button" class="btn-add" onclick="adicionarItemAnalise()"><i class="fas fa-plus-circle"></i> Adicionar Item à Análise</button></div>
 
@@ -399,9 +434,9 @@
     <h5 style="color: var(--primary-color); margin: 25px 0 10px 0;"><i class="fas fa-paperclip"></i> 3. ANEXOS EXIGIDOS PELA PORTARIA 17/2025 (ITEM 16 DO ANEXO I)</h5>
     <div class="table-container">
       <table class="custom-table">
-        <thead><tr><th>Anexo exigido</th><th>Apresentado?</th><th>Localização no PRAD</th><th>Observação</th><th style="width:50px"></th> </tr</thead>
+        <thead><tr><th>Anexo exigido</th><th>Apresentado?</th><th>Localização no PRAD</th><th>Observação</th><th style="width:50px"></th></tr></thead>
         <tbody id="anexos-body"></tbody>
-       </table>
+      </table>
     </div>
     <div class="table-footer no-print"><button type="button" class="btn-add" onclick="adicionarItemAnexo()"><i class="fas fa-plus-circle"></i> Adicionar Anexo</button></div>
 
@@ -430,9 +465,9 @@ Considerando as contradições encontradas no projeto, tais informações devem 
     <h5 style="color: var(--primary-color); margin: 25px 0 10px 0;"><i class="fas fa-exclamation-triangle"></i> 5. PENDÊNCIAS A SEREM APRESENTADAS</h5>
     <div class="table-container">
       <table class="custom-table">
-        <thead><tr><th style="width:40px">Item</th><th>Pendência identificada</th><th>Fundamentação normativa</th><th>Providência necessária</th><th style="width:50px"></th> </tr</thead>
+        <thead><tr><th style="width:40px">Item</th><th>Pendência identificada</th><th>Fundamentação normativa</th><th>Providência necessária</th><th style="width:50px"></th></tr></thead>
         <tbody id="pendencias-body"></tbody>
-       </table>
+      </table>
     </div>
     <div class="table-footer no-print"><button type="button" class="btn-add" onclick="adicionarPendenciaManual()"><i class="fas fa-plus-circle"></i> Adicionar Pendência Manual</button></div>
 
@@ -591,13 +626,16 @@ Considerando as contradições encontradas no projeto, tais informações devem 
 
   // ==================== FUNÇÕES AUXILIARES ====================
   function getAIAInfo() {
-    const aiaTexto = document.getElementById('prad_aia').value;
-    let numero = aiaTexto.match(/n[º°]\s*(\d+)/i);
+    const razaoCompleta = getRazaoCompleta();
+    let numero = '';
     let area = document.getElementById('prad_area').value.replace(',', '.');
-    return { numero: numero ? numero[1] : 'N/A', area: area || 'N/A' };
+    if (razaoCompleta.startsWith('AIA')) {
+      const match = razaoCompleta.match(/\d+/);
+      if (match) numero = match[0];
+    }
+    return { numero: numero || 'N/A', area: area || 'N/A' };
   }
 
-  // Inicializa os arrays com os itens padrão (isCustom = false)
   function inicializarDados() {
     itensAnalise = itensAnalisePadrao.map((exigencia, idx) => ({
       item: (idx+1).toString(),
@@ -656,6 +694,81 @@ Considerando as contradições encontradas no projeto, tais informações devem 
     } else {
       mostrarStatus('Deve haver pelo menos um responsável técnico.', 'info');
     }
+  }
+
+  // ==================== FUNÇÃO PARA OBTER A RAZÃO COMPLETA (com número) ====================
+  function getRazaoCompleta() {
+    const radios = document.querySelectorAll('input[name="prad_razao"]');
+    let selectedValue = null;
+    for (let radio of radios) {
+      if (radio.checked) {
+        selectedValue = radio.value;
+        break;
+      }
+    }
+    if (!selectedValue) return 'Não informado';
+    
+    const numero = document.getElementById('prad_razao_numero').value.trim();
+    let razaoTexto = selectedValue;
+    if (selectedValue === 'Outro') {
+      const outroDesc = document.getElementById('prad_razao_outro_desc').value.trim();
+      razaoTexto = outroDesc ? `Outro: ${outroDesc}` : 'Outro';
+    }
+    if (numero !== "") {
+      return `${razaoTexto} ${numero}`;
+    }
+    return razaoTexto;
+  }
+
+  // Retorna a razão e o número separados (para exibição em três colunas)
+  function getRazaoENumeroSeparados() {
+    const radios = document.querySelectorAll('input[name="prad_razao"]');
+    let selectedValue = null;
+    for (let radio of radios) {
+      if (radio.checked) {
+        selectedValue = radio.value;
+        break;
+      }
+    }
+    if (!selectedValue) return { razao: 'Não informado', numero: '' };
+    
+    const numero = document.getElementById('prad_razao_numero').value.trim();
+    let razaoTexto = selectedValue;
+    if (selectedValue === 'Outro') {
+      const outroDesc = document.getElementById('prad_razao_outro_desc').value.trim();
+      razaoTexto = outroDesc ? `Outro: ${outroDesc}` : 'Outro';
+    }
+    return { razao: razaoTexto, numero: numero };
+  }
+
+  function setupRazaoEventos() {
+    const radios = document.querySelectorAll('input[name="prad_razao"]');
+    const numeroContainer = document.getElementById('razao_numero_container');
+    const outroDescContainer = document.getElementById('outro_razao_desc_container');
+    const numeroInput = document.getElementById('prad_razao_numero');
+    const outroDescInput = document.getElementById('prad_razao_outro_desc');
+    
+    function toggleFields() {
+      const selected = document.querySelector('input[name="prad_razao"]:checked');
+      if (selected) {
+        numeroContainer.style.display = 'block';
+        if (selected.value === 'Outro') {
+          outroDescContainer.style.display = 'block';
+        } else {
+          outroDescContainer.style.display = 'none';
+          if (outroDescInput) outroDescInput.value = '';
+        }
+      } else {
+        numeroContainer.style.display = 'none';
+        outroDescContainer.style.display = 'none';
+      }
+      atualizarStatusSalvamento();
+    }
+    
+    radios.forEach(radio => radio.addEventListener('change', toggleFields));
+    if (numeroInput) numeroInput.addEventListener('input', () => atualizarStatusSalvamento());
+    if (outroDescInput) outroDescInput.addEventListener('input', () => atualizarStatusSalvamento());
+    toggleFields();
   }
 
   // ==================== FUNÇÃO PRINCIPAL: GERAR PENDÊNCIAS AUTOMATICAMENTE ====================
@@ -920,12 +1033,21 @@ Considerando as contradições encontradas no projeto, tais informações devem 
       document.getElementById('prad_numero_info').focus();
       return false;
     }
+    let razaoValue = null;
+    for (let radio of document.querySelectorAll('input[name="prad_razao"]')) {
+      if (radio.checked) {
+        razaoValue = radio.value;
+        break;
+      }
+    }
+    const razaoNumero = document.getElementById('prad_razao_numero').value;
+    const razaoOutroDesc = document.getElementById('prad_razao_outro_desc').value;
+    
     const dados = {
       numero_info: numeroInfo,
       interessado: document.getElementById('prad_interessado').value,
       cpf: document.getElementById('prad_cpf').value,
       processo: document.getElementById('prad_processo').value,
-      aia: document.getElementById('prad_aia').value,
       area: document.getElementById('prad_area').value,
       rt_nome: document.getElementById('prad_rt_nome').value,
       rt_curso: document.getElementById('prad_rt_curso').value,
@@ -941,7 +1063,10 @@ Considerando as contradições encontradas no projeto, tais informações devem 
       responsaveis: responsaveis,
       itensAnalise: itensAnalise.filter(item => item.isCustom),
       anexos: anexos.filter(item => item.isCustom),
-      pendenciasManuais: pendenciasManuais
+      pendenciasManuais: pendenciasManuais,
+      razao_apresentacao: razaoValue,
+      razao_numero: razaoNumero,
+      razao_outro_desc: razaoOutroDesc
     };
     localStorage.setItem('informacaoTecnicaPRAD', JSON.stringify(dados));
     atualizarStatusSalvo();
@@ -958,7 +1083,6 @@ Considerando as contradições encontradas no projeto, tais informações devem 
       document.getElementById('prad_interessado').value = dados.interessado || '';
       document.getElementById('prad_cpf').value = dados.cpf || '';
       document.getElementById('prad_processo').value = dados.processo || '';
-      document.getElementById('prad_aia').value = dados.aia || '';
       document.getElementById('prad_area').value = dados.area || '';
       document.getElementById('prad_rt_nome').value = dados.rt_nome || '';
       document.getElementById('prad_rt_curso').value = dados.rt_curso || '';
@@ -972,6 +1096,16 @@ Considerando as contradições encontradas no projeto, tais informações devem 
       document.getElementById('prad_prazo').value = dados.prazo || '60';
       if(dados.responsaveis) { responsaveis = dados.responsaveis; preencherResponsaveis(); }
       if(dados.conclusao_status) document.querySelector(`input[name="conclusao_prad"][value="${dados.conclusao_status}"]`).checked = true;
+      
+      if (dados.razao_apresentacao) {
+        const radioToCheck = document.querySelector(`input[name="prad_razao"][value="${dados.razao_apresentacao}"]`);
+        if (radioToCheck) {
+          radioToCheck.checked = true;
+        }
+        if (dados.razao_numero) document.getElementById('prad_razao_numero').value = dados.razao_numero;
+        if (dados.razao_outro_desc) document.getElementById('prad_razao_outro_desc').value = dados.razao_outro_desc;
+      }
+      setupRazaoEventos();
       
       inicializarDados();
       if(dados.itensAnalise && dados.itensAnalise.length) {
@@ -1171,14 +1305,12 @@ Assim, cria-se pendência no processo, com a devida notificação ao interessado
       adicionarCabecalho();
       yPos = 48;
 
-      // 1. INFORMAÇÕES GERAIS (SEM O NÚMERO DA INFORMAÇÃO TÉCNICA)
+      // 1. INFORMAÇÕES GERAIS (com tratamento especial para a razão)
       pdf.setFont('helvetica', 'bold');
       pdf.setFontSize(10);
       pdf.setTextColor(0,0,0);
       pdf.text('1. INFORMAÇÕES GERAIS:', marginLeft, yPos);
       yPos += 5;
-      
-      const largInfo = [55, pageWidth - marginLeft - marginRight - 55];
       
       const rtNome = document.getElementById('prad_rt_nome').value;
       const rtCurso = document.getElementById('prad_rt_curso').value;
@@ -1187,32 +1319,69 @@ Assim, cria-se pendência no processo, com a devida notificação ao interessado
       if (rtCurso) rtCompleto += ` - ${rtCurso}`;
       if (rtCrea) rtCompleto += ` (CREA- ${rtCrea})`;
       
+      // Obter razão e número separados para três colunas
+      const { razao, numero } = getRazaoENumeroSeparados();
+      
       const infoDados = [
         { campo: "INTERESSADO:", valor: document.getElementById('prad_interessado').value },
         { campo: "CPF:", valor: document.getElementById('prad_cpf').value },
         { campo: "PROCESSO PRAD:", valor: document.getElementById('prad_processo').value },
-        { campo: "AIA:", valor: document.getElementById('prad_aia').value },
+        { campo: "RAZÃO DA APRESENTAÇÃO DO PRAD:", especial: true, razaoTexto: razao, numeroTexto: numero },
         { campo: "ÁREA DO DANO:", valor: document.getElementById('prad_area').value + " ha" },
         { campo: "RESPONSÁVEL TÉCNICO DO PRAD:", valor: rtCompleto },
         { campo: "ART nº:", valor: document.getElementById('prad_art').value },
         { campo: "MUNICÍPIO:", valor: document.getElementById('prad_municipio').value }
       ];
       
+      const largInfoTotal = pageWidth - marginLeft - marginRight;
+      const largCampo = 55;
+      const largValor = largInfoTotal - largCampo;
+      
       for (let i = 0; i < infoDados.length; i++) {
+        const item = infoDados[i];
         if (verificarPagina(15)) {}
-        const conteudos = [infoDados[i].campo, infoDados[i].valor];
-        const corFundo = (i % 2 === 0) ? PDF_CONFIG.colors.lightGray : null;
-        const novaY = desenharLinhaTabelaEquilibrada(conteudos, largInfo, yPos, corFundo, pdf, marginLeft, pageWidth, marginRight);
-        if (novaY === null) {
-          adicionarRodape();
-          pdf.addPage();
-          adicionarCabecalho();
-          yPos = 48;
-          const novaY2 = desenharLinhaTabelaEquilibrada(conteudos, largInfo, yPos, corFundo, pdf, marginLeft, pageWidth, marginRight);
-          if (novaY2 !== null) yPos = novaY2 + 1;
-          else yPos += 10;
+        
+        if (item.especial) {
+          // Desenhar linha com três "colunas": rótulo | razão | número
+          const alturaNecessaria = 7; // altura fixa para essa linha
+          if (yPos + alturaNecessaria > 270) {
+            adicionarRodape();
+            pdf.addPage();
+            adicionarCabecalho();
+            yPos = 48;
+          }
+          const corFundo = (i % 2 === 0) ? PDF_CONFIG.colors.lightGray : null;
+          if (corFundo) {
+            pdf.setFillColor(...corFundo);
+            pdf.rect(marginLeft, yPos, largInfoTotal, alturaNecessaria, 'F');
+          }
+          pdf.setFont('helvetica', 'normal');
+          pdf.setFontSize(7);
+          pdf.setTextColor(0, 0, 0);
+          // Coluna 1: rótulo
+          pdf.text(item.campo, marginLeft + 2, yPos + 5);
+          // Coluna 2: razão
+          const razaoX = marginLeft + largCampo;
+          pdf.text(item.razaoTexto || '', razaoX + 2, yPos + 5);
+          // Coluna 3: número
+          const numeroX = marginLeft + largCampo + 40; // espaço adicional
+          pdf.text(item.numeroTexto || '', numeroX + 2, yPos + 5);
+          yPos += alturaNecessaria;
         } else {
-          yPos = novaY + 1;
+          const conteudos = [item.campo, item.valor];
+          const corFundo = (i % 2 === 0) ? PDF_CONFIG.colors.lightGray : null;
+          const novaY = desenharLinhaTabelaEquilibrada(conteudos, [largCampo, largValor], yPos, corFundo, pdf, marginLeft, pageWidth, marginRight);
+          if (novaY === null) {
+            adicionarRodape();
+            pdf.addPage();
+            adicionarCabecalho();
+            yPos = 48;
+            const novaY2 = desenharLinhaTabelaEquilibrada(conteudos, [largCampo, largValor], yPos, corFundo, pdf, marginLeft, pageWidth, marginRight);
+            if (novaY2 !== null) yPos = novaY2 + 1;
+            else yPos += 10;
+          } else {
+            yPos = novaY + 1;
+          }
         }
       }
       yPos += 5;
@@ -1456,6 +1625,7 @@ Assim, cria-se pendência no processo, com a devida notificação ao interessado
     preencherResponsaveis();
     renderizarPendencias();
     atualizarTituloRelatorio();
+    setupRazaoEventos();
     
     document.querySelectorAll('input, textarea, select').forEach(el => el.addEventListener('input', () => {
       atualizarStatusSalvamento();
@@ -1464,7 +1634,6 @@ Assim, cria-se pendência no processo, com a devida notificação ao interessado
     const reparoRadios = document.querySelectorAll('input[name="reparo_local"]');
     reparoRadios.forEach(r => r.addEventListener('change', () => { renderizarPendencias(); atualizarStatusSalvamento(); }));
     document.getElementById('prad_area').addEventListener('input', () => renderizarPendencias());
-    document.getElementById('prad_aia').addEventListener('input', () => renderizarPendencias());
     document.getElementById('prad_prazo').addEventListener('input', () => { atualizarConclusao(); atualizarStatusSalvamento(); });
     document.getElementById('prad_numero_info').addEventListener('input', () => atualizarTituloRelatorio());
     const conclRadios = document.querySelectorAll('input[name="conclusao_prad"]');
