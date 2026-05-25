@@ -1,126 +1,1476 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>IAT - PRAD</title>
-    
-    <!-- Font Awesome via CDN (funciona offline após primeiro acesso) -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
-    <!-- Fallback local para Font Awesome (caso não tenha internet) -->
-    <style>
-        /* Fallback icons caso o CDN falhe */
-        .fallback-icon {
-            display: inline-block;
-            width: 24px;
-            height: 24px;
-            background: currentColor;
-            mask-size: contain;
-            -webkit-mask-size: contain;
-        }
-    </style>
-    
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Informação Técnica PRAD - ERCBA/IAT</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --primary-color: #003366;
+      --secondary-color: #0056b3;
+      --accent-color: #28a745;
+      --light-bg: #f8fafc;
+      --card-shadow: 0 2px 15px rgba(0, 0, 0, 0.08);
+      --border-radius: 12px;
+    }
+    body {
+      font-family: 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
+      background: linear-gradient(135deg, #f5f7fa 0%, #e4e8f0 100%);
+      min-height: 100vh;
+      padding: 20px 10px;
+      color: #333;
+    }
+    .dashboard-container { max-width: 1400px; margin: 0 auto; }
+    .dashboard-header {
+      background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+      color: white;
+      padding: 20px 30px;
+      border-radius: var(--border-radius);
+      margin-bottom: 30px;
+      box-shadow: var(--card-shadow);
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      min-height: 120px;
+    }
+    .dashboard-header::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 200px;
+      height: 100%;
+      background: rgba(255, 255, 255, 0.1);
+      transform: skewX(-20deg);
+      z-index: 1;
+    }
+    .logo-left, .logo-right { position: relative; z-index: 2; flex: 0 0 auto; }
+    .logo-img {
+      height: 80px;
+      width: auto;
+      object-fit: contain;
+      background: white;
+      padding: 8px;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      transition: transform 0.3s ease;
+    }
+    .org-info { position: relative; z-index: 2; text-align: center; flex: 1; padding: 0 20px; }
+    .org-title { font-size: 20px; font-weight: 700; margin-bottom: 5px; text-shadow: 1px 1px 3px rgba(0,0,0,0.3); }
+    .org-department { font-size: 16px; font-weight: 500; opacity: 0.95; margin-bottom: 5px; }
+    .report-title {
+      font-size: 16px;
+      background: rgba(255, 255, 255, 0.15);
+      padding: 8px 20px;
+      border-radius: 10px;
+      display: inline-block;
+      margin-top: 8px;
+      font-weight: 600;
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+    .dashboard-card {
+      background: white;
+      border-radius: var(--border-radius);
+      padding: 25px;
+      box-shadow: var(--card-shadow);
+      margin-bottom: 25px;
+    }
+    .card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 20px;
+      padding-bottom: 15px;
+      border-bottom: 2px solid #f0f0f0;
+    }
+    .card-title { font-size: 20px; font-weight: 700; color: var(--primary-color); margin: 0; display: flex; align-items: center; gap: 10px; }
+    .card-title i { font-size: 22px; }
+    .card-subtitle { font-size: 14px; color: #666; margin-top: 5px; font-weight: 400; }
+    .form-control {
+      border: 2px solid #e9ecef;
+      border-radius: 8px;
+      padding: 12px 15px;
+      transition: all 0.3s;
+      font-size: 15px;
+    }
+    .form-control:focus {
+      border-color: var(--primary-color);
+      box-shadow: 0 0 0 3px rgba(0,51,102,0.1);
+      outline: none;
+    }
+    .form-group { margin-bottom: 20px; }
+    .form-label { font-weight: 600; color: #495057; margin-bottom: 8px; font-size: 14px; display: flex; align-items: center; gap: 8px; }
+    .table-container {
+      background: white;
+      border-radius: 10px;
+      overflow-x: auto;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+      border: 1px solid #e9ecef;
+      margin-bottom: 15px;
+    }
+    .custom-table {
+      width: 100%;
+      margin-bottom: 0;
+      border-collapse: separate;
+      border-spacing: 0;
+      min-width: 800px;
+    }
+    .custom-table thead th {
+      background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+      color: white;
+      font-weight: 600;
+      padding: 12px 16px;
+      border: none;
+      font-size: 13px;
+    }
+    .custom-table tbody td {
+      padding: 10px 12px;
+      border-bottom: 1px solid #e9ecef;
+      vertical-align: top;
+    }
+    .custom-table tbody tr:hover { background-color: #f8f9fa; }
+    .btn-add {
+      background: linear-gradient(135deg, #6610f2, #6f42c1);
+      color: white;
+      padding: 10px 20px;
+      border-radius: 8px;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.3s ease;
+      border: none;
+      cursor: pointer;
+      font-size: 14px;
+      width: 100%;
+      justify-content: center;
+    }
+    .btn-add:hover { transform: translateY(-2px); box-shadow: 0 6px 15px rgba(102,16,242,0.3); }
+    .btn-remove {
+      background: linear-gradient(135deg, #fd7e14, #e36209);
+      color: white;
+      padding: 6px 12px;
+      border-radius: 6px;
+      font-weight: 500;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      border: none;
+      cursor: pointer;
+      font-size: 12px;
+    }
+    .btn-remove:hover { background: linear-gradient(135deg, #dc3545, #c82333); transform: translateY(-2px); }
+    .btn-remove-small {
+      background: linear-gradient(135deg, #dc3545, #c82333);
+      color: white;
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-weight: 500;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      border: none;
+      cursor: pointer;
+      font-size: 11px;
+    }
+    .table-footer {
+      background: #f8f9fa;
+      padding: 15px;
+      border-radius: 0 0 10px 10px;
+      border-top: 1px solid #e9ecef;
+    }
+    .info-table-modern {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 20px;
+      background: #f9fafb;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    }
+    .info-table-modern td {
+      padding: 12px 15px;
+      border-bottom: 1px solid #e2e8f0;
+      vertical-align: top;
+    }
+    .info-table-modern td:first-child {
+      font-weight: 700;
+      background-color: #f1f5f9;
+      width: 250px;
+      color: var(--primary-color);
+    }
+    .info-table-modern tr:last-child td { border-bottom: none; }
+    .info-table-modern input, .info-table-modern .form-control {
+      background: white;
+      border: 1px solid #cbd5e1;
+      border-radius: 8px;
+      padding: 10px 12px;
+      width: 100%;
+    }
+    .radio-group { display: flex; gap: 25px; align-items: center; }
+    .radio-option { display: flex; align-items: center; gap: 8px; cursor: pointer; }
+    .radio-option input[type="radio"] { width: 18px; height: 18px; accent-color: var(--primary-color); }
+    .btn-group-custom {
+      display: flex;
+      gap: 15px;
+      justify-content: center;
+      margin-top: 40px;
+      flex-wrap: wrap;
+    }
+    .btn-custom {
+      padding: 14px 28px;
+      border-radius: 10px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      transition: all 0.3s ease;
+      border: none;
+      cursor: pointer;
+      font-size: 15px;
+      min-width: 160px;
+      justify-content: center;
+    }
+    .btn-save { background: linear-gradient(135deg, #28a745, #20c997); color: white; }
+    .btn-load { background: linear-gradient(135deg, #17a2b8, #138496); color: white; }
+    .btn-pdf { background: linear-gradient(135deg, #dc3545, #c82333); color: white; }
+    .btn-clear { background: linear-gradient(135deg, #6c757d, #5a6268); color: white; }
+    .btn-print { background: linear-gradient(135deg, #ffc107, #e0a800); color: #212529; }
+    .status-bar {
+      position: fixed;
+      bottom: 25px;
+      right: 25px;
+      background: var(--accent-color);
+      color: white;
+      padding: 14px 22px;
+      border-radius: 10px;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+      display: none;
+      z-index: 1000;
+      font-weight: 500;
+      animation: slideIn 0.3s ease;
+    }
+    @keyframes slideIn {
+      from { transform: translateX(100%); opacity: 0; }
+      to { transform: translateX(0); opacity: 1; }
+    }
+    .dashboard-footer { text-align: center; margin-top: 30px; padding-top: 20px; border-top: 1px solid #dee2e6; color: #666; font-size: 14px; }
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 12px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 600;
+      margin-left: 10px;
+    }
+    .status-badge.saved { background: rgba(40,167,69,0.1); color: var(--accent-color); border: 1px solid rgba(40,167,69,0.2); }
+    .status-badge.unsaved { background: rgba(255,193,7,0.1); color: #e0a800; border: 1px solid rgba(255,193,7,0.2); }
+    @media (max-width: 992px) {
+      .dashboard-header { flex-direction: column; gap: 15px; text-align: center; min-height: auto; padding: 20px; }
+      .logo-img { height: 60px; }
+      .org-title { font-size: 16px; }
+      .report-title { font-size: 13px; }
+    }
+    @media print {
+      .no-print { display: none !important; }
+      body { background: white; padding: 0; }
+      .dashboard-card { box-shadow: none; border: 1px solid #ddd; }
+      .btn-group-custom, .table-footer, .btn-remove { display: none !important; }
+    }
+    ::-webkit-scrollbar { width: 8px; height: 8px; }
+    ::-webkit-scrollbar-track { background: #f1f1f1; border-radius: 10px; }
+    ::-webkit-scrollbar-thumb { background: var(--primary-color); border-radius: 10px; }
+    .assinatura-item {
+      background: #f8f9fa;
+      padding: 15px;
+      border-radius: 8px;
+      margin-bottom: 15px;
+      border: 1px solid #e9ecef;
+      position: relative;
+    }
+    .assinatura-item .btn-remove-small {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+    }
+    .pendencia-automatica {
+      background-color: #fff3e0;
+    }
+    .pendencia-text {
+      white-space: pre-wrap;
+      word-break: break-word;
+      line-height: 1.4;
+    }
+    .no-print-pdf { display: block; }
+    @media print { .no-print-pdf { display: none !important; } }
+    .area-input-group {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .area-input-group input {
+      flex: 1;
+    }
+    .area-input-group span {
+      font-weight: 500;
+      color: #495057;
+    }
+    .readonly-cell {
+      background-color: #f8f9fa;
+    }
+    .numero-info-label {
+      font-weight: 600;
+      color: var(--primary-color);
+      margin-bottom: 5px;
+    }
+  </style>
 </head>
 <body>
-    <div class="iat-system">
-        <!-- Header minimalista -->
-        <header class="iat-header">
-            <div class="header-content">
-                <div class="logo-container">
-                    <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%23003366'/%3E%3Ctext x='50' y='65' font-size='50' text-anchor='middle' fill='white' font-family='Arial'%3EIAT%3C/text%3E%3C/svg%3E" 
-                         alt="IAT" 
-                         class="logo-fallback"
-                         onerror="this.style.display='none'">
-                </div>
-                <h1 class="iat-title">PRAD</h1>
-                <div class="offline-badge" id="offlineBadge" style="display: none;">
-                    <i class="fas fa-wifi-slash"></i> Modo Offline
-                </div>
-            </div>
-        </header>
+<div class="dashboard-container">
+  <!-- Header -->
+  <div class="dashboard-header">
+    <div class="logo-left"><img src="https://upload.wikimedia.org/wikipedia/pt/b/ba/Logo_IAT_PR.png" alt="Logo ERCBA" class="logo-img"></div>
+    <div class="org-info">
+      <h1 class="org-title">ESCRITÓRIO REGIONAL DE CURITIBA – ERCBA</h1>
+      <div class="org-department">SETOR DE LICENCIAMENTO FLORESTAL</div>
+      <div class="report-title" id="reportTitle">INFORMAÇÃO TÉCNICA PRAD</div>
+    </div>
+    <div class="logo-right"><img src="https://image2url.com/r2/default/images/1770223607016-99c57976-38bc-462d-aaac-01c87703b919.png" alt="Logo IAT" class="logo-img"></div>
+  </div>
 
-        <!-- Cards de seleção - APENAS 2 BOTÕES -->
-        <main class="selection-container">
-            <div class="cards-grid">
-                <!-- Card 1: informação técnica do Prad -->
-                <div class="select-card" onclick="abrirFormulario('formulario.html')" role="button" tabindex="0">
-                    <div class="card-content">
-                        <div class="card-icon">
-                            <i class="fas fa-clipboard-check"></i>
-                        </div>
-                        <h2 class="card-title">INFORMAÇÃO TÉCNICA</h2>
-                        <p class="card-subtitle">Formulário de informação técnica do Prad</p>
-                        <div class="card-features">
-                            <span class="feature"><i class="fas fa-check-circle"></i> ANÁLISE DOS ITENS EXIGIDOS NO ANEXO I DA PORTARIA 17/2025</span>
-                            <span class="feature"><i class="fas fa-tasks"></i> ANEXOS EXIGIDOS PELA PORTARIA 17/2025 (ITEM 16 DO ANEXO I)</span>
-                            <span class="feature"><i class="fas fa-file-pdf"></i> PDF</span>
-                        </div>
-                    </div>
-                    <div class="card-footer">
-                        <span class="status-dot"></span>
-                        <span class="status-text">Disponível offline</span>
-                        <button class="btn-acessar" onclick="event.stopPropagation(); abrirFormulario('formulario1.html')">
-                            Acessar <i class="fas fa-arrow-right"></i>
-                        </button>
-                    </div>
-                </div>
-
-                <!-- Card 2: RMA -->
-                <div class="select-card" onclick="abrirFormulario('formulario1.html')" role="button" tabindex="0">
-                    <div class="card-content">
-                        <div class="card-icon">
-                            <i class="fas fa-bolt"></i>
-                        </div>
-                        <h2 class="card-title">ANALISE DO RELATÓRIO DE MONITORAMENTO AMBIENTAL</h2>
-                        <p class="card-subtitle">RMA</p>
-                        <div class="card-features">
-                            <span class="feature"><i class="fas fa-fingerprint"></i> Identificação</span>
-                            <span class="feature"><i class="fas fa-camera"></i> Fotos</span>
-                            <span class="feature"><i class="fas fa-file-pdf"></i> PDF ABNT</span>
-                        </div>
-                    </div>
-                    <div class="card-footer">
-                        <span class="status-dot"></span>
-                        <span class="status-text">Disponível offline</span>
-                        <button class="btn-acessar" onclick="event.stopPropagation(); abrirFormulario('formulario1.html')">
-                            Acessar <i class="fas fa-arrow-right"></i>
-                        </button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Status do sistema (apenas informação) -->
-            <div class="system-status">
-                <div class="status-item">
-                    <i class="fas fa-database"></i>
-                    <span>Armazenamento local ativo</span>
-                </div>
-                <div class="status-item">
-                    <i class="fas fa-save"></i>
-                    <span>Auto-save a cada 30s</span>
-                </div>
-                <div class="status-item">
-                    <i class="fas fa-wifi-slash"></i>
-                    <span>Funciona sem internet</span>
-                </div>
-            </div>
-        </main>
-
-        <!-- Footer simples -->
-        <footer class="iat-footer">
-            <p>© 2024 Instituto Água e Terra - IAT</p>
-            <p class="footer-note">Todos os dados são salvos localmente no seu dispositivo</p>
-        </footer>
+  <!-- Card Principal -->
+  <div class="dashboard-card">
+    <div class="card-header">
+      <h3 class="card-title"><i class="fas fa-tree"></i> INFORMAÇÃO TÉCNICA PRAD
+        <span id="saveStatus" class="status-badge unsaved"><i class="fas fa-sync-alt"></i> NÃO SALVO</span>
+      </h3>
+      <span class="card-subtitle">Baseado na Portaria IAT nº 17/2025</span>
     </div>
 
-    <!-- Toast de notificação -->
-    <div id="statusToast" class="toast-notification">
-        <i class="fas fa-info-circle"></i>
-        <span id="toastMessage"></span>
+    <!-- CAMPO DO NÚMERO DA INFORMAÇÃO TÉCNICA (FORA DA TABELA) -->
+    <div class="form-group no-print-pdf" style="margin-bottom: 20px;">
+      <label class="form-label"><i class="fas fa-hashtag"></i> Nº DA INFORMAÇÃO TÉCNICA (apenas o número):</label>
+      <div class="input-group" style="max-width: 300px;">
+        <input type="text" id="prad_numero_info" class="form-control" value="001" placeholder="Ex: 001" required>
+        <span class="input-group-text">/<span id="anoAtualDisplay"></span></span>
+      </div>
+      <small class="text-muted">O ano será adicionado automaticamente</small>
     </div>
 
-    <script src="script.js"></script>
+    <!-- 1. INFORMAÇÕES GERAIS (SEM O NÚMERO DA INFORMAÇÃO TÉCNICA) -->
+    <h5 style="color: var(--primary-color); margin: 15px 0 10px 0;"><i class="fas fa-info-circle"></i> 1. INFORMAÇÕES GERAIS</h5>
+    <table class="info-table-modern">
+      <tr><td style="width:250px">INTERESSADO:</td><td><input type="text" id="prad_interessado" class="form-control" value="ROSI LEDA TRZASKOS GITICOVSKI"></td></tr>
+      <tr><td>CPF:</td><td><input type="text" id="prad_cpf" class="form-control" value="008.048.109-40"></td></tr>
+      <tr><td>PROCESSO PRAD:</td><td><input type="text" id="prad_processo" class="form-control" value="25.813.328-5"></td></tr>
+      <tr><td>AIA:</td><td><input type="text" id="prad_aia" class="form-control" value="nº 142900 (26/10/2021) Danificar"></td></tr>
+      <tr><td>ÁREA DO DANO:</td><td><div class="area-input-group"><input type="text" id="prad_area" class="form-control" value="3,61" style="width: 100px;"> <span>ha</span></div></td></tr>
+      <tr><td>RESPONSÁVEL TÉCNICO DO PRAD:</td>
+        <td>
+          <input type="text" id="prad_rt_nome" class="form-control" placeholder="Nome completo" value="Alexandro Banaszewski" style="margin-bottom: 8px;">
+          <input type="text" id="prad_rt_curso" class="form-control" placeholder="Curso / Formação" value="Engenharia Florestal" style="margin-bottom: 8px;">
+          <input type="text" id="prad_rt_crea" class="form-control" placeholder="Nº do CREA" value="82034/D">
+          </div>
+        </td>
+      </tr>
+      <tr><td>ART nº:</td><td><input type="text" id="prad_art" class="form-control" value="1720262445003 (quitada em 23/04/2026)"></td></tr>
+      <tr><td>MUNICÍPIO:</td><td><input type="text" id="prad_municipio" class="form-control" value="Rio Negro - PR"></td></tr>
+    </table>
+
+    <!-- 2. ANÁLISE DOS ITENS EXIGIDOS NO ANEXO I -->
+    <h5 style="color: var(--primary-color); margin: 15px 0 10px 0;"><i class="fas fa-clipboard-list"></i> 2. ANÁLISE DOS ITENS EXIGIDOS NO ANEXO I DA PORTARIA 17/2025</h5>
+    <div class="table-container">
+      <table class="custom-table">
+        <thead><tr><th>Item</th><th>Exigência</th><th>Atendeu?</th><th>Fls.</th><th>Observação</th><th style="width:50px"></th> </tr</thead>
+        <tbody id="analise-itens-body"></tbody>
+       </table>
+    </div>
+    <div class="table-footer no-print"><button type="button" class="btn-add" onclick="adicionarItemAnalise()"><i class="fas fa-plus-circle"></i> Adicionar Item à Análise</button></div>
+
+    <!-- 3. ANEXOS EXIGIDOS -->
+    <h5 style="color: var(--primary-color); margin: 25px 0 10px 0;"><i class="fas fa-paperclip"></i> 3. ANEXOS EXIGIDOS PELA PORTARIA 17/2025 (ITEM 16 DO ANEXO I)</h5>
+    <div class="table-container">
+      <table class="custom-table">
+        <thead><tr><th>Anexo exigido</th><th>Apresentado?</th><th>Localização no PRAD</th><th>Observação</th><th style="width:50px"></th> </tr</thead>
+        <tbody id="anexos-body"></tbody>
+       </table>
+    </div>
+    <div class="table-footer no-print"><button type="button" class="btn-add" onclick="adicionarItemAnexo()"><i class="fas fa-plus-circle"></i> Adicionar Anexo</button></div>
+
+    <!-- 4. OBSERVAÇÕES -->
+    <h5 style="color: var(--primary-color); margin: 25px 0 10px 0;"><i class="fas fa-comment"></i> 4. OBSERVAÇÕES</h5>
+    <textarea id="prad_observacoes" class="form-control" rows="6">Sobre inconsistência do tamanho da área no CAR:
+a) imóvel declarado no CAR tem 2,73 ha, mas o AIA autuou 3,61 ha
+b) PRAD alega que 1,4068 ha já estão recuperados (Fls. 31), mas não apresenta laudo técnico, fotos georreferenciadas ou comprovação da data da recuperação;
+c) PRAD reduz a área efetiva a recuperar para 2,2032 ha, mas mantém referência a 3,61 ha na conclusão
+
+Considerando as contradições encontradas no projeto, tais informações devem ser esclarecidas para que o PRAD seja passível de aprovação.</textarea>
+
+    <!-- 5. PERGUNTA SOBRE REPARO NO LOCAL -->
+    <div class="no-print-pdf">
+      <h5 style="color: var(--primary-color); margin: 25px 0 10px 0;"><i class="fas fa-question-circle"></i> 5. REPARAÇÃO DO DANO</h5>
+      <div class="form-group">
+        <label class="form-label">Foi proposto reparar o dano no local?</label>
+        <div class="radio-group">
+          <div class="radio-option"><input type="radio" name="reparo_local" value="SIM" id="reparo_sim"> <label for="reparo_sim">SIM</label></div>
+          <div class="radio-option"><input type="radio" name="reparo_local" value="NAO" id="reparo_nao" checked> <label for="reparo_nao">NÃO</label></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 6. PENDÊNCIAS -->
+    <h5 style="color: var(--primary-color); margin: 25px 0 10px 0;"><i class="fas fa-exclamation-triangle"></i> 5. PENDÊNCIAS A SEREM APRESENTADAS</h5>
+    <div class="table-container">
+      <table class="custom-table">
+        <thead><tr><th style="width:40px">Item</th><th>Pendência identificada</th><th>Fundamentação normativa</th><th>Providência necessária</th><th style="width:50px"></th> </tr</thead>
+        <tbody id="pendencias-body"></tbody>
+       </table>
+    </div>
+    <div class="table-footer no-print"><button type="button" class="btn-add" onclick="adicionarPendenciaManual()"><i class="fas fa-plus-circle"></i> Adicionar Pendência Manual</button></div>
+
+    <!-- 7. CONCLUSÃO -->
+    <h5 style="color: var(--primary-color); margin: 25px 0 10px 0;"><i class="fas fa-check-circle"></i> 6. CONCLUSÃO E ENCAMINHAMENTO</h5>
+    <div class="form-group">
+      <div class="radio-group">
+        <div class="radio-option"><input type="radio" name="conclusao_prad" value="APTO" id="prad_apto"> <label for="prad_apto"><strong>APTO À APROVAÇÃO</strong></label></div>
+        <div class="radio-option"><input type="radio" name="conclusao_prad" value="NAO_APTO" id="prad_nao_apto" checked> <label for="prad_nao_apto"><strong>NÃO APTO À APROVAÇÃO</strong></label></div>
+      </div>
+    </div>
+    
+    <!-- Prazo para correções -->
+    <div class="form-group">
+      <label class="form-label">Prazo para correções (dias):</label>
+      <input type="number" id="prad_prazo" class="form-control" style="width: 150px;" value="60">
+    </div>
+    
+    <div class="form-group">
+      <label class="form-label">Texto da Conclusão (automático):</label>
+      <textarea id="prad_conclusao_texto" class="form-control" rows="8" readonly style="background-color: #f8f9fa;"></textarea>
+    </div>
+    <div class="form-group">
+      <label class="form-label">Data da Informação (DD/MM/AAAA):</label>
+      <input type="text" id="prad_data_info" class="form-control" style="width: auto; display: inline-block;" placeholder="DD/MM/AAAA">
+    </div>
+
+    <!-- 8. RESPONSÁVEIS TÉCNICOS PELA ANÁLISE -->
+    <h5 style="color: var(--primary-color); margin: 35px 0 15px 0;"><i class="fas fa-signature"></i> 7. RESPONSÁVEIS TÉCNICOS PELA ANÁLISE</h5>
+    <div id="responsaveis-container"></div>
+    <div class="table-footer no-print" style="margin-top: 10px;">
+      <button type="button" class="btn-add" onclick="adicionarResponsavel()"><i class="fas fa-plus-circle"></i> Adicionar Responsável Técnico</button>
+    </div>
+
+    <!-- 9. NÚMERO DA INFORMAÇÃO TÉCNICA NO FINAL DO FORMULÁRIO -->
+    <div class="form-group no-print-pdf" style="margin-top: 30px; padding: 15px; background-color: #e9ecef; border-radius: 8px; text-align: center;">
+      <strong><i class="fas fa-hashtag"></i> INFORMAÇÃO TÉCNICA PRAD Nº <span id="infoNumeroFinal">---</span></strong>
+    </div>
+  </div>
+
+  <div class="dashboard-footer"><p><i class="fas fa-shield-alt"></i> Documento oficial - ERCBA/IAT - Setor de Licenciamento Florestal</p></div>
+
+  <div class="btn-group-custom no-print">
+    <button type="button" class="btn-custom btn-save" onclick="salvarFormulario()"><i class="fas fa-save"></i> Salvar</button>
+    <button type="button" class="btn-custom btn-load" onclick="carregarFormulario()"><i class="fas fa-folder-open"></i> Carregar</button>
+    <button type="button" class="btn-custom btn-pdf" onclick="gerarPDF()"><i class="fas fa-file-pdf"></i> Gerar PDF</button>
+    <button type="button" class="btn-custom btn-clear" onclick="limparFormulario()"><i class="fas fa-trash-alt"></i> Limpar</button>
+    <button type="button" class="btn-custom btn-print" onclick="window.print()"><i class="fas fa-print"></i> Imprimir</button>
+  </div>
+</div>
+
+<div class="status-bar" id="statusBar"></div>
+
+<script>
+  // ==================== ATUALIZAR TÍTULO E FINAL DO RELATÓRIO ====================
+  function getAnoCorrente() {
+    return new Date().getFullYear();
+  }
+
+  function getNumeroInfoCompleto() {
+    const numero = document.getElementById('prad_numero_info').value.trim();
+    const ano = getAnoCorrente();
+    if (numero === "") return "";
+    return `${numero}/${ano}`;
+  }
+
+  function atualizarTituloRelatorio() {
+    const numeroCompleto = getNumeroInfoCompleto();
+    const tituloElement = document.getElementById('reportTitle');
+    const finalSpan = document.getElementById('infoNumeroFinal');
+    const anoDisplay = document.getElementById('anoAtualDisplay');
+    
+    if (anoDisplay) anoDisplay.innerText = getAnoCorrente();
+    
+    if (numeroCompleto) {
+      tituloElement.innerHTML = `INFORMAÇÃO TÉCNICA PRAD Nº ${numeroCompleto}`;
+      finalSpan.innerHTML = numeroCompleto;
+    } else {
+      tituloElement.innerHTML = `INFORMAÇÃO TÉCNICA PRAD`;
+      finalSpan.innerHTML = "---";
+    }
+  }
+
+  // ==================== CONFIGURAÇÕES ====================
+  const PDF_CONFIG = {
+    relatorioText: { linha1: "ESCRITÓRIO REGIONAL DE CURITIBA – ERCBA", linha2: "SETOR DE LICENCIAMENTO FLORESTAL", linha3: "INFORMAÇÃO TÉCNICA PRAD" },
+    footerText: { linha1: "IAT - Instituto Água e Terra", linha2: "Rua Engenheiros Rebouças, 1206 | Rebouças | Curitiba/PR", linha3: "CEP: 80215.100 | Tel: 41 3213-3700" },
+    colors: { primary: [0, 51, 102], secondary: [0, 86, 179], lightGray: [240, 240, 240], darkGray: [100, 100, 100], mediumGray: [200, 200, 200] },
+    pageWidth: 210, marginLeft: 25, marginRight: 25, font: "helvetica", fontSize: 12, lineHeight: 6
+  };
+  const LOGOS = {
+    headerLeft: "https://upload.wikimedia.org/wikipedia/pt/b/ba/Logo_IAT_PR.png",
+    headerRight: "https://image2url.com/r2/default/images/1770223607016-99c57976-38bc-462d-aaac-01c87703b919.png"
+  };
+
+  // ==================== FUNÇÃO PARA CONVERTER NÚMERO POR EXTENSO ====================
+  function numeroPorExtenso(numero) {
+    const unidades = ['zero', 'um', 'dois', 'três', 'quatro', 'cinco', 'seis', 'sete', 'oito', 'nove'];
+    const especiais = { 10: 'dez', 11: 'onze', 12: 'doze', 13: 'treze', 14: 'quatorze', 15: 'quinze', 16: 'dezesseis', 17: 'dezessete', 18: 'dezoito', 19: 'dezenove' };
+    const dezenas = { 2: 'vinte', 3: 'trinta', 4: 'quarenta', 5: 'cinquenta', 6: 'sessenta', 7: 'setenta', 8: 'oitenta', 9: 'noventa' };
+    
+    const n = parseInt(numero);
+    if (n < 10) return unidades[n];
+    if (n >= 10 && n <= 19) return especiais[n];
+    const dezena = Math.floor(n / 10);
+    const unidade = n % 10;
+    if (unidade === 0) return dezenas[dezena];
+    return `${dezenas[dezena]} e ${unidades[unidade]}`;
+  }
+
+  // ==================== DADOS PADRÃO (FIXOS) ====================
+  const itensAnalisePadrao = [
+    "Dados do PRAD (nome, RT, razão)",
+    "Dados do proprietário",
+    "Identificação do RT (elaboração)",
+    "Identificação do RT (execução)",
+    "Descrição da propriedade/posse",
+    "Diagnóstico ambiental da área degradada",
+    "Objetivo geral e específicos",
+    "Descrição das metodologias",
+    "Espécies vegetais a serem empregadas",
+    "Monitoramento",
+    "Manutenção (tratos culturais)",
+    "Cronogramas físico e financeiro",
+    "Equipe técnica",
+    "Documentação cartográfica",
+    "Referências bibliográficas",
+    "Anexos"
+  ];
+
+  const anexosPadrao = [
+    "Fotografias",
+    "Fotos aéreas",
+    "Mapas",
+    "Arquivos vetoriais (KML/SHP)",
+    "ART",
+    "Documentos de identificação (RG/CPF)",
+    "Procuração / representação legal",
+    "Recibo do CAR",
+    "Certidão de Registro de Imóveis",
+    "Comprovante de taxa ambiental",
+    "Imagens de satélite",
+    "Inventário florestal",
+    "Auto de Infração Ambiental (AIA)",
+    "Manifestações concordantes de terceiros"
+  ];
+
+  let itensAnalise = [];
+  let anexos = [];
+  let pendenciasManuais = [];
+  
+  // Múltiplos responsáveis - inicial com um exemplo
+  let responsaveis = [
+    { nome: "Paulo Francisco Nginga Gaspar", curso: "Engenharia de Energias", crea: "2523337967" }
+  ];
+
+  // ==================== FUNÇÕES AUXILIARES ====================
+  function getAIAInfo() {
+    const aiaTexto = document.getElementById('prad_aia').value;
+    let numero = aiaTexto.match(/n[º°]\s*(\d+)/i);
+    let area = document.getElementById('prad_area').value.replace(',', '.');
+    return { numero: numero ? numero[1] : 'N/A', area: area || 'N/A' };
+  }
+
+  // Inicializa os arrays com os itens padrão (isCustom = false)
+  function inicializarDados() {
+    itensAnalise = itensAnalisePadrao.map((exigencia, idx) => ({
+      item: (idx+1).toString(),
+      exigencia: exigencia,
+      atende: "SIM",
+      fls: "",
+      obs: "",
+      isCustom: false
+    }));
+    
+    anexos = anexosPadrao.map((anexo, idx) => ({
+      anexo: anexo,
+      apresentado: "SIM",
+      localizacao: "",
+      obs: "",
+      isCustom: false
+    }));
+  }
+
+  // ==================== FUNÇÕES PARA RESPONSÁVEIS ====================
+  function preencherResponsaveis() {
+    const container = document.getElementById('responsaveis-container');
+    container.innerHTML = '';
+    responsaveis.forEach((resp, idx) => {
+      const div = document.createElement('div');
+      div.className = 'assinatura-item';
+      div.innerHTML = `
+        <button type="button" class="btn-remove-small" onclick="removerResponsavel(${idx})"><i class="fas fa-trash"></i> Remover</button>
+        <div class="row">
+          <div class="col-md-12"><label class="form-label">Nome completo:</label><input type="text" class="form-control" id="resp_nome_${idx}" value="${(resp.nome || '').replace(/"/g, '&quot;')}"></div>
+          <div class="col-md-12" style="margin-top: 15px;"><label class="form-label">Curso / Formação:</label><input type="text" class="form-control" id="resp_curso_${idx}" value="${(resp.curso || '').replace(/"/g, '&quot;')}"></div>
+          <div class="col-md-12" style="margin-top: 15px;"><label class="form-label">Nº do CREA:</label><input type="text" class="form-control" id="resp_crea_${idx}" value="${(resp.crea || '').replace(/"/g, '&quot;')}"></div>
+        </div>
+      `;
+      container.appendChild(div);
+      
+      document.getElementById(`resp_nome_${idx}`)?.addEventListener('input', function() { responsaveis[idx].nome = this.value; atualizarStatusSalvamento(); });
+      document.getElementById(`resp_curso_${idx}`)?.addEventListener('input', function() { responsaveis[idx].curso = this.value; atualizarStatusSalvamento(); });
+      document.getElementById(`resp_crea_${idx}`)?.addEventListener('input', function() { responsaveis[idx].crea = this.value; atualizarStatusSalvamento(); });
+    });
+  }
+
+  function adicionarResponsavel() {
+    responsaveis.push({ nome: "", curso: "", crea: "" });
+    preencherResponsaveis();
+    atualizarStatusSalvamento();
+    mostrarStatus('Novo responsável adicionado!');
+  }
+
+  function removerResponsavel(idx) {
+    if (responsaveis.length > 1) {
+      responsaveis.splice(idx, 1);
+      preencherResponsaveis();
+      atualizarStatusSalvamento();
+      mostrarStatus('Responsável removido!');
+    } else {
+      mostrarStatus('Deve haver pelo menos um responsável técnico.', 'info');
+    }
+  }
+
+  // ==================== FUNÇÃO PRINCIPAL: GERAR PENDÊNCIAS AUTOMATICAMENTE ====================
+  function gerarPendenciasAutomaticas() {
+    const pendenciasAuto = [];
+    
+    itensAnalise.forEach((item, idx) => {
+      const atendeUpper = (item.atende || '').toUpperCase();
+      if (atendeUpper === 'NÃO' || atendeUpper === 'PARCIAL') {
+        let textoPendencia = `Item ${item.item || (idx+1)}: ${item.exigencia || 'Item não especificado'}`;
+        let observacao = item.obs ? ` - ${item.obs}` : '';
+        if (atendeUpper === 'NÃO') {
+          textoPendencia += ` - NÃO ATENDE${observacao}`;
+        } else {
+          textoPendencia += ` - ATENDE PARCIALMENTE${observacao}`;
+        }
+        
+        pendenciasAuto.push({
+          id: `auto_item_${idx}`,
+          pendencia: textoPendencia,
+          fundamentacao: "Art. 5º e Anexo I da Portaria IAT nº 17/2025",
+          providencia: `Complementar/Corrigir o item "${item.exigencia || item.item}" conforme exigências da Portaria IAT nº 17/2025. ${item.obs ? 'Observação: ' + item.obs : ''}`,
+          categoria: "ITENS DO PRAD (ANEXO I DA PORTARIA 17/2025)"
+        });
+      }
+    });
+    
+    anexos.forEach((anexo, idx) => {
+      const apresentadoUpper = (anexo.apresentado || '').toUpperCase();
+      if (apresentadoUpper === 'NÃO') {
+        let textoPendencia = `Anexo: ${anexo.anexo || 'Anexo não especificado'} - NÃO APRESENTADO`;
+        if (anexo.obs) textoPendencia += ` (${anexo.obs})`;
+        
+        pendenciasAuto.push({
+          id: `auto_anexo_${idx}`,
+          pendencia: textoPendencia,
+          fundamentacao: "Item 16 do Anexo I da Portaria IAT nº 17/2025",
+          providencia: `Apresentar o anexo "${anexo.anexo}" conforme exigido na Portaria IAT nº 17/2025. ${anexo.obs ? 'Observação: ' + anexo.obs : ''}`,
+          categoria: "ANEXOS EXIGIDOS (ITEM 16 DO ANEXO I DA PORTARIA 17/2025)"
+        });
+      }
+    });
+    
+    const reparoValue = document.querySelector('input[name="reparo_local"]:checked')?.value;
+    if (reparoValue === 'NAO') {
+      const aia = getAIAInfo();
+      pendenciasAuto.push({
+        id: 'auto_compensacao',
+        pendencia: `Compensação do AIA ${aia.numero} (${aia.area} ha) – não foi proposto reparo no local do dano`,
+        fundamentacao: "Art. 66 da IN IAT nº 50/2025",
+        providencia: "• Opção 1: recuperar no local do dano.\n• Opção 2: comprovar impossibilidade técnica/ambiental da recuperação no local, aplicar fator multiplicador (4x a área suprimida), averbar a área compensada e obter manifestação jurídica favorável, conforme o Art. 66 da IN IAT nº 50/2025.",
+        categoria: "PENDÊNCIA ESPECIAL - COMPENSAÇÃO"
+      });
+    }
+    
+    return pendenciasAuto;
+  }
+
+  function renderizarPendencias() {
+    const pendenciasAuto = gerarPendenciasAutomaticas();
+    const todas = [...pendenciasAuto, ...pendenciasManuais];
+    
+    const corpo = document.getElementById('pendencias-body');
+    corpo.innerHTML = '';
+    
+    let currentCat = '';
+    let itemNum = 1;
+    
+    for (let p of todas) {
+      if (p.categoria && p.categoria !== currentCat) {
+        currentCat = p.categoria;
+        const catRow = corpo.insertRow();
+        catRow.style.backgroundColor = "#e9ecef";
+        catRow.innerHTML = `<td colspan="5"><strong>${currentCat}</strong></td>`;
+      }
+      
+      const row = corpo.insertRow();
+      const isAutomatica = p.id && p.id.startsWith('auto_');
+      if (isAutomatica) row.classList.add('pendencia-automatica');
+      
+      row.innerHTML = `
+        <td style="vertical-align:top">${itemNum++}</td>
+        <td style="vertical-align:top"><textarea class="form-control form-control-sm pendencia-text" style="min-width:250px" ${isAutomatica ? 'readonly' : ''} id="pend_texto_${itemNum}">${(p.pendencia || '').replace(/"/g, '&quot;')}</textarea></td>
+        <td style="vertical-align:top"><textarea class="form-control form-control-sm pendencia-text" style="min-width:200px" ${isAutomatica ? 'readonly' : ''} id="pend_fund_${itemNum}">${(p.fundamentacao || '').replace(/"/g, '&quot;')}</textarea></td>
+        <td style="vertical-align:top"><textarea class="form-control form-control-sm pendencia-text" style="min-width:300px" ${isAutomatica ? 'readonly' : ''} id="pend_prov_${itemNum}">${(p.providencia || '').replace(/"/g, '&quot;')}</textarea></td>
+        <td style="vertical-align:top">${!isAutomatica ? `<button type="button" class="btn-remove" onclick="removerPendenciaManual('${p.id}')"><i class="fas fa-trash"></i></button>` : ''}</td>
+      `;
+      
+      if (!isAutomatica) {
+        const textoElem = document.getElementById(`pend_texto_${itemNum}`);
+        const fundElem = document.getElementById(`pend_fund_${itemNum}`);
+        const provElem = document.getElementById(`pend_prov_${itemNum}`);
+        
+        if (textoElem) textoElem.addEventListener('input', function() { p.pendencia = this.value; atualizarStatusSalvamento(); atualizarConclusao(); });
+        if (fundElem) fundElem.addEventListener('input', function() { p.fundamentacao = this.value; atualizarStatusSalvamento(); atualizarConclusao(); });
+        if (provElem) provElem.addEventListener('input', function() { p.providencia = this.value; atualizarStatusSalvamento(); atualizarConclusao(); });
+      }
+    }
+    
+    atualizarConclusao();
+  }
+
+  function adicionarPendenciaManual() {
+    pendenciasManuais.push({ 
+      id: `manual_${Date.now()}_${Math.random()}`, 
+      pendencia: "", 
+      fundamentacao: "", 
+      providencia: "", 
+      categoria: "PENDÊNCIAS MANUAIS" 
+    });
+    renderizarPendencias();
+    atualizarStatusSalvamento();
+    mostrarStatus('Nova pendência manual adicionada!');
+  }
+  
+  function removerPendenciaManual(id) {
+    pendenciasManuais = pendenciasManuais.filter(p => p.id !== id);
+    renderizarPendencias();
+    atualizarStatusSalvamento();
+    mostrarStatus('Pendência manual removida!');
+  }
+
+  // ==================== RENDERIZAÇÃO DAS TABELAS ====================
+  function preencherAnalise() {
+    const body = document.getElementById('analise-itens-body');
+    body.innerHTML = '';
+    
+    itensAnalise.forEach((item, idx) => {
+      const row = body.insertRow();
+      const isCustom = item.isCustom === true;
+      
+      row.innerHTML = `
+        <td><input type="text" class="form-control form-control-sm" id="analise_item_${idx}" value="${item.item}" style="width:60px"></td>
+        <td><div class="readonly-cell" style="padding: 6px 8px; background-color: #f8f9fa; border-radius: 6px; font-size: 13px;">${item.exigencia.replace(/"/g, '&quot;')}</div></td>
+        <td><select class="form-control form-control-sm" id="analise_atende_${idx}" style="width:90px">
+              <option value="SIM" ${item.atende=='SIM' ? 'selected' : ''}>SIM</option>
+              <option value="NÃO" ${item.atende=='NÃO' ? 'selected' : ''}>NÃO</option>
+              <option value="PARCIAL" ${item.atende=='PARCIAL' ? 'selected' : ''}>PARCIAL</option>
+            </select></td>
+        <td><input type="text" class="form-control form-control-sm" id="analise_fls_${idx}" value="${item.fls || ''}" style="width:70px"></td>
+        <td><input type="text" class="form-control form-control-sm" id="analise_obs_${idx}" value="${(item.obs || '').replace(/"/g, '&quot;')}" style="width:100%"></td>
+        <td>${isCustom ? `<button type="button" class="btn-remove" onclick="removerItemAnalise(${idx})"><i class="fas fa-trash"></i></button>` : ''}</td>
+      `;
+      
+      const atendeSelect = document.getElementById(`analise_atende_${idx}`);
+      if (atendeSelect) {
+        atendeSelect.addEventListener('change', function() {
+          itensAnalise[idx].atende = this.value;
+          renderizarPendencias();
+          atualizarStatusSalvamento();
+        });
+      }
+      
+      const itemInput = document.getElementById(`analise_item_${idx}`);
+      if (itemInput) itemInput.addEventListener('input', function() { itensAnalise[idx].item = this.value; renderizarPendencias(); atualizarStatusSalvamento(); });
+      
+      const flsInput = document.getElementById(`analise_fls_${idx}`);
+      if (flsInput) flsInput.addEventListener('input', function() { itensAnalise[idx].fls = this.value; atualizarStatusSalvamento(); });
+      
+      const obsInput = document.getElementById(`analise_obs_${idx}`);
+      if (obsInput) obsInput.addEventListener('input', function() { itensAnalise[idx].obs = this.value; renderizarPendencias(); atualizarStatusSalvamento(); });
+    });
+    renderizarPendencias();
+  }
+
+  function preencherAnexos() {
+    const body = document.getElementById('anexos-body');
+    body.innerHTML = '';
+    
+    anexos.forEach((item, idx) => {
+      const row = body.insertRow();
+      const isCustom = item.isCustom === true;
+      
+      row.innerHTML = `
+        <td><div class="readonly-cell" style="padding: 6px 8px; background-color: #f8f9fa; border-radius: 6px; font-size: 13px;">${item.anexo.replace(/"/g, '&quot;')}</div></td>
+        <td><select class="form-control form-control-sm" id="anexo_apresentado_${idx}" style="width:100px">
+              <option value="SIM" ${item.apresentado=='SIM' ? 'selected' : ''}>SIM</option>
+              <option value="NÃO" ${item.apresentado=='NÃO' ? 'selected' : ''}>NÃO</option>
+              <option value="NÃO APLICÁVEL" ${item.apresentado=='NÃO APLICÁVEL' ? 'selected' : ''}>NÃO APLICÁVEL</option>
+            </select></td>
+        <td><input type="text" class="form-control form-control-sm" id="anexo_local_${idx}" value="${(item.localizacao || '').replace(/"/g, '&quot;')}" style="width:100%"></td>
+        <td><input type="text" class="form-control form-control-sm" id="anexo_obs_${idx}" value="${(item.obs || '').replace(/"/g, '&quot;')}" style="width:100%"></td>
+        <td>${isCustom ? `<button type="button" class="btn-remove" onclick="removerItemAnexo(${idx})"><i class="fas fa-trash"></i></button>` : ''}</td>
+      `;
+      
+      const apresSelect = document.getElementById(`anexo_apresentado_${idx}`);
+      if (apresSelect) {
+        apresSelect.addEventListener('change', function() {
+          anexos[idx].apresentado = this.value;
+          renderizarPendencias();
+          atualizarStatusSalvamento();
+        });
+      }
+      
+      const localInput = document.getElementById(`anexo_local_${idx}`);
+      if (localInput) localInput.addEventListener('input', function() { anexos[idx].localizacao = this.value; atualizarStatusSalvamento(); });
+      
+      const obsInput = document.getElementById(`anexo_obs_${idx}`);
+      if (obsInput) obsInput.addEventListener('input', function() { anexos[idx].obs = this.value; renderizarPendencias(); atualizarStatusSalvamento(); });
+    });
+    renderizarPendencias();
+  }
+
+  // ==================== CRUD PARA ITENS PERSONALIZADOS ====================
+  function adicionarItemAnalise() { 
+    const novoItem = {
+      item: (itensAnalise.length + 1).toString(),
+      exigencia: "",
+      atende: "SIM",
+      fls: "",
+      obs: "",
+      isCustom: true
+    };
+    itensAnalise.push(novoItem);
+    preencherAnalise(); 
+    atualizarStatusSalvamento(); 
+  }
+  
+  function removerItemAnalise(idx) { 
+    if (itensAnalise[idx].isCustom) {
+      itensAnalise.splice(idx, 1);
+      itensAnalise.forEach((item, i) => { item.item = (i+1).toString(); });
+      preencherAnalise(); 
+      atualizarStatusSalvamento();
+    } else {
+      mostrarStatus('Itens padrão não podem ser removidos.', 'info');
+    }
+  }
+  
+  function adicionarItemAnexo() { 
+    const novoAnexo = {
+      anexo: "",
+      apresentado: "SIM",
+      localizacao: "",
+      obs: "",
+      isCustom: true
+    };
+    anexos.push(novoAnexo);
+    preencherAnexos(); 
+    atualizarStatusSalvamento(); 
+  }
+  
+  function removerItemAnexo(idx) { 
+    if (anexos[idx].isCustom) {
+      anexos.splice(idx, 1);
+      preencherAnexos(); 
+      atualizarStatusSalvamento();
+    } else {
+      mostrarStatus('Anexos padrão não podem ser removidos.', 'info');
+    }
+  }
+
+  // ==================== SALVAR E CARREGAR ====================
+  let unsaved = false;
+  function atualizarStatusSalvamento() { unsaved = true; document.getElementById('saveStatus').className = 'status-badge unsaved'; document.getElementById('saveStatus').innerHTML = '<i class="fas fa-sync-alt"></i> NÃO SALVO'; }
+  function atualizarStatusSalvo() { unsaved = false; document.getElementById('saveStatus').className = 'status-badge saved'; document.getElementById('saveStatus').innerHTML = '<i class="fas fa-check-circle"></i> SALVO'; }
+  
+  function salvarFormulario() {
+    const numeroInfo = document.getElementById('prad_numero_info').value.trim();
+    if (numeroInfo === "") {
+      mostrarStatus('O Nº da Informação Técnica é obrigatório!', 'error');
+      document.getElementById('prad_numero_info').focus();
+      return false;
+    }
+    const dados = {
+      numero_info: numeroInfo,
+      interessado: document.getElementById('prad_interessado').value,
+      cpf: document.getElementById('prad_cpf').value,
+      processo: document.getElementById('prad_processo').value,
+      aia: document.getElementById('prad_aia').value,
+      area: document.getElementById('prad_area').value,
+      rt_nome: document.getElementById('prad_rt_nome').value,
+      rt_curso: document.getElementById('prad_rt_curso').value,
+      rt_crea: document.getElementById('prad_rt_crea').value,
+      art: document.getElementById('prad_art').value,
+      municipio: document.getElementById('prad_municipio').value,
+      observacoes: document.getElementById('prad_observacoes').value,
+      reparo_local: document.querySelector('input[name="reparo_local"]:checked')?.value,
+      conclusao_texto: document.getElementById('prad_conclusao_texto').value,
+      conclusao_status: document.querySelector('input[name="conclusao_prad"]:checked')?.value || 'NAO_APTO',
+      data_info: document.getElementById('prad_data_info').value,
+      prazo: document.getElementById('prad_prazo').value,
+      responsaveis: responsaveis,
+      itensAnalise: itensAnalise.filter(item => item.isCustom),
+      anexos: anexos.filter(item => item.isCustom),
+      pendenciasManuais: pendenciasManuais
+    };
+    localStorage.setItem('informacaoTecnicaPRAD', JSON.stringify(dados));
+    atualizarStatusSalvo();
+    mostrarStatus('Dados salvos localmente!');
+    return true;
+  }
+  
+  function carregarFormulario() {
+    const salvos = localStorage.getItem('informacaoTecnicaPRAD');
+    if(!salvos) { mostrarStatus('Nenhum dado salvo encontrado.', 'info'); return; }
+    try {
+      const dados = JSON.parse(salvos);
+      document.getElementById('prad_numero_info').value = dados.numero_info || '';
+      document.getElementById('prad_interessado').value = dados.interessado || '';
+      document.getElementById('prad_cpf').value = dados.cpf || '';
+      document.getElementById('prad_processo').value = dados.processo || '';
+      document.getElementById('prad_aia').value = dados.aia || '';
+      document.getElementById('prad_area').value = dados.area || '';
+      document.getElementById('prad_rt_nome').value = dados.rt_nome || '';
+      document.getElementById('prad_rt_curso').value = dados.rt_curso || '';
+      document.getElementById('prad_rt_crea').value = dados.rt_crea || '';
+      document.getElementById('prad_art').value = dados.art || '';
+      document.getElementById('prad_municipio').value = dados.municipio || '';
+      document.getElementById('prad_observacoes').value = dados.observacoes || '';
+      if(dados.reparo_local) document.querySelector(`input[name="reparo_local"][value="${dados.reparo_local}"]`).checked = true;
+      document.getElementById('prad_conclusao_texto').value = dados.conclusao_texto || '';
+      document.getElementById('prad_data_info').value = dados.data_info || '';
+      document.getElementById('prad_prazo').value = dados.prazo || '60';
+      if(dados.responsaveis) { responsaveis = dados.responsaveis; preencherResponsaveis(); }
+      if(dados.conclusao_status) document.querySelector(`input[name="conclusao_prad"][value="${dados.conclusao_status}"]`).checked = true;
+      
+      inicializarDados();
+      if(dados.itensAnalise && dados.itensAnalise.length) {
+        dados.itensAnalise.forEach(custom => {
+          itensAnalise.push({
+            item: (itensAnalise.length+1).toString(),
+            exigencia: custom.exigencia || "",
+            atende: custom.atende || "SIM",
+            fls: custom.fls || "",
+            obs: custom.obs || "",
+            isCustom: true
+          });
+        });
+      }
+      if(dados.anexos && dados.anexos.length) {
+        dados.anexos.forEach(custom => {
+          anexos.push({
+            anexo: custom.anexo || "",
+            apresentado: custom.apresentado || "SIM",
+            localizacao: custom.localizacao || "",
+            obs: custom.obs || "",
+            isCustom: true
+          });
+        });
+      }
+      if(dados.pendenciasManuais) { pendenciasManuais = dados.pendenciasManuais; }
+      
+      preencherAnalise();
+      preencherAnexos();
+      renderizarPendencias();
+      atualizarTituloRelatorio();
+      atualizarStatusSalvo();
+      mostrarStatus('Dados carregados com sucesso!');
+    } catch(e) { console.error(e); mostrarStatus('Erro ao carregar dados', 'error'); }
+  }
+  
+  function limparFormulario() {
+    if(confirm('Tem certeza que deseja limpar todo o formulário?')) {
+      localStorage.removeItem('informacaoTecnicaPRAD');
+      location.reload();
+    }
+  }
+  
+  function mostrarStatus(msg, tipo='success') {
+    const bar = document.getElementById('statusBar');
+    bar.textContent = msg;
+    bar.style.background = tipo=='error' ? 'linear-gradient(135deg, #dc3545, #c82333)' : tipo=='info' ? 'linear-gradient(135deg, #17a2b8, #138496)' : 'linear-gradient(135deg, #28a745, #20c997)';
+    bar.style.display = 'block';
+    setTimeout(() => bar.style.display = 'none', 3000);
+  }
+  
+  // ==================== CONCLUSÃO ====================
+  function gerarConclusaoAutomatica() {
+    const status = document.querySelector('input[name="conclusao_prad"]:checked')?.value || 'NAO_APTO';
+    const processo = document.getElementById('prad_processo').value || 'Nº';
+    const prazo = parseInt(document.getElementById('prad_prazo').value) || 60;
+    const prazoExtenso = numeroPorExtenso(prazo);
+    
+    if (status === "APTO") {
+      return `Diante do exposto, considerando que o PRAD atende às exigências da Portaria IAT nº 17/2025 e da Instrução Normativa IAT nº 50/2025, conclui-se que o projeto está APTO À APROVAÇÃO. Recomenda-se o encaminhamento para assinatura do Termo de Compromisso de Recuperação Ambiental (TCRA) e subsequente início da execução.`;
+    } else {
+      return `Diante do exposto, considerando as inconformidades e pendências identificadas no PRAD, conclui-se que o projeto NÃO ESTÁ APTO À APROVAÇÃO, por não cumprir as exigências mínimas descritas na Portaria IAT 17/2025 e IN 50/2025.
+
+Assim, cria-se pendência no processo, com a devida notificação ao interessado para apresentação das correções e complementações indicadas em conformidade com a Portaria n.º 17/2025, junto ao sistema e-protocolo, no prazo de ${prazo} (${prazoExtenso}) dias. Reforçamos que o não atendimento à pendência incorrerá em INDEFERIMENTO DEFINITIVO DO PRAD.`;
+    }
+  }
+  
+  function atualizarConclusao() { 
+    document.getElementById('prad_conclusao_texto').value = gerarConclusaoAutomatica(); 
+  }
+
+  // ==================== FUNÇÕES PARA O PDF ====================
+  function desenharLinhaCategoria(texto, y, pdf, marginLeft, pageWidth, marginRight) {
+    const larguraTotal = pageWidth - marginLeft - marginRight;
+    const alturaLinha = 7;
+    if (y + alturaLinha > 270) return null;
+    pdf.setFillColor(233, 236, 239);
+    pdf.rect(marginLeft, y, larguraTotal, alturaLinha, 'F');
+    pdf.setTextColor(0, 0, 0);
+    pdf.setFont('helvetica', 'bold');
+    pdf.setFontSize(8);
+    pdf.text(texto, marginLeft + (larguraTotal / 2), y + 5, { align: 'center' });
+    return y + alturaLinha;
+  }
+
+  function desenharLinhaTabelaEquilibrada(conteudos, larguras, y, corFundo, pdf, marginLeft, pageWidth, marginRight) {
+    const linhasPorColuna = [];
+    let maxLinhas = 0;
+    for (let i = 0; i < conteudos.length; i++) {
+      const texto = conteudos[i] || '';
+      const linhas = pdf.splitTextToSize(texto, larguras[i] - 4);
+      const numLinhas = linhas.length;
+      linhasPorColuna.push(linhas);
+      if (numLinhas > maxLinhas) maxLinhas = numLinhas;
+    }
+    const alturaLinha = 3.5;
+    const padding = 2;
+    const alturaTotal = (maxLinhas * alturaLinha) + padding;
+    if (y + alturaTotal > 270) return null;
+    if (corFundo) {
+      pdf.setFillColor(...corFundo);
+      pdf.rect(marginLeft, y, pageWidth - marginLeft - marginRight, alturaTotal, 'F');
+    }
+    pdf.setTextColor(0, 0, 0);
+    pdf.setFont('helvetica', 'normal');
+    pdf.setFontSize(7);
+    let xAtual = marginLeft;
+    for (let i = 0; i < conteudos.length; i++) {
+      const linhas = linhasPorColuna[i];
+      let yLinha = y + 2;
+      for (let linha of linhas) {
+        pdf.text(linha, xAtual + 2, yLinha);
+        yLinha += alturaLinha;
+      }
+      xAtual += larguras[i];
+    }
+    return y + alturaTotal;
+  }
+
+  // ==================== GERAR PDF ====================
+  function gerarPDF() {
+    const numeroInfo = document.getElementById('prad_numero_info').value.trim();
+    if (numeroInfo === "") {
+      mostrarStatus('O Nº da Informação Técnica é obrigatório para gerar o PDF!', 'error');
+      document.getElementById('prad_numero_info').focus();
+      return;
+    }
+
+    try {
+      mostrarStatus('Gerando PDF...', 'info');
+      if (typeof window.jspdf === 'undefined') { mostrarStatus('Erro: jsPDF não carregado', 'error'); return; }
+      const { jsPDF } = window.jspdf;
+      const pdf = new jsPDF({ orientation: 'p', unit: 'mm', format: 'a4' });
+      const pageWidth = 210, marginLeft = 25, marginRight = 25;
+      let yPos = 25;
+
+      const anoAtual = getAnoCorrente();
+      const tituloCompleto = `INFORMAÇÃO TÉCNICA PRAD Nº ${numeroInfo}/${anoAtual}`;
+
+      const adicionarCabecalho = () => {
+        try {
+          if (LOGOS.headerLeft) pdf.addImage(LOGOS.headerLeft, 'PNG', marginLeft, 10, 22, 18);
+          if (LOGOS.headerRight) pdf.addImage(LOGOS.headerRight, 'PNG', pageWidth - marginRight - 18, 10, 18, 16);
+        } catch(e) {}
+        pdf.setFont('helvetica', 'bold');
+        pdf.setFontSize(12);
+        pdf.setTextColor(...PDF_CONFIG.colors.primary);
+        pdf.text(PDF_CONFIG.relatorioText.linha1, pageWidth/2, 16, { align: 'center' });
+        pdf.setFont('helvetica', 'normal');
+        pdf.setFontSize(10);
+        pdf.text(PDF_CONFIG.relatorioText.linha2, pageWidth/2, 23, { align: 'center' });
+        pdf.setFont('helvetica', 'bold');
+        pdf.setFontSize(12);
+        pdf.text(tituloCompleto, pageWidth/2, 30, { align: 'center' });
+        pdf.setDrawColor(...PDF_CONFIG.colors.primary);
+        pdf.setLineWidth(0.3);
+        pdf.line(marginLeft, 36, pageWidth - marginRight, 36);
+      };
+      
+      const adicionarRodape = () => {
+        pdf.setDrawColor(...PDF_CONFIG.colors.mediumGray);
+        pdf.setLineWidth(0.2);
+        pdf.line(marginLeft, 277, pageWidth - marginRight, 277);
+        pdf.setFontSize(8);
+        pdf.setFont('helvetica', 'normal');
+        pdf.setTextColor(100,100,100);
+        pdf.text(PDF_CONFIG.footerText.linha1, marginLeft, 283);
+        pdf.text(PDF_CONFIG.footerText.linha2, marginLeft, 288);
+        pdf.text(PDF_CONFIG.footerText.linha3, marginLeft, 293);
+      };
+      
+      const verificarPagina = (alturaNecessaria) => {
+        if (yPos + alturaNecessaria > 270) {
+          adicionarRodape();
+          pdf.addPage();
+          adicionarCabecalho();
+          yPos = 48;
+          return true;
+        }
+        return false;
+      };
+      
+      const desenharCabecalhoTabela = (colunas, larguras, y, corFundo) => {
+        pdf.setFillColor(...corFundo);
+        pdf.rect(marginLeft, y, pageWidth - marginLeft - marginRight, 7, 'F');
+        pdf.setTextColor(255,255,255);
+        pdf.setFont('helvetica', 'bold');
+        pdf.setFontSize(7);
+        let xAtual = marginLeft;
+        for (let i=0;i<colunas.length;i++) {
+          pdf.text(colunas[i], xAtual+2, y+5);
+          xAtual += larguras[i];
+        }
+        return y+7;
+      };
+
+      adicionarCabecalho();
+      yPos = 48;
+
+      // 1. INFORMAÇÕES GERAIS (SEM O NÚMERO DA INFORMAÇÃO TÉCNICA)
+      pdf.setFont('helvetica', 'bold');
+      pdf.setFontSize(10);
+      pdf.setTextColor(0,0,0);
+      pdf.text('1. INFORMAÇÕES GERAIS:', marginLeft, yPos);
+      yPos += 5;
+      
+      const largInfo = [55, pageWidth - marginLeft - marginRight - 55];
+      
+      const rtNome = document.getElementById('prad_rt_nome').value;
+      const rtCurso = document.getElementById('prad_rt_curso').value;
+      const rtCrea = document.getElementById('prad_rt_crea').value;
+      let rtCompleto = rtNome;
+      if (rtCurso) rtCompleto += ` - ${rtCurso}`;
+      if (rtCrea) rtCompleto += ` (CREA- ${rtCrea})`;
+      
+      const infoDados = [
+        { campo: "INTERESSADO:", valor: document.getElementById('prad_interessado').value },
+        { campo: "CPF:", valor: document.getElementById('prad_cpf').value },
+        { campo: "PROCESSO PRAD:", valor: document.getElementById('prad_processo').value },
+        { campo: "AIA:", valor: document.getElementById('prad_aia').value },
+        { campo: "ÁREA DO DANO:", valor: document.getElementById('prad_area').value + " ha" },
+        { campo: "RESPONSÁVEL TÉCNICO DO PRAD:", valor: rtCompleto },
+        { campo: "ART nº:", valor: document.getElementById('prad_art').value },
+        { campo: "MUNICÍPIO:", valor: document.getElementById('prad_municipio').value }
+      ];
+      
+      for (let i = 0; i < infoDados.length; i++) {
+        if (verificarPagina(15)) {}
+        const conteudos = [infoDados[i].campo, infoDados[i].valor];
+        const corFundo = (i % 2 === 0) ? PDF_CONFIG.colors.lightGray : null;
+        const novaY = desenharLinhaTabelaEquilibrada(conteudos, largInfo, yPos, corFundo, pdf, marginLeft, pageWidth, marginRight);
+        if (novaY === null) {
+          adicionarRodape();
+          pdf.addPage();
+          adicionarCabecalho();
+          yPos = 48;
+          const novaY2 = desenharLinhaTabelaEquilibrada(conteudos, largInfo, yPos, corFundo, pdf, marginLeft, pageWidth, marginRight);
+          if (novaY2 !== null) yPos = novaY2 + 1;
+          else yPos += 10;
+        } else {
+          yPos = novaY + 1;
+        }
+      }
+      yPos += 5;
+
+      // 2. ANÁLISE
+      verificarPagina(20);
+      pdf.setFont('helvetica', 'bold');
+      pdf.setFontSize(10);
+      pdf.text('2. ANÁLISE DOS ITENS EXIGIDOS NO ANEXO I DA PORTARIA 17/2025:', marginLeft, yPos);
+      yPos += 5;
+      const colAnalise = ['Item','Exigência','Atendeu?','Fls.','Observação'];
+      const largAnalise = [8, 50, 15, 12, 210 - marginLeft - marginRight - (8+50+15+12)];
+      yPos = desenharCabecalhoTabela(colAnalise, largAnalise, yPos, PDF_CONFIG.colors.primary);
+      for (let i=0;i<itensAnalise.length;i++) {
+        const item = itensAnalise[i];
+        if (!item.exigencia && !item.item) continue;
+        if (verificarPagina(15)) yPos = desenharCabecalhoTabela(colAnalise, largAnalise, yPos, PDF_CONFIG.colors.primary);
+        const conteudos = [item.item, item.exigencia, item.atende, item.fls, item.obs];
+        const corFundo = (i%2===0)?PDF_CONFIG.colors.lightGray:null;
+        const novaY = desenharLinhaTabelaEquilibrada(conteudos, largAnalise, yPos, corFundo, pdf, marginLeft, pageWidth, marginRight);
+        if (novaY===null) {
+          adicionarRodape();
+          pdf.addPage();
+          adicionarCabecalho();
+          yPos = 48;
+          yPos = desenharCabecalhoTabela(colAnalise, largAnalise, yPos, PDF_CONFIG.colors.primary);
+          const novaY2 = desenharLinhaTabelaEquilibrada(conteudos, largAnalise, yPos, corFundo, pdf, marginLeft, pageWidth, marginRight);
+          if (novaY2!==null) yPos = novaY2+1;
+          else yPos += 10;
+        } else {
+          yPos = novaY+1;
+        }
+      }
+      yPos += 5;
+
+      // 3. ANEXOS
+      verificarPagina(20);
+      pdf.setFont('helvetica', 'bold');
+      pdf.setFontSize(10);
+      pdf.text('3. ANEXOS EXIGIDOS PELA PORTARIA 17/2025 (ITEM 16 DO ANEXO I):', marginLeft, yPos);
+      yPos += 5;
+      const colAnexos = ['Anexo exigido','Apresentado?','Localização no PRAD','Observação'];
+      const largAnexos = [50, 24, 45, 210 - marginLeft - marginRight - (50+24+45)];
+      yPos = desenharCabecalhoTabela(colAnexos, largAnexos, yPos, PDF_CONFIG.colors.secondary);
+      for (let i=0;i<anexos.length;i++) {
+        const a = anexos[i];
+        if (verificarPagina(15)) yPos = desenharCabecalhoTabela(colAnexos, largAnexos, yPos, PDF_CONFIG.colors.secondary);
+        const conteudos = [a.anexo, a.apresentado, a.localizacao, a.obs];
+        const corFundo = (i%2===0)?PDF_CONFIG.colors.lightGray:null;
+        const novaY = desenharLinhaTabelaEquilibrada(conteudos, largAnexos, yPos, corFundo, pdf, marginLeft, pageWidth, marginRight);
+        if (novaY===null) {
+          adicionarRodape();
+          pdf.addPage();
+          adicionarCabecalho();
+          yPos = 48;
+          yPos = desenharCabecalhoTabela(colAnexos, largAnexos, yPos, PDF_CONFIG.colors.secondary);
+          const novaY2 = desenharLinhaTabelaEquilibrada(conteudos, largAnexos, yPos, corFundo, pdf, marginLeft, pageWidth, marginRight);
+          if (novaY2!==null) yPos = novaY2+1;
+          else yPos += 10;
+        } else {
+          yPos = novaY+1;
+        }
+      }
+      yPos += 5;
+
+      // 4. OBSERVAÇÕES
+      const obs = document.getElementById('prad_observacoes').value.trim();
+      if (obs !== "") {
+        verificarPagina(20);
+        pdf.setFont('helvetica', 'bold');
+        pdf.setFontSize(10);
+        pdf.text('4. OBSERVAÇÕES:', marginLeft, yPos);
+        yPos += 5;
+        pdf.setFont('helvetica', 'normal');
+        pdf.setFontSize(8);
+        const obsLines = pdf.splitTextToSize(obs, pageWidth-2*marginLeft);
+        for (let l of obsLines) {
+          if (verificarPagina(5)) yPos += 3;
+          pdf.text(l, marginLeft, yPos);
+          yPos += 4;
+        }
+        yPos += 5;
+      }
+
+      // 5. PENDÊNCIAS
+      const pendenciasAutoPDF = gerarPendenciasAutomaticas();
+      const todasPendenciasPDF = [...pendenciasAutoPDF, ...pendenciasManuais];
+
+      if (todasPendenciasPDF.length > 0) {
+        verificarPagina(20);
+        pdf.setFont('helvetica', 'bold');
+        pdf.setFontSize(10);
+        pdf.text('5. PENDÊNCIAS A SEREM APRESENTADAS:', marginLeft, yPos);
+        yPos += 5;
+        const colPend = ['Item','Pendência identificada','Fundamentação normativa','Providência necessária'];
+        const largPend = [10, 45, 36, 160 - (10+45+36)];
+        yPos = desenharCabecalhoTabela(colPend, largPend, yPos, PDF_CONFIG.colors.primary);
+        
+        let currentCatPDF = '';
+        let itemNumPDF = 1;
+        
+        for (let i = 0; i < todasPendenciasPDF.length; i++) {
+          const p = todasPendenciasPDF[i];
+          
+          if (p.categoria && p.categoria !== currentCatPDF) {
+            currentCatPDF = p.categoria;
+            if (verificarPagina(10)) yPos = desenharCabecalhoTabela(colPend, largPend, yPos, PDF_CONFIG.colors.primary);
+            const catY = desenharLinhaCategoria(currentCatPDF, yPos, pdf, marginLeft, pageWidth, marginRight);
+            if (catY === null) {
+              adicionarRodape();
+              pdf.addPage();
+              adicionarCabecalho();
+              yPos = 48;
+              yPos = desenharCabecalhoTabela(colPend, largPend, yPos, PDF_CONFIG.colors.primary);
+              const catY2 = desenharLinhaCategoria(currentCatPDF, yPos, pdf, marginLeft, pageWidth, marginRight);
+              if (catY2 !== null) yPos = catY2 + 1;
+              else yPos += 8;
+            } else {
+              yPos = catY + 1;
+            }
+          }
+          
+          if (verificarPagina(15)) yPos = desenharCabecalhoTabela(colPend, largPend, yPos, PDF_CONFIG.colors.primary);
+          
+          const conteudos = [(itemNumPDF++).toString(), p.pendencia, p.fundamentacao || "", p.providencia];
+          const corFundo = (itemNumPDF % 2 === 0) ? PDF_CONFIG.colors.lightGray : null;
+          const novaY = desenharLinhaTabelaEquilibrada(conteudos, largPend, yPos, corFundo, pdf, marginLeft, pageWidth, marginRight);
+          
+          if (novaY === null) {
+            adicionarRodape();
+            pdf.addPage();
+            adicionarCabecalho();
+            yPos = 48;
+            yPos = desenharCabecalhoTabela(colPend, largPend, yPos, PDF_CONFIG.colors.primary);
+            const novaY2 = desenharLinhaTabelaEquilibrada(conteudos, largPend, yPos, corFundo, pdf, marginLeft, pageWidth, marginRight);
+            if (novaY2 !== null) yPos = novaY2 + 1;
+            else yPos += 10;
+          } else {
+            yPos = novaY + 1;
+          }
+        }
+        yPos += 5;
+      } else {
+        verificarPagina(10);
+        pdf.setFont('helvetica', 'bold');
+        pdf.setFontSize(10);
+        pdf.text('5. PENDÊNCIAS A SEREM APRESENTADAS:', marginLeft, yPos);
+        yPos += 5;
+        pdf.setFont('helvetica', 'italic');
+        pdf.setFontSize(9);
+        pdf.text('Não há pendências registradas.', marginLeft, yPos);
+        yPos += 8;
+      }
+
+      // 6. CONCLUSÃO
+      verificarPagina(30);
+      pdf.setFont('helvetica', 'bold');
+      pdf.setFontSize(10);
+      pdf.text('6. CONCLUSÃO E ENCAMINHAMENTO:', marginLeft, yPos);
+      yPos += 5;
+      const conclStatus = document.querySelector('input[name="conclusao_prad"]:checked')?.value || 'NAO_APTO';
+      pdf.setFont('helvetica', 'bold');
+      pdf.setTextColor(conclStatus=='APTO'?0:200,0,0);
+      pdf.text(`PARECER: ${conclStatus} À APROVAÇÃO`, marginLeft, yPos);
+      yPos += 5;
+      pdf.setFont('helvetica', 'normal');
+      pdf.setTextColor(0,0,0);
+      pdf.setFontSize(8);
+      const conclTexto = document.getElementById('prad_conclusao_texto').value || gerarConclusaoAutomatica();
+      const conclLines = pdf.splitTextToSize(conclTexto, pageWidth-2*marginLeft);
+      for (let l of conclLines) {
+        if (verificarPagina(5)) yPos += 3;
+        pdf.text(l, marginLeft, yPos);
+        yPos += 4;
+      }
+      yPos += 8;
+      
+      let dataInfo = document.getElementById('prad_data_info').value;
+      if (!dataInfo) {
+        const hoje = new Date();
+        dataInfo = `${hoje.getDate().toString().padStart(2,'0')}/${(hoje.getMonth()+1).toString().padStart(2,'0')}/${hoje.getFullYear()}`;
+      }
+      pdf.text(`Curitiba, ${dataInfo}`, pageWidth - marginRight, yPos, { align: 'right' });
+      yPos += 15;
+
+      // 7. RESPONSÁVEIS TÉCNICOS PELA ANÁLISE
+      verificarPagina(30);
+      pdf.setFont('helvetica', 'bold');
+      pdf.setFontSize(10);
+      pdf.text('7. RESPONSÁVEIS TÉCNICOS PELA ANÁLISE:', marginLeft, yPos);
+      yPos += 8;
+      
+      for (let i = 0; i < responsaveis.length; i++) {
+        const resp = responsaveis[i];
+        if (verificarPagina(20)) {
+          pdf.setFont('helvetica', 'bold');
+          pdf.setFontSize(10);
+          pdf.text('7. RESPONSÁVEIS TÉCNICOS (continuação):', marginLeft, yPos);
+          yPos += 8;
+        }
+        pdf.setFont('helvetica', 'bold');
+        pdf.setFontSize(10);
+        pdf.text(resp.nome || '_________________________', marginLeft, yPos);
+        yPos += 5;
+        pdf.setFont('helvetica', 'normal');
+        pdf.setFontSize(9);
+        let linhaCursoCrea = '';
+        if (resp.curso && resp.crea) {
+          linhaCursoCrea = `${resp.curso} | CREA-${resp.crea}`;
+        } else if (resp.curso) {
+          linhaCursoCrea = resp.curso;
+        } else if (resp.crea) {
+          linhaCursoCrea = `CREA-${resp.crea}`;
+        }
+        if (linhaCursoCrea) {
+          pdf.text(linhaCursoCrea, marginLeft, yPos);
+          yPos += 4;
+        }
+        pdf.text("Licenciamento Florestal | PRAD | ERCBA", marginLeft, yPos);
+        yPos += 6;
+        if (i < responsaveis.length - 1) yPos += 4;
+      }
+
+      adicionarRodape();
+      const nomeArquivo = `Informacao_Tecnica_PRAD_${numeroInfo}_${anoAtual}.pdf`;
+      pdf.save(nomeArquivo);
+      mostrarStatus('PDF gerado com sucesso!');
+    } catch(e) {
+      console.error(e);
+      mostrarStatus(`Erro: ${e.message}`, 'error');
+    }
+  }
+
+  // ==================== INICIALIZAÇÃO ====================
+  document.addEventListener('DOMContentLoaded', () => {
+    const hoje = new Date();
+    document.getElementById('prad_data_info').value = `${hoje.getDate().toString().padStart(2,'0')}/${(hoje.getMonth()+1).toString().padStart(2,'0')}/${hoje.getFullYear()}`;
+    inicializarDados();
+    preencherAnalise();
+    preencherAnexos();
+    preencherResponsaveis();
+    renderizarPendencias();
+    atualizarTituloRelatorio();
+    
+    document.querySelectorAll('input, textarea, select').forEach(el => el.addEventListener('input', () => {
+      atualizarStatusSalvamento();
+      atualizarTituloRelatorio();
+    }));
+    const reparoRadios = document.querySelectorAll('input[name="reparo_local"]');
+    reparoRadios.forEach(r => r.addEventListener('change', () => { renderizarPendencias(); atualizarStatusSalvamento(); }));
+    document.getElementById('prad_area').addEventListener('input', () => renderizarPendencias());
+    document.getElementById('prad_aia').addEventListener('input', () => renderizarPendencias());
+    document.getElementById('prad_prazo').addEventListener('input', () => { atualizarConclusao(); atualizarStatusSalvamento(); });
+    document.getElementById('prad_numero_info').addEventListener('input', () => atualizarTituloRelatorio());
+    const conclRadios = document.querySelectorAll('input[name="conclusao_prad"]');
+    conclRadios.forEach(r => r.addEventListener('change', () => { atualizarConclusao(); atualizarStatusSalvamento(); }));
+    setTimeout(() => carregarFormulario(), 300);
+  });
+</script>
 </body>
 </html>
