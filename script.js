@@ -4,11 +4,11 @@
 // CONFIGURAÇÕES
 // ============================================
 const APP_CONFIG = {
-    name: 'IAT - Sistema de Vistorias',
+    name: 'IAT - PRAD',
     version: '1.0.0',
     storageKeys: {
-        form1: 'relatorioVistoria',
-        form2: 'relatorioVistoriaSubestacao'
+        form: 'PRAD',
+        form1: 'RMA'
     },
     autoSaveInterval: 30000, // 30 segundos
     toastDuration: 3000
@@ -107,12 +107,12 @@ function verificarDadosSalvos() {
                 const dados = JSON.parse(dadosForm1);
                 const dataSalvamento = new Date(dados.dataSalvamento || dados.dataVistoria);
                 if (!isNaN(dataSalvamento)) {
-                    adicionarBadgeSalvo('form1', `Salvo em: ${dataSalvamento.toLocaleDateString()}`);
+                    adicionarBadgeSalvo('form', `Salvo em: ${dataSalvamento.toLocaleDateString()}`);
                 } else {
-                    adicionarBadgeSalvo('form1', 'Rascunho salvo');
+                    adicionarBadgeSalvo('form', 'Rascunho salvo');
                 }
             } catch {
-                adicionarBadgeSalvo('form1', 'Rascunho salvo');
+                adicionarBadgeSalvo('form', 'Rascunho salvo');
             }
         }
         
@@ -124,12 +124,12 @@ function verificarDadosSalvos() {
                 if (dados.dataCadastro) {
                     const dataSalvamento = new Date(dados.dataCadastro);
                     if (!isNaN(dataSalvamento)) {
-                        adicionarBadgeSalvo('form2', `Salvo em: ${dataSalvamento.toLocaleDateString()}`);
+                        adicionarBadgeSalvo('form1', `Salvo em: ${dataSalvamento.toLocaleDateString()}`);
                     } else {
-                        adicionarBadgeSalvo('form2', 'Rascunho salvo');
+                        adicionarBadgeSalvo('form1', 'Rascunho salvo');
                     }
                 } else {
-                    adicionarBadgeSalvo('form2', 'Rascunho salvo');
+                    adicionarBadgeSalvo('form1', 'Rascunho salvo');
                 }
             } catch {
                 adicionarBadgeSalvo('form2', 'Rascunho salvo');
@@ -147,7 +147,7 @@ function verificarDadosSalvos() {
 // ============================================
 function adicionarBadgeSalvo(formId, texto) {
     const cards = document.querySelectorAll('.select-card');
-    const index = formId === 'form1' ? 0 : 1;
+    const index = formId === 'form' ? 0 : 1;
     
     if (cards[index]) {
         const badge = document.createElement('div');
@@ -180,8 +180,8 @@ function adicionarBadgeSalvo(formId, texto) {
 // ============================================
 function verificarFormulariosExistem() {
     const forms = [
-        { url: 'formulario1.html', index: 0 },
-        { url: 'formulario2.html', index: 1 }
+        { url: 'formulario.html', index: 0 },
+        { url: 'formulario1.html', index: 1 }
     ];
     
     forms.forEach(form => {
@@ -236,7 +236,7 @@ function inicializarEventos() {
         card.addEventListener('keydown', (e) => {
             if (e.key === 'Enter' || e.key === ' ') {
                 e.preventDefault();
-                const url = index === 0 ? 'formulario1.html' : 'formulario2.html';
+                const url = index === 0 ? 'formulario.html' : 'formulario1.html';
                 abrirFormulario(url);
             }
         });
@@ -303,7 +303,7 @@ function mostrarToast(mensagem, tipo = 'info') {
 
 // Função para ser chamada pelos formulários ao salvar
 function notificarSalvamento(formulario) {
-    const nomeForm = formulario === 1 ? 'Relatório de Vistoria' : 'Relatório - Subestação';
+    const nomeForm = formulario === 1 ? 'informação técnica do Prad' : 'RMA';
     mostrarToast(`${nomeForm} salvo localmente`, 'success');
     
     // Atualiza badge no dashboard se existir
@@ -348,12 +348,12 @@ window.verificarEspacoStorage = verificarEspacoStorage;
 if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
         const swCode = `
-        const CACHE_NAME = 'iat-vistorias-v1';
+        const CACHE_NAME = 'iat-PRAD-v1';
         const urlsToCache = [
             './',
             './index.html',
+            './formulario.html',
             './formulario1.html',
-            './formulario2.html',
             './style.css',
             './script.js',
             'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css',
