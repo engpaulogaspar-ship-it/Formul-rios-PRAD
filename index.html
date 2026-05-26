@@ -340,6 +340,20 @@
       padding-left: 15px;
       border-left: 2px solid var(--primary-color);
     }
+    /* Estilo para campos personalizados */
+    .custom-field-item {
+      background: #f8f9fa;
+      padding: 10px;
+      border-radius: 8px;
+      margin-bottom: 10px;
+      border: 1px solid #e2e8f0;
+      position: relative;
+    }
+    .custom-field-item .btn-remove-small {
+      position: absolute;
+      top: 5px;
+      right: 5px;
+    }
   </style>
 </head>
 <body>
@@ -364,7 +378,7 @@
       <span class="card-subtitle">Baseado na Portaria IAT nº 17/2025</span>
     </div>
 
-    <!-- CAMPO DO NÚMERO DA INFORMAÇÃO TÉCNICA (FORA DA TABELA) -->
+    <!-- CAMPO DO NÚMERO DA INFORMAÇÃO TÉCNICA -->
     <div class="form-group no-print-pdf" style="margin-bottom: 20px;">
       <label class="form-label"><i class="fas fa-hashtag"></i> Nº DA INFORMAÇÃO TÉCNICA (apenas o número):</label>
       <div class="input-group" style="max-width: 300px;">
@@ -377,23 +391,20 @@
     <!-- 1. INFORMAÇÕES GERAIS -->
     <h5 style="color: var(--primary-color); margin: 15px 0 10px 0;"><i class="fas fa-info-circle"></i> 1. INFORMAÇÕES GERAIS</h5>
     <table class="info-table-modern" id="infoTable">
-      <tr><td style="width:280px">INTERESSADO:</td><td><input type="text" id="prad_interessado" class="form-control" value="ROSI LEDA TRZASKOS GITICOVSKI"></td></tr>
+      <tr><td style="width:280px">INTERESSADO:</td><td><input type="text" id="prad_interessado" class="form-control" value="HATAKE LTDA (em nome de NISSEI ADMINISTRADORA DE BENS LTDA)"></td></tr>
       <tr>
         <td>TIPO DE DOCUMENTO:</td>
         <td>
-          <div class="radio-group">
-            <div class="radio-option"><input type="radio" name="tipo_documento" value="CPF" id="tipo_cpf" checked> <label for="tipo_cpf">CPF</label></div>
-            <div class="radio-option"><input type="radio" name="tipo_documento" value="CNPJ" id="tipo_cnpj"> <label for="tipo_cnpj">CNPJ</label></div>
-          </div>
-          <div style="margin-top: 8px;"><input type="text" id="prad_documento" class="form-control" placeholder="Nº do documento" value="008.048.109-40"></div>
+          <div class="radio-group"><div class="radio-option"><input type="radio" name="tipo_documento" value="CPF" id="tipo_cpf"> <label for="tipo_cpf">CPF</label></div><div class="radio-option"><input type="radio" name="tipo_documento" value="CNPJ" id="tipo_cnpj" checked> <label for="tipo_cnpj">CNPJ</label></div></div>
+          <div style="margin-top: 8px;"><input type="text" id="prad_documento" class="form-control" placeholder="Nº do documento" value="05.493.678/0001-77"></div>
         </td>
       </tr>
-      <tr><td>PROCESSO PRAD:</td><td><input type="text" id="prad_processo" class="form-control" value="25.813.328-5">NonNull</td>
+      <tr><td>PROCESSO PRAD:</td><td><input type="text" id="prad_processo" class="form-control" value="23.509.850-4">NonNull</td>
       <tr>
         <td>RAZÃO DA APRESENTAÇÃO DO PRAD:</td>
         <td>
           <div class="radio-group" id="razao-group">
-            <div class="radio-option"><input type="radio" name="prad_razao" value="AIA" id="razao_aia"> <label for="razao_aia">AIA</label></div>
+            <div class="radio-option"><input type="radio" name="prad_razao" value="AIA" id="razao_aia" checked> <label for="razao_aia">AIA</label></div>
             <div class="radio-option"><input type="radio" name="prad_razao" value="TAC" id="razao_tac"> <label for="razao_tac">TAC</label></div>
             <div class="radio-option"><input type="radio" name="prad_razao" value="Licenciamento" id="razao_lic"> <label for="razao_lic">Licenciamento</label></div>
             <div class="radio-option"><input type="radio" name="prad_razao" value="Substituição de Exóticas" id="razao_exoticas"> <label for="razao_exoticas">Substituição de Exóticas em APP</label></div>
@@ -401,10 +412,10 @@
             <div class="radio-option"><input type="radio" name="prad_razao" value="Voluntário" id="razao_voluntario"> <label for="razao_voluntario">Voluntário</label></div>
             <div class="radio-option"><input type="radio" name="prad_razao" value="Outro" id="razao_outro"> <label for="razao_outro">Outro:</label></div>
           </div>
-          <div id="razao_numero_container" style="display:none; margin-top:10px;">
+          <div id="razao_numero_container" style="display:block; margin-top:10px;">
             <div class="razao-numero-input">
               <label for="prad_razao_numero">Número/Identificação:</label>
-              <input type="text" id="prad_razao_numero" class="form-control" style="flex:1;" placeholder="Ex: 142900, 001/2025, etc.">
+              <input type="text" id="prad_razao_numero" class="form-control" style="flex:1;" placeholder="Ex: 142900, 001/2025, etc." value="164452, 164453, 164454, 164455">
             </div>
             <div id="outro_razao_desc_container" style="margin-top:8px; display:none;">
               <label for="prad_razao_outro_desc">Especificação (Outro):</label>
@@ -418,30 +429,37 @@
         <td>
           <div class="radio-group" id="tipo-area-group">
             <div class="radio-option"><input type="radio" name="tipo_area" value="dano" id="area_dano"> <label for="area_dano">Área do dano</label></div>
-            <div class="radio-option"><input type="radio" name="tipo_area" value="recuperacao" id="area_recuperacao"> <label for="area_recuperacao">Área total de recuperação declarada</label></div>
+            <div class="radio-option"><input type="radio" name="tipo_area" value="recuperacao" id="area_recuperacao" checked> <label for="area_recuperacao">Área total de recuperação declarada</label></div>
             <div class="radio-option"><input type="radio" name="tipo_area" value="ambas" id="area_ambas"> <label for="area_ambas">Ambas (dano + recuperação)</label></div>
           </div>
-          <div id="area_dano_container" style="margin-top: 8px;">
+          <div id="area_dano_container" style="margin-top: 8px; display: none;">
             <label>Área do dano (ha):</label>
-            <input type="text" id="prad_area_dano" class="form-control" value="3,61">
+            <input type="text" id="prad_area_dano" class="form-control" value="">
           </div>
-          <div id="area_recuperacao_container" style="margin-top: 8px; display: none;">
+          <div id="area_recuperacao_container" style="margin-top: 8px;">
             <label>Área total de recuperação declarada (ha):</label>
-            <input type="text" id="prad_area_recuperacao" class="form-control" value="">
+            <input type="text" id="prad_area_recuperacao" class="form-control" value="6,65">
           </div>
         </td>
       </tr>
       <tr>
         <td>RESPONSÁVEL TÉCNICO DO PRAD:</td>
         <td>
-          <input type="text" id="prad_rt_nome" class="form-control" placeholder="Nome completo" value="Alexandro Banaszewski" style="margin-bottom: 8px;">
-          <input type="text" id="prad_rt_curso" class="form-control" placeholder="Curso / Formação" value="Engenharia Florestal" style="margin-bottom: 8px;">
-          <input type="text" id="prad_rt_crea" class="form-control" placeholder="Nº do CREA" value="82034/D">
+          <input type="text" id="prad_rt_nome" class="form-control" placeholder="Nome completo" value="Felipe Luiz" style="margin-bottom: 8px;">
+          <input type="text" id="prad_rt_curso" class="form-control" placeholder="Curso / Formação" value="Biólogo" style="margin-bottom: 8px;">
+          <input type="text" id="prad_rt_crea" class="form-control" placeholder="Nº do CREA" value="CRBio/PR 50380/07-D">
         </td>
       </tr>
-      <tr><td>ART nº:</td><td><input type="text" id="prad_art" class="form-control" value="1720262445003 (quitada em 23/04/2026)">NonNull</td>
-      <tr><td>MUNICÍPIO:</td><td><input type="text" id="prad_municipio" class="form-control" value="Rio Negro - PR">NonNull</tr>
+      <tr><td>ART nº:</td><td><input type="text" id="prad_art" class="form-control" value="07-0624/25 (CRBio) – válida por 24 meses">NonNull</tr>
+      <tr><td>MUNICÍPIO:</td><td><input type="text" id="prad_municipio" class="form-control" value="Itaperuçu – PR">NonNull</tr>
     </table>
+
+    <!-- Campos personalizados (adicionados pelo usuário) -->
+    <div style="margin-top: 20px;">
+      <h5 style="color: var(--primary-color);"><i class="fas fa-plus-circle"></i> Campos personalizados</h5>
+      <div id="custom-fields-container"></div>
+      <button type="button" class="btn-add" onclick="adicionarCampoPersonalizado()" style="margin-top: 10px;"><i class="fas fa-plus"></i> Adicionar campo personalizado</button>
+    </div>
 
     <!-- 2. ANÁLISE DOS ITENS EXIGIDOS NO ANEXO I -->
     <h5 style="color: var(--primary-color); margin: 15px 0 10px 0;"><i class="fas fa-clipboard-list"></i> 2. ANÁLISE DOS ITENS EXIGIDOS NO ANEXO I DA PORTARIA 17/2025</h5>
@@ -453,7 +471,7 @@
     </div>
     <div class="table-footer no-print"><button type="button" class="btn-add" onclick="adicionarItemAnalise()"><i class="fas fa-plus-circle"></i> Adicionar Item à Análise</button></div>
 
-    <!-- 3. ANEXOS EXIGIDOS (COM OS NOVOS ITENS) -->
+    <!-- 3. ANEXOS EXIGIDOS -->
     <h5 style="color: var(--primary-color); margin: 25px 0 10px 0;"><i class="fas fa-paperclip"></i> 3. ANEXOS EXIGIDOS PELA PORTARIA 17/2025 (ITEM 16 DO ANEXO I)</h5>
     <div class="table-container">
       <table class="custom-table">
@@ -465,12 +483,7 @@
 
     <!-- 4. OBSERVAÇÕES -->
     <h5 style="color: var(--primary-color); margin: 25px 0 10px 0;"><i class="fas fa-comment"></i> 4. OBSERVAÇÕES</h5>
-    <textarea id="prad_observacoes" class="form-control" rows="6">Sobre inconsistência do tamanho da área no CAR:
-a) imóvel declarado no CAR tem 2,73 ha, mas o AIA autuou 3,61 ha
-b) PRAD alega que 1,4068 ha já estão recuperados (Fls. 31), mas não apresenta laudo técnico, fotos georreferenciadas ou comprovação da data da recuperação;
-c) PRAD reduz a área efetiva a recuperar para 2,2032 ha, mas mantém referência a 3,61 ha na conclusão
-
-Considerando as contradições encontradas no projeto, tais informações devem ser esclarecidas para que o PRAD seja passível de aprovação.</textarea>
+    <textarea id="prad_observacoes" class="form-control" rows="6"></textarea>
 
     <!-- 5. PERGUNTA SOBRE REPARO NO LOCAL -->
     <div class="no-print-pdf">
@@ -611,7 +624,6 @@ Considerando as contradições encontradas no projeto, tais informações devem 
     "Anexos"
   ];
 
-  // Lista de anexos padrão com os 3 novos itens no final
   const anexosPadrao = [
     "Fotografias",
     "Fotos aéreas",
@@ -636,6 +648,9 @@ Considerando as contradições encontradas no projeto, tais informações devem 
   let anexos = [];
   let pendenciasManuais = [];
   let responsaveis = [{ nome: "Paulo Francisco Nginga Gaspar", curso: "Engenharia de Energias", crea: "2523337967" }];
+  
+  // Campos personalizados para informações gerais
+  let camposPersonalizados = []; // cada elemento: { rotulo: "", valor: "" }
 
   function inicializarDados() {
     itensAnalise = itensAnalisePadrao.map((exigencia, idx) => ({
@@ -677,14 +692,27 @@ Considerando as contradições encontradas no projeto, tais informações devem 
     return `${tipo}: ${numero}`;
   }
 
-  function getAreaTexto() {
+  // Retorna o rótulo e o valor da área (rótulo em maiúsculas para o PDF)
+  function getAreaRotuloValor(paraPdf = false) {
     const tipo = document.querySelector('input[name="tipo_area"]:checked')?.value;
     const areaDano = document.getElementById('prad_area_dano').value;
     const areaRec = document.getElementById('prad_area_recuperacao').value;
-    if (tipo === 'dano') return `Área do dano ${areaDano} ha`;
-    if (tipo === 'recuperacao') return `Área total de recuperação declarada ${areaRec} ha`;
-    if (tipo === 'ambas') return `Área do dano ${areaDano} ha / Área de recuperação declarada ${areaRec} ha`;
-    return '';
+    let rotulo = "";
+    let valor = "";
+    if (tipo === 'dano') {
+      rotulo = "Área do dano";
+      valor = `${areaDano} ha`;
+    } else if (tipo === 'recuperacao') {
+      rotulo = "Área total de recuperação declarada";
+      valor = `${areaRec} ha`;
+    } else if (tipo === 'ambas') {
+      rotulo = "Áreas (dano e recuperação)";
+      valor = `dano: ${areaDano} ha / recuperação: ${areaRec} ha`;
+    }
+    if (paraPdf && rotulo) {
+      rotulo = rotulo.toUpperCase();
+    }
+    return { rotulo, valor };
   }
 
   function getRazaoENumeroSeparados() {
@@ -699,6 +727,40 @@ Considerando as contradições encontradas no projeto, tais informações devem 
       razaoTexto = outroDesc ? `Outro: ${outroDesc}` : 'Outro';
     }
     return { razao: razaoTexto, numero: numero };
+  }
+
+  // ==================== CAMPOS PERSONALIZADOS ====================
+  function renderizarCamposPersonalizados() {
+    const container = document.getElementById('custom-fields-container');
+    container.innerHTML = '';
+    camposPersonalizados.forEach((campo, idx) => {
+      const div = document.createElement('div');
+      div.className = 'custom-field-item';
+      div.innerHTML = `
+        <button type="button" class="btn-remove-small" onclick="removerCampoPersonalizado(${idx})"><i class="fas fa-trash"></i> Remover</button>
+        <div class="row">
+          <div class="col-md-6"><label class="form-label">Rótulo:</label><input type="text" class="form-control" id="campo_rotulo_${idx}" value="${(campo.rotulo || '').replace(/"/g, '&quot;')}"></div>
+          <div class="col-md-6"><label class="form-label">Valor:</label><input type="text" class="form-control" id="campo_valor_${idx}" value="${(campo.valor || '').replace(/"/g, '&quot;')}"></div>
+        </div>
+      `;
+      container.appendChild(div);
+      document.getElementById(`campo_rotulo_${idx}`).addEventListener('input', function() { camposPersonalizados[idx].rotulo = this.value; atualizarStatusSalvamento(); });
+      document.getElementById(`campo_valor_${idx}`).addEventListener('input', function() { camposPersonalizados[idx].valor = this.value; atualizarStatusSalvamento(); });
+    });
+  }
+
+  function adicionarCampoPersonalizado() {
+    camposPersonalizados.push({ rotulo: "", valor: "" });
+    renderizarCamposPersonalizados();
+    atualizarStatusSalvamento();
+    mostrarStatus('Novo campo personalizado adicionado!');
+  }
+
+  function removerCampoPersonalizado(idx) {
+    camposPersonalizados.splice(idx, 1);
+    renderizarCamposPersonalizados();
+    atualizarStatusSalvamento();
+    mostrarStatus('Campo personalizado removido!');
   }
 
   // ==================== RESPONSÁVEIS ====================
@@ -726,7 +788,6 @@ Considerando as contradições encontradas no projeto, tais informações devem 
   function removerResponsavel(idx) { if (responsaveis.length > 1) { responsaveis.splice(idx, 1); preencherResponsaveis(); atualizarStatusSalvamento(); mostrarStatus('Responsável removido!'); } else { mostrarStatus('Deve haver pelo menos um responsável.', 'info'); } }
 
   // ==================== PENDÊNCIAS AUTOMÁTICAS ====================
-  // Mapeamento dos itens de análise (primeiros 15) para as pendências 1 a 15
   const pendenciaItens = [
     { titulo: "Dados do PRAD não apresentados ou incompletos",
       providencia: "Preencher corretamente todos os campos do item 1 do Anexo I (nome do restaurador, representante legal, responsáveis técnicos, razão da apresentação, número do processo originário)",
@@ -775,7 +836,6 @@ Considerando as contradições encontradas no projeto, tais informações devem 
       fundamentacao: "Anexo I, item 15 da Portaria 17/2025; Art. 5º, §5º" }
   ];
 
-  // Mapeamento dos anexos padrão (14 originais + 3 novos = 17 itens) para pendências 16 a 32
   const pendenciaAnexos = [
     { titulo: "Fotografias não anexadas",
       providencia: "Anexar fotografias nítidas, coloridas, contendo coordenadas geográficas, orientação (bússola) e data, que contribuam para a caracterização da área degradada antes da implantação do PRAD",
@@ -819,7 +879,6 @@ Considerando as contradições encontradas no projeto, tais informações devem 
     { titulo: "Manifestações concordantes de terceiros não anexadas",
       providencia: "Se houver terceiros envolvidos (colaboradores, parceiros, entidades gestoras ou beneficiados), anexar anuências ou manifestações concordantes com seus contatos",
       fundamentacao: "Art. 16, inciso XII da Portaria 17/2025" },
-    // Novos 3 itens complementares
     { titulo: "Termo de Ajustamento de Conduta (TAC) não anexado",
       providencia: "Se o PRAD decorrer de TAC, anexar cópia do documento",
       fundamentacao: "Art. 16, inciso VIII da Portaria 17/2025" },
@@ -833,8 +892,6 @@ Considerando as contradições encontradas no projeto, tais informações devem 
 
   function gerarPendenciasAutomaticas() {
     const pendenciasAuto = [];
-
-    // 1. Verificar itens da análise (itens 1 a 15 - PRAD)
     for (let idx = 0; idx < Math.min(itensAnalise.length, 15); idx++) {
       const item = itensAnalise[idx];
       const atendeUpper = (item.atende || '').toUpperCase();
@@ -842,9 +899,7 @@ Considerando as contradições encontradas no projeto, tais informações devem 
         const pend = pendenciaItens[idx];
         if (pend) {
           let textoPendencia = pend.titulo;
-          if (item.obs && item.obs.trim() !== "") {
-            textoPendencia += `. Observação: ${item.obs}`;
-          }
+          if (item.obs && item.obs.trim() !== "") textoPendencia += `. Observação: ${item.obs}`;
           pendenciasAuto.push({
             id: `auto_item_${idx}`,
             pendencia: textoPendencia,
@@ -855,18 +910,13 @@ Considerando as contradições encontradas no projeto, tais informações devem 
         }
       }
     }
-
-    // 2. Verificar anexos (todos, incluindo os novos)
     for (let idx = 0; idx < Math.min(anexos.length, pendenciaAnexos.length); idx++) {
       const anexo = anexos[idx];
-      const apresentadoUpper = (anexo.apresentado || '').toUpperCase();
-      if (apresentadoUpper === 'NÃO') {
+      if ((anexo.apresentado || '').toUpperCase() === 'NÃO') {
         const pend = pendenciaAnexos[idx];
         if (pend) {
           let textoPendencia = pend.titulo;
-          if (anexo.obs && anexo.obs.trim() !== "") {
-            textoPendencia += `. Observação: ${anexo.obs}`;
-          }
+          if (anexo.obs && anexo.obs.trim() !== "") textoPendencia += `. Observação: ${anexo.obs}`;
           pendenciasAuto.push({
             id: `auto_anexo_${idx}`,
             pendencia: textoPendencia,
@@ -877,8 +927,6 @@ Considerando as contradições encontradas no projeto, tais informações devem 
         }
       }
     }
-
-    // 3. Item de compensação (já existente)
     const reparoValue = document.querySelector('input[name="reparo_local"]:checked')?.value;
     if (reparoValue === 'NAO') {
       const aiaInfo = getAIAInfo();
@@ -890,7 +938,6 @@ Considerando as contradições encontradas no projeto, tais informações devem 
         categoria: "PENDÊNCIA ESPECIAL - COMPENSAÇÃO"
       });
     }
-
     return pendenciasAuto;
   }
 
@@ -1051,7 +1098,8 @@ Considerando as contradições encontradas no projeto, tais informações devem 
       responsaveis: responsaveis,
       itensAnalise: itensAnalise.filter(item => item.isCustom),
       anexos: anexos.filter(item => item.isCustom),
-      pendenciasManuais: pendenciasManuais
+      pendenciasManuais: pendenciasManuais,
+      camposPersonalizados: camposPersonalizados
     };
     localStorage.setItem('informacaoTecnicaPRAD', JSON.stringify(dados));
     atualizarStatusSalvo();
@@ -1090,6 +1138,9 @@ Considerando as contradições encontradas no projeto, tais informações devem 
       document.getElementById('prad_prazo').value = dados.prazo || '60';
       if(dados.responsaveis) { responsaveis = dados.responsaveis; preencherResponsaveis(); }
       if(dados.conclusao_status) document.querySelector(`input[name="conclusao_prad"][value="${dados.conclusao_status}"]`).checked = true;
+      // Carregar campos personalizados
+      if(dados.camposPersonalizados) { camposPersonalizados = dados.camposPersonalizados; renderizarCamposPersonalizados(); }
+      else { camposPersonalizados = []; renderizarCamposPersonalizados(); }
       setupRazaoEventos(); setupDynamicFields();
       inicializarDados();
       if(dados.itensAnalise && dados.itensAnalise.length) {
@@ -1151,7 +1202,8 @@ Assim, cria-se pendência no processo, com a devida notificação ao interessado
     let maxLinhas = 0;
     for (let i = 0; i < conteudos.length; i++) {
       const texto = conteudos[i] || '';
-      const linhas = pdf.splitTextToSize(texto, larguras[i] - 4);
+      const larguraEfetiva = larguras[i] - 2;
+      const linhas = pdf.splitTextToSize(texto, larguraEfetiva);
       const numLinhas = linhas.length;
       linhasPorColuna.push(linhas);
       if (numLinhas > maxLinhas) maxLinhas = numLinhas;
@@ -1162,6 +1214,9 @@ Assim, cria-se pendência no processo, com a devida notificação ao interessado
     if (y + alturaTotal > 270) return null;
     if (corFundo) {
       pdf.setFillColor(...corFundo);
+      pdf.rect(marginLeft, y, pageWidth - marginLeft - marginRight, alturaTotal, 'F');
+    } else {
+      pdf.setFillColor(255, 255, 255);
       pdf.rect(marginLeft, y, pageWidth - marginLeft - marginRight, alturaTotal, 'F');
     }
     pdf.setTextColor(0, 0, 0);
@@ -1176,6 +1231,47 @@ Assim, cria-se pendência no processo, com a devida notificação ao interessado
         yLinha += alturaLinha;
       }
       xAtual += larguras[i];
+    }
+    return y + alturaTotal;
+  }
+
+  // Função especial para a linha da razão com três colunas
+  function desenharLinhaRazao(rotulo, razaoTexto, numeroTexto, y, corFundo, pdf, marginLeft, pageWidth, marginRight, largRotulo, largRazao, largNumero) {
+    const linhasRotulo = pdf.splitTextToSize(rotulo, largRotulo - 2);
+    const linhasRazao = pdf.splitTextToSize(razaoTexto, largRazao - 2);
+    const linhasNumero = pdf.splitTextToSize(numeroTexto, largNumero - 2);
+    const maxLinhas = Math.max(linhasRotulo.length, linhasRazao.length, linhasNumero.length);
+    const alturaLinha = 3.5;
+    const padding = 2;
+    const alturaTotal = (maxLinhas * alturaLinha) + padding;
+    if (y + alturaTotal > 270) return null;
+    if (corFundo) {
+      pdf.setFillColor(...corFundo);
+      pdf.rect(marginLeft, y, pageWidth - marginLeft - marginRight, alturaTotal, 'F');
+    } else {
+      pdf.setFillColor(255, 255, 255);
+      pdf.rect(marginLeft, y, pageWidth - marginLeft - marginRight, alturaTotal, 'F');
+    }
+    pdf.setTextColor(0, 0, 0);
+    pdf.setFont('helvetica', 'normal');
+    pdf.setFontSize(7);
+    let yLinha = y + 2;
+    let xAtual = marginLeft;
+    for (let linha of linhasRotulo) {
+      pdf.text(linha, xAtual + 2, yLinha);
+      yLinha += alturaLinha;
+    }
+    yLinha = y + 2;
+    xAtual += largRotulo;
+    for (let linha of linhasRazao) {
+      pdf.text(linha, xAtual + 2, yLinha);
+      yLinha += alturaLinha;
+    }
+    yLinha = y + 2;
+    xAtual += largRazao;
+    for (let linha of linhasNumero) {
+      pdf.text(linha, xAtual + 2, yLinha);
+      yLinha += alturaLinha;
     }
     return y + alturaTotal;
   }
@@ -1230,72 +1326,86 @@ Assim, cria-se pendência no processo, com a devida notificação ao interessado
       adicionarCabecalho();
       yPos = 48;
 
-      // 1. INFORMAÇÕES GERAIS
+      // 1. INFORMAÇÕES GERAIS – com duas colunas e campos personalizados
       pdf.setFont('helvetica', 'bold'); pdf.setFontSize(10); pdf.setTextColor(0,0,0);
       pdf.text('1. INFORMAÇÕES GERAIS:', marginLeft, yPos); yPos += 5;
+
+      const largRotulo = 50;      // mm para a coluna "Campo"
+      const largValor = pageWidth - marginLeft - marginRight - largRotulo; // 100 mm
+      const largRazaoRotulo = 50;
+      const largRazaoTexto = 10;
+      const largRazaoNumero = pageWidth - marginLeft - marginRight - largRazaoRotulo - largRazaoTexto; // ~50 mm
+
+      // Coletar dados padrão
+      const interessado = document.getElementById('prad_interessado').value;
+      const docCompleto = getDocumentoTexto();
+      const docCampo = docCompleto.split(':')[0] + ":";
+      const docValor = docCompleto.split(':')[1]?.trim() || '';
+      const processo = document.getElementById('prad_processo').value;
+      const { razao, numero } = getRazaoENumeroSeparados();
+      const area = getAreaRotuloValor(true);  // rótulo em maiúsculas no PDF
       const rtNome = document.getElementById('prad_rt_nome').value;
       const rtCurso = document.getElementById('prad_rt_curso').value;
       const rtCrea = document.getElementById('prad_rt_crea').value;
       let rtCompleto = rtNome;
       if (rtCurso) rtCompleto += ` - ${rtCurso}`;
       if (rtCrea) rtCompleto += ` (CREA- ${rtCrea})`;
-      const { razao, numero } = getRazaoENumeroSeparados();
-      
-      let infoDados = [
-        { campo: "INTERESSADO:", valor: document.getElementById('prad_interessado').value },
-        { campo: getDocumentoTexto().split(':')[0] + ":", valor: getDocumentoTexto().split(':')[1]?.trim() || '' },
-        { campo: "PROCESSO PRAD:", valor: document.getElementById('prad_processo').value },
-        { campo: "RAZÃO DA APRESENTAÇÃO DO PRAD:", especial: true, razaoTexto: razao, numeroTexto: numero },
-      ];
-      const areaTexto = getAreaTexto();
-      if (areaTexto) infoDados.push({ campo: "", valor: areaTexto });
-      infoDados.push(
-        { campo: "RESPONSÁVEL TÉCNICO DO PRAD:", valor: rtCompleto },
-        { campo: "ART nº:", valor: document.getElementById('prad_art').value },
-        { campo: "MUNICÍPIO:", valor: document.getElementById('prad_municipio').value }
-      );
+      const art = document.getElementById('prad_art').value;
+      const municipio = document.getElementById('prad_municipio').value;
 
-      for (let i = 0; i < infoDados.length; i++) {
-        const item = infoDados[i];
+      // Lista de linhas fixas
+      const linhasInfo = [
+        { rotulo: "INTERESSADO:", valor: interessado },
+        { rotulo: docCampo, valor: docValor },
+        { rotulo: "PROCESSO PRAD:", valor: processo },
+        { rotulo: area.rotulo, valor: area.valor },
+        { rotulo: "RESPONSÁVEL TÉCNICO DO PRAD:", valor: rtCompleto },
+        { rotulo: "ART nº:", valor: art },
+        { rotulo: "MUNICÍPIO:", valor: municipio }
+      ];
+
+      // Desenha linhas fixas
+      for (let i = 0; i < linhasInfo.length; i++) {
+        const linha = linhasInfo[i];
         if (verificarPagina(15)) {}
-        if (item.especial) {
-          const alturaNecessaria = 7;
-          if (yPos + alturaNecessaria > 270) { adicionarRodape(); pdf.addPage(); adicionarCabecalho(); yPos = 48; }
-          const corFundo = (i % 2 === 0) ? PDF_CONFIG.colors.lightGray : null;
-          if (corFundo) pdf.setFillColor(...corFundo); else pdf.setFillColor(255,255,255);
-          pdf.rect(marginLeft, yPos, pageWidth - marginLeft - marginRight, alturaNecessaria, 'F');
-          pdf.setFont('helvetica', 'normal'); pdf.setFontSize(7); pdf.setTextColor(0,0,0);
-          pdf.text(item.campo, marginLeft + 2, yPos + 5);
-          const razaoX = marginLeft + 55;
-          pdf.text(item.razaoTexto || '', razaoX + 2, yPos + 5);
-          const numeroX = marginLeft + 55 + 40;
-          pdf.text(item.numeroTexto || '', numeroX + 2, yPos + 5);
-          yPos += alturaNecessaria;
-        } else {
-          if (item.campo === "" && item.valor) {
-            const alturaNecessaria = 7;
-            if (yPos + alturaNecessaria > 270) { adicionarRodape(); pdf.addPage(); adicionarCabecalho(); yPos = 48; }
-            const corFundo = (i % 2 === 0) ? PDF_CONFIG.colors.lightGray : null;
-            if (corFundo) pdf.setFillColor(...corFundo); else pdf.setFillColor(255,255,255);
-            pdf.rect(marginLeft, yPos, pageWidth - marginLeft - marginRight, alturaNecessaria, 'F');
-            pdf.setFont('helvetica', 'normal'); pdf.setFontSize(7); pdf.setTextColor(0,0,0);
-            pdf.text(item.valor, marginLeft + 2, yPos + 5);
-            yPos += alturaNecessaria;
-          } else {
-            const conteudos = [item.campo, item.valor];
-            const corFundo = (i % 2 === 0) ? PDF_CONFIG.colors.lightGray : null;
-            const novaY = desenharLinhaTabelaEquilibrada(conteudos, [55, pageWidth - marginLeft - marginRight - 55], yPos, corFundo, pdf, marginLeft, pageWidth, marginRight);
-            if (novaY === null) {
-              adicionarRodape(); pdf.addPage(); adicionarCabecalho(); yPos = 48;
-              const novaY2 = desenharLinhaTabelaEquilibrada(conteudos, [55, pageWidth - marginLeft - marginRight - 55], yPos, corFundo, pdf, marginLeft, pageWidth, marginRight);
-              if (novaY2 !== null) yPos = novaY2 + 1; else yPos += 10;
-            } else { yPos = novaY + 1; }
-          }
+        const corFundo = (i % 2 === 0) ? PDF_CONFIG.colors.lightGray : null;
+        const novaY = desenharLinhaTabelaEquilibrada([linha.rotulo, linha.valor], [largRotulo, largValor], yPos, corFundo, pdf, marginLeft, pageWidth, marginRight);
+        if (novaY === null) {
+          adicionarRodape(); pdf.addPage(); adicionarCabecalho(); yPos = 48;
+          const novaY2 = desenharLinhaTabelaEquilibrada([linha.rotulo, linha.valor], [largRotulo, largValor], yPos, corFundo, pdf, marginLeft, pageWidth, marginRight);
+          if (novaY2 !== null) yPos = novaY2 + 1; else yPos += 10;
+        } else { yPos = novaY + 1; }
+      }
+      
+      // Linha da razão (3 colunas)
+      if (verificarPagina(10)) {}
+      const corFundoRazao = (linhasInfo.length % 2 === 0) ? PDF_CONFIG.colors.lightGray : null;
+      const novaYRazao = desenharLinhaRazao("RAZÃO DA APRESENTAÇÃO DO PRAD:", razao, numero, yPos, corFundoRazao, pdf, marginLeft, pageWidth, marginRight, largRazaoRotulo, largRazaoTexto, largRazaoNumero);
+      if (novaYRazao === null) {
+        adicionarRodape(); pdf.addPage(); adicionarCabecalho(); yPos = 48;
+        const novaYRazao2 = desenharLinhaRazao("RAZÃO DA APRESENTAÇÃO DO PRAD:", razao, numero, yPos, corFundoRazao, pdf, marginLeft, pageWidth, marginRight, largRazaoRotulo, largRazaoTexto, largRazaoNumero);
+        if (novaYRazao2 !== null) yPos = novaYRazao2 + 1; else yPos += 10;
+      } else { yPos = novaYRazao + 1; }
+
+      // Campos personalizados
+      if (camposPersonalizados.length > 0) {
+        for (let i = 0; i < camposPersonalizados.length; i++) {
+          const campo = camposPersonalizados[i];
+          if (!campo.rotulo.trim() && !campo.valor.trim()) continue;
+          if (verificarPagina(10)) {}
+          const corFundo = ((linhasInfo.length + 1 + i) % 2 === 0) ? PDF_CONFIG.colors.lightGray : null;
+          const novaY = desenharLinhaTabelaEquilibrada([campo.rotulo, campo.valor], [largRotulo, largValor], yPos, corFundo, pdf, marginLeft, pageWidth, marginRight);
+          if (novaY === null) {
+            adicionarRodape(); pdf.addPage(); adicionarCabecalho(); yPos = 48;
+            const novaY2 = desenharLinhaTabelaEquilibrada([campo.rotulo, campo.valor], [largRotulo, largValor], yPos, corFundo, pdf, marginLeft, pageWidth, marginRight);
+            if (novaY2 !== null) yPos = novaY2 + 1; else yPos += 10;
+          } else { yPos = novaY + 1; }
         }
       }
+      
       yPos += 5;
 
-      // 2. ANÁLISE
+      // 2. ANÁLISE (idêntico)
       verificarPagina(20);
       pdf.setFont('helvetica', 'bold'); pdf.setFontSize(10); pdf.text('2. ANÁLISE DOS ITENS EXIGIDOS NO ANEXO I DA PORTARIA 17/2025:', marginLeft, yPos); yPos += 5;
       const colAnalise = ['Item','Exigência','Atendeu?','Fls.','Observação'];
@@ -1317,7 +1427,7 @@ Assim, cria-se pendência no processo, com a devida notificação ao interessado
       }
       yPos += 5;
 
-      // 3. ANEXOS
+      // 3. ANEXOS (idêntico)
       verificarPagina(20);
       pdf.setFont('helvetica', 'bold'); pdf.setFontSize(10); pdf.text('3. ANEXOS EXIGIDOS PELA PORTARIA 17/2025 (ITEM 16 DO ANEXO I):', marginLeft, yPos); yPos += 5;
       const colAnexos = ['Anexo exigido','Apresentado?','Localização no PRAD','Observação'];
@@ -1459,6 +1569,7 @@ Assim, cria-se pendência no processo, com a devida notificação ao interessado
     atualizarTituloRelatorio();
     setupRazaoEventos();
     setupDynamicFields();
+    renderizarCamposPersonalizados(); // para garantir que os campos vazios apareçam
     
     document.querySelectorAll('input, textarea, select').forEach(el => el.addEventListener('input', () => { atualizarStatusSalvamento(); atualizarTituloRelatorio(); }));
     const reparoRadios = document.querySelectorAll('input[name="reparo_local"]');
