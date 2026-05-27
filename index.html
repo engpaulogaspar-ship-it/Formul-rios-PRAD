@@ -8,11 +8,13 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
-    /* ========== ESTILOS (MANTIDOS) ========== */
+    /* ========== ESTILOS ========== */
     :root {
       --primary-color: #003366;
       --secondary-color: #0056b3;
       --accent-color: #28a745;
+      --warning-color: #ffc107;
+      --danger-color: #dc3545;
       --light-bg: #f8fafc;
       --card-shadow: 0 2px 15px rgba(0, 0, 0, 0.08);
       --border-radius: 12px;
@@ -391,6 +393,29 @@
       margin-bottom: 15px;
       line-height: 1.4;
     }
+    .reparo-card {
+      background: #f8f9fa;
+      border-radius: 10px;
+      padding: 15px;
+      margin-top: 15px;
+      border-left: 4px solid var(--primary-color);
+    }
+    .resultado-conforme {
+      background: #d4edda;
+      border: 1px solid #c3e6cb;
+      color: #155724;
+      padding: 10px;
+      border-radius: 8px;
+      margin-top: 10px;
+    }
+    .resultado-nao-conforme {
+      background: #f8d7da;
+      border: 1px solid #f5c6cb;
+      color: #721c24;
+      padding: 10px;
+      border-radius: 8px;
+      margin-top: 10px;
+    }
   </style>
 </head>
 <body>
@@ -429,17 +454,15 @@
     <h5 style="color: var(--primary-color); margin: 15px 0 10px 0;"><i class="fas fa-info-circle"></i> 1. INFORMAÇÕES GERAIS</h5>
     <table class="info-table-modern" id="infoTable">
       <tbody id="infoTableBody">
-        <!-- Linhas fixas -->
-        <tr><td style="width:280px">INTERESSADO:</td><td><input type="text" id="prad_interessado" class="form-control" value="FRANCIELI PORONICZAK MARASCHIN"></td> </tr>
+        <tr><td style="width:280px">INTERESSADO:</td><td><input type="text" id="prad_interessado" class="form-control" value="FRANCIELI PORONICZAK MARASCHIN"></td></tr>
         <tr>
           <td>TIPO DE DOCUMENTO:</td>
           <td>
             <div class="radio-group"><div class="radio-option"><input type="radio" name="tipo_documento" value="CPF" id="tipo_cpf" checked> <label for="tipo_cpf">CPF</label></div><div class="radio-option"><input type="radio" name="tipo_documento" value="CNPJ" id="tipo_cnpj"> <label for="tipo_cnpj">CNPJ</label></div></div>
             <div style="margin-top: 8px;"><input type="text" id="prad_documento" class="form-control" placeholder="Nº do documento" value="007.605.459-44"></div>
-          </div>
           </td>
-          </tr>
-        <tr><td style="width:280px">PROCESSO PRAD:</td><td><input type="text" id="prad_processo" class="form-control" value="25.786.633-5"></td> </tr>
+        </tr>
+        <tr><td style="width:280px">PROCESSO PRAD:</td><td><input type="text" id="prad_processo" class="form-control" value="25.786.633-5"></td></tr>
         <tr>
           <td>RAZÃO DA APRESENTAÇÃO DO PRAD:</td>
           <td>
@@ -458,27 +481,23 @@
                 <input type="text" id="prad_razao_outro_desc" class="form-control" placeholder="Descreva a razão">
               </div>
             </div>
-           </div>
           </td>
-          <tr>
-        <!-- Linha que conterá os AIAs dinâmicos (inserida via JS) -->
-        <tr id="aiaSectionPlaceholder" style="display: none;"><td colspan="2"> </td></tr>
-        <!-- Linhas restantes -->
+        </tr>
+        <tr id="aiaSectionPlaceholder" style="display: none;"><td colspan="2"></td></tr>
         <tr>
           <td>RESPONSÁVEL TÉCNICO DO PRAD:</td>
           <td>
             <input type="text" id="prad_rt_nome" class="form-control" placeholder="Nome completo" value="Bruna de Melo" style="margin-bottom: 8px;">
             <input type="text" id="prad_rt_curso" class="form-control" placeholder="Curso / Formação" value="Engenharia Florestal" style="margin-bottom: 8px;">
             <input type="text" id="prad_rt_crea" class="form-control" placeholder="Nº do CREA" value="CREA/PR 155222/D">
-          </div>
           </td>
-          </tr>
-        <tr><td>ART nº:</td><td><input type="text" id="prad_art" class="form-control" value="1720262322831 (elaboração – quitada em 17/04/2026)"></td> </tr>
-        <tr><td>MUNICÍPIO:</td><td><input type="text" id="prad_municipio" class="form-control" value="Campo Largo – PR"></td> </tr>
+        </tr>
+        <tr><td>ART nº:</td><td><input type="text" id="prad_art" class="form-control" value="1720262322831 (elaboração – quitada em 17/04/2026)"></td></tr>
+        <tr><td style="width:280px">MUNICÍPIO:</td><td><input type="text" id="prad_municipio" class="form-control" value="Campo Largo – PR"></td></tr>
       </tbody>
     </table>
 
-    <!-- Campos personalizados (adicionados pelo usuário) -->
+    <!-- Campos personalizados -->
     <div style="margin-top: 20px;">
       <h5 style="color: var(--primary-color);"><i class="fas fa-plus-circle"></i> Campos personalizados</h5>
       <div id="custom-fields-container"></div>
@@ -489,7 +508,7 @@
     <h5 style="color: var(--primary-color); margin: 15px 0 10px 0;"><i class="fas fa-clipboard-list"></i> 2. ANÁLISE DOS ITENS EXIGIDOS NO ANEXO I DA PORTARIA 17/2025</h5>
     <div class="table-container">
       <table class="custom-table">
-        <thead><tr><th>Item</th><th>Exigência</th><th>Atendeu?</th><th>Fls.</th><th>Observação</th><th style="width:50px"></th> </tr</thead>
+        <thead><tr><th>Item</th><th>Exigência</th><th>Atendeu?</th><th>Fls.</th><th>Observação</th><th style="width:50px"></th></tr></thead>
         <tbody id="analise-itens-body"></tbody>
       </table>
     </div>
@@ -499,7 +518,7 @@
     <h5 style="color: var(--primary-color); margin: 25px 0 10px 0;"><i class="fas fa-paperclip"></i> 3. ANEXOS EXIGIDOS PELA PORTARIA 17/2025 (ITEM 16 DO ANEXO I)</h5>
     <div class="table-container">
       <table class="custom-table">
-        <thead><tr><th>Anexo exigido</th><th>Apresentado?</th><th>Localização no PRAD</th><th>Observação</th><th style="width:50px"></th> </tr</thead>
+        <thead><tr><th>Anexo exigido</th><th>Apresentado?</th><th>Localização no PRAD</th><th>Observação</th><th style="width:50px"></th></tr></thead>
         <tbody id="anexos-body"></tbody>
       </table>
     </div>
@@ -509,30 +528,86 @@
     <h5 style="color: var(--primary-color); margin: 25px 0 10px 0;"><i class="fas fa-comment"></i> 4. OBSERVAÇÕES</h5>
     <textarea id="prad_observacoes" class="form-control" rows="6"></textarea>
 
-    <!-- 5. PERGUNTA SOBRE REPARO NO LOCAL -->
-    <div class="no-print-pdf">
-      <h5 style="color: var(--primary-color); margin: 25px 0 10px 0;"><i class="fas fa-question-circle"></i> 5. REPARAÇÃO DO DANO</h5>
-      <div class="form-group">
-        <label class="form-label">Foi proposto reparar o dano no local?</label>
-        <div class="radio-group">
-          <div class="radio-option"><input type="radio" name="reparo_local" value="SIM" id="reparo_sim"> <label for="reparo_sim">SIM</label></div>
-          <div class="radio-option"><input type="radio" name="reparo_local" value="NAO" id="reparo_nao" checked> <label for="reparo_nao">NÃO</label></div>
+    <!-- 5. REPARAÇÃO DO DANO -->
+    <h5 style="color: var(--primary-color); margin: 25px 0 10px 0;"><i class="fas fa-question-circle"></i> 5. REPARAÇÃO DO DANO</h5>
+    <div class="form-group">
+      <label class="form-label">Foi proposto reparar o dano no local?</label>
+      <div class="radio-group">
+        <div class="radio-option"><input type="radio" name="reparo_local" value="SIM" id="reparo_sim" onchange="toggleReparoForm()"> <label for="reparo_sim">SIM</label></div>
+        <div class="radio-option"><input type="radio" name="reparo_local" value="NAO" id="reparo_nao" checked onchange="toggleReparoForm()"> <label for="reparo_nao">NÃO</label></div>
+      </div>
+    </div>
+
+    <!-- Formulário para opção SIM -->
+    <div id="reparoSimForm" style="display: none;">
+      <div class="reparo-card">
+        <h6><i class="fas fa-check-circle"></i> Reparo no local do dano</h6>
+        <div class="row">
+          <div class="col-md-6">
+            <label class="form-label">Área suprimida (ha):</label>
+            <input type="number" id="area_suprimida_sim" class="form-control" step="0.01" value="5.98" oninput="calcularReparoSim()">
+          </div>
+          <div class="col-md-6">
+            <label class="form-label">Área restaurada local:</label>
+            <div class="input-group">
+              <input type="number" id="area_restaurada_valor" class="form-control" step="0.01" value="5.98" oninput="calcularReparoSim()">
+              <select id="area_restaurada_unidade" class="form-control" style="width: 100px;" onchange="calcularReparoSim()">
+                <option value="ha">ha</option>
+                <option value="m2">m²</option>
+              </select>
+            </div>
+          </div>
         </div>
+        <div id="resultadoReparoSim" class="mt-3"></div>
+      </div>
+    </div>
+
+    <!-- Formulário para opção NÃO -->
+    <div id="reparoNaoForm" style="display: block;">
+      <div class="reparo-card">
+        <h6><i class="fas fa-map-marker-alt"></i> Reparo em local diverso (Compensação)</h6>
+        <div class="row">
+          <div class="col-md-6">
+            <label class="form-label">Área suprimida (ha):</label>
+            <input type="number" id="area_suprimida_nao" class="form-control" step="0.01" value="5.98" oninput="calcularReparoNao()">
+          </div>
+          <div class="col-md-6">
+            <label class="form-label">Área compensada proposta:</label>
+            <div class="input-group">
+              <input type="number" id="area_compensada_valor" class="form-control" step="0.01" value="23.92" oninput="calcularReparoNao()">
+              <select id="area_compensada_unidade" class="form-control" style="width: 100px;" onchange="calcularReparoNao()">
+                <option value="ha">ha</option>
+                <option value="m2">m²</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="row mt-3">
+          <div class="col-md-12">
+            <label class="form-label">Local da compensação:</label>
+            <select id="local_compensacao" class="form-control" onchange="calcularReparoNao()">
+              <option value="4">Mesma propriedade (4x)</option>
+              <option value="6">Mesma microbacia (6x)</option>
+              <option value="10">Mesma bacia hidrográfica (10x)</option>
+            </select>
+          </div>
+        </div>
+        <div id="resultadoReparoNao" class="mt-3"></div>
       </div>
     </div>
 
     <!-- 6. PENDÊNCIAS -->
-    <h5 style="color: var(--primary-color); margin: 25px 0 10px 0;"><i class="fas fa-exclamation-triangle"></i> 5. PENDÊNCIAS A SEREM APRESENTADAS</h5>
+    <h5 style="color: var(--primary-color); margin: 25px 0 10px 0;"><i class="fas fa-exclamation-triangle"></i> 6. PENDÊNCIAS A SEREM APRESENTADAS</h5>
     <div class="table-container">
       <table class="custom-table">
-        <thead><tr><th style="width:40px">Item</th><th>Pendência identificada</th><th>Providência necessária</th><th>Fundamentação normativa</th><th style="width:50px"></th> </tr</thead>
+        <thead><tr><th style="width:40px">Item</th><th>Pendência identificada</th><th>Providência necessária</th><th>Fundamentação normativa</th><th style="width:50px"></th></tr></thead>
         <tbody id="pendencias-body"></tbody>
       </table>
     </div>
     <div class="table-footer no-print"><button type="button" class="btn-add" onclick="adicionarPendenciaManual()"><i class="fas fa-plus-circle"></i> Adicionar Pendência Manual</button></div>
 
     <!-- 7. CONCLUSÃO -->
-    <h5 style="color: var(--primary-color); margin: 25px 0 10px 0;"><i class="fas fa-check-circle"></i> 6. CONCLUSÃO E ENCAMINHAMENTO</h5>
+    <h5 style="color: var(--primary-color); margin: 25px 0 10px 0;"><i class="fas fa-check-circle"></i> 7. CONCLUSÃO E ENCAMINHAMENTO</h5>
     <div class="form-group">
       <div class="radio-group">
         <div class="radio-option"><input type="radio" name="conclusao_prad" value="APTO" id="prad_apto"> <label for="prad_apto"><strong>APTO À APROVAÇÃO</strong></label></div>
@@ -555,7 +630,7 @@
     </div>
 
     <!-- 8. RESPONSÁVEIS TÉCNICOS PELA ANÁLISE -->
-    <h5 style="color: var(--primary-color); margin: 35px 0 15px 0;"><i class="fas fa-signature"></i> 7. RESPONSÁVEIS TÉCNICOS PELA ANÁLISE</h5>
+    <h5 style="color: var(--primary-color); margin: 35px 0 15px 0;"><i class="fas fa-signature"></i> 8. RESPONSÁVEIS TÉCNICOS PELA ANÁLISE</h5>
     <div id="responsaveis-container"></div>
     <div class="table-footer no-print" style="margin-top: 10px;">
       <button type="button" class="btn-add" onclick="adicionarResponsavel()"><i class="fas fa-plus-circle"></i> Adicionar Responsável Técnico</button>
@@ -600,6 +675,150 @@
     } else {
       tituloElement.innerHTML = `INFORMAÇÃO TÉCNICA PRAD`;
       finalSpan.innerHTML = "---";
+    }
+  }
+
+  // ==================== FUNÇÕES DE REPARAÇÃO DO DANO (CORRIGIDAS) ====================
+  let pendenciaReparoId = null;
+
+  function toggleReparoForm() {
+    const reparoSim = document.getElementById('reparo_sim').checked;
+    const simForm = document.getElementById('reparoSimForm');
+    const naoForm = document.getElementById('reparoNaoForm');
+    
+    // REMOVER PENDÊNCIA EXISTENTE AO MUDAR DE OPÇÃO
+    removerPendenciaReparo();
+    
+    if (reparoSim) {
+      simForm.style.display = 'block';
+      naoForm.style.display = 'none';
+      calcularReparoSim();
+    } else {
+      simForm.style.display = 'none';
+      naoForm.style.display = 'block';
+      calcularReparoNao();
+    }
+  }
+
+  function removerPendenciaReparo() {
+    if (pendenciaReparoId) {
+      pendenciasManuais = pendenciasManuais.filter(p => p.id !== pendenciaReparoId);
+      pendenciaReparoId = null;
+      renderizarPendencias();
+      atualizarStatusSalvamento();
+    }
+  }
+
+  function adicionarOuAtualizarPendenciaReparo(novaPendencia) {
+    if (pendenciaReparoId) {
+      pendenciasManuais = pendenciasManuais.filter(p => p.id !== pendenciaReparoId);
+    }
+    pendenciasManuais.push(novaPendencia);
+    pendenciaReparoId = novaPendencia.id;
+    renderizarPendencias();
+    atualizarStatusSalvamento();
+  }
+
+  function calcularReparoSim() {
+    let areaSuprimida = parseFloat(document.getElementById('area_suprimida_sim').value) || 0;
+    let areaRestauradaValor = parseFloat(document.getElementById('area_restaurada_valor').value) || 0;
+    let unidade = document.getElementById('area_restaurada_unidade').value;
+    
+    if (unidade === 'm2') {
+      areaRestauradaValor = areaRestauradaValor / 10000;
+    }
+    areaRestauradaValor = parseFloat(areaRestauradaValor.toFixed(4));
+    
+    const resultadoDiv = document.getElementById('resultadoReparoSim');
+    const diferenca = Math.abs(areaSuprimida - areaRestauradaValor);
+    const estaConforme = diferenca < 0.01;
+    
+    if (estaConforme) {
+      resultadoDiv.innerHTML = `
+        <div class="resultado-conforme">
+          <i class="fas fa-check-circle"></i> <strong>CONFORME</strong><br>
+          Área suprimida: ${areaSuprimida.toFixed(4)} ha<br>
+          Área restaurada: ${areaRestauradaValor.toFixed(4)} ha<br>
+          ✅ O reparo proposto atende ao estabelecido no art. 45 da IN IAT 50/2025.
+        </div>
+      `;
+      removerPendenciaReparo();
+    } else {
+      resultadoDiv.innerHTML = `
+        <div class="resultado-nao-conforme">
+          <i class="fas fa-exclamation-triangle"></i> <strong>NÃO CONFORME</strong><br>
+          Área suprimida: ${areaSuprimida.toFixed(4)} ha<br>
+          Área restaurada: ${areaRestauradaValor.toFixed(4)} ha<br>
+          ❌ NÃO ESTÁ CONFORME o Reparo no local com base no art. 45 da IN IAT 50/2025, sem incidência do multiplicador do art. 66.
+        </div>
+      `;
+      const novaPendencia = {
+        id: `reparo_sim_${Date.now()}`,
+        pendencia: `Reparo no local do dano: área suprimida (${areaSuprimida.toFixed(4)} ha) diferente da área restaurada (${areaRestauradaValor.toFixed(4)} ha)`,
+        providencia: "Ajustar o projeto de recuperação para que a área restaurada seja equivalente à área suprimida, conforme art. 45 da IN IAT 50/2025.",
+        fundamentacao: "Art. 45 da IN IAT 50/2025 - Reparo no local do dano exige área restaurada igual à área suprimida, sem incidência do multiplicador do art. 66.",
+        categoria: "PENDÊNCIA - REPARO DO DANO"
+      };
+      adicionarOuAtualizarPendenciaReparo(novaPendencia);
+    }
+  }
+
+  function calcularReparoNao() {
+    let areaSuprimida = parseFloat(document.getElementById('area_suprimida_nao').value) || 0;
+    let areaCompensadaValor = parseFloat(document.getElementById('area_compensada_valor').value) || 0;
+    let unidade = document.getElementById('area_compensada_unidade').value;
+    let fator = parseInt(document.getElementById('local_compensacao').value);
+    
+    if (unidade === 'm2') {
+      areaCompensadaValor = areaCompensadaValor / 10000;
+    }
+    areaCompensadaValor = parseFloat(areaCompensadaValor.toFixed(4));
+    let areaMinima = areaSuprimida * fator;
+    let percentualAtendimento = (areaCompensadaValor / areaMinima) * 100;
+    let estaConforme = percentualAtendimento >= 99.99;
+    
+    let textoLocal = "";
+    switch(fator) {
+      case 4: textoLocal = "Mesma propriedade"; break;
+      case 6: textoLocal = "Mesma microbacia"; break;
+      case 10: textoLocal = "Mesma bacia hidrográfica"; break;
+    }
+    
+    const resultadoDiv = document.getElementById('resultadoReparoNao');
+    
+    if (estaConforme) {
+      resultadoDiv.innerHTML = `
+        <div class="resultado-conforme">
+          <i class="fas fa-check-circle"></i> <strong>CONFORME</strong><br>
+          Área suprimida: ${areaSuprimida.toFixed(4)} ha<br>
+          Local: ${textoLocal} (fator ${fator}x)<br>
+          Área mínima exigida: ${areaMinima.toFixed(4)} ha<br>
+          Área compensada proposta: ${areaCompensadaValor.toFixed(4)} ha<br>
+          Percentual de atendimento: ${percentualAtendimento.toFixed(2)}%<br>
+          ✅ ESTÁ CONFORME o fundamento no art. 66, §1º da IN IAT 50/2025, mediante justificativa de inviabilidade técnica e aplicação do fator multiplicador correspondente.
+        </div>
+      `;
+      removerPendenciaReparo();
+    } else {
+      resultadoDiv.innerHTML = `
+        <div class="resultado-nao-conforme">
+          <i class="fas fa-exclamation-triangle"></i> <strong>NÃO CONFORME</strong><br>
+          Área suprimida: ${areaSuprimida.toFixed(4)} ha<br>
+          Local: ${textoLocal} (fator ${fator}x)<br>
+          Área mínima exigida: ${areaMinima.toFixed(4)} ha<br>
+          Área compensada proposta: ${areaCompensadaValor.toFixed(4)} ha<br>
+          Percentual de atendimento: ${percentualAtendimento.toFixed(2)}% (mínimo 100%)<br>
+          ❌ NÃO ESTÁ CONFORME o Reparo em local diverso, com fundamento no art. 66, §1º da IN IAT 50/2025.
+        </div>
+      `;
+      const novaPendencia = {
+        id: `reparo_nao_${Date.now()}`,
+        pendencia: `Compensação em local diverso: área compensada (${areaCompensadaValor.toFixed(4)} ha) inferior à área mínima exigida (${areaMinima.toFixed(4)} ha) para ${textoLocal} (fator ${fator}x)`,
+        providencia: `Aumentar a área compensada para pelo menos ${areaMinima.toFixed(4)} ha, respeitando o fator multiplicador de ${fator}x conforme a localização escolhida.`,
+        fundamentacao: "Art. 66, §1º da IN IAT 50/2025 - Reparo em local diverso exige aplicação de fator multiplicador (4x, 6x ou 10x) mediante justificativa de inviabilidade técnica.",
+        categoria: "PENDÊNCIA - COMPENSAÇÃO"
+      };
+      adicionarOuAtualizarPendenciaReparo(novaPendencia);
     }
   }
 
@@ -672,7 +891,6 @@
   let anexos = [];
   let pendenciasManuais = [];
   let responsaveis = [{ nome: "Paulo Francisco Nginga Gaspar", curso: "Engenharia de Energias", crea: "2523337967" }];
-  
   let camposPersonalizados = [];
   let aiasList = [];
 
@@ -741,31 +959,20 @@
     const razaoSelected = document.querySelector('input[name="prad_razao"]:checked')?.value;
     const isAia = (razaoSelected === 'AIA');
     const tbody = document.getElementById('infoTableBody');
-    
     const placeholder = document.getElementById('aiaSectionPlaceholder');
     if (placeholder) placeholder.remove();
-
-    if (aiaSectionRow) {
-      aiaSectionRow.remove();
-      aiaSectionRow = null;
-    }
-    if (totalAreaRow) {
-      totalAreaRow.remove();
-      totalAreaRow = null;
-    }
-
+    if (aiaSectionRow) aiaSectionRow.remove();
+    if (totalAreaRow) totalAreaRow.remove();
+    aiaSectionRow = null;
+    totalAreaRow = null;
     if (!isAia) return;
-
     const razaoRow = document.querySelector('#infoTableBody tr:nth-child(4)');
     const insertAfter = razaoRow;
-
-    // Linha para os AIAs
     aiaSectionRow = tbody.insertRow(insertAfter.rowIndex + 1);
     const labelCell = aiaSectionRow.insertCell(0);
     const contentCell = aiaSectionRow.insertCell(1);
     labelCell.innerHTML = '<strong>AIA:</strong>';
     labelCell.style.verticalAlign = 'top';
-    
     let html = '<div id="aiasContainer">';
     aiasList.forEach((aia, idx) => {
       html += `
@@ -792,22 +999,15 @@
         </div>
       `;
     });
-    html += `</div>
-      <button type="button" class="btn-add" onclick="adicionarAia()" style="margin-top:10px;"><i class="fas fa-plus"></i> Adicionar AIA</button>
-    `;
+    html += `<button type="button" class="btn-add" onclick="adicionarAia()" style="margin-top:10px;"><i class="fas fa-plus"></i> Adicionar AIA</button>`;
     contentCell.innerHTML = html;
-
     contentCell.querySelectorAll('.aia-numero, .aia-tipo, .aia-area').forEach(el => {
       el.addEventListener('change', function() { atualizarAiasFromDOM(); atualizarStatusSalvamento(); });
       el.addEventListener('input', function() { atualizarAiasFromDOM(); atualizarStatusSalvamento(); });
     });
-
-    // Linha da área total
     totalAreaRow = tbody.insertRow(insertAfter.rowIndex + 2);
-    const totalLabelCell = totalAreaRow.insertCell(0);
-    const totalValueCell = totalAreaRow.insertCell(1);
-    totalLabelCell.innerHTML = '<strong>Área Total do PRAD:</strong>';
-    totalValueCell.innerHTML = `${getAiaTotalArea().toFixed(2).replace('.', ',')} ha`;
+    totalAreaRow.insertCell(0).innerHTML = '<strong>Área Total do PRAD:</strong>';
+    totalAreaRow.insertCell(1).innerHTML = `${getAiaTotalArea().toFixed(2).replace('.', ',')} ha`;
     if (!document.getElementById('prad_area_total_aia')) {
       const hidden = document.createElement('input');
       hidden.type = 'hidden';
@@ -1043,16 +1243,6 @@
         }
       }
     }
-    const reparoValue = document.querySelector('input[name="reparo_local"]:checked')?.value;
-    if (reparoValue === 'NAO') {
-      pendenciasAuto.push({
-        id: 'auto_compensacao',
-        pendencia: `Compensação do AIA – não foi proposto reparo no local do dano`,
-        fundamentacao: "Art. 66 da IN IAT nº 50/2025",
-        providencia: "• Opção 1: recuperar no local do dano.\n• Opção 2: comprovar impossibilidade técnica/ambiental da recuperação no local, aplicar fator multiplicador (4x a área suprimida), averbar a área compensada e obter manifestação jurídica favorável, conforme o Art. 66 da IN IAT nº 50/2025.",
-        categoria: "PENDÊNCIA ESPECIAL - COMPENSAÇÃO"
-      });
-    }
     return pendenciasAuto;
   }
 
@@ -1090,11 +1280,19 @@
     }
     atualizarConclusao();
   }
+  
   function adicionarPendenciaManual() {
     pendenciasManuais.push({ id: `manual_${Date.now()}_${Math.random()}`, pendencia: "", fundamentacao: "", providencia: "", categoria: "PENDÊNCIAS MANUAIS" });
     renderizarPendencias(); atualizarStatusSalvamento(); mostrarStatus('Nova pendência manual adicionada!');
   }
-  function removerPendenciaManual(id) { pendenciasManuais = pendenciasManuais.filter(p => p.id !== id); renderizarPendencias(); atualizarStatusSalvamento(); mostrarStatus('Pendência manual removida!'); }
+  
+  function removerPendenciaManual(id) { 
+    pendenciasManuais = pendenciasManuais.filter(p => p.id !== id);
+    if (pendenciaReparoId === id) pendenciaReparoId = null;
+    renderizarPendencias(); 
+    atualizarStatusSalvamento(); 
+    mostrarStatus('Pendência manual removida!'); 
+  }
 
   // ==================== RENDERIZAÇÃO DAS TABELAS ====================
   function preencherAnalise() {
@@ -1126,6 +1324,7 @@
     });
     renderizarPendencias();
   }
+  
   function preencherAnexos() {
     const body = document.getElementById('anexos-body');
     body.innerHTML = '';
@@ -1152,18 +1351,22 @@
     });
     renderizarPendencias();
   }
+  
   function adicionarItemAnalise() { 
     itensAnalise.push({ item: (itensAnalise.length+1).toString(), exigencia: "", atende: "SIM", fls: "", obs: "", isCustom: true });
     preencherAnalise(); atualizarStatusSalvamento();
   }
+  
   function removerItemAnalise(idx) { 
     if (itensAnalise[idx].isCustom) { itensAnalise.splice(idx, 1); itensAnalise.forEach((item, i) => item.item = (i+1).toString()); preencherAnalise(); atualizarStatusSalvamento(); }
     else mostrarStatus('Itens padrão não podem ser removidos.', 'info');
   }
+  
   function adicionarItemAnexo() { 
     anexos.push({ anexo: "", apresentado: "SIM", localizacao: "", obs: "", isCustom: true });
     preencherAnexos(); atualizarStatusSalvamento();
   }
+  
   function removerItemAnexo(idx) { 
     if (anexos[idx].isCustom) { anexos.splice(idx, 1); preencherAnexos(); atualizarStatusSalvamento(); }
     else mostrarStatus('Anexos padrão não podem ser removidos.', 'info');
@@ -1180,6 +1383,24 @@
     let razaoValue = null;
     for (let radio of document.querySelectorAll('input[name="prad_razao"]')) if (radio.checked) { razaoValue = radio.value; break; }
     if (razaoValue === 'AIA') atualizarAiasFromDOM();
+    
+    const reparoLocal = document.querySelector('input[name="reparo_local"]:checked')?.value;
+    let dadosReparo = {};
+    if (reparoLocal === 'SIM') {
+      dadosReparo = {
+        area_suprimida: document.getElementById('area_suprimida_sim').value,
+        area_restaurada_valor: document.getElementById('area_restaurada_valor').value,
+        area_restaurada_unidade: document.getElementById('area_restaurada_unidade').value
+      };
+    } else {
+      dadosReparo = {
+        area_suprimida: document.getElementById('area_suprimida_nao').value,
+        area_compensada_valor: document.getElementById('area_compensada_valor').value,
+        area_compensada_unidade: document.getElementById('area_compensada_unidade').value,
+        local_compensacao: document.getElementById('local_compensacao').value
+      };
+    }
+    
     const dados = {
       numero_info: numeroInfo,
       interessado: document.getElementById('prad_interessado').value,
@@ -1194,7 +1415,8 @@
       art: document.getElementById('prad_art').value,
       municipio: document.getElementById('prad_municipio').value,
       observacoes: document.getElementById('prad_observacoes').value,
-      reparo_local: document.querySelector('input[name="reparo_local"]:checked')?.value,
+      reparo_local: reparoLocal,
+      dados_reparo: dadosReparo,
       conclusao_texto: document.getElementById('prad_conclusao_texto').value,
       conclusao_status: document.querySelector('input[name="conclusao_prad"]:checked')?.value || 'NAO_APTO',
       data_info: document.getElementById('prad_data_info').value,
@@ -1202,7 +1424,7 @@
       responsaveis: responsaveis,
       itensAnalise: itensAnalise.filter(item => item.isCustom),
       anexos: anexos.filter(item => item.isCustom),
-      pendenciasManuais: pendenciasManuais,
+      pendenciasManuais: pendenciasManuais.filter(p => !p.id || !p.id.startsWith('reparo_')),
       camposPersonalizados: camposPersonalizados,
       aiasList: aiasList,
       area_total_aia: getAiaTotalArea().toFixed(2)
@@ -1234,7 +1456,23 @@
       document.getElementById('prad_art').value = dados.art || '';
       document.getElementById('prad_municipio').value = dados.municipio || '';
       document.getElementById('prad_observacoes').value = dados.observacoes || '';
-      if(dados.reparo_local) document.querySelector(`input[name="reparo_local"][value="${dados.reparo_local}"]`).checked = true;
+      
+      if(dados.reparo_local) {
+        document.querySelector(`input[name="reparo_local"][value="${dados.reparo_local}"]`).checked = true;
+        if(dados.reparo_local === 'SIM' && dados.dados_reparo) {
+          document.getElementById('area_suprimida_sim').value = dados.dados_reparo.area_suprimida || '';
+          document.getElementById('area_restaurada_valor').value = dados.dados_reparo.area_restaurada_valor || '';
+          document.getElementById('area_restaurada_unidade').value = dados.dados_reparo.area_restaurada_unidade || 'ha';
+        } else if(dados.dados_reparo) {
+          document.getElementById('area_suprimida_nao').value = dados.dados_reparo.area_suprimida || '';
+          document.getElementById('area_compensada_valor').value = dados.dados_reparo.area_compensada_valor || '';
+          document.getElementById('area_compensada_unidade').value = dados.dados_reparo.area_compensada_unidade || 'ha';
+          document.getElementById('local_compensacao').value = dados.dados_reparo.local_compensacao || '4';
+        }
+      }
+      
+      toggleReparoForm();
+      
       document.getElementById('prad_conclusao_texto').value = dados.conclusao_texto || '';
       document.getElementById('prad_data_info').value = dados.data_info || '';
       document.getElementById('prad_prazo').value = dados.prazo || '60';
@@ -1264,6 +1502,10 @@
       if (document.querySelector('input[name="prad_razao"]:checked')?.value === 'AIA') {
         renderAiaSection();
       }
+      
+      if(dados.reparo_local === 'SIM') calcularReparoSim();
+      else calcularReparoNao();
+      
       atualizarStatusSalvo();
       mostrarStatus('Dados carregados com sucesso!');
     } catch(e) { console.error(e); mostrarStatus('Erro ao carregar dados', 'error'); }
@@ -1358,6 +1600,7 @@ Assim, cria-se pendência no processo, com a devida notificação ao interessado
       let yPos = 25;
       const anoAtual = getAnoCorrente();
       const tituloCompleto = `INFORMAÇÃO TÉCNICA PRAD Nº ${numeroInfo}/${anoAtual}`;
+      
       const adicionarCabecalho = () => {
         try {
           if (LOGOS.headerLeft) pdf.addImage(LOGOS.headerLeft, 'PNG', marginLeft, 10, 22, 18);
@@ -1372,6 +1615,7 @@ Assim, cria-se pendência no processo, com a devida notificação ao interessado
         pdf.setDrawColor(...PDF_CONFIG.colors.primary); pdf.setLineWidth(0.3);
         pdf.line(marginLeft, 36, pageWidth - marginRight, 36);
       };
+      
       const adicionarRodape = () => {
         pdf.setDrawColor(...PDF_CONFIG.colors.mediumGray); pdf.setLineWidth(0.2);
         pdf.line(marginLeft, 277, pageWidth - marginRight, 277);
@@ -1380,10 +1624,12 @@ Assim, cria-se pendência no processo, com a devida notificação ao interessado
         pdf.text(PDF_CONFIG.footerText.linha2, marginLeft, 288);
         pdf.text(PDF_CONFIG.footerText.linha3, marginLeft, 293);
       };
+      
       const verificarPagina = (alturaNecessaria) => {
         if (yPos + alturaNecessaria > 270) { adicionarRodape(); pdf.addPage(); adicionarCabecalho(); yPos = 48; return true; }
         return false;
       };
+      
       const desenharCabecalhoTabela = (colunas, larguras, y, corFundo) => {
         pdf.setFillColor(...corFundo); pdf.rect(marginLeft, y, pageWidth - marginLeft - marginRight, 7, 'F');
         pdf.setTextColor(255,255,255); pdf.setFont('helvetica', 'bold'); pdf.setFontSize(7);
@@ -1431,7 +1677,6 @@ Assim, cria-se pendência no processo, com a devida notificação ao interessado
           if (idx < aiasList.length - 1) aiasTexto += '\n';
         });
         linhasInfoPDF.push({ campo: "AIA:", dados: aiasTexto });
-        
         const totalAias = getAiaTotalArea().toFixed(2).replace('.', ',');
         linhasInfoPDF.push({ campo: "Área Total do PRAD:", dados: `${totalAias} ha` });
       }
@@ -1468,7 +1713,6 @@ Assim, cria-se pendência no processo, com a devida notificação ao interessado
           } else { yPos = novaY + 1; }
         }
       }
-      
       yPos += 5;
 
       // 2. ANÁLISE
@@ -1525,12 +1769,40 @@ Assim, cria-se pendência no processo, com a devida notificação ao interessado
         yPos += 5;
       }
 
-      // 5. PENDÊNCIAS
+      // 5. REPARAÇÃO DO DANO
+      const reparoLocal = document.querySelector('input[name="reparo_local"]:checked')?.value;
+      if (reparoLocal) {
+        verificarPagina(20);
+        pdf.setFont('helvetica', 'bold'); pdf.setFontSize(10); pdf.text('5. REPARAÇÃO DO DANO:', marginLeft, yPos); yPos += 5;
+        
+        if (reparoLocal === 'SIM') {
+          const areaSuprimida = document.getElementById('area_suprimida_sim').value;
+          let areaRestauradaValor = document.getElementById('area_restaurada_valor').value;
+          const unidade = document.getElementById('area_restaurada_unidade').value;
+          pdf.setFont('helvetica', 'normal'); pdf.setFontSize(9);
+          pdf.text(`Foi proposto reparar o dano no local: SIM`, marginLeft, yPos); yPos += 5;
+          pdf.text(`Área suprimida: ${areaSuprimida} ha`, marginLeft, yPos); yPos += 4;
+          pdf.text(`Área restaurada local: ${areaRestauradaValor} ${unidade}`, marginLeft, yPos); yPos += 4;
+        } else {
+          const areaSuprimida = document.getElementById('area_suprimida_nao').value;
+          let areaCompensadaValor = document.getElementById('area_compensada_valor').value;
+          const unidade = document.getElementById('area_compensada_unidade').value;
+          const localCompensacao = document.getElementById('local_compensacao').options[document.getElementById('local_compensacao').selectedIndex].text;
+          pdf.setFont('helvetica', 'normal'); pdf.setFontSize(9);
+          pdf.text(`Foi proposto reparar o dano no local: NÃO`, marginLeft, yPos); yPos += 5;
+          pdf.text(`Área suprimida: ${areaSuprimida} ha`, marginLeft, yPos); yPos += 4;
+          pdf.text(`Área compensada proposta: ${areaCompensadaValor} ${unidade}`, marginLeft, yPos); yPos += 4;
+          pdf.text(`Local da compensação: ${localCompensacao}`, marginLeft, yPos); yPos += 4;
+        }
+        yPos += 5;
+      }
+
+      // 6. PENDÊNCIAS
       const pendenciasAutoPDF = gerarPendenciasAutomaticas();
       const todasPendenciasPDF = [...pendenciasAutoPDF, ...pendenciasManuais];
       if (todasPendenciasPDF.length > 0) {
         verificarPagina(20);
-        pdf.setFont('helvetica', 'bold'); pdf.setFontSize(10); pdf.text('5. PENDÊNCIAS A SEREM APRESENTADAS:', marginLeft, yPos); yPos += 5;
+        pdf.setFont('helvetica', 'bold'); pdf.setFontSize(10); pdf.text('6. PENDÊNCIAS A SEREM APRESENTADAS:', marginLeft, yPos); yPos += 5;
         const colPend = ['Item','Pendência identificada','Providência necessária','Fundamentação normativa'];
         const largPend = [10, 50, 50, 210 - marginLeft - marginRight - (10+50+50)];
         yPos = desenharCabecalhoTabela(colPend, largPend, yPos, PDF_CONFIG.colors.primary);
@@ -1561,13 +1833,13 @@ Assim, cria-se pendência no processo, com a devida notificação ao interessado
         yPos += 5;
       } else {
         verificarPagina(10);
-        pdf.setFont('helvetica', 'bold'); pdf.setFontSize(10); pdf.text('5. PENDÊNCIAS A SEREM APRESENTADAS:', marginLeft, yPos); yPos += 5;
+        pdf.setFont('helvetica', 'bold'); pdf.setFontSize(10); pdf.text('6. PENDÊNCIAS A SEREM APRESENTADAS:', marginLeft, yPos); yPos += 5;
         pdf.setFont('helvetica', 'italic'); pdf.setFontSize(9); pdf.text('Não há pendências registradas.', marginLeft, yPos); yPos += 8;
       }
 
-      // 6. CONCLUSÃO
+      // 7. CONCLUSÃO
       verificarPagina(30);
-      pdf.setFont('helvetica', 'bold'); pdf.setFontSize(10); pdf.text('6. CONCLUSÃO E ENCAMINHAMENTO:', marginLeft, yPos); yPos += 5;
+      pdf.setFont('helvetica', 'bold'); pdf.setFontSize(10); pdf.text('7. CONCLUSÃO E ENCAMINHAMENTO:', marginLeft, yPos); yPos += 5;
       const conclStatus = document.querySelector('input[name="conclusao_prad"]:checked')?.value || 'NAO_APTO';
       pdf.setFont('helvetica', 'bold'); pdf.setTextColor(conclStatus=='APTO'?0:200,0,0);
       pdf.text(`PARECER: ${conclStatus} À APROVAÇÃO`, marginLeft, yPos); yPos += 5;
@@ -1577,7 +1849,7 @@ Assim, cria-se pendência no processo, com a devida notificação ao interessado
       for (let l of conclLines) { if (verificarPagina(5)) yPos += 3; pdf.text(l, marginLeft, yPos); yPos += 4; }
       yPos += 8;
       
-      // Informações de contato (antes da data e assinatura)
+      // Informações de contato
       pdf.setFont('helvetica', 'normal'); pdf.setFontSize(9); pdf.setTextColor(80, 80, 80);
       pdf.text("Em caso de dúvidas, entrar em contato:", marginLeft, yPos);
       yPos += 4;
@@ -1590,12 +1862,12 @@ Assim, cria-se pendência no processo, com a devida notificação ao interessado
       if (!dataInfo) { const hoje = new Date(); dataInfo = `${hoje.getDate().toString().padStart(2,'0')}/${(hoje.getMonth()+1).toString().padStart(2,'0')}/${hoje.getFullYear()}`; }
       pdf.text(`Curitiba, ${dataInfo}`, pageWidth - marginRight, yPos, { align: 'right' }); yPos += 15;
 
-      // 7. RESPONSÁVEIS TÉCNICOS PELA ANÁLISE
+      // 8. RESPONSÁVEIS TÉCNICOS PELA ANÁLISE
       verificarPagina(30);
-      pdf.setFont('helvetica', 'bold'); pdf.setFontSize(10); pdf.text('7. RESPONSÁVEIS TÉCNICOS PELA ANÁLISE:', marginLeft, yPos); yPos += 8;
+      pdf.setFont('helvetica', 'bold'); pdf.setFontSize(10); pdf.text('8. RESPONSÁVEIS TÉCNICOS PELA ANÁLISE:', marginLeft, yPos); yPos += 8;
       for (let i = 0; i < responsaveis.length; i++) {
         const resp = responsaveis[i];
-        if (verificarPagina(20)) { pdf.setFont('helvetica', 'bold'); pdf.setFontSize(10); pdf.text('7. RESPONSÁVEIS TÉCNICOS (continuação):', marginLeft, yPos); yPos += 8; }
+        if (verificarPagina(20)) { pdf.setFont('helvetica', 'bold'); pdf.setFontSize(10); pdf.text('8. RESPONSÁVEIS TÉCNICOS (continuação):', marginLeft, yPos); yPos += 8; }
         pdf.setFont('helvetica', 'bold'); pdf.setFontSize(10); pdf.text(resp.nome || '_________________________', marginLeft, yPos); yPos += 5;
         pdf.setFont('helvetica', 'normal'); pdf.setFontSize(9);
         let linhaCursoCrea = '';
@@ -1653,12 +1925,14 @@ Assim, cria-se pendência no processo, com a devida notificação ao interessado
     renderizarCamposPersonalizados();
     
     document.querySelectorAll('input, textarea, select').forEach(el => el.addEventListener('input', () => { atualizarStatusSalvamento(); atualizarTituloRelatorio(); }));
-    const reparoRadios = document.querySelectorAll('input[name="reparo_local"]');
-    reparoRadios.forEach(r => r.addEventListener('change', () => { renderizarPendencias(); atualizarStatusSalvamento(); }));
     document.getElementById('prad_prazo').addEventListener('input', () => { atualizarConclusao(); atualizarStatusSalvamento(); });
     document.getElementById('prad_numero_info').addEventListener('input', () => atualizarTituloRelatorio());
     const conclRadios = document.querySelectorAll('input[name="conclusao_prad"]');
     conclRadios.forEach(r => r.addEventListener('change', () => { atualizarConclusao(); atualizarStatusSalvamento(); }));
+    
+    toggleReparoForm();
+    calcularReparoNao();
+    
     setTimeout(() => carregarFormulario(), 300);
   });
 </script>
