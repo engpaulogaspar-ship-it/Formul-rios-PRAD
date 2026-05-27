@@ -312,18 +312,6 @@
     }
     .no-print-pdf { display: block; }
     @media print { .no-print-pdf { display: none !important; } }
-    .area-input-group {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-    .area-input-group input {
-      flex: 1;
-    }
-    .area-input-group span {
-      font-weight: 500;
-      color: #495057;
-    }
     .readonly-cell {
       background-color: #f8f9fa;
     }
@@ -340,7 +328,6 @@
       padding-left: 15px;
       border-left: 2px solid var(--primary-color);
     }
-    /* Estilo para campos personalizados */
     .custom-field-item {
       background: #f8f9fa;
       padding: 10px;
@@ -353,6 +340,56 @@
       position: absolute;
       top: 5px;
       right: 5px;
+    }
+    .aia-item {
+      background: #fff;
+      border: 1px solid #dee2e6;
+      border-radius: 8px;
+      padding: 10px;
+      margin-bottom: 10px;
+      position: relative;
+    }
+    .aia-item .btn-remove-small {
+      position: absolute;
+      top: 5px;
+      right: 5px;
+    }
+    .aia-fields {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: flex-end;
+    }
+    .aia-fields .field-group {
+      flex: 1;
+      min-width: 150px;
+    }
+    .aia-fields label {
+      font-weight: 600;
+      font-size: 12px;
+      margin-bottom: 4px;
+      display: block;
+    }
+    .aia-fields input, .aia-fields select {
+      width: 100%;
+      padding: 6px 10px;
+      border-radius: 6px;
+      border: 1px solid #ced4da;
+    }
+    .total-area {
+      font-weight: bold;
+      background-color: #e9ecef;
+      padding: 8px 12px;
+      border-radius: 8px;
+      margin-top: 10px;
+      text-align: right;
+    }
+    .contato-info {
+      font-size: 9px;
+      color: #555;
+      margin-top: 15px;
+      margin-bottom: 15px;
+      line-height: 1.4;
     }
   </style>
 </head>
@@ -391,67 +428,54 @@
     <!-- 1. INFORMAÇÕES GERAIS -->
     <h5 style="color: var(--primary-color); margin: 15px 0 10px 0;"><i class="fas fa-info-circle"></i> 1. INFORMAÇÕES GERAIS</h5>
     <table class="info-table-modern" id="infoTable">
-      <tr><td style="width:280px">INTERESSADO:</td><td><input type="text" id="prad_interessado" class="form-control" value="HATAKE LTDA (em nome de NISSEI ADMINISTRADORA DE BENS LTDA)"></td></tr>
-      <tr>
-        <td>TIPO DE DOCUMENTO:</td>
-        <td>
-          <div class="radio-group"><div class="radio-option"><input type="radio" name="tipo_documento" value="CPF" id="tipo_cpf"> <label for="tipo_cpf">CPF</label></div><div class="radio-option"><input type="radio" name="tipo_documento" value="CNPJ" id="tipo_cnpj" checked> <label for="tipo_cnpj">CNPJ</label></div></div>
-          <div style="margin-top: 8px;"><input type="text" id="prad_documento" class="form-control" placeholder="Nº do documento" value="05.493.678/0001-77"></div>
-        </td>
-      </tr>
-      <tr><td>PROCESSO PRAD:</td><td><input type="text" id="prad_processo" class="form-control" value="23.509.850-4">NonNull</td>
-      <tr>
-        <td>RAZÃO DA APRESENTAÇÃO DO PRAD:</td>
-        <td>
-          <div class="radio-group" id="razao-group">
-            <div class="radio-option"><input type="radio" name="prad_razao" value="AIA" id="razao_aia" checked> <label for="razao_aia">AIA</label></div>
-            <div class="radio-option"><input type="radio" name="prad_razao" value="TAC" id="razao_tac"> <label for="razao_tac">TAC</label></div>
-            <div class="radio-option"><input type="radio" name="prad_razao" value="Licenciamento" id="razao_lic"> <label for="razao_lic">Licenciamento</label></div>
-            <div class="radio-option"><input type="radio" name="prad_razao" value="Substituição de Exóticas" id="razao_exoticas"> <label for="razao_exoticas">Substituição de Exóticas em APP</label></div>
-            <div class="radio-option"><input type="radio" name="prad_razao" value="Regularização Ambiental" id="razao_reg_amb"> <label for="razao_reg_amb">Regularização Ambiental de Imóvel Rural não integrado ao PRA</label></div>
-            <div class="radio-option"><input type="radio" name="prad_razao" value="Voluntário" id="razao_voluntario"> <label for="razao_voluntario">Voluntário</label></div>
-            <div class="radio-option"><input type="radio" name="prad_razao" value="Outro" id="razao_outro"> <label for="razao_outro">Outro:</label></div>
+      <tbody id="infoTableBody">
+        <!-- Linhas fixas -->
+        <tr><td style="width:280px">INTERESSADO:</td><td><input type="text" id="prad_interessado" class="form-control" value="FRANCIELI PORONICZAK MARASCHIN"></td> </tr>
+        <tr>
+          <td>TIPO DE DOCUMENTO:</td>
+          <td>
+            <div class="radio-group"><div class="radio-option"><input type="radio" name="tipo_documento" value="CPF" id="tipo_cpf" checked> <label for="tipo_cpf">CPF</label></div><div class="radio-option"><input type="radio" name="tipo_documento" value="CNPJ" id="tipo_cnpj"> <label for="tipo_cnpj">CNPJ</label></div></div>
+            <div style="margin-top: 8px;"><input type="text" id="prad_documento" class="form-control" placeholder="Nº do documento" value="007.605.459-44"></div>
           </div>
-          <div id="razao_numero_container" style="display:block; margin-top:10px;">
-            <div class="razao-numero-input">
-              <label for="prad_razao_numero">Número/Identificação:</label>
-              <input type="text" id="prad_razao_numero" class="form-control" style="flex:1;" placeholder="Ex: 142900, 001/2025, etc." value="164452, 164453, 164454, 164455">
+          </td>
+          </tr>
+        <tr><td style="width:280px">PROCESSO PRAD:</td><td><input type="text" id="prad_processo" class="form-control" value="25.786.633-5"></td> </tr>
+        <tr>
+          <td>RAZÃO DA APRESENTAÇÃO DO PRAD:</td>
+          <td>
+            <div class="radio-group" id="razao-group">
+              <div class="radio-option"><input type="radio" name="prad_razao" value="AIA" id="razao_aia" checked> <label for="razao_aia">AIA</label></div>
+              <div class="radio-option"><input type="radio" name="prad_razao" value="TAC" id="razao_tac"> <label for="razao_tac">TAC</label></div>
+              <div class="radio-option"><input type="radio" name="prad_razao" value="Licenciamento" id="razao_lic"> <label for="razao_lic">Licenciamento</label></div>
+              <div class="radio-option"><input type="radio" name="prad_razao" value="Substituição de Exóticas" id="razao_exoticas"> <label for="razao_exoticas">Substituição de Exóticas em APP</label></div>
+              <div class="radio-option"><input type="radio" name="prad_razao" value="Regularização Ambiental" id="razao_reg_amb"> <label for="razao_reg_amb">Regularização Ambiental de Imóvel Rural não integrado ao PRA</label></div>
+              <div class="radio-option"><input type="radio" name="prad_razao" value="Voluntário" id="razao_voluntario"> <label for="razao_voluntario">Voluntário</label></div>
+              <div class="radio-option"><input type="radio" name="prad_razao" value="Outro" id="razao_outro"> <label for="razao_outro">Outro:</label></div>
             </div>
-            <div id="outro_razao_desc_container" style="margin-top:8px; display:none;">
-              <label for="prad_razao_outro_desc">Especificação (Outro):</label>
-              <input type="text" id="prad_razao_outro_desc" class="form-control" placeholder="Descreva a razão">
+            <div id="razao_numero_container" style="display:block; margin-top:10px;">
+              <div id="outro_razao_desc_container" style="margin-top:8px; display:none;">
+                <label for="prad_razao_outro_desc">Especificação (Outro):</label>
+                <input type="text" id="prad_razao_outro_desc" class="form-control" placeholder="Descreva a razão">
+              </div>
             </div>
+           </div>
+          </td>
+          <tr>
+        <!-- Linha que conterá os AIAs dinâmicos (inserida via JS) -->
+        <tr id="aiaSectionPlaceholder" style="display: none;"><td colspan="2"> </td></tr>
+        <!-- Linhas restantes -->
+        <tr>
+          <td>RESPONSÁVEL TÉCNICO DO PRAD:</td>
+          <td>
+            <input type="text" id="prad_rt_nome" class="form-control" placeholder="Nome completo" value="Bruna de Melo" style="margin-bottom: 8px;">
+            <input type="text" id="prad_rt_curso" class="form-control" placeholder="Curso / Formação" value="Engenharia Florestal" style="margin-bottom: 8px;">
+            <input type="text" id="prad_rt_crea" class="form-control" placeholder="Nº do CREA" value="CREA/PR 155222/D">
           </div>
-        </td>
-      </tr>
-      <tr>
-        <td>ÁREA (selecione o tipo):</td>
-        <td>
-          <div class="radio-group" id="tipo-area-group">
-            <div class="radio-option"><input type="radio" name="tipo_area" value="dano" id="area_dano"> <label for="area_dano">Área do dano</label></div>
-            <div class="radio-option"><input type="radio" name="tipo_area" value="recuperacao" id="area_recuperacao" checked> <label for="area_recuperacao">Área total de recuperação declarada</label></div>
-            <div class="radio-option"><input type="radio" name="tipo_area" value="ambas" id="area_ambas"> <label for="area_ambas">Ambas (dano + recuperação)</label></div>
-          </div>
-          <div id="area_dano_container" style="margin-top: 8px; display: none;">
-            <label>Área do dano (ha):</label>
-            <input type="text" id="prad_area_dano" class="form-control" value="">
-          </div>
-          <div id="area_recuperacao_container" style="margin-top: 8px;">
-            <label>Área total de recuperação declarada (ha):</label>
-            <input type="text" id="prad_area_recuperacao" class="form-control" value="6,65">
-          </div>
-        </td>
-      </tr>
-      <tr>
-        <td>RESPONSÁVEL TÉCNICO DO PRAD:</td>
-        <td>
-          <input type="text" id="prad_rt_nome" class="form-control" placeholder="Nome completo" value="Felipe Luiz" style="margin-bottom: 8px;">
-          <input type="text" id="prad_rt_curso" class="form-control" placeholder="Curso / Formação" value="Biólogo" style="margin-bottom: 8px;">
-          <input type="text" id="prad_rt_crea" class="form-control" placeholder="Nº do CREA" value="CRBio/PR 50380/07-D">
-        </td>
-      </tr>
-      <tr><td>ART nº:</td><td><input type="text" id="prad_art" class="form-control" value="07-0624/25 (CRBio) – válida por 24 meses">NonNull</tr>
-      <tr><td>MUNICÍPIO:</td><td><input type="text" id="prad_municipio" class="form-control" value="Itaperuçu – PR">NonNull</tr>
+          </td>
+          </tr>
+        <tr><td>ART nº:</td><td><input type="text" id="prad_art" class="form-control" value="1720262322831 (elaboração – quitada em 17/04/2026)"></td> </tr>
+        <tr><td>MUNICÍPIO:</td><td><input type="text" id="prad_municipio" class="form-control" value="Campo Largo – PR"></td> </tr>
+      </tbody>
     </table>
 
     <!-- Campos personalizados (adicionados pelo usuário) -->
@@ -649,8 +673,8 @@
   let pendenciasManuais = [];
   let responsaveis = [{ nome: "Paulo Francisco Nginga Gaspar", curso: "Engenharia de Energias", crea: "2523337967" }];
   
-  // Campos personalizados para informações gerais
-  let camposPersonalizados = []; // cada elemento: { rotulo: "", valor: "" }
+  let camposPersonalizados = [];
+  let aiasList = [];
 
   function inicializarDados() {
     itensAnalise = itensAnalisePadrao.map((exigencia, idx) => ({
@@ -662,57 +686,10 @@
   }
 
   // ==================== FUNÇÕES DE APOIO ====================
-  function setupDynamicFields() {
-    const areaDanoRadio = document.getElementById('area_dano');
-    const areaRecRadio = document.getElementById('area_recuperacao');
-    const areaAmbasRadio = document.getElementById('area_ambas');
-    const divDano = document.getElementById('area_dano_container');
-    const divRec = document.getElementById('area_recuperacao_container');
-    function updateAreaFields() {
-      if (areaDanoRadio.checked) {
-        divDano.style.display = 'block';
-        divRec.style.display = 'none';
-      } else if (areaRecRadio.checked) {
-        divDano.style.display = 'none';
-        divRec.style.display = 'block';
-      } else if (areaAmbasRadio.checked) {
-        divDano.style.display = 'block';
-        divRec.style.display = 'block';
-      }
-    }
-    areaDanoRadio.addEventListener('change', updateAreaFields);
-    areaRecRadio.addEventListener('change', updateAreaFields);
-    areaAmbasRadio.addEventListener('change', updateAreaFields);
-    updateAreaFields();
-  }
-
   function getDocumentoTexto() {
     const tipo = document.querySelector('input[name="tipo_documento"]:checked')?.value || 'CPF';
     const numero = document.getElementById('prad_documento').value;
     return `${tipo}: ${numero}`;
-  }
-
-  // Retorna o rótulo e o valor da área (rótulo em maiúsculas para o PDF)
-  function getAreaRotuloValor(paraPdf = false) {
-    const tipo = document.querySelector('input[name="tipo_area"]:checked')?.value;
-    const areaDano = document.getElementById('prad_area_dano').value;
-    const areaRec = document.getElementById('prad_area_recuperacao').value;
-    let rotulo = "";
-    let valor = "";
-    if (tipo === 'dano') {
-      rotulo = "Área do dano";
-      valor = `${areaDano} ha`;
-    } else if (tipo === 'recuperacao') {
-      rotulo = "Área total de recuperação declarada";
-      valor = `${areaRec} ha`;
-    } else if (tipo === 'ambas') {
-      rotulo = "Áreas (dano e recuperação)";
-      valor = `dano: ${areaDano} ha / recuperação: ${areaRec} ha`;
-    }
-    if (paraPdf && rotulo) {
-      rotulo = rotulo.toUpperCase();
-    }
-    return { rotulo, valor };
   }
 
   function getRazaoENumeroSeparados() {
@@ -720,13 +697,152 @@
     let selectedValue = null;
     for (let radio of radios) if (radio.checked) { selectedValue = radio.value; break; }
     if (!selectedValue) return { razao: 'Não informado', numero: '' };
-    const numero = document.getElementById('prad_razao_numero').value.trim();
     let razaoTexto = selectedValue;
     if (selectedValue === 'Outro') {
       const outroDesc = document.getElementById('prad_razao_outro_desc').value.trim();
       razaoTexto = outroDesc ? `Outro: ${outroDesc}` : 'Outro';
     }
-    return { razao: razaoTexto, numero: numero };
+    return { razao: razaoTexto, numero: '' };
+  }
+
+  // ==================== GERENCIAMENTO DA SEÇÃO AIA ====================
+  let aiaSectionRow = null;
+  let totalAreaRow = null;
+
+  function getAiaTotalArea() {
+    let total = 0;
+    for (let aia of aiasList) {
+      let areaVal = parseFloat(aia.area.replace(',', '.'));
+      if (!isNaN(areaVal) && areaVal > 0) total += areaVal;
+    }
+    return total;
+  }
+
+  function updateTotalAreaDisplay() {
+    const total = getAiaTotalArea();
+    if (totalAreaRow) {
+      const totalCell = totalAreaRow.cells[1];
+      totalCell.innerHTML = `${total.toFixed(2)} ha`;
+    }
+    document.getElementById('prad_area_total_aia').value = total.toFixed(2);
+  }
+
+  function formatAiaLine(aia) {
+    let tipoTexto = '';
+    if (aia.tipo === 'supressao') tipoTexto = 'supressão de vegetação';
+    else if (aia.tipo === 'queimada') tipoTexto = 'queimada';
+    else tipoTexto = 'supressão e queimada';
+    let areaVal = parseFloat(aia.area.replace(',', '.'));
+    let areaStr = isNaN(areaVal) ? '0' : areaVal.toFixed(2).replace('.', ',');
+    return `nº ${aia.numero} (${tipoTexto} em ${areaStr} ha)`;
+  }
+
+  function renderAiaSection() {
+    const razaoSelected = document.querySelector('input[name="prad_razao"]:checked')?.value;
+    const isAia = (razaoSelected === 'AIA');
+    const tbody = document.getElementById('infoTableBody');
+    
+    const placeholder = document.getElementById('aiaSectionPlaceholder');
+    if (placeholder) placeholder.remove();
+
+    if (aiaSectionRow) {
+      aiaSectionRow.remove();
+      aiaSectionRow = null;
+    }
+    if (totalAreaRow) {
+      totalAreaRow.remove();
+      totalAreaRow = null;
+    }
+
+    if (!isAia) return;
+
+    const razaoRow = document.querySelector('#infoTableBody tr:nth-child(4)');
+    const insertAfter = razaoRow;
+
+    // Linha para os AIAs
+    aiaSectionRow = tbody.insertRow(insertAfter.rowIndex + 1);
+    const labelCell = aiaSectionRow.insertCell(0);
+    const contentCell = aiaSectionRow.insertCell(1);
+    labelCell.innerHTML = '<strong>AIA:</strong>';
+    labelCell.style.verticalAlign = 'top';
+    
+    let html = '<div id="aiasContainer">';
+    aiasList.forEach((aia, idx) => {
+      html += `
+        <div class="aia-item" data-idx="${idx}">
+          <button type="button" class="btn-remove-small" onclick="removerAia(${idx})"><i class="fas fa-trash"></i> Remover</button>
+          <div class="aia-fields">
+            <div class="field-group">
+              <label>Nº do AIA</label>
+              <input type="text" class="form-control aia-numero" value="${aia.numero.replace(/"/g, '&quot;')}">
+            </div>
+            <div class="field-group">
+              <label>Tipo de dano</label>
+              <select class="form-control aia-tipo">
+                <option value="supressao" ${aia.tipo === 'supressao' ? 'selected' : ''}>Supressão</option>
+                <option value="queimada" ${aia.tipo === 'queimada' ? 'selected' : ''}>Queimada</option>
+                <option value="ambos" ${aia.tipo === 'ambos' ? 'selected' : ''}>Ambos</option>
+              </select>
+            </div>
+            <div class="field-group">
+              <label>Área (ha)</label>
+              <input type="text" class="form-control aia-area" value="${aia.area}">
+            </div>
+          </div>
+        </div>
+      `;
+    });
+    html += `</div>
+      <button type="button" class="btn-add" onclick="adicionarAia()" style="margin-top:10px;"><i class="fas fa-plus"></i> Adicionar AIA</button>
+    `;
+    contentCell.innerHTML = html;
+
+    contentCell.querySelectorAll('.aia-numero, .aia-tipo, .aia-area').forEach(el => {
+      el.addEventListener('change', function() { atualizarAiasFromDOM(); atualizarStatusSalvamento(); });
+      el.addEventListener('input', function() { atualizarAiasFromDOM(); atualizarStatusSalvamento(); });
+    });
+
+    // Linha da área total
+    totalAreaRow = tbody.insertRow(insertAfter.rowIndex + 2);
+    const totalLabelCell = totalAreaRow.insertCell(0);
+    const totalValueCell = totalAreaRow.insertCell(1);
+    totalLabelCell.innerHTML = '<strong>Área Total do PRAD:</strong>';
+    totalValueCell.innerHTML = `${getAiaTotalArea().toFixed(2).replace('.', ',')} ha`;
+    if (!document.getElementById('prad_area_total_aia')) {
+      const hidden = document.createElement('input');
+      hidden.type = 'hidden';
+      hidden.id = 'prad_area_total_aia';
+      document.body.appendChild(hidden);
+    }
+    document.getElementById('prad_area_total_aia').value = getAiaTotalArea().toFixed(2);
+  }
+
+  function atualizarAiasFromDOM() {
+    if (!aiaSectionRow) return;
+    const container = aiaSectionRow.querySelector('#aiasContainer');
+    if (!container) return;
+    const items = container.querySelectorAll('.aia-item');
+    const novos = [];
+    items.forEach(item => {
+      const numero = item.querySelector('.aia-numero')?.value || '';
+      const tipo = item.querySelector('.aia-tipo')?.value || 'supressao';
+      const area = item.querySelector('.aia-area')?.value || '';
+      novos.push({ numero, tipo, area });
+    });
+    aiasList = novos;
+    updateTotalAreaDisplay();
+  }
+
+  function adicionarAia() {
+    aiasList.push({ numero: "", tipo: "supressao", area: "" });
+    renderAiaSection();
+    atualizarStatusSalvamento();
+  }
+
+  function removerAia(idx) {
+    aiasList.splice(idx, 1);
+    renderAiaSection();
+    atualizarStatusSalvamento();
   }
 
   // ==================== CAMPOS PERSONALIZADOS ====================
@@ -929,24 +1045,15 @@
     }
     const reparoValue = document.querySelector('input[name="reparo_local"]:checked')?.value;
     if (reparoValue === 'NAO') {
-      const aiaInfo = getAIAInfo();
       pendenciasAuto.push({
         id: 'auto_compensacao',
-        pendencia: `Compensação do AIA ${aiaInfo.numero} (${aiaInfo.area} ha) – não foi proposto reparo no local do dano`,
+        pendencia: `Compensação do AIA – não foi proposto reparo no local do dano`,
         fundamentacao: "Art. 66 da IN IAT nº 50/2025",
         providencia: "• Opção 1: recuperar no local do dano.\n• Opção 2: comprovar impossibilidade técnica/ambiental da recuperação no local, aplicar fator multiplicador (4x a área suprimida), averbar a área compensada e obter manifestação jurídica favorável, conforme o Art. 66 da IN IAT nº 50/2025.",
         categoria: "PENDÊNCIA ESPECIAL - COMPENSAÇÃO"
       });
     }
     return pendenciasAuto;
-  }
-
-  function getAIAInfo() {
-    const razaoCompleta = getRazaoENumeroSeparados();
-    let numero = '';
-    if (razaoCompleta.razao === 'AIA') numero = razaoCompleta.numero;
-    let area = document.getElementById('prad_area_dano').value.replace(',', '.');
-    return { numero: numero || 'N/A', area: area || 'N/A' };
   }
 
   function renderizarPendencias() {
@@ -1072,6 +1179,7 @@
     if (numeroInfo === "") { mostrarStatus('O Nº da Informação Técnica é obrigatório!', 'error'); document.getElementById('prad_numero_info').focus(); return false; }
     let razaoValue = null;
     for (let radio of document.querySelectorAll('input[name="prad_razao"]')) if (radio.checked) { razaoValue = radio.value; break; }
+    if (razaoValue === 'AIA') atualizarAiasFromDOM();
     const dados = {
       numero_info: numeroInfo,
       interessado: document.getElementById('prad_interessado').value,
@@ -1079,11 +1187,7 @@
       documento_numero: document.getElementById('prad_documento').value,
       processo: document.getElementById('prad_processo').value,
       razao_apresentacao: razaoValue,
-      razao_numero: document.getElementById('prad_razao_numero').value,
       razao_outro_desc: document.getElementById('prad_razao_outro_desc').value,
-      tipo_area: document.querySelector('input[name="tipo_area"]:checked')?.value || 'dano',
-      area_dano: document.getElementById('prad_area_dano').value,
-      area_recuperacao: document.getElementById('prad_area_recuperacao').value,
       rt_nome: document.getElementById('prad_rt_nome').value,
       rt_curso: document.getElementById('prad_rt_curso').value,
       rt_crea: document.getElementById('prad_rt_crea').value,
@@ -1099,7 +1203,9 @@
       itensAnalise: itensAnalise.filter(item => item.isCustom),
       anexos: anexos.filter(item => item.isCustom),
       pendenciasManuais: pendenciasManuais,
-      camposPersonalizados: camposPersonalizados
+      camposPersonalizados: camposPersonalizados,
+      aiasList: aiasList,
+      area_total_aia: getAiaTotalArea().toFixed(2)
     };
     localStorage.setItem('informacaoTecnicaPRAD', JSON.stringify(dados));
     atualizarStatusSalvo();
@@ -1120,12 +1226,8 @@
       if (dados.razao_apresentacao) {
         const radioToCheck = document.querySelector(`input[name="prad_razao"][value="${dados.razao_apresentacao}"]`);
         if (radioToCheck) radioToCheck.checked = true;
-        document.getElementById('prad_razao_numero').value = dados.razao_numero || '';
         document.getElementById('prad_razao_outro_desc').value = dados.razao_outro_desc || '';
       }
-      if(dados.tipo_area) document.querySelector(`input[name="tipo_area"][value="${dados.tipo_area}"]`).checked = true;
-      document.getElementById('prad_area_dano').value = dados.area_dano || '';
-      document.getElementById('prad_area_recuperacao').value = dados.area_recuperacao || '';
       document.getElementById('prad_rt_nome').value = dados.rt_nome || '';
       document.getElementById('prad_rt_curso').value = dados.rt_curso || '';
       document.getElementById('prad_rt_crea').value = dados.rt_crea || '';
@@ -1138,10 +1240,14 @@
       document.getElementById('prad_prazo').value = dados.prazo || '60';
       if(dados.responsaveis) { responsaveis = dados.responsaveis; preencherResponsaveis(); }
       if(dados.conclusao_status) document.querySelector(`input[name="conclusao_prad"][value="${dados.conclusao_status}"]`).checked = true;
-      // Carregar campos personalizados
+      
       if(dados.camposPersonalizados) { camposPersonalizados = dados.camposPersonalizados; renderizarCamposPersonalizados(); }
       else { camposPersonalizados = []; renderizarCamposPersonalizados(); }
-      setupRazaoEventos(); setupDynamicFields();
+      
+      if(dados.aiasList) { aiasList = dados.aiasList; }
+      else { aiasList = []; }
+      
+      setupRazaoEventos();
       inicializarDados();
       if(dados.itensAnalise && dados.itensAnalise.length) {
         dados.itensAnalise.forEach(custom => {
@@ -1155,6 +1261,9 @@
       }
       if(dados.pendenciasManuais) { pendenciasManuais = dados.pendenciasManuais; }
       preencherAnalise(); preencherAnexos(); renderizarPendencias(); atualizarTituloRelatorio();
+      if (document.querySelector('input[name="prad_razao"]:checked')?.value === 'AIA') {
+        renderAiaSection();
+      }
       atualizarStatusSalvo();
       mostrarStatus('Dados carregados com sucesso!');
     } catch(e) { console.error(e); mostrarStatus('Erro ao carregar dados', 'error'); }
@@ -1197,6 +1306,7 @@ Assim, cria-se pendência no processo, com a devida notificação ao interessado
     pdf.text(texto, marginLeft + (larguraTotal / 2), y + 5, { align: 'center' });
     return y + alturaLinha;
   }
+  
   function desenharLinhaTabelaEquilibrada(conteudos, larguras, y, corFundo, pdf, marginLeft, pageWidth, marginRight) {
     const linhasPorColuna = [];
     let maxLinhas = 0;
@@ -1235,47 +1345,6 @@ Assim, cria-se pendência no processo, com a devida notificação ao interessado
     return y + alturaTotal;
   }
 
-  // Função especial para a linha da razão com três colunas
-  function desenharLinhaRazao(rotulo, razaoTexto, numeroTexto, y, corFundo, pdf, marginLeft, pageWidth, marginRight, largRotulo, largRazao, largNumero) {
-    const linhasRotulo = pdf.splitTextToSize(rotulo, largRotulo - 2);
-    const linhasRazao = pdf.splitTextToSize(razaoTexto, largRazao - 2);
-    const linhasNumero = pdf.splitTextToSize(numeroTexto, largNumero - 2);
-    const maxLinhas = Math.max(linhasRotulo.length, linhasRazao.length, linhasNumero.length);
-    const alturaLinha = 3.5;
-    const padding = 2;
-    const alturaTotal = (maxLinhas * alturaLinha) + padding;
-    if (y + alturaTotal > 270) return null;
-    if (corFundo) {
-      pdf.setFillColor(...corFundo);
-      pdf.rect(marginLeft, y, pageWidth - marginLeft - marginRight, alturaTotal, 'F');
-    } else {
-      pdf.setFillColor(255, 255, 255);
-      pdf.rect(marginLeft, y, pageWidth - marginLeft - marginRight, alturaTotal, 'F');
-    }
-    pdf.setTextColor(0, 0, 0);
-    pdf.setFont('helvetica', 'normal');
-    pdf.setFontSize(7);
-    let yLinha = y + 2;
-    let xAtual = marginLeft;
-    for (let linha of linhasRotulo) {
-      pdf.text(linha, xAtual + 2, yLinha);
-      yLinha += alturaLinha;
-    }
-    yLinha = y + 2;
-    xAtual += largRotulo;
-    for (let linha of linhasRazao) {
-      pdf.text(linha, xAtual + 2, yLinha);
-      yLinha += alturaLinha;
-    }
-    yLinha = y + 2;
-    xAtual += largRazao;
-    for (let linha of linhasNumero) {
-      pdf.text(linha, xAtual + 2, yLinha);
-      yLinha += alturaLinha;
-    }
-    return y + alturaTotal;
-  }
-
   // ==================== GERAR PDF ====================
   function gerarPDF() {
     const numeroInfo = document.getElementById('prad_numero_info').value.trim();
@@ -1293,7 +1362,7 @@ Assim, cria-se pendência no processo, com a devida notificação ao interessado
         try {
           if (LOGOS.headerLeft) pdf.addImage(LOGOS.headerLeft, 'PNG', marginLeft, 10, 22, 18);
           if (LOGOS.headerRight) pdf.addImage(LOGOS.headerRight, 'PNG', pageWidth - marginRight - 18, 10, 18, 16);
-        } catch(e) {}
+        } catch(e) { console.warn("Erro ao carregar logos:", e); }
         pdf.setFont('helvetica', 'bold'); pdf.setFontSize(12); pdf.setTextColor(...PDF_CONFIG.colors.primary);
         pdf.text(PDF_CONFIG.relatorioText.linha1, pageWidth/2, 16, { align: 'center' });
         pdf.setFont('helvetica', 'normal'); pdf.setFontSize(10);
@@ -1326,78 +1395,75 @@ Assim, cria-se pendência no processo, com a devida notificação ao interessado
       adicionarCabecalho();
       yPos = 48;
 
-      // 1. INFORMAÇÕES GERAIS – com duas colunas e campos personalizados
+      // 1. INFORMAÇÕES GERAIS
       pdf.setFont('helvetica', 'bold'); pdf.setFontSize(10); pdf.setTextColor(0,0,0);
       pdf.text('1. INFORMAÇÕES GERAIS:', marginLeft, yPos); yPos += 5;
-
-      const largRotulo = 50;      // mm para a coluna "Campo"
-      const largValor = pageWidth - marginLeft - marginRight - largRotulo; // 100 mm
-      const largRazaoRotulo = 50;
-      const largRazaoTexto = 10;
-      const largRazaoNumero = pageWidth - marginLeft - marginRight - largRazaoRotulo - largRazaoTexto; // ~50 mm
-
-      // Coletar dados padrão
+      
+      const largCampo = 55;
+      const largDados = pageWidth - marginLeft - marginRight - largCampo;
+      
       const interessado = document.getElementById('prad_interessado').value;
       const docCompleto = getDocumentoTexto();
-      const docCampo = docCompleto.split(':')[0] + ":";
+      const docCampo = docCompleto.split(':')[0];
       const docValor = docCompleto.split(':')[1]?.trim() || '';
       const processo = document.getElementById('prad_processo').value;
-      const { razao, numero } = getRazaoENumeroSeparados();
-      const area = getAreaRotuloValor(true);  // rótulo em maiúsculas no PDF
+      const { razao } = getRazaoENumeroSeparados();
       const rtNome = document.getElementById('prad_rt_nome').value;
       const rtCurso = document.getElementById('prad_rt_curso').value;
       const rtCrea = document.getElementById('prad_rt_crea').value;
       let rtCompleto = rtNome;
-      if (rtCurso) rtCompleto += ` - ${rtCurso}`;
-      if (rtCrea) rtCompleto += ` (CREA- ${rtCrea})`;
+      if (rtCurso) rtCompleto += ` – ${rtCurso}`;
+      if (rtCrea) rtCompleto += ` (CREA/PR ${rtCrea})`;
       const art = document.getElementById('prad_art').value;
       const municipio = document.getElementById('prad_municipio').value;
-
-      // Lista de linhas fixas
-      const linhasInfo = [
-        { rotulo: "INTERESSADO:", valor: interessado },
-        { rotulo: docCampo, valor: docValor },
-        { rotulo: "PROCESSO PRAD:", valor: processo },
-        { rotulo: area.rotulo, valor: area.valor },
-        { rotulo: "RESPONSÁVEL TÉCNICO DO PRAD:", valor: rtCompleto },
-        { rotulo: "ART nº:", valor: art },
-        { rotulo: "MUNICÍPIO:", valor: municipio }
+      
+      let linhasInfoPDF = [
+        { campo: "INTERESSADO:", dados: interessado },
+        { campo: `${docCampo}:`, dados: docValor },
+        { campo: "PROCESSO PRAD:", dados: processo },
+        { campo: "RAZÃO DA APRESENTAÇÃO DO PRAD:", dados: razao }
       ];
-
-      // Desenha linhas fixas
-      for (let i = 0; i < linhasInfo.length; i++) {
-        const linha = linhasInfo[i];
+      
+      if (razao === 'AIA' && aiasList.length > 0) {
+        let aiasTexto = '';
+        aiasList.forEach((aia, idx) => {
+          aiasTexto += formatAiaLine(aia);
+          if (idx < aiasList.length - 1) aiasTexto += '\n';
+        });
+        linhasInfoPDF.push({ campo: "AIA:", dados: aiasTexto });
+        
+        const totalAias = getAiaTotalArea().toFixed(2).replace('.', ',');
+        linhasInfoPDF.push({ campo: "Área Total do PRAD:", dados: `${totalAias} ha` });
+      }
+      
+      linhasInfoPDF.push(
+        { campo: "RESPONSÁVEL TÉCNICO:", dados: rtCompleto },
+        { campo: "ART nº:", dados: art },
+        { campo: "MUNICÍPIO:", dados: municipio }
+      );
+      
+      for (let i = 0; i < linhasInfoPDF.length; i++) {
+        const linha = linhasInfoPDF[i];
         if (verificarPagina(15)) {}
         const corFundo = (i % 2 === 0) ? PDF_CONFIG.colors.lightGray : null;
-        const novaY = desenharLinhaTabelaEquilibrada([linha.rotulo, linha.valor], [largRotulo, largValor], yPos, corFundo, pdf, marginLeft, pageWidth, marginRight);
+        const novaY = desenharLinhaTabelaEquilibrada([linha.campo, linha.dados], [largCampo, largDados], yPos, corFundo, pdf, marginLeft, pageWidth, marginRight);
         if (novaY === null) {
           adicionarRodape(); pdf.addPage(); adicionarCabecalho(); yPos = 48;
-          const novaY2 = desenharLinhaTabelaEquilibrada([linha.rotulo, linha.valor], [largRotulo, largValor], yPos, corFundo, pdf, marginLeft, pageWidth, marginRight);
+          const novaY2 = desenharLinhaTabelaEquilibrada([linha.campo, linha.dados], [largCampo, largDados], yPos, corFundo, pdf, marginLeft, pageWidth, marginRight);
           if (novaY2 !== null) yPos = novaY2 + 1; else yPos += 10;
         } else { yPos = novaY + 1; }
       }
       
-      // Linha da razão (3 colunas)
-      if (verificarPagina(10)) {}
-      const corFundoRazao = (linhasInfo.length % 2 === 0) ? PDF_CONFIG.colors.lightGray : null;
-      const novaYRazao = desenharLinhaRazao("RAZÃO DA APRESENTAÇÃO DO PRAD:", razao, numero, yPos, corFundoRazao, pdf, marginLeft, pageWidth, marginRight, largRazaoRotulo, largRazaoTexto, largRazaoNumero);
-      if (novaYRazao === null) {
-        adicionarRodape(); pdf.addPage(); adicionarCabecalho(); yPos = 48;
-        const novaYRazao2 = desenharLinhaRazao("RAZÃO DA APRESENTAÇÃO DO PRAD:", razao, numero, yPos, corFundoRazao, pdf, marginLeft, pageWidth, marginRight, largRazaoRotulo, largRazaoTexto, largRazaoNumero);
-        if (novaYRazao2 !== null) yPos = novaYRazao2 + 1; else yPos += 10;
-      } else { yPos = novaYRazao + 1; }
-
-      // Campos personalizados
       if (camposPersonalizados.length > 0) {
         for (let i = 0; i < camposPersonalizados.length; i++) {
           const campo = camposPersonalizados[i];
           if (!campo.rotulo.trim() && !campo.valor.trim()) continue;
           if (verificarPagina(10)) {}
-          const corFundo = ((linhasInfo.length + 1 + i) % 2 === 0) ? PDF_CONFIG.colors.lightGray : null;
-          const novaY = desenharLinhaTabelaEquilibrada([campo.rotulo, campo.valor], [largRotulo, largValor], yPos, corFundo, pdf, marginLeft, pageWidth, marginRight);
+          const corFundo = ((linhasInfoPDF.length + i) % 2 === 0) ? PDF_CONFIG.colors.lightGray : null;
+          const novaY = desenharLinhaTabelaEquilibrada([campo.rotulo, campo.valor], [largCampo, largDados], yPos, corFundo, pdf, marginLeft, pageWidth, marginRight);
           if (novaY === null) {
             adicionarRodape(); pdf.addPage(); adicionarCabecalho(); yPos = 48;
-            const novaY2 = desenharLinhaTabelaEquilibrada([campo.rotulo, campo.valor], [largRotulo, largValor], yPos, corFundo, pdf, marginLeft, pageWidth, marginRight);
+            const novaY2 = desenharLinhaTabelaEquilibrada([campo.rotulo, campo.valor], [largCampo, largDados], yPos, corFundo, pdf, marginLeft, pageWidth, marginRight);
             if (novaY2 !== null) yPos = novaY2 + 1; else yPos += 10;
           } else { yPos = novaY + 1; }
         }
@@ -1405,7 +1471,7 @@ Assim, cria-se pendência no processo, com a devida notificação ao interessado
       
       yPos += 5;
 
-      // 2. ANÁLISE (idêntico)
+      // 2. ANÁLISE
       verificarPagina(20);
       pdf.setFont('helvetica', 'bold'); pdf.setFontSize(10); pdf.text('2. ANÁLISE DOS ITENS EXIGIDOS NO ANEXO I DA PORTARIA 17/2025:', marginLeft, yPos); yPos += 5;
       const colAnalise = ['Item','Exigência','Atendeu?','Fls.','Observação'];
@@ -1427,7 +1493,7 @@ Assim, cria-se pendência no processo, com a devida notificação ao interessado
       }
       yPos += 5;
 
-      // 3. ANEXOS (idêntico)
+      // 3. ANEXOS
       verificarPagina(20);
       pdf.setFont('helvetica', 'bold'); pdf.setFontSize(10); pdf.text('3. ANEXOS EXIGIDOS PELA PORTARIA 17/2025 (ITEM 16 DO ANEXO I):', marginLeft, yPos); yPos += 5;
       const colAnexos = ['Anexo exigido','Apresentado?','Localização no PRAD','Observação'];
@@ -1510,6 +1576,16 @@ Assim, cria-se pendência no processo, com a devida notificação ao interessado
       const conclLines = pdf.splitTextToSize(conclTexto, pageWidth-2*marginLeft);
       for (let l of conclLines) { if (verificarPagina(5)) yPos += 3; pdf.text(l, marginLeft, yPos); yPos += 4; }
       yPos += 8;
+      
+      // Informações de contato (antes da data e assinatura)
+      pdf.setFont('helvetica', 'normal'); pdf.setFontSize(9); pdf.setTextColor(80, 80, 80);
+      pdf.text("Em caso de dúvidas, entrar em contato:", marginLeft, yPos);
+      yPos += 4;
+      pdf.text("E-mail: camila.rocha@iat.pr.gov.br", marginLeft, yPos);
+      yPos += 4;
+      pdf.text("Telefone: 3213-3408", marginLeft, yPos);
+      yPos += 8;
+      
       let dataInfo = document.getElementById('prad_data_info').value;
       if (!dataInfo) { const hoje = new Date(); dataInfo = `${hoje.getDate().toString().padStart(2,'0')}/${(hoje.getMonth()+1).toString().padStart(2,'0')}/${hoje.getFullYear()}`; }
       pdf.text(`Curitiba, ${dataInfo}`, pageWidth - marginRight, yPos, { align: 'right' }); yPos += 15;
@@ -1541,19 +1617,25 @@ Assim, cria-se pendência no processo, com a devida notificação ao interessado
   // ==================== INICIALIZAÇÃO ====================
   function setupRazaoEventos() {
     const radios = document.querySelectorAll('input[name="prad_razao"]');
-    const numeroContainer = document.getElementById('razao_numero_container');
     const outroDescContainer = document.getElementById('outro_razao_desc_container');
     function toggleFields() {
       const selected = document.querySelector('input[name="prad_razao"]:checked');
       if (selected) {
-        numeroContainer.style.display = 'block';
         if (selected.value === 'Outro') outroDescContainer.style.display = 'block';
         else outroDescContainer.style.display = 'none';
-      } else { numeroContainer.style.display = 'none'; outroDescContainer.style.display = 'none'; }
+        if (selected.value === 'AIA') renderAiaSection();
+        else {
+          if (aiaSectionRow) aiaSectionRow.remove();
+          if (totalAreaRow) totalAreaRow.remove();
+          aiaSectionRow = null;
+          totalAreaRow = null;
+        }
+      } else {
+        outroDescContainer.style.display = 'none';
+      }
       atualizarStatusSalvamento();
     }
     radios.forEach(radio => radio.addEventListener('change', toggleFields));
-    document.getElementById('prad_razao_numero')?.addEventListener('input', () => atualizarStatusSalvamento());
     document.getElementById('prad_razao_outro_desc')?.addEventListener('input', () => atualizarStatusSalvamento());
     toggleFields();
   }
@@ -1568,14 +1650,11 @@ Assim, cria-se pendência no processo, com a devida notificação ao interessado
     renderizarPendencias();
     atualizarTituloRelatorio();
     setupRazaoEventos();
-    setupDynamicFields();
-    renderizarCamposPersonalizados(); // para garantir que os campos vazios apareçam
+    renderizarCamposPersonalizados();
     
     document.querySelectorAll('input, textarea, select').forEach(el => el.addEventListener('input', () => { atualizarStatusSalvamento(); atualizarTituloRelatorio(); }));
     const reparoRadios = document.querySelectorAll('input[name="reparo_local"]');
     reparoRadios.forEach(r => r.addEventListener('change', () => { renderizarPendencias(); atualizarStatusSalvamento(); }));
-    document.getElementById('prad_area_dano')?.addEventListener('input', () => renderizarPendencias());
-    document.getElementById('prad_area_recuperacao')?.addEventListener('input', () => renderizarPendencias());
     document.getElementById('prad_prazo').addEventListener('input', () => { atualizarConclusao(); atualizarStatusSalvamento(); });
     document.getElementById('prad_numero_info').addEventListener('input', () => atualizarTituloRelatorio());
     const conclRadios = document.querySelectorAll('input[name="conclusao_prad"]');
