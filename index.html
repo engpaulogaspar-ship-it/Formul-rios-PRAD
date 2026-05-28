@@ -754,9 +754,9 @@
       `;
       const novaPendencia = {
         id: `reparo_sim_${Date.now()}`,
-        pendencia: `Reparo no local do dano: área que foi ilegalmente desmatada/suprimida (${areaSuprimida.toFixed(4)} ha) diferente da área restaurada (${areaRestauradaValor.toFixed(4)} ha)`,
-        providencia: "Ajustar o projeto de recuperação para que a área restaurada seja equivalente à área que foi ilegalmente desmatada/suprimida, conforme art. 45 da IN IAT 50/2025.",
-        fundamentacao: "Art. 45 da IN IAT 50/2025 - Reparo no local do dano exige área restaurada igual à área que foi ilegalmente desmatada/suprimida, sem incidência do multiplicador do art. 66.",
+        pendencia: `Divergência na área de restauração. A área proposta para recuperação no local do dano é diferente (menor) que a área ilegalmente desmatada ou suprimida, descumprindo o dever de reparação integral (proporção 1:1) estabelecido no Art. 26 da IN IAT 50/2025`,
+        providencia: "Ajustar o projeto de recuperação ambiental para que a área restaurada seja exatamente equivalente à área suprimida, garantindo a restauração total do ecossistema afetado, conforme exigido pelo Art. 26 e Art. 45, § 7º da IN IAT 50/2025. O projeto deve seguir o Termo de Referência da Portaria IAT 17/2025",
+        fundamentacao: "Art. 26 da IN IAT 50/2025 e Portaria IAT 17/2025",
         categoria: "PENDÊNCIA - REPARO DO DANO"
       };
       adicionarOuAtualizarPendenciaReparo(novaPendencia);
@@ -813,9 +813,9 @@
       `;
       const novaPendencia = {
         id: `reparo_nao_${Date.now()}`,
-        pendencia: `Compensação em local diverso: área compensada (${areaCompensadaValor.toFixed(4)} ha) inferior à área mínima exigida (${areaMinima.toFixed(4)} ha) para ${textoLocal} (fator ${fator}x)`,
-        providencia: `Aumentar a área compensada para pelo menos ${areaMinima.toFixed(4)} ha, respeitando o fator multiplicador de ${fator}x conforme a localização escolhida.`,
-        fundamentacao: "Art. 66, §1º da IN IAT 50/2025 - Reparo em local diverso exige aplicação de fator multiplicador (4x, 6x ou 10x) mediante justificativa de inviabilidade técnica.",
+        pendencia: `Compensação em local diverso com área insuficiente. A área compensada é inferior à área mínima exigida após a aplicação do fator multiplicador legal (4x, 6x ou 10x) sobre o dano original, conforme determina o Art. 66, incisos I, II e III da IN IAT 50/2025`,
+        providencia: `Retificar o PRAD (nos moldes da Portaria IAT 17/2025) para aumentar a área compensada até atingir, no mínimo, o valor resultante do multiplicador aplicado. Deve-se incluir no projeto a justificativa técnica detalhada comprovando a inviabilidade de reparação no local original do dano`,
+        fundamentacao: "Art. 66 da IN IAT 50/2025 e Portaria IAT 17/2025",
         categoria: "PENDÊNCIA - COMPENSAÇÃO"
       };
       adicionarOuAtualizarPendenciaReparo(novaPendencia);
