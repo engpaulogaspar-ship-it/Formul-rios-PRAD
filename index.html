@@ -544,7 +544,7 @@
         <h6><i class="fas fa-check-circle"></i> Reparo no local do dano</h6>
         <div class="row">
           <div class="col-md-6">
-            <label class="form-label">Área suprimida (ha):</label>
+            <label class="form-label">Área que foi ilegalmente desmatada/suprimida (ha):</label>
             <input type="number" id="area_suprimida_sim" class="form-control" step="0.01" value="5.98" oninput="calcularReparoSim()">
           </div>
           <div class="col-md-6">
@@ -568,11 +568,11 @@
         <h6><i class="fas fa-map-marker-alt"></i> Reparo em local diverso (Compensação)</h6>
         <div class="row">
           <div class="col-md-6">
-            <label class="form-label">Área suprimida (ha):</label>
+            <label class="form-label">Área que foi ilegalmente desmatada/suprimida (ha):</label>
             <input type="number" id="area_suprimida_nao" class="form-control" step="0.01" value="5.98" oninput="calcularReparoNao()">
           </div>
           <div class="col-md-6">
-            <label class="form-label">Área compensada proposta:</label>
+            <label class="form-label">Área que o PRAD efetivamente propõe restaurar/recuperar:</label>
             <div class="input-group">
               <input type="number" id="area_compensada_valor" class="form-control" step="0.01" value="23.92" oninput="calcularReparoNao()">
               <select id="area_compensada_unidade" class="form-control" style="width: 100px;" onchange="calcularReparoNao()">
@@ -737,7 +737,7 @@
       resultadoDiv.innerHTML = `
         <div class="resultado-conforme">
           <i class="fas fa-check-circle"></i> <strong>CONFORME</strong><br>
-          Área suprimida: ${areaSuprimida.toFixed(4)} ha<br>
+          Área que foi ilegalmente desmatada/suprimida: ${areaSuprimida.toFixed(4)} ha<br>
           Área restaurada: ${areaRestauradaValor.toFixed(4)} ha<br>
           ✅ O reparo proposto atende ao estabelecido no art. 45 da IN IAT 50/2025.
         </div>
@@ -747,16 +747,16 @@
       resultadoDiv.innerHTML = `
         <div class="resultado-nao-conforme">
           <i class="fas fa-exclamation-triangle"></i> <strong>NÃO CONFORME</strong><br>
-          Área suprimida: ${areaSuprimida.toFixed(4)} ha<br>
+          Área que foi ilegalmente desmatada/suprimida: ${areaSuprimida.toFixed(4)} ha<br>
           Área restaurada: ${areaRestauradaValor.toFixed(4)} ha<br>
           ❌ NÃO ESTÁ CONFORME o Reparo no local com base no art. 45 da IN IAT 50/2025, sem incidência do multiplicador do art. 66.
         </div>
       `;
       const novaPendencia = {
         id: `reparo_sim_${Date.now()}`,
-        pendencia: `Reparo no local do dano: área suprimida (${areaSuprimida.toFixed(4)} ha) diferente da área restaurada (${areaRestauradaValor.toFixed(4)} ha)`,
-        providencia: "Ajustar o projeto de recuperação para que a área restaurada seja equivalente à área suprimida, conforme art. 45 da IN IAT 50/2025.",
-        fundamentacao: "Art. 45 da IN IAT 50/2025 - Reparo no local do dano exige área restaurada igual à área suprimida, sem incidência do multiplicador do art. 66.",
+        pendencia: `Reparo no local do dano: área que foi ilegalmente desmatada/suprimida (${areaSuprimida.toFixed(4)} ha) diferente da área restaurada (${areaRestauradaValor.toFixed(4)} ha)`,
+        providencia: "Ajustar o projeto de recuperação para que a área restaurada seja equivalente à área que foi ilegalmente desmatada/suprimida, conforme art. 45 da IN IAT 50/2025.",
+        fundamentacao: "Art. 45 da IN IAT 50/2025 - Reparo no local do dano exige área restaurada igual à área que foi ilegalmente desmatada/suprimida, sem incidência do multiplicador do art. 66.",
         categoria: "PENDÊNCIA - REPARO DO DANO"
       };
       adicionarOuAtualizarPendenciaReparo(novaPendencia);
@@ -790,10 +790,10 @@
       resultadoDiv.innerHTML = `
         <div class="resultado-conforme">
           <i class="fas fa-check-circle"></i> <strong>CONFORME</strong><br>
-          Área suprimida: ${areaSuprimida.toFixed(4)} ha<br>
+          Área que foi ilegalmente desmatada/suprimida: ${areaSuprimida.toFixed(4)} ha<br>
           Local: ${textoLocal} (fator ${fator}x)<br>
           Área mínima exigida: ${areaMinima.toFixed(4)} ha<br>
-          Área compensada proposta: ${areaCompensadaValor.toFixed(4)} ha<br>
+          Área que o PRAD efetivamente propõe restaurar/recuperar: ${areaCompensadaValor.toFixed(4)} ha<br>
           Percentual de atendimento: ${percentualAtendimento.toFixed(2)}%<br>
           ✅ ESTÁ CONFORME o fundamento no art. 66, §1º da IN IAT 50/2025, mediante justificativa de inviabilidade técnica e aplicação do fator multiplicador correspondente.
         </div>
@@ -803,10 +803,10 @@
       resultadoDiv.innerHTML = `
         <div class="resultado-nao-conforme">
           <i class="fas fa-exclamation-triangle"></i> <strong>NÃO CONFORME</strong><br>
-          Área suprimida: ${areaSuprimida.toFixed(4)} ha<br>
+          Área que foi ilegalmente desmatada/suprimida: ${areaSuprimida.toFixed(4)} ha<br>
           Local: ${textoLocal} (fator ${fator}x)<br>
           Área mínima exigida: ${areaMinima.toFixed(4)} ha<br>
-          Área compensada proposta: ${areaCompensadaValor.toFixed(4)} ha<br>
+          Área que o PRAD efetivamente propõe restaurar/recuperar: ${areaCompensadaValor.toFixed(4)} ha<br>
           Percentual de atendimento: ${percentualAtendimento.toFixed(2)}% (mínimo 100%)<br>
           ❌ NÃO ESTÁ CONFORME o Reparo em local diverso, com fundamento no art. 66, §1º da IN IAT 50/2025.
         </div>
@@ -1780,8 +1780,8 @@ Assim, cria-se pendência no processo, com a devida notificação ao interessado
           let areaRestauradaValor = document.getElementById('area_restaurada_valor').value;
           const unidade = document.getElementById('area_restaurada_unidade').value;
           pdf.setFont('helvetica', 'normal'); pdf.setFontSize(9);
-          pdf.text(`Foi proposto reparar o dano no local: SIM`, marginLeft, yPos); yPos += 5;
-          pdf.text(`Área suprimida: ${areaSuprimida} ha`, marginLeft, yPos); yPos += 4;
+          pdf.text(`Foi proposto reparar o dano no local? SIM`, marginLeft, yPos); yPos += 5;
+          pdf.text(`Área que foi ilegalmente desmatada/suprimida: ${areaSuprimida} ha`, marginLeft, yPos); yPos += 4;
           pdf.text(`Área restaurada local: ${areaRestauradaValor} ${unidade}`, marginLeft, yPos); yPos += 4;
         } else {
           const areaSuprimida = document.getElementById('area_suprimida_nao').value;
@@ -1789,9 +1789,9 @@ Assim, cria-se pendência no processo, com a devida notificação ao interessado
           const unidade = document.getElementById('area_compensada_unidade').value;
           const localCompensacao = document.getElementById('local_compensacao').options[document.getElementById('local_compensacao').selectedIndex].text;
           pdf.setFont('helvetica', 'normal'); pdf.setFontSize(9);
-          pdf.text(`Foi proposto reparar o dano no local: NÃO`, marginLeft, yPos); yPos += 5;
-          pdf.text(`Área suprimida: ${areaSuprimida} ha`, marginLeft, yPos); yPos += 4;
-          pdf.text(`Área compensada proposta: ${areaCompensadaValor} ${unidade}`, marginLeft, yPos); yPos += 4;
+          pdf.text(`Foi proposto reparar o dano no local? NÃO`, marginLeft, yPos); yPos += 5;
+          pdf.text(`Área que foi ilegalmente desmatada/suprimida: ${areaSuprimida} ha`, marginLeft, yPos); yPos += 4;
+          pdf.text(`Área que o PRAD efetivamente propõe restaurar/recuperar: ${areaCompensadaValor} ${unidade}`, marginLeft, yPos); yPos += 4;
           pdf.text(`Local da compensação: ${localCompensacao}`, marginLeft, yPos); yPos += 4;
         }
         yPos += 5;
