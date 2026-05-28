@@ -8,7 +8,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
-    /* ========== ESTILOS ========== */
+    /* ========== ESTILOS (mantidos originais) ========== */
     :root {
       --primary-color: #003366;
       --secondary-color: #0056b3;
@@ -245,6 +245,13 @@
     .btn-pdf { background: linear-gradient(135deg, #dc3545, #c82333); color: white; }
     .btn-clear { background: linear-gradient(135deg, #6c757d, #5a6268); color: white; }
     .btn-print { background: linear-gradient(135deg, #ffc107, #e0a800); color: #212529; }
+    .btn-toggle-reparo {
+      background: linear-gradient(135deg, #6f42c1, #e83e8c);
+      color: white;
+    }
+    .btn-toggle-reparo.excluir {
+      background: linear-gradient(135deg, #6c757d, #495057);
+    }
     .status-bar {
       position: fixed;
       bottom: 25px;
@@ -455,44 +462,12 @@
     <table class="info-table-modern" id="infoTable">
       <tbody id="infoTableBody">
         <tr><td style="width:280px">INTERESSADO:</td><td><input type="text" id="prad_interessado" class="form-control" value="FRANCIELI PORONICZAK MARASCHIN"></td></tr>
-        <tr>
-          <td>TIPO DE DOCUMENTO:</td>
-          <td>
-            <div class="radio-group"><div class="radio-option"><input type="radio" name="tipo_documento" value="CPF" id="tipo_cpf" checked> <label for="tipo_cpf">CPF</label></div><div class="radio-option"><input type="radio" name="tipo_documento" value="CNPJ" id="tipo_cnpj"> <label for="tipo_cnpj">CNPJ</label></div></div>
-            <div style="margin-top: 8px;"><input type="text" id="prad_documento" class="form-control" placeholder="Nº do documento" value="007.605.459-44"></div>
-          </td>
-        </tr>
+        <tr><td style="width:280px">TIPO DE DOCUMENTO:</td><td><div class="radio-group"><div class="radio-option"><input type="radio" name="tipo_documento" value="CPF" id="tipo_cpf" checked> <label for="tipo_cpf">CPF</label></div><div class="radio-option"><input type="radio" name="tipo_documento" value="CNPJ" id="tipo_cnpj"> <label for="tipo_cnpj">CNPJ</label></div></div><div style="margin-top: 8px;"><input type="text" id="prad_documento" class="form-control" placeholder="Nº do documento" value="007.605.459-44"></div></td></tr>
         <tr><td style="width:280px">PROCESSO PRAD:</td><td><input type="text" id="prad_processo" class="form-control" value="25.786.633-5"></td></tr>
-        <tr>
-          <td>RAZÃO DA APRESENTAÇÃO DO PRAD:</td>
-          <td>
-            <div class="radio-group" id="razao-group">
-              <div class="radio-option"><input type="radio" name="prad_razao" value="AIA" id="razao_aia" checked> <label for="razao_aia">AIA</label></div>
-              <div class="radio-option"><input type="radio" name="prad_razao" value="TAC" id="razao_tac"> <label for="razao_tac">TAC</label></div>
-              <div class="radio-option"><input type="radio" name="prad_razao" value="Licenciamento" id="razao_lic"> <label for="razao_lic">Licenciamento</label></div>
-              <div class="radio-option"><input type="radio" name="prad_razao" value="Substituição de Exóticas" id="razao_exoticas"> <label for="razao_exoticas">Substituição de Exóticas em APP</label></div>
-              <div class="radio-option"><input type="radio" name="prad_razao" value="Regularização Ambiental" id="razao_reg_amb"> <label for="razao_reg_amb">Regularização Ambiental de Imóvel Rural não integrado ao PRA</label></div>
-              <div class="radio-option"><input type="radio" name="prad_razao" value="Voluntário" id="razao_voluntario"> <label for="razao_voluntario">Voluntário</label></div>
-              <div class="radio-option"><input type="radio" name="prad_razao" value="Outro" id="razao_outro"> <label for="razao_outro">Outro:</label></div>
-            </div>
-            <div id="razao_numero_container" style="display:block; margin-top:10px;">
-              <div id="outro_razao_desc_container" style="margin-top:8px; display:none;">
-                <label for="prad_razao_outro_desc">Especificação (Outro):</label>
-                <input type="text" id="prad_razao_outro_desc" class="form-control" placeholder="Descreva a razão">
-              </div>
-            </div>
-          </td>
-        </tr>
+        <tr><td style="width:280px">RAZÃO DA APRESENTAÇÃO DO PRAD:</td><td><div class="radio-group" id="razao-group"><div class="radio-option"><input type="radio" name="prad_razao" value="AIA" id="razao_aia" checked> <label for="razao_aia">AIA</label></div><div class="radio-option"><input type="radio" name="prad_razao" value="TAC" id="razao_tac"> <label for="razao_tac">TAC</label></div><div class="radio-option"><input type="radio" name="prad_razao" value="Licenciamento" id="razao_lic"> <label for="razao_lic">Licenciamento</label></div><div class="radio-option"><input type="radio" name="prad_razao" value="Substituição de Exóticas" id="razao_exoticas"> <label for="razao_exoticas">Substituição de Exóticas em APP</label></div><div class="radio-option"><input type="radio" name="prad_razao" value="Regularização Ambiental" id="razao_reg_amb"> <label for="razao_reg_amb">Regularização Ambiental de Imóvel Rural não integrado ao PRA</label></div><div class="radio-option"><input type="radio" name="prad_razao" value="Voluntário" id="razao_voluntario"> <label for="razao_voluntario">Voluntário</label></div><div class="radio-option"><input type="radio" name="prad_razao" value="Outro" id="razao_outro"> <label for="razao_outro">Outro:</label></div></div><div id="razao_numero_container" style="display:block; margin-top:10px;"><div id="outro_razao_desc_container" style="margin-top:8px; display:none;"><label for="prad_razao_outro_desc">Especificação (Outro):</label><input type="text" id="prad_razao_outro_desc" class="form-control" placeholder="Descreva a razão"></div></div></td></tr>
         <tr id="aiaSectionPlaceholder" style="display: none;"><td colspan="2"></td></tr>
-        <tr>
-          <td>RESPONSÁVEL TÉCNICO DO PRAD:</td>
-          <td>
-            <input type="text" id="prad_rt_nome" class="form-control" placeholder="Nome completo" value="Bruna de Melo" style="margin-bottom: 8px;">
-            <input type="text" id="prad_rt_curso" class="form-control" placeholder="Curso / Formação" value="Engenharia Florestal" style="margin-bottom: 8px;">
-            <input type="text" id="prad_rt_crea" class="form-control" placeholder="Nº do CREA" value="CREA/PR 155222/D">
-          </td>
-        </tr>
-        <tr><td>ART nº:</td><td><input type="text" id="prad_art" class="form-control" value="1720262322831 (elaboração – quitada em 17/04/2026)"></td></tr>
+        <tr><td style="width:280px">RESPONSÁVEL TÉCNICO DO PRAD:</td><td><input type="text" id="prad_rt_nome" class="form-control" placeholder="Nome completo" value="Bruna de Melo" style="margin-bottom: 8px;"><input type="text" id="prad_rt_curso" class="form-control" placeholder="Curso / Formação" value="Engenharia Florestal" style="margin-bottom: 8px;"><input type="text" id="prad_rt_crea" class="form-control" placeholder="Nº do CREA" value="CREA/PR 155222/D"></td></tr>
+        <tr><td style="width:280px">ART nº:</td><td><input type="text" id="prad_art" class="form-control" value="1720262322831 (elaboração – quitada em 17/04/2026)"></td></tr>
         <tr><td style="width:280px">MUNICÍPIO:</td><td><input type="text" id="prad_municipio" class="form-control" value="Campo Largo – PR"></td></tr>
       </tbody>
     </table>
@@ -548,7 +523,7 @@
             <input type="number" id="area_suprimida_sim" class="form-control" step="0.01" value="5.98" oninput="calcularReparoSim()">
           </div>
           <div class="col-md-6">
-            <label class="form-label">Área restaurada local:</label>
+            <label class="form-label">Área a reparar o dano (no local) (ha):</label>
             <div class="input-group">
               <input type="number" id="area_restaurada_valor" class="form-control" step="0.01" value="5.98" oninput="calcularReparoSim()">
               <select id="area_restaurada_unidade" class="form-control" style="width: 100px;" onchange="calcularReparoSim()">
@@ -644,6 +619,10 @@
   <div class="dashboard-footer"><p><i class="fas fa-shield-alt"></i> Documento oficial - ERCBA/IAT - Setor de Licenciamento Florestal</p></div>
 
   <div class="btn-group-custom no-print">
+    <!-- Botão para alternar inclusão da seção "Reparação do Dano" no PDF -->
+    <button type="button" id="btnToggleReparo" class="btn-custom btn-toggle-reparo" onclick="toggleIncluirReparoPDF()">
+      <i class="fas fa-toggle-on"></i> Incluir Reparo no PDF
+    </button>
     <button type="button" class="btn-custom btn-save" onclick="salvarFormulario()"><i class="fas fa-save"></i> Salvar</button>
     <button type="button" class="btn-custom btn-load" onclick="carregarFormulario()"><i class="fas fa-folder-open"></i> Carregar</button>
     <button type="button" class="btn-custom btn-pdf" onclick="gerarPDF()"><i class="fas fa-file-pdf"></i> Gerar PDF</button>
@@ -656,6 +635,22 @@
 
 <script>
   // ==================== FUNÇÕES GERAIS ====================
+  let incluirReparoPDF = true;  // Variável global que controla a inclusão da seção no PDF
+
+  function toggleIncluirReparoPDF() {
+    incluirReparoPDF = !incluirReparoPDF;
+    const btn = document.getElementById('btnToggleReparo');
+    if (incluirReparoPDF) {
+      btn.innerHTML = '<i class="fas fa-toggle-on"></i> Incluir Reparo no PDF';
+      btn.classList.remove('excluir');
+      mostrarStatus('Seção "Reparação do Dano" será incluída no PDF', 'info');
+    } else {
+      btn.innerHTML = '<i class="fas fa-toggle-off"></i> Excluir Reparo do PDF';
+      btn.classList.add('excluir');
+      mostrarStatus('Seção "Reparação do Dano" será excluída do PDF', 'info');
+    }
+  }
+
   function getAnoCorrente() { return new Date().getFullYear(); }
   function getNumeroInfoCompleto() {
     const numero = document.getElementById('prad_numero_info').value.trim();
@@ -678,7 +673,7 @@
     }
   }
 
-  // ==================== FUNÇÕES DE REPARAÇÃO DO DANO (CORRIGIDAS) ====================
+  // ==================== FUNÇÕES DE REPARAÇÃO DO DANO ====================
   let pendenciaReparoId = null;
 
   function toggleReparoForm() {
@@ -686,7 +681,6 @@
     const simForm = document.getElementById('reparoSimForm');
     const naoForm = document.getElementById('reparoNaoForm');
     
-    // REMOVER PENDÊNCIA EXISTENTE AO MUDAR DE OPÇÃO
     removerPendenciaReparo();
     
     if (reparoSim) {
@@ -719,6 +713,11 @@
     atualizarStatusSalvamento();
   }
 
+  // Função para formatar número com 4 decimais
+  function formatNumber(n) {
+    return n.toFixed(4);
+  }
+
   function calcularReparoSim() {
     let areaSuprimida = parseFloat(document.getElementById('area_suprimida_sim').value) || 0;
     let areaRestauradaValor = parseFloat(document.getElementById('area_restaurada_valor').value) || 0;
@@ -730,26 +729,29 @@
     areaRestauradaValor = parseFloat(areaRestauradaValor.toFixed(4));
     
     const resultadoDiv = document.getElementById('resultadoReparoSim');
-    const diferenca = Math.abs(areaSuprimida - areaRestauradaValor);
-    const estaConforme = diferenca < 0.01;
+    const estaConforme = Math.abs(areaSuprimida - areaRestauradaValor) < 0.0001;
     
     if (estaConforme) {
       resultadoDiv.innerHTML = `
         <div class="resultado-conforme">
-          <i class="fas fa-check-circle"></i> <strong>CONFORME</strong><br>
-          Área que foi ilegalmente desmatada/suprimida: ${areaSuprimida.toFixed(4)} ha<br>
-          Área restaurada: ${areaRestauradaValor.toFixed(4)} ha<br>
-          ✅ O reparo proposto atende ao estabelecido no art. 45 da IN IAT 50/2025.
+          <strong>CONFORME</strong><br>
+          - Área que foi ilegalmente desmatada/suprimida: ${formatNumber(areaSuprimida)} ha<br>
+          - Área a reparar o dano (no local): ${formatNumber(areaRestauradaValor)} ha<br>
+          - ${formatNumber(areaSuprimida)} ha = ${formatNumber(areaRestauradaValor)} ha<br>
+          - Área exigida: ${formatNumber(areaSuprimida)} ha<br>
+          ✅ O reparo proposto atende ao estabelecido no Art. 26 da IN IAT 50/2025 e Portaria IAT 17/2025.
         </div>
       `;
       removerPendenciaReparo();
     } else {
       resultadoDiv.innerHTML = `
         <div class="resultado-nao-conforme">
-          <i class="fas fa-exclamation-triangle"></i> <strong>NÃO CONFORME</strong><br>
-          Área que foi ilegalmente desmatada/suprimida: ${areaSuprimida.toFixed(4)} ha<br>
-          Área restaurada: ${areaRestauradaValor.toFixed(4)} ha<br>
-          ❌ NÃO ESTÁ CONFORME o Reparo no local com base no art. 45 da IN IAT 50/2025, sem incidência do multiplicador do art. 66.
+          <strong>NÃO CONFORME</strong><br>
+          - Área que foi ilegalmente desmatada/suprimida: ${formatNumber(areaSuprimida)} ha<br>
+          - Área a reparar o dano (no local): ${formatNumber(areaRestauradaValor)} ha<br>
+          - ${formatNumber(areaSuprimida)} ha ≠ ${formatNumber(areaRestauradaValor)} ha<br>
+          - Área exigida: ${formatNumber(areaSuprimida)} ha<br>
+          ❌ NÃO ESTÁ CONFORME o Art. 26 da IN IAT 50/2025 e Portaria IAT 17/2025.
         </div>
       `;
       const novaPendencia = {
@@ -779,9 +781,9 @@
     
     let textoLocal = "";
     switch(fator) {
-      case 4: textoLocal = "Mesma propriedade"; break;
-      case 6: textoLocal = "Mesma microbacia"; break;
-      case 10: textoLocal = "Mesma bacia hidrográfica"; break;
+      case 4: textoLocal = "Mesma propriedade (fator 4x)"; break;
+      case 6: textoLocal = "Mesma microbacia (fator 6x)"; break;
+      case 10: textoLocal = "Mesma bacia hidrográfica (fator 10x)"; break;
     }
     
     const resultadoDiv = document.getElementById('resultadoReparoNao');
@@ -789,26 +791,26 @@
     if (estaConforme) {
       resultadoDiv.innerHTML = `
         <div class="resultado-conforme">
-          <i class="fas fa-check-circle"></i> <strong>CONFORME</strong><br>
-          Área que foi ilegalmente desmatada/suprimida: ${areaSuprimida.toFixed(4)} ha<br>
-          Local: ${textoLocal} (fator ${fator}x)<br>
-          Área mínima exigida: ${areaMinima.toFixed(4)} ha<br>
-          Área que o PRAD efetivamente propõe restaurar/recuperar: ${areaCompensadaValor.toFixed(4)} ha<br>
-          Percentual de atendimento: ${percentualAtendimento.toFixed(2)}%<br>
-          ✅ ESTÁ CONFORME o fundamento no art. 66, §1º da IN IAT 50/2025, mediante justificativa de inviabilidade técnica e aplicação do fator multiplicador correspondente.
+          <strong>CONFORME</strong><br>
+          - Área que foi ilegalmente desmatada/suprimida: ${formatNumber(areaSuprimida)} ha<br>
+          - Área que o PRAD efetivamente propõe restaurar/recuperar: ${formatNumber(areaCompensadaValor)} ha<br>
+          - Área mínima exigida: ${formatNumber(areaMinima)} ha<br>
+          - Local: ${textoLocal}<br>
+          - Percentual de atendimento: ${percentualAtendimento.toFixed(2)}%<br>
+          ✅ ESTÁ CONFORME o Art. 66 da IN IAT 50/2025 e Portaria IAT 17/2025.
         </div>
       `;
       removerPendenciaReparo();
     } else {
       resultadoDiv.innerHTML = `
         <div class="resultado-nao-conforme">
-          <i class="fas fa-exclamation-triangle"></i> <strong>NÃO CONFORME</strong><br>
-          Área que foi ilegalmente desmatada/suprimida: ${areaSuprimida.toFixed(4)} ha<br>
-          Local: ${textoLocal} (fator ${fator}x)<br>
-          Área mínima exigida: ${areaMinima.toFixed(4)} ha<br>
-          Área que o PRAD efetivamente propõe restaurar/recuperar: ${areaCompensadaValor.toFixed(4)} ha<br>
-          Percentual de atendimento: ${percentualAtendimento.toFixed(2)}% (mínimo 100%)<br>
-          ❌ NÃO ESTÁ CONFORME o Reparo em local diverso, com fundamento no art. 66, §1º da IN IAT 50/2025.
+          <strong>NÃO CONFORME</strong><br>
+          - Área que foi ilegalmente desmatada/suprimida: ${formatNumber(areaSuprimida)} ha<br>
+          - Área que o PRAD efetivamente propõe restaurar/recuperar: ${formatNumber(areaCompensadaValor)} ha<br>
+          - Área mínima exigida: ${formatNumber(areaMinima)} ha<br>
+          - Local: ${textoLocal}<br>
+          - Percentual de atendimento: ${percentualAtendimento.toFixed(2)}% (mínimo 100%)<br>
+          ❌ NÃO ESTÁ CONFORME o Art. 66 da IN IAT 50/2025 e Portaria IAT 17/2025.
         </div>
       `;
       const novaPendencia = {
@@ -1769,32 +1771,59 @@ Assim, cria-se pendência no processo, com a devida notificação ao interessado
         yPos += 5;
       }
 
-      // 5. REPARAÇÃO DO DANO
-      const reparoLocal = document.querySelector('input[name="reparo_local"]:checked')?.value;
-      if (reparoLocal) {
-        verificarPagina(20);
-        pdf.setFont('helvetica', 'bold'); pdf.setFontSize(10); pdf.text('5. REPARAÇÃO DO DANO:', marginLeft, yPos); yPos += 5;
-        
-        if (reparoLocal === 'SIM') {
-          const areaSuprimida = document.getElementById('area_suprimida_sim').value;
-          let areaRestauradaValor = document.getElementById('area_restaurada_valor').value;
-          const unidade = document.getElementById('area_restaurada_unidade').value;
-          pdf.setFont('helvetica', 'normal'); pdf.setFontSize(9);
-          pdf.text(`Foi proposto reparar o dano no local? SIM`, marginLeft, yPos); yPos += 5;
-          pdf.text(`Área que foi ilegalmente desmatada/suprimida: ${areaSuprimida} ha`, marginLeft, yPos); yPos += 4;
-          pdf.text(`Área restaurada local: ${areaRestauradaValor} ${unidade}`, marginLeft, yPos); yPos += 4;
-        } else {
-          const areaSuprimida = document.getElementById('area_suprimida_nao').value;
-          let areaCompensadaValor = document.getElementById('area_compensada_valor').value;
-          const unidade = document.getElementById('area_compensada_unidade').value;
-          const localCompensacao = document.getElementById('local_compensacao').options[document.getElementById('local_compensacao').selectedIndex].text;
-          pdf.setFont('helvetica', 'normal'); pdf.setFontSize(9);
-          pdf.text(`Foi proposto reparar o dano no local? NÃO`, marginLeft, yPos); yPos += 5;
-          pdf.text(`Área que foi ilegalmente desmatada/suprimida: ${areaSuprimida} ha`, marginLeft, yPos); yPos += 4;
-          pdf.text(`Área que o PRAD efetivamente propõe restaurar/recuperar: ${areaCompensadaValor} ${unidade}`, marginLeft, yPos); yPos += 4;
-          pdf.text(`Local da compensação: ${localCompensacao}`, marginLeft, yPos); yPos += 4;
+      // 5. REPARAÇÃO DO DANO (CONTROLADO PELA VARIÁVEL GLOBAL incluirReparoPDF)
+      if (incluirReparoPDF) {
+        const reparoLocal = document.querySelector('input[name="reparo_local"]:checked')?.value;
+        if (reparoLocal) {
+          verificarPagina(20);
+          pdf.setFont('helvetica', 'bold'); pdf.setFontSize(10); pdf.text('5. REPARAÇÃO DO DANO:', marginLeft, yPos); yPos += 5;
+          
+          if (reparoLocal === 'SIM') {
+            let areaSuprimida = parseFloat(document.getElementById('area_suprimida_sim').value) || 0;
+            let areaRestauradaValor = parseFloat(document.getElementById('area_restaurada_valor').value) || 0;
+            let unidade = document.getElementById('area_restaurada_unidade').value;
+            if (unidade === 'm2') areaRestauradaValor = areaRestauradaValor / 10000;
+            areaRestauradaValor = parseFloat(areaRestauradaValor.toFixed(4));
+            const estaConforme = Math.abs(areaSuprimida - areaRestauradaValor) < 0.0001;
+            
+            pdf.setFont('helvetica', 'normal'); pdf.setFontSize(9);
+            pdf.text(`Foi proposto reparar o dano no local.`, marginLeft, yPos); yPos += 5;
+            pdf.text(`- Área que foi ilegalmente desmatada/suprimida: ${areaSuprimida.toFixed(4)} ha`, marginLeft, yPos); yPos += 4;
+            pdf.text(`- Área a reparar o dano (no local): ${areaRestauradaValor.toFixed(4)} ha`, marginLeft, yPos); yPos += 4;
+            pdf.text(`- ${areaSuprimida.toFixed(4)} ha ${estaConforme ? ' É IGUAL A ' : ' É DIFERENTE QUE '} ${areaRestauradaValor.toFixed(4)} ha`, marginLeft, yPos); yPos += 4;
+            pdf.text(`- Área exigida: ${areaSuprimida.toFixed(4)} ha`, marginLeft, yPos); yPos += 4;
+            const conclusao = estaConforme ? "Atende o Art. 26 da IN IAT 50/2025 e Portaria IAT 17/2025." : "Não atende o Art. 26 da IN IAT 50/2025 e Portaria IAT 17/2025.";
+            pdf.text(`Conclusão: ${conclusao}`, marginLeft, yPos); yPos += 4;
+          } else {
+            let areaSuprimida = parseFloat(document.getElementById('area_suprimida_nao').value) || 0;
+            let areaCompensadaValor = parseFloat(document.getElementById('area_compensada_valor').value) || 0;
+            let unidade = document.getElementById('area_compensada_unidade').value;
+            let fator = parseInt(document.getElementById('local_compensacao').value);
+            if (unidade === 'm2') areaCompensadaValor = areaCompensadaValor / 10000;
+            areaCompensadaValor = parseFloat(areaCompensadaValor.toFixed(4));
+            let areaMinima = areaSuprimida * fator;
+            let percentualAtendimento = (areaCompensadaValor / areaMinima) * 100;
+            let estaConforme = percentualAtendimento >= 99.99;
+            
+            let textoLocal = "";
+            switch(fator) {
+              case 4: textoLocal = "Mesma propriedade (fator 4x)"; break;
+              case 6: textoLocal = "Mesma microbacia (fator 6x)"; break;
+              case 10: textoLocal = "Mesma bacia hidrográfica (fator 10x)"; break;
+            }
+            
+            pdf.setFont('helvetica', 'normal'); pdf.setFontSize(9);
+            pdf.text(`Não foi proposto reparar o dano no local.`, marginLeft, yPos); yPos += 5;
+            pdf.text(`- Área que foi ilegalmente desmatada/suprimida: ${areaSuprimida.toFixed(4)} ha`, marginLeft, yPos); yPos += 4;
+            pdf.text(`- Área que o PRAD efetivamente propõe restaurar/recuperar: ${areaCompensadaValor.toFixed(4)} ha`, marginLeft, yPos); yPos += 4;
+            pdf.text(`- Área mínima exigida: ${areaMinima.toFixed(4)} ha`, marginLeft, yPos); yPos += 4;
+            const conclusao = estaConforme ? "Atende o Art. 66 da IN IAT 50/2025 e Portaria IAT 17/2025." : "Não atende o Art. 66 da IN IAT 50/2025 e Portaria IAT 17/2025.";
+            pdf.text(`Conclusão: ${conclusao}`, marginLeft, yPos); yPos += 4;
+          }
+          yPos += 5;
         }
-        yPos += 5;
+      } else {
+        // Se o usuário optou por excluir, não adiciona nada.
       }
 
       // 6. PENDÊNCIAS
