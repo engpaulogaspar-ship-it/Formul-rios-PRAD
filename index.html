@@ -538,7 +538,7 @@
     <div class="form-group no-print-pdf" style="margin-bottom: 20px;">
       <label class="form-label"><i class="fas fa-hashtag"></i> Nº DA INFORMAÇÃO TÉCNICA (apenas o número):</label>
       <div class="input-group" style="max-width: 300px;">
-        <input type="text" id="prad_numero_info" class="form-control" value="001" placeholder="Ex: 001" required>
+        <input type="text" id="prad_numero_info" class="form-control" value="" placeholder="Ex: 001" required>
         <span class="input-group-text">/<span id="anoAtualDisplay"></span></span>
       </div>
       <small class="text-muted">O ano será adicionado automaticamente</small>
@@ -548,14 +548,14 @@
     <h5 style="color: var(--primary-color); margin: 15px 0 10px 0;"><i class="fas fa-info-circle"></i> 1. INFORMAÇÕES GERAIS</h5>
     <table class="info-table-modern" id="infoTable">
       <tbody id="infoTableBody">
-        <tr><td style="width:280px">INTERESSADO:</td><td><input type="text" id="prad_interessado" class="form-control" value="FRANCIELI PORONICZAK MARASCHIN"></td></tr>
-        <tr><td>TIPO DE DOCUMENTO:</td><td><div class="radio-group"><div class="radio-option"><input type="radio" name="tipo_documento" value="CPF" id="tipo_cpf" checked> <label for="tipo_cpf">CPF</label></div><div class="radio-option"><input type="radio" name="tipo_documento" value="CNPJ" id="tipo_cnpj"> <label for="tipo_cnpj">CNPJ</label></div></div><div style="margin-top: 8px;"><input type="text" id="prad_documento" class="form-control" placeholder="Nº do documento" value="007.605.459-44"></div></td></tr>
-        <tr><td>PROCESSO PRAD:</td><td><input type="text" id="prad_processo" class="form-control" value="25.786.633-5"></td></tr>
-        <tr><td>RAZÃO DA APRESENTAÇÃO DO PRAD:</td><td><div class="radio-group" id="razao-group"><div class="radio-option"><input type="radio" name="prad_razao" value="AIA" id="razao_aia" checked> <label for="razao_aia">AIA</label></div><div class="radio-option"><input type="radio" name="prad_razao" value="TAC" id="razao_tac"> <label for="razao_tac">TAC</label></div><div class="radio-option"><input type="radio" name="prad_razao" value="Licenciamento" id="razao_lic"> <label for="razao_lic">Licenciamento</label></div><div class="radio-option"><input type="radio" name="prad_razao" value="Substituição de Exóticas" id="razao_exoticas"> <label for="razao_exoticas">Substituição de Exóticas em APP</label></div><div class="radio-option"><input type="radio" name="prad_razao" value="Regularização Ambiental" id="razao_reg_amb"> <label for="razao_reg_amb">Regularização Ambiental de Imóvel Rural não integrado ao PRA</label></div><div class="radio-option"><input type="radio" name="prad_razao" value="Voluntário" id="razao_voluntario"> <label for="razao_voluntario">Voluntário</label></div><div class="radio-option"><input type="radio" name="prad_razao" value="Outro" id="razao_outro"> <label for="razao_outro">Outro:</label></div></div><div id="razao_numero_container" style="display:block; margin-top:10px;"><div id="outro_razao_desc_container" style="margin-top:8px; display:none;"><label for="prad_razao_outro_desc">Especificação (Outro):</label><input type="text" id="prad_razao_outro_desc" class="form-control" placeholder="Descreva a razão"></div></div></td></tr>
+        <tr><td style="width:280px">INTERESSADO:</td><td><input type="text" id="prad_interessado" class="form-control" value=""></td></tr>
+        <tr><td>TIPO DE DOCUMENTO:</td><td><div class="radio-group"><div class="radio-option"><input type="radio" name="tipo_documento" value="CPF" id="tipo_cpf" checked> <label for="tipo_cpf">CPF</label></div><div class="radio-option"><input type="radio" name="tipo_documento" value="CNPJ" id="tipo_cnpj"> <label for="tipo_cnpj">CNPJ</label></div></div><div style="margin-top: 8px;"><input type="text" id="prad_documento" class="form-control" placeholder="Nº do documento" value=""></div></td></tr>
+        <tr><td>PROCESSO PRAD:</td><td><input type="text" id="prad_processo" class="form-control" value=""></td></tr>
+        <tr><td>RAZÃO DA APRESENTAÇÃO DO PRAD:</td><td><div class="radio-group" id="razao-group"><div class="radio-option"><input type="radio" name="prad_razao" value="AIA" id="razao_aia"> <label for="razao_aia">AIA</label></div><div class="radio-option"><input type="radio" name="prad_razao" value="TAC" id="razao_tac"> <label for="razao_tac">TAC</label></div><div class="radio-option"><input type="radio" name="prad_razao" value="Licenciamento" id="razao_lic"> <label for="razao_lic">Licenciamento</label></div><div class="radio-option"><input type="radio" name="prad_razao" value="Substituição de Exóticas" id="razao_exoticas"> <label for="razao_exoticas">Substituição de Exóticas em APP</label></div><div class="radio-option"><input type="radio" name="prad_razao" value="Regularização Ambiental" id="razao_reg_amb"> <label for="razao_reg_amb">Regularização Ambiental de Imóvel Rural não integrado ao PRA</label></div><div class="radio-option"><input type="radio" name="prad_razao" value="Voluntário" id="razao_voluntario"> <label for="razao_voluntario">Voluntário</label></div><div class="radio-option"><input type="radio" name="prad_razao" value="Outro" id="razao_outro"> <label for="razao_outro">Outro:</label></div></div><div id="razao_numero_container" style="display:block; margin-top:10px;"><div id="outro_razao_desc_container" style="margin-top:8px; display:none;"><label for="prad_razao_outro_desc">Especificação (Outro):</label><input type="text" id="prad_razao_outro_desc" class="form-control" placeholder="Descreva a razão"></div></div></td></tr>
         <tr id="aiaSectionPlaceholder" style="display: none;"><td colspan="2"></td></tr>
-        <tr><td>RESPONSÁVEL TÉCNICO DO PRAD:</td><td><input type="text" id="prad_rt_nome" class="form-control" placeholder="Nome completo" value="Bruna de Melo" style="margin-bottom: 8px;"><input type="text" id="prad_rt_curso" class="form-control" placeholder="Curso / Formação" value="Engenharia Florestal" style="margin-bottom: 8px;"><input type="text" id="prad_rt_crea" class="form-control" placeholder="Nº do CREA" value="CREA/PR 155222/D"></td></tr>
-        <tr><td>ART nº:</td><td><input type="text" id="prad_art" class="form-control" value="1720262322831 (elaboração – quitada em 17/04/2026)"></td></tr>
-        <tr><td>MUNICÍPIO:</td><td><input type="text" id="prad_municipio" class="form-control" value="Campo Largo – PR"></td></tr>
+        <tr><td>RESPONSÁVEL TÉCNICO DO PRAD:</td><td><input type="text" id="prad_rt_nome" class="form-control" placeholder="Nome completo" value="" style="margin-bottom: 8px;"><input type="text" id="prad_rt_curso" class="form-control" placeholder="Curso / Formação" value="" style="margin-bottom: 8px;"><input type="text" id="prad_rt_crea" class="form-control" placeholder="Nº do CREA" value=""></td></tr>
+        <tr><td>ART nº:</td><td><input type="text" id="prad_art" class="form-control" value=""></td></tr>
+        <tr><td>MUNICÍPIO:</td><td><input type="text" id="prad_municipio" class="form-control" value=""></td></tr>
       </tbody>
     </table>
 
@@ -602,14 +602,14 @@
     <div id="reparoSimForm" style="display: none;">
       <div class="reparo-card">
         <h6><i class="fas fa-check-circle"></i> Reparo no local do dano</h6>
-        <div class="row"><div class="col-md-6"><label class="form-label">Área que foi ilegalmente desmatada/suprimida (ha):</label><input type="number" id="area_suprimida_sim" class="form-control" step="0.01" value="5.98" oninput="calcularReparoSim()"></div><div class="col-md-6"><label class="form-label">Área a reparar o dano (no local) (ha):</label><div class="input-group"><input type="number" id="area_restaurada_valor" class="form-control" step="0.01" value="5.98" oninput="calcularReparoSim()"><select id="area_restaurada_unidade" class="form-control" style="width: 100px;" onchange="calcularReparoSim()"><option value="ha">ha</option><option value="m2">m²</option></select></div></div></div>
+        <div class="row"><div class="col-md-6"><label class="form-label">Área que foi ilegalmente desmatada/suprimida (ha):</label><input type="number" id="area_suprimida_sim" class="form-control" step="0.01" value="" oninput="calcularReparoSim()"></div><div class="col-md-6"><label class="form-label">Área a reparar o dano (no local) (ha):</label><div class="input-group"><input type="number" id="area_restaurada_valor" class="form-control" step="0.01" value="" oninput="calcularReparoSim()"><select id="area_restaurada_unidade" class="form-control" style="width: 100px;" onchange="calcularReparoSim()"><option value="ha">ha</option><option value="m2">m²</option></select></div></div></div>
         <div id="resultadoReparoSim" class="mt-3"></div>
       </div>
     </div>
     <div id="reparoNaoForm" style="display: block;">
       <div class="reparo-card">
         <h6><i class="fas fa-map-marker-alt"></i> Reparo em local diverso (Compensação)</h6>
-        <div class="row"><div class="col-md-6"><label class="form-label">Área que foi ilegalmente desmatada/suprimida (ha):</label><input type="number" id="area_suprimida_nao" class="form-control" step="0.01" value="5.98" oninput="calcularReparoNao()"></div><div class="col-md-6"><label class="form-label">Área que o PRAD efetivamente propõe restaurar/recuperar:</label><div class="input-group"><input type="number" id="area_compensada_valor" class="form-control" step="0.01" value="23.92" oninput="calcularReparoNao()"><select id="area_compensada_unidade" class="form-control" style="width: 100px;" onchange="calcularReparoNao()"><option value="ha">ha</option><option value="m2">m²</option></select></div></div></div>
+        <div class="row"><div class="col-md-6"><label class="form-label">Área que foi ilegalmente desmatada/suprimida (ha):</label><input type="number" id="area_suprimida_nao" class="form-control" step="0.01" value="" oninput="calcularReparoNao()"></div><div class="col-md-6"><label class="form-label">Área que o PRAD efetivamente propõe restaurar/recuperar:</label><div class="input-group"><input type="number" id="area_compensada_valor" class="form-control" step="0.01" value="" oninput="calcularReparoNao()"><select id="area_compensada_unidade" class="form-control" style="width: 100px;" onchange="calcularReparoNao()"><option value="ha">ha</option><option value="m2">m²</option></select></div></div></div>
         <div class="row mt-3"><div class="col-md-12"><label class="form-label">Local da compensação:</label><select id="local_compensacao" class="form-control" onchange="calcularReparoNao()"><option value="4">Mesma propriedade (4x)</option><option value="6">Mesma microbacia (6x)</option><option value="10">Mesma bacia hidrográfica (10x)</option></select></div></div>
         <div id="resultadoReparoNao" class="mt-3"></div>
       </div>
@@ -683,7 +683,24 @@
   const anexosPadrao = [ "Fotografias", "Fotos aéreas", "Mapas", "Arquivos vetoriais (KML/SHP)", "ART", "Documentos de identificação (RG/CPF)", "Procuração / representação legal", "Recibo do CAR", "Certidão de Registro de Imóveis", "Comprovante de taxa ambiental", "Imagens de satélite", "Inventário florestal", "Auto de Infração Ambiental (AIA)", "Manifestações concordantes de terceiros", "Termo de Ajustamento de Conduta (TAC)", "Licença Ambiental", "Autorização de Supressão de Vegetação (ASV) ou Uso Alternativo do Solo (UAS)" ];
   let itensAnalise = [], anexos = [], pendenciasManuais = [], responsaveis = [{ nome: "Paulo Francisco Nginga Gaspar", curso: "Engenharia de Energias", crea: "2523337967" }], camposPersonalizados = [], aiasList = [];
 
-  function inicializarDados() { itensAnalise = itensAnalisePadrao.map((exigencia, idx) => ({ item: (idx+1).toString(), exigencia: exigencia, atende: "SIM", fls: "", obs: "", isCustom: false })); anexos = anexosPadrao.map((anexo, idx) => ({ anexo: anexo, apresentado: "SIM", localizacao: "", obs: "", isCustom: false })); }
+  function inicializarDados() { 
+    itensAnalise = itensAnalisePadrao.map((exigencia, idx) => ({ 
+      item: (idx+1).toString(), 
+      exigencia: exigencia, 
+      atende: "N/A", 
+      fls: "", 
+      obs: "", 
+      isCustom: false 
+    })); 
+    anexos = anexosPadrao.map((anexo, idx) => ({ 
+      anexo: anexo, 
+      apresentado: "N/A", 
+      localizacao: "", 
+      obs: "", 
+      isCustom: false 
+    })); 
+  }
+  
   function getDocumentoTexto() { const tipo = document.querySelector('input[name="tipo_documento"]:checked')?.value || 'CPF'; const numero = document.getElementById('prad_documento').value; return `${tipo}: ${numero}`; }
   function getRazaoENumeroSeparados() { const radios = document.querySelectorAll('input[name="prad_razao"]'); let selectedValue = null; for (let radio of radios) if (radio.checked) { selectedValue = radio.value; break; } if (!selectedValue) return { razao: 'Não informado', numero: '' }; let razaoTexto = selectedValue; if (selectedValue === 'Outro') { const outroDesc = document.getElementById('prad_razao_outro_desc').value.trim(); razaoTexto = outroDesc ? `Outro: ${outroDesc}` : 'Outro'; } return { razao: razaoTexto, numero: '' }; }
 
@@ -718,11 +735,11 @@
   function removerPendenciaManual(id) { pendenciasManuais = pendenciasManuais.filter(p => p.id !== id); if (pendenciaReparoId === id) pendenciaReparoId = null; renderizarPendencias(); atualizarStatusSalvamento(); mostrarStatus('Pendência manual removida!'); }
 
   // Renderização das tabelas
-  function preencherAnalise() { const body = document.getElementById('analise-itens-body'); body.innerHTML = ''; itensAnalise.forEach((item, idx) => { const row = body.insertRow(); const isCustom = item.isCustom === true; row.innerHTML = `<td><input type="text" class="form-control form-control-sm" id="analise_item_${idx}" value="${item.item}" style="width:60px"></td><td><div class="readonly-cell" style="padding: 6px 8px; background-color: #f8f9fa; border-radius: 6px; font-size: 13px;">${item.exigencia.replace(/"/g, '&quot;')}</div></td><td><select class="form-control form-control-sm" id="analise_atende_${idx}" style="width:90px"><option value="SIM" ${item.atende=='SIM' ? 'selected' : ''}>SIM</option><option value="NÃO" ${item.atende=='NÃO' ? 'selected' : ''}>NÃO</option><option value="PARCIAL" ${item.atende=='PARCIAL' ? 'selected' : ''}>PARCIAL</option></select></td><td><input type="text" class="form-control form-control-sm" id="analise_fls_${idx}" value="${item.fls || ''}" style="width:70px"></td><td><input type="text" class="form-control form-control-sm" id="analise_obs_${idx}" value="${(item.obs || '').replace(/"/g, '&quot;')}" style="width:100%"></td><td>${isCustom ? `<button type="button" class="btn-remove" onclick="removerItemAnalise(${idx})"><i class="fas fa-trash"></i></button>` : ''}</td>`; const atendeSelect = document.getElementById(`analise_atende_${idx}`); if (atendeSelect) atendeSelect.addEventListener('change', function() { itensAnalise[idx].atende = this.value; renderizarPendencias(); atualizarStatusSalvamento(); }); const itemInput = document.getElementById(`analise_item_${idx}`); if (itemInput) itemInput.addEventListener('input', function() { itensAnalise[idx].item = this.value; renderizarPendencias(); atualizarStatusSalvamento(); }); const flsInput = document.getElementById(`analise_fls_${idx}`); if (flsInput) flsInput.addEventListener('input', function() { itensAnalise[idx].fls = this.value; atualizarStatusSalvamento(); }); const obsInput = document.getElementById(`analise_obs_${idx}`); if (obsInput) obsInput.addEventListener('input', function() { itensAnalise[idx].obs = this.value; renderizarPendencias(); atualizarStatusSalvamento(); }); }); renderizarPendencias(); }
-  function preencherAnexos() { const body = document.getElementById('anexos-body'); body.innerHTML = ''; anexos.forEach((item, idx) => { const row = body.insertRow(); const isCustom = item.isCustom === true; row.innerHTML = `<td><div class="readonly-cell" style="padding: 6px 8px; background-color: #f8f9fa; border-radius: 6px; font-size: 13px;">${item.anexo.replace(/"/g, '&quot;')}</div></td><td><select class="form-control form-control-sm" id="anexo_apresentado_${idx}" style="width:100px"><option value="SIM" ${item.apresentado=='SIM' ? 'selected' : ''}>SIM</option><option value="NÃO" ${item.apresentado=='NÃO' ? 'selected' : ''}>NÃO</option><option value="NÃO APLICÁVEL" ${item.apresentado=='NÃO APLICÁVEL' ? 'selected' : ''}>NÃO APLICÁVEL</option></select></td><td><input type="text" class="form-control form-control-sm" id="anexo_local_${idx}" value="${(item.localizacao || '').replace(/"/g, '&quot;')}" style="width:100%"></td><td><input type="text" class="form-control form-control-sm" id="anexo_obs_${idx}" value="${(item.obs || '').replace(/"/g, '&quot;')}" style="width:100%"></td><td>${isCustom ? `<button type="button" class="btn-remove" onclick="removerItemAnexo(${idx})"><i class="fas fa-trash"></i></button>` : ''}</td>`; const apresSelect = document.getElementById(`anexo_apresentado_${idx}`); if (apresSelect) apresSelect.addEventListener('change', function() { anexos[idx].apresentado = this.value; renderizarPendencias(); atualizarStatusSalvamento(); }); const localInput = document.getElementById(`anexo_local_${idx}`); if (localInput) localInput.addEventListener('input', function() { anexos[idx].localizacao = this.value; atualizarStatusSalvamento(); }); const obsInput = document.getElementById(`anexo_obs_${idx}`); if (obsInput) obsInput.addEventListener('input', function() { anexos[idx].obs = this.value; renderizarPendencias(); atualizarStatusSalvamento(); }); }); renderizarPendencias(); }
-  function adicionarItemAnalise() { itensAnalise.push({ item: (itensAnalise.length+1).toString(), exigencia: "", atende: "SIM", fls: "", obs: "", isCustom: true }); preencherAnalise(); atualizarStatusSalvamento(); }
+  function preencherAnalise() { const body = document.getElementById('analise-itens-body'); body.innerHTML = ''; itensAnalise.forEach((item, idx) => { const row = body.insertRow(); const isCustom = item.isCustom === true; row.innerHTML = `<td><input type="text" class="form-control form-control-sm" id="analise_item_${idx}" value="${item.item}" style="width:60px"></td><td><div class="readonly-cell" style="padding: 6px 8px; background-color: #f8f9fa; border-radius: 6px; font-size: 13px;">${item.exigencia.replace(/"/g, '&quot;')}</div></td><td><select class="form-control form-control-sm" id="analise_atende_${idx}" style="width:90px"><option value="SIM" ${item.atende=='SIM' ? 'selected' : ''}>SIM</option><option value="NÃO" ${item.atende=='NÃO' ? 'selected' : ''}>NÃO</option><option value="PARCIAL" ${item.atende=='PARCIAL' ? 'selected' : ''}>PARCIAL</option><option value="N/A" ${item.atende=='N/A' ? 'selected' : ''}>N/A</option></select></td><td><input type="text" class="form-control form-control-sm" id="analise_fls_${idx}" value="${item.fls || ''}" style="width:70px"></td><td><input type="text" class="form-control form-control-sm" id="analise_obs_${idx}" value="${(item.obs || '').replace(/"/g, '&quot;')}" style="width:100%"></td><td>${isCustom ? `<button type="button" class="btn-remove" onclick="removerItemAnalise(${idx})"><i class="fas fa-trash"></i></button>` : ''}</td>`; const atendeSelect = document.getElementById(`analise_atende_${idx}`); if (atendeSelect) atendeSelect.addEventListener('change', function() { itensAnalise[idx].atende = this.value; renderizarPendencias(); atualizarStatusSalvamento(); }); const itemInput = document.getElementById(`analise_item_${idx}`); if (itemInput) itemInput.addEventListener('input', function() { itensAnalise[idx].item = this.value; renderizarPendencias(); atualizarStatusSalvamento(); }); const flsInput = document.getElementById(`analise_fls_${idx}`); if (flsInput) flsInput.addEventListener('input', function() { itensAnalise[idx].fls = this.value; atualizarStatusSalvamento(); }); const obsInput = document.getElementById(`analise_obs_${idx}`); if (obsInput) obsInput.addEventListener('input', function() { itensAnalise[idx].obs = this.value; renderizarPendencias(); atualizarStatusSalvamento(); }); }); renderizarPendencias(); }
+  function preencherAnexos() { const body = document.getElementById('anexos-body'); body.innerHTML = ''; anexos.forEach((item, idx) => { const row = body.insertRow(); const isCustom = item.isCustom === true; row.innerHTML = `<td><div class="readonly-cell" style="padding: 6px 8px; background-color: #f8f9fa; border-radius: 6px; font-size: 13px;">${item.anexo.replace(/"/g, '&quot;')}</div></td><td><select class="form-control form-control-sm" id="anexo_apresentado_${idx}" style="width:110px"><option value="SIM" ${item.apresentado=='SIM' ? 'selected' : ''}>SIM</option><option value="NÃO" ${item.apresentado=='NÃO' ? 'selected' : ''}>NÃO</option><option value="NÃO APLICÁVEL" ${item.apresentado=='NÃO APLICÁVEL' ? 'selected' : ''}>NÃO APLICÁVEL</option><option value="N/A" ${item.apresentado=='N/A' ? 'selected' : ''}>N/A</option></select></td><td><input type="text" class="form-control form-control-sm" id="anexo_local_${idx}" value="${(item.localizacao || '').replace(/"/g, '&quot;')}" style="width:100%"></td><td><input type="text" class="form-control form-control-sm" id="anexo_obs_${idx}" value="${(item.obs || '').replace(/"/g, '&quot;')}" style="width:100%"></td><td>${isCustom ? `<button type="button" class="btn-remove" onclick="removerItemAnexo(${idx})"><i class="fas fa-trash"></i></button>` : ''}</td>`; const apresSelect = document.getElementById(`anexo_apresentado_${idx}`); if (apresSelect) apresSelect.addEventListener('change', function() { anexos[idx].apresentado = this.value; renderizarPendencias(); atualizarStatusSalvamento(); }); const localInput = document.getElementById(`anexo_local_${idx}`); if (localInput) localInput.addEventListener('input', function() { anexos[idx].localizacao = this.value; atualizarStatusSalvamento(); }); const obsInput = document.getElementById(`anexo_obs_${idx}`); if (obsInput) obsInput.addEventListener('input', function() { anexos[idx].obs = this.value; renderizarPendencias(); atualizarStatusSalvamento(); }); }); renderizarPendencias(); }
+  function adicionarItemAnalise() { itensAnalise.push({ item: (itensAnalise.length+1).toString(), exigencia: "", atende: "N/A", fls: "", obs: "", isCustom: true }); preencherAnalise(); atualizarStatusSalvamento(); }
   function removerItemAnalise(idx) { if (itensAnalise[idx].isCustom) { itensAnalise.splice(idx, 1); itensAnalise.forEach((item, i) => item.item = (i+1).toString()); preencherAnalise(); atualizarStatusSalvamento(); } else mostrarStatus('Itens padrão não podem ser removidos.', 'info'); }
-  function adicionarItemAnexo() { anexos.push({ anexo: "", apresentado: "SIM", localizacao: "", obs: "", isCustom: true }); preencherAnexos(); atualizarStatusSalvamento(); }
+  function adicionarItemAnexo() { anexos.push({ anexo: "", apresentado: "N/A", localizacao: "", obs: "", isCustom: true }); preencherAnexos(); atualizarStatusSalvamento(); }
   function removerItemAnexo(idx) { if (anexos[idx].isCustom) { anexos.splice(idx, 1); preencherAnexos(); atualizarStatusSalvamento(); } else mostrarStatus('Anexos padrão não podem ser removidos.', 'info'); }
 
   // Status de salvamento
@@ -735,7 +752,179 @@
   function gerarConclusaoAutomatica() { const status = document.querySelector('input[name="conclusao_prad"]:checked')?.value || 'NAO_APTO'; const prazo = parseInt(document.getElementById('prad_prazo').value) || 60; const prazoExtenso = numeroPorExtenso(prazo); if (status === "APTO") { return `Diante do exposto, considerando que o PRAD atende às exigências da Portaria IAT nº 17/2025 e da Instrução Normativa IAT nº 50/2025, conclui-se que o projeto está APTO À APROVAÇÃO. Recomenda-se o encaminhamento para assinatura do Termo de Compromisso de Recuperação Ambiental (TCRA) e subsequente início da execução.`; } else { return `Diante do exposto, considerando as inconformidades e pendências identificadas no PRAD, conclui-se que o projeto NÃO ESTÁ APTO À APROVAÇÃO, por não cumprir as exigências mínimas descritas na Portaria IAT 17/2025 e IN 50/2025.\n\nAssim, cria-se pendência no processo, com a devida notificação ao interessado para apresentação das correções e complementações indicadas em conformidade com a Portaria n.º 17/2025, junto ao sistema e-protocolo, no prazo de ${prazo} (${prazoExtenso}) dias. Reforçamos que o não atendimento à pendência incorrerá em INDEFERIMENTO DEFINITIVO DO PRAD.`; } }
   function atualizarConclusao() { document.getElementById('prad_conclusao_texto').value = gerarConclusaoAutomatica(); }
 
-  // ==================== FUNÇÃO DE PDF COMPLETA (ORIGINAL) ====================
+  // ==================== FUNÇÃO LIMPAR (MODIFICADA CONFORME SOLICITADO) ====================
+  function limparFormulario() { 
+    if(confirm('Tem certeza que deseja limpar o formulário? Esta ação não pode ser desfeita.')) { 
+      
+      // 1. ITEM "INFORMAÇÕES GERAIS" - Limpa TODOS os campos
+      document.getElementById('prad_numero_info').value = '';
+      document.getElementById('prad_interessado').value = '';
+      document.getElementById('prad_documento').value = '';
+      document.getElementById('prad_processo').value = '';
+      document.getElementById('prad_rt_nome').value = '';
+      document.getElementById('prad_rt_curso').value = '';
+      document.getElementById('prad_rt_crea').value = '';
+      document.getElementById('prad_art').value = '';
+      document.getElementById('prad_municipio').value = '';
+      document.getElementById('prad_razao_outro_desc').value = '';
+      
+      // Reset radio buttons - Informações Gerais
+      document.getElementById('tipo_cpf').checked = true;
+      
+      // Reset radio buttons - Razão da apresentação (desmarcar todos)
+      const razaoRadios = document.querySelectorAll('input[name="prad_razao"]');
+      razaoRadios.forEach(radio => radio.checked = false);
+      document.getElementById('outro_razao_desc_container').style.display = 'none';
+      
+      // Reset AIA list
+      aiasList = [];
+      renderAiaSection();
+      
+      // 2. ITEM "ANÁLISE DOS ITENS" - Limpa Fls e Observação, Atendeu? fica "N/A"
+      itensAnalise.forEach((item, idx) => {
+        item.atende = "N/A";
+        item.fls = "";
+        item.obs = "";
+      });
+      preencherAnalise();
+      
+      // 3. ITEM "ANEXOS" - Limpa Localização e Observação, Apresentado? fica "N/A"
+      anexos.forEach((item, idx) => {
+        item.apresentado = "N/A";
+        item.localizacao = "";
+        item.obs = "";
+      });
+      preencherAnexos();
+      
+      // 4. ITEM "OBSERVAÇÕES" - Limpa completamente
+      document.getElementById('prad_observacoes').value = '';
+      
+      // 5. ITEM "REPARAÇÃO DO DANO" - Limpa todas as informações
+      document.getElementById('reparo_nao').checked = true;
+      document.getElementById('reparo_sim').checked = false;
+      document.getElementById('area_suprimida_sim').value = '';
+      document.getElementById('area_restaurada_valor').value = '';
+      document.getElementById('area_restaurada_unidade').value = 'ha';
+      document.getElementById('area_suprimida_nao').value = '';
+      document.getElementById('area_compensada_valor').value = '';
+      document.getElementById('area_compensada_unidade').value = 'ha';
+      document.getElementById('local_compensacao').value = '4';
+      toggleReparoForm();
+      document.getElementById('resultadoReparoSim').innerHTML = '';
+      document.getElementById('resultadoReparoNao').innerHTML = '';
+      
+      // Limpar campos personalizados
+      camposPersonalizados = [];
+      renderizarCamposPersonalizados();
+      
+      // Reset conclusão
+      document.getElementById('prad_nao_apto').checked = true;
+      
+      // Data atual
+      const hoje = new Date();
+      document.getElementById('prad_data_info').value = `${hoje.getDate().toString().padStart(2,'0')}/${(hoje.getMonth()+1).toString().padStart(2,'0')}/${hoje.getFullYear()}`;
+      
+      // Prazo padrão
+      document.getElementById('prad_prazo').value = '60';
+      
+      // Atualizar título e conclusão
+      atualizarTituloRelatorio();
+      atualizarConclusao();
+      atualizarStatusSalvamento();
+      
+      mostrarStatus('Formulário limpo com sucesso!');
+    } 
+  }
+
+  // ==================== FUNÇÃO NOVO PRAD (MODIFICADA) ====================
+  function limparFormularioParaNovo() {
+    if (confirm("Deseja criar um novo PRAD? Os dados atuais não salvos serão perdidos.")) {
+      // Chama a mesma função de limpar
+      limparFormularioCompleto();
+    }
+  }
+  
+  function limparFormularioCompleto() {
+    // 1. ITEM "INFORMAÇÕES GERAIS" - Limpa TODOS os campos
+    document.getElementById('prad_numero_info').value = '';
+    document.getElementById('prad_interessado').value = '';
+    document.getElementById('prad_documento').value = '';
+    document.getElementById('prad_processo').value = '';
+    document.getElementById('prad_rt_nome').value = '';
+    document.getElementById('prad_rt_curso').value = '';
+    document.getElementById('prad_rt_crea').value = '';
+    document.getElementById('prad_art').value = '';
+    document.getElementById('prad_municipio').value = '';
+    document.getElementById('prad_razao_outro_desc').value = '';
+    
+    // Reset radio buttons - Informações Gerais
+    document.getElementById('tipo_cpf').checked = true;
+    
+    // Reset radio buttons - Razão da apresentação (desmarcar todos)
+    const razaoRadios = document.querySelectorAll('input[name="prad_razao"]');
+    razaoRadios.forEach(radio => radio.checked = false);
+    document.getElementById('outro_razao_desc_container').style.display = 'none';
+    
+    // Reset AIA list
+    aiasList = [];
+    renderAiaSection();
+    
+    // 2. ITEM "ANÁLISE DOS ITENS" - Limpa Fls e Observação, Atendeu? fica "N/A"
+    itensAnalise.forEach((item, idx) => {
+      item.atende = "N/A";
+      item.fls = "";
+      item.obs = "";
+    });
+    preencherAnalise();
+    
+    // 3. ITEM "ANEXOS" - Limpa Localização e Observação, Apresentado? fica "N/A"
+    anexos.forEach((item, idx) => {
+      item.apresentado = "N/A";
+      item.localizacao = "";
+      item.obs = "";
+    });
+    preencherAnexos();
+    
+    // 4. ITEM "OBSERVAÇÕES" - Limpa completamente
+    document.getElementById('prad_observacoes').value = '';
+    
+    // 5. ITEM "REPARAÇÃO DO DANO" - Limpa todas as informações
+    document.getElementById('reparo_nao').checked = true;
+    document.getElementById('reparo_sim').checked = false;
+    document.getElementById('area_suprimida_sim').value = '';
+    document.getElementById('area_restaurada_valor').value = '';
+    document.getElementById('area_restaurada_unidade').value = 'ha';
+    document.getElementById('area_suprimida_nao').value = '';
+    document.getElementById('area_compensada_valor').value = '';
+    document.getElementById('area_compensada_unidade').value = 'ha';
+    document.getElementById('local_compensacao').value = '4';
+    toggleReparoForm();
+    document.getElementById('resultadoReparoSim').innerHTML = '';
+    document.getElementById('resultadoReparoNao').innerHTML = '';
+    
+    // Limpar campos personalizados
+    camposPersonalizados = [];
+    renderizarCamposPersonalizados();
+    
+    // Reset conclusão
+    document.getElementById('prad_nao_apto').checked = true;
+    
+    // Data atual
+    const hoje = new Date();
+    document.getElementById('prad_data_info').value = `${hoje.getDate().toString().padStart(2,'0')}/${(hoje.getMonth()+1).toString().padStart(2,'0')}/${hoje.getFullYear()}`;
+    
+    // Prazo padrão
+    document.getElementById('prad_prazo').value = '60';
+    
+    // Atualizar título e conclusão
+    atualizarTituloRelatorio();
+    atualizarConclusao();
+    atualizarStatusSalvamento();
+    
+    mostrarStatus('Novo PRAD iniciado!');
+  }
+
+  // ==================== FUNÇÃO PDF COMPLETA (ORIGINAL) ====================
   function desenharLinhaCategoria(texto, y, pdf, marginLeft, pageWidth, marginRight) {
     const larguraTotal = pageWidth - marginLeft - marginRight;
     const alturaLinha = 7;
@@ -1207,8 +1396,6 @@
     }
   }
 
-  function limparFormulario() { if(confirm('Tem certeza que deseja limpar todo o formulário?')) { location.reload(); } }
-
   // ==================== SISTEMA LOCAL DE USUÁRIOS E PRADS ====================
   let usuarioAtual = null;
   let pradsDoUsuario = {};
@@ -1297,12 +1484,12 @@
     if(dados.itensAnalise && dados.itensAnalise.length) {
       itensAnalise = dados.itensAnalise;
     } else {
-      itensAnalise = itensAnalisePadrao.map((ex, idx) => ({ item: (idx+1).toString(), exigencia: ex, atende: "SIM", fls: "", obs: "", isCustom: false }));
+      itensAnalise = itensAnalisePadrao.map((ex, idx) => ({ item: (idx+1).toString(), exigencia: ex, atende: "N/A", fls: "", obs: "", isCustom: false }));
     }
     if(dados.anexos && dados.anexos.length) {
       anexos = dados.anexos;
     } else {
-      anexos = anexosPadrao.map((a, idx) => ({ anexo: a, apresentado: "SIM", localizacao: "", obs: "", isCustom: false }));
+      anexos = anexosPadrao.map((a, idx) => ({ anexo: a, apresentado: "N/A", localizacao: "", obs: "", isCustom: false }));
     }
     pendenciasManuais = dados.pendenciasManuais || [];
     preencherAnalise();
@@ -1328,15 +1515,9 @@
     atualizarStatusSalvo();
     mostrarStatus(concluido ? "Processo concluído e salvo!" : "PRAD salvo com sucesso!");
     if (concluido) {
-      limparFormularioParaNovo();
+      limparFormularioCompleto();
     }
     return true;
-  }
-
-  function limparFormularioParaNovo() {
-    if (confirm("Novo PRAD? Os dados atuais serão perdidos se não foram salvos.")) {
-      location.reload();
-    }
   }
 
   function carregarPRADLocal(id) {
@@ -1405,16 +1586,6 @@
     document.getElementById('userBar').style.display = 'flex';
     document.getElementById('userNameDisplay').innerHTML = `<i class="fas fa-user-circle"></i> ${nome}`;
     carregarPRADsDoUsuario();
-    location.reload();
-  }
-
-  function trocarUsuario() {
-    if (confirm("Trocar usuário perderá os dados não salvos do formulário atual?")) {
-      location.reload();
-    }
-  }
-
-  document.addEventListener('DOMContentLoaded', () => {
     inicializarDados();
     preencherAnalise();
     preencherAnexos();
@@ -1430,16 +1601,43 @@
     conclRadios.forEach(r => r.addEventListener('change', () => { atualizarConclusao(); atualizarStatusSalvamento(); }));
     toggleReparoForm();
     calcularReparoNao();
+    const hoje = new Date();
+    if (!document.getElementById('prad_data_info').value) document.getElementById('prad_data_info').value = `${hoje.getDate().toString().padStart(2,'0')}/${(hoje.getMonth()+1).toString().padStart(2,'0')}/${hoje.getFullYear()}`;
+  }
+
+  function trocarUsuario() {
+    if (confirm("Trocar usuário perderá os dados não salvos do formulário atual?")) {
+      location.reload();
+    }
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('btnTrocarUsuario').addEventListener('click', trocarUsuario);
     document.getElementById('btnMeusPRADs').addEventListener('click', listarMeusPRADs);
     document.getElementById('btnNovoPRAD').addEventListener('click', limparFormularioParaNovo);
-    const hoje = new Date();
-    if (!document.getElementById('prad_data_info').value) document.getElementById('prad_data_info').value = `${hoje.getDate().toString().padStart(2,'0')}/${(hoje.getMonth()+1).toString().padStart(2,'0')}/${hoje.getFullYear()}`;
     if (usuarioAtual) {
       document.getElementById('authLocalModal').style.display = 'none';
       document.getElementById('mainForm').style.display = 'block';
       document.getElementById('userBar').style.display = 'flex';
       document.getElementById('userNameDisplay').innerHTML = `<i class="fas fa-user-circle"></i> ${usuarioAtual}`;
+      carregarPRADsDoUsuario();
+      inicializarDados();
+      preencherAnalise();
+      preencherAnexos();
+      preencherResponsaveis();
+      renderizarPendencias();
+      atualizarTituloRelatorio();
+      setupRazaoEventos();
+      renderizarCamposPersonalizados();
+      document.querySelectorAll('input, textarea, select').forEach(el => el.addEventListener('input', () => { atualizarStatusSalvamento(); atualizarTituloRelatorio(); }));
+      document.getElementById('prad_prazo').addEventListener('input', () => { atualizarConclusao(); atualizarStatusSalvamento(); });
+      document.getElementById('prad_numero_info').addEventListener('input', () => atualizarTituloRelatorio());
+      const conclRadios = document.querySelectorAll('input[name="conclusao_prad"]');
+      conclRadios.forEach(r => r.addEventListener('change', () => { atualizarConclusao(); atualizarStatusSalvamento(); }));
+      toggleReparoForm();
+      calcularReparoNao();
+      const hoje = new Date();
+      if (!document.getElementById('prad_data_info').value) document.getElementById('prad_data_info').value = `${hoje.getDate().toString().padStart(2,'0')}/${(hoje.getMonth()+1).toString().padStart(2,'0')}/${hoje.getFullYear()}`;
     }
   });
 
@@ -1493,6 +1691,8 @@
   window.limparFormulario = limparFormulario;
   window.salvarPRADLocal = salvarPRADLocal;
   window.toggleIncluirReparoPDF = toggleIncluirReparoPDF;
+  window.limparFormularioParaNovo = limparFormularioParaNovo;
+  window.limparFormularioCompleto = limparFormularioCompleto;
 </script>
 </body>
 </html>
