@@ -480,6 +480,29 @@
     }
     .prad-item:last-child { border-bottom: none; }
     .prad-actions button { margin-left: 8px; }
+    
+    /* Estilo para o botão de gerar número */
+    .btn-auto-number {
+      background: linear-gradient(135deg, #28a745, #20c997);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      padding: 0 15px;
+      margin-left: 10px;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: 500;
+      transition: all 0.3s ease;
+    }
+    .btn-auto-number:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(40,167,69,0.3);
+    }
+    .numero-container {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
   </style>
 </head>
 <body>
@@ -534,14 +557,19 @@
       <span class="card-subtitle">Baseado na Portaria IAT nº 17/2025</span>
     </div>
 
-    <!-- Nº da Informação Técnica -->
+    <!-- Nº da Informação Técnica com numeração automática -->
     <div class="form-group no-print-pdf" style="margin-bottom: 20px;">
       <label class="form-label"><i class="fas fa-hashtag"></i> Nº DA INFORMAÇÃO TÉCNICA (apenas o número):</label>
-      <div class="input-group" style="max-width: 300px;">
-        <input type="text" id="prad_numero_info" class="form-control" value="" placeholder="Ex: 001" required>
-        <span class="input-group-text">/<span id="anoAtualDisplay"></span></span>
+      <div class="numero-container">
+        <div class="input-group" style="max-width: 300px;">
+          <input type="text" id="prad_numero_info" class="form-control" value="" placeholder="Ex: 001" required>
+          <span class="input-group-text">/<span id="anoAtualDisplay"></span></span>
+        </div>
+        <button type="button" class="btn-auto-number" onclick="gerarProximoNumero()">
+          <i class="fas fa-magic"></i> Gerar próximo número
+        </button>
       </div>
-      <small class="text-muted">O ano será adicionado automaticamente</small>
+      <small class="text-muted">Clique em "Gerar próximo número" para obter o próximo número disponível automaticamente</small>
     </div>
 
     <!-- 1. INFORMAÇÕES GERAIS -->
@@ -664,6 +692,55 @@
   function getNumeroInfoCompleto() { const numero = document.getElementById('prad_numero_info').value.trim(); const ano = getAnoCorrente(); if (numero === "") return ""; return `${numero}/${ano}`; }
   function atualizarTituloRelatorio() { const numeroCompleto = getNumeroInfoCompleto(); const tituloElement = document.getElementById('reportTitle'); const finalSpan = document.getElementById('infoNumeroFinal'); const anoDisplay = document.getElementById('anoAtualDisplay'); if (anoDisplay) anoDisplay.innerText = getAnoCorrente(); if (numeroCompleto) { tituloElement.innerHTML = `INFORMAÇÃO TÉCNICA PRAD Nº ${numeroCompleto}`; finalSpan.innerHTML = numeroCompleto; } else { tituloElement.innerHTML = `INFORMAÇÃO TÉCNICA PRAD`; finalSpan.innerHTML = "---"; } }
 
+  // ==================== FUNÇÃO PARA GERAR PRÓXIMO NÚMERO AUTOMATICAMENTE ====================
+  function gerarProximoNumero() {
+    if (!usuarioAtual) {
+      mostrarStatus('Usuário não identificado!', 'error');
+      return;
+    }
+    
+    // Carregar PRADs do usuário
+    const storageKey = `prads_${usuarioAtual}`;
+    const dadosStorage = localStorage.getItem(storageKey);
+    const pradsDoUsuario = dadosStorage ? JSON.parse(dadosStorage) : {};
+    
+    // Coletar todos os números já utilizados
+    const numerosUsados = [];
+    const anoAtual = getAnoCorrente();
+    
+    for (const id in pradsDoUsuario) {
+      // Extrair o número do ID (formato: "numero_ano")
+      const parts = id.split('_');
+      if (parts.length === 2) {
+        const numero = parseInt(parts[0]);
+        const ano = parseInt(parts[1]);
+        if (!isNaN(numero) && ano === anoAtual) {
+          numerosUsados.push(numero);
+        }
+      }
+    }
+    
+    // Encontrar o próximo número disponível
+    let proximoNumero = 1;
+    numerosUsados.sort((a, b) => a - b);
+    
+    for (let i = 0; i < numerosUsados.length; i++) {
+      if (numerosUsados[i] > proximoNumero) {
+        break;
+      }
+      if (numerosUsados[i] === proximoNumero) {
+        proximoNumero++;
+      }
+    }
+    
+    // Formatar o número com 3 dígitos (001, 002, etc.)
+    const numeroFormatado = proximoNumero.toString().padStart(3, '0');
+    document.getElementById('prad_numero_info').value = numeroFormatado;
+    atualizarTituloRelatorio();
+    atualizarStatusSalvamento();
+    mostrarStatus(`Número ${numeroFormatado}/${anoAtual} gerado automaticamente!`, 'success');
+  }
+
   // Reparação
   let pendenciaReparoId = null;
   function toggleReparoForm() { const reparoSim = document.getElementById('reparo_sim').checked; const simForm = document.getElementById('reparoSimForm'); const naoForm = document.getElementById('reparoNaoForm'); removerPendenciaReparo(); if (reparoSim) { simForm.style.display = 'block'; naoForm.style.display = 'none'; calcularReparoSim(); } else { simForm.style.display = 'none'; naoForm.style.display = 'block'; calcularReparoNao(); } }
@@ -752,7 +829,7 @@
   function gerarConclusaoAutomatica() { const status = document.querySelector('input[name="conclusao_prad"]:checked')?.value || 'NAO_APTO'; const prazo = parseInt(document.getElementById('prad_prazo').value) || 60; const prazoExtenso = numeroPorExtenso(prazo); if (status === "APTO") { return `Diante do exposto, considerando que o PRAD atende às exigências da Portaria IAT nº 17/2025 e da Instrução Normativa IAT nº 50/2025, conclui-se que o projeto está APTO À APROVAÇÃO. Recomenda-se o encaminhamento para assinatura do Termo de Compromisso de Recuperação Ambiental (TCRA) e subsequente início da execução.`; } else { return `Diante do exposto, considerando as inconformidades e pendências identificadas no PRAD, conclui-se que o projeto NÃO ESTÁ APTO À APROVAÇÃO, por não cumprir as exigências mínimas descritas na Portaria IAT 17/2025 e IN 50/2025.\n\nAssim, cria-se pendência no processo, com a devida notificação ao interessado para apresentação das correções e complementações indicadas em conformidade com a Portaria n.º 17/2025, junto ao sistema e-protocolo, no prazo de ${prazo} (${prazoExtenso}) dias. Reforçamos que o não atendimento à pendência incorrerá em INDEFERIMENTO DEFINITIVO DO PRAD.`; } }
   function atualizarConclusao() { document.getElementById('prad_conclusao_texto').value = gerarConclusaoAutomatica(); }
 
-  // ==================== FUNÇÃO LIMPAR (MODIFICADA CONFORME SOLICITADO) ====================
+  // ==================== FUNÇÃO LIMPAR ====================
   function limparFormulario() { 
     if(confirm('Tem certeza que deseja limpar o formulário? Esta ação não pode ser desfeita.')) { 
       
@@ -836,10 +913,9 @@
     } 
   }
 
-  // ==================== FUNÇÃO NOVO PRAD (MODIFICADA) ====================
+  // ==================== FUNÇÃO NOVO PRAD ====================
   function limparFormularioParaNovo() {
     if (confirm("Deseja criar um novo PRAD? Os dados atuais não salvos serão perdidos.")) {
-      // Chama a mesma função de limpar
       limparFormularioCompleto();
     }
   }
@@ -1505,6 +1581,18 @@
     if (!numero) { alert("Nº da Informação Técnica é obrigatório"); return false; }
     const ano = getAnoCorrente();
     const id = `${numero}_${ano}`;
+    
+    // Verificar duplicidade
+    const storageKey = getStorageKey();
+    const dadosStorage = localStorage.getItem(storageKey);
+    const pradsExistentes = dadosStorage ? JSON.parse(dadosStorage) : {};
+    
+    // Se não é edição (novo PRAD) e já existe um PRAD com este número
+    if (!pradsDoUsuario[id] && pradsExistentes[id]) {
+      mostrarStatus(`ERRO: Já existe um PRAD com o número ${numero}/${ano}! Use o botão "Gerar próximo número" para obter um número disponível.`, 'error');
+      return false;
+    }
+    
     const dados = coletarDadosFormulario();
     dados.id = id;
     dados.status = concluido ? 'concluido' : 'rascunho';
@@ -1693,6 +1781,7 @@
   window.toggleIncluirReparoPDF = toggleIncluirReparoPDF;
   window.limparFormularioParaNovo = limparFormularioParaNovo;
   window.limparFormularioCompleto = limparFormularioCompleto;
+  window.gerarProximoNumero = gerarProximoNumero;
 </script>
 </body>
 </html>
