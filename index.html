@@ -138,6 +138,9 @@
       vertical-align: top;
     }
     .custom-table tbody tr:hover { background-color: #f8f9fa; }
+    .row-na-atendimento {
+      background-color: #fff3e0 !important; /* laranja claro */
+    }
     .btn-add {
       background: linear-gradient(135deg, #6610f2, #6f42c1);
       color: white;
@@ -811,13 +814,264 @@
   function adicionarPendenciaManual() { pendenciasManuais.push({ id: `manual_${Date.now()}_${Math.random()}`, pendencia: "", fundamentacao: "", providencia: "", categoria: "PENDÊNCIAS MANUAIS" }); renderizarPendencias(); atualizarStatusSalvamento(); mostrarStatus('Nova pendência manual adicionada!'); }
   function removerPendenciaManual(id) { pendenciasManuais = pendenciasManuais.filter(p => p.id !== id); if (pendenciaReparoId === id) pendenciaReparoId = null; renderizarPendencias(); atualizarStatusSalvamento(); mostrarStatus('Pendência manual removida!'); }
 
-  // Renderização das tabelas
-  function preencherAnalise() { const body = document.getElementById('analise-itens-body'); body.innerHTML = ''; itensAnalise.forEach((item, idx) => { const row = body.insertRow(); const isCustom = item.isCustom === true; row.innerHTML = `<td><input type="text" class="form-control form-control-sm" id="analise_item_${idx}" value="${item.item}" style="width:60px"></td><td><div class="readonly-cell" style="padding: 6px 8px; background-color: #f8f9fa; border-radius: 6px; font-size: 13px;">${item.exigencia.replace(/"/g, '&quot;')}</div></td><td><select class="form-control form-control-sm" id="analise_atende_${idx}" style="width:90px"><option value="SIM" ${item.atende=='SIM' ? 'selected' : ''}>SIM</option><option value="NÃO" ${item.atende=='NÃO' ? 'selected' : ''}>NÃO</option><option value="PARCIAL" ${item.atende=='PARCIAL' ? 'selected' : ''}>PARCIAL</option><option value="N/A" ${item.atende=='N/A' ? 'selected' : ''}>N/A</option></select></td><td><input type="text" class="form-control form-control-sm" id="analise_fls_${idx}" value="${item.fls || ''}" style="width:70px"></td><td><input type="text" class="form-control form-control-sm" id="analise_obs_${idx}" value="${(item.obs || '').replace(/"/g, '&quot;')}" style="width:100%"></td><td>${isCustom ? `<button type="button" class="btn-remove" onclick="removerItemAnalise(${idx})"><i class="fas fa-trash"></i></button>` : ''}</td>`; const atendeSelect = document.getElementById(`analise_atende_${idx}`); if (atendeSelect) atendeSelect.addEventListener('change', function() { itensAnalise[idx].atende = this.value; renderizarPendencias(); atualizarStatusSalvamento(); }); const itemInput = document.getElementById(`analise_item_${idx}`); if (itemInput) itemInput.addEventListener('input', function() { itensAnalise[idx].item = this.value; renderizarPendencias(); atualizarStatusSalvamento(); }); const flsInput = document.getElementById(`analise_fls_${idx}`); if (flsInput) flsInput.addEventListener('input', function() { itensAnalise[idx].fls = this.value; atualizarStatusSalvamento(); }); const obsInput = document.getElementById(`analise_obs_${idx}`); if (obsInput) obsInput.addEventListener('input', function() { itensAnalise[idx].obs = this.value; renderizarPendencias(); atualizarStatusSalvamento(); }); }); renderizarPendencias(); }
-  function preencherAnexos() { const body = document.getElementById('anexos-body'); body.innerHTML = ''; anexos.forEach((item, idx) => { const row = body.insertRow(); const isCustom = item.isCustom === true; row.innerHTML = `<td><div class="readonly-cell" style="padding: 6px 8px; background-color: #f8f9fa; border-radius: 6px; font-size: 13px;">${item.anexo.replace(/"/g, '&quot;')}</div></td><td><select class="form-control form-control-sm" id="anexo_apresentado_${idx}" style="width:110px"><option value="SIM" ${item.apresentado=='SIM' ? 'selected' : ''}>SIM</option><option value="NÃO" ${item.apresentado=='NÃO' ? 'selected' : ''}>NÃO</option><option value="NÃO APLICÁVEL" ${item.apresentado=='NÃO APLICÁVEL' ? 'selected' : ''}>NÃO APLICÁVEL</option><option value="N/A" ${item.apresentado=='N/A' ? 'selected' : ''}>N/A</option></select></td><td><input type="text" class="form-control form-control-sm" id="anexo_local_${idx}" value="${(item.localizacao || '').replace(/"/g, '&quot;')}" style="width:100%"></td><td><input type="text" class="form-control form-control-sm" id="anexo_obs_${idx}" value="${(item.obs || '').replace(/"/g, '&quot;')}" style="width:100%"></td><td>${isCustom ? `<button type="button" class="btn-remove" onclick="removerItemAnexo(${idx})"><i class="fas fa-trash"></i></button>` : ''}</td>`; const apresSelect = document.getElementById(`anexo_apresentado_${idx}`); if (apresSelect) apresSelect.addEventListener('change', function() { anexos[idx].apresentado = this.value; renderizarPendencias(); atualizarStatusSalvamento(); }); const localInput = document.getElementById(`anexo_local_${idx}`); if (localInput) localInput.addEventListener('input', function() { anexos[idx].localizacao = this.value; atualizarStatusSalvamento(); }); const obsInput = document.getElementById(`anexo_obs_${idx}`); if (obsInput) obsInput.addEventListener('input', function() { anexos[idx].obs = this.value; renderizarPendencias(); atualizarStatusSalvamento(); }); }); renderizarPendencias(); }
-  function adicionarItemAnalise() { itensAnalise.push({ item: (itensAnalise.length+1).toString(), exigencia: "", atende: "N/A", fls: "", obs: "", isCustom: true }); preencherAnalise(); atualizarStatusSalvamento(); }
-  function removerItemAnalise(idx) { if (itensAnalise[idx].isCustom) { itensAnalise.splice(idx, 1); itensAnalise.forEach((item, i) => item.item = (i+1).toString()); preencherAnalise(); atualizarStatusSalvamento(); } else mostrarStatus('Itens padrão não podem ser removidos.', 'info'); }
-  function adicionarItemAnexo() { anexos.push({ anexo: "", apresentado: "N/A", localizacao: "", obs: "", isCustom: true }); preencherAnexos(); atualizarStatusSalvamento(); }
-  function removerItemAnexo(idx) { if (anexos[idx].isCustom) { anexos.splice(idx, 1); preencherAnexos(); atualizarStatusSalvamento(); } else mostrarStatus('Anexos padrão não podem ser removidos.', 'info'); }
+  // ========== FUNÇÃO AUXILIAR PARA ATUALIZAR COR DA LINHA (N/A) ==========
+  function aplicarCorNaLinha(linha, valorSelect, tipoTabela) {
+    if (valorSelect === 'N/A') {
+      linha.classList.add('row-na-atendimento');
+    } else {
+      linha.classList.remove('row-na-atendimento');
+    }
+  }
+
+  // Renderização das tabelas (CORRIGIDA: agora campos customizados são editáveis e com destaque para N/A)
+  function preencherAnalise() {
+    const body = document.getElementById('analise-itens-body');
+    body.innerHTML = '';
+    itensAnalise.forEach((item, idx) => {
+      const row = body.insertRow();
+      const isCustom = item.isCustom === true;
+      
+      // Coluna Item (sempre editável via input)
+      const itemCell = row.insertCell(0);
+      const itemInput = document.createElement('input');
+      itemInput.type = 'text';
+      itemInput.className = 'form-control form-control-sm';
+      itemInput.value = item.item;
+      itemInput.style.width = '60px';
+      itemInput.addEventListener('input', function() {
+        itensAnalise[idx].item = this.value;
+        atualizarStatusSalvamento();
+      });
+      itemCell.appendChild(itemInput);
+      
+      // Coluna Exigência
+      const exigenciaCell = row.insertCell(1);
+      if (isCustom) {
+        const exigenciaInput = document.createElement('input');
+        exigenciaInput.type = 'text';
+        exigenciaInput.className = 'form-control form-control-sm';
+        exigenciaInput.value = item.exigencia;
+        exigenciaInput.style.width = '100%';
+        exigenciaInput.addEventListener('input', function() {
+          itensAnalise[idx].exigencia = this.value;
+          atualizarStatusSalvamento();
+          renderizarPendencias();
+        });
+        exigenciaCell.appendChild(exigenciaInput);
+      } else {
+        const div = document.createElement('div');
+        div.className = 'readonly-cell';
+        div.style.padding = '6px 8px';
+        div.style.backgroundColor = '#f8f9fa';
+        div.style.borderRadius = '6px';
+        div.style.fontSize = '13px';
+        div.textContent = item.exigencia;
+        exigenciaCell.appendChild(div);
+      }
+      
+      // Atendeu?
+      const atendeCell = row.insertCell(2);
+      const atendeSelect = document.createElement('select');
+      atendeSelect.className = 'form-control form-control-sm';
+      atendeSelect.style.width = '90px';
+      const opts = ['SIM', 'NÃO', 'PARCIAL', 'N/A'];
+      opts.forEach(opt => {
+        const option = document.createElement('option');
+        option.value = opt;
+        option.textContent = opt;
+        if (item.atende === opt) option.selected = true;
+        atendeSelect.appendChild(option);
+      });
+      atendeSelect.addEventListener('change', function() {
+        itensAnalise[idx].atende = this.value;
+        aplicarCorNaLinha(row, this.value, 'analise');
+        renderizarPendencias();
+        atualizarStatusSalvamento();
+      });
+      atendeCell.appendChild(atendeSelect);
+      
+      // Aplicar cor inicial
+      aplicarCorNaLinha(row, item.atende, 'analise');
+      
+      // Fls.
+      const flsCell = row.insertCell(3);
+      const flsInput = document.createElement('input');
+      flsInput.type = 'text';
+      flsInput.className = 'form-control form-control-sm';
+      flsInput.style.width = '70px';
+      flsInput.value = item.fls || '';
+      flsInput.addEventListener('input', function() {
+        itensAnalise[idx].fls = this.value;
+        atualizarStatusSalvamento();
+      });
+      flsCell.appendChild(flsInput);
+      
+      // Observação
+      const obsCell = row.insertCell(4);
+      const obsInput = document.createElement('input');
+      obsInput.type = 'text';
+      obsInput.className = 'form-control form-control-sm';
+      obsInput.style.width = '100%';
+      obsInput.value = item.obs || '';
+      obsInput.addEventListener('input', function() {
+        itensAnalise[idx].obs = this.value;
+        renderizarPendencias();
+        atualizarStatusSalvamento();
+      });
+      obsCell.appendChild(obsInput);
+      
+      // Botão remover (apenas custom)
+      const removeCell = row.insertCell(5);
+      if (isCustom) {
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'btn-remove';
+        btn.innerHTML = '<i class="fas fa-trash"></i>';
+        btn.addEventListener('click', () => removerItemAnalise(idx));
+        removeCell.appendChild(btn);
+      } else {
+        removeCell.innerHTML = '';
+      }
+    });
+    renderizarPendencias();
+  }
+
+  function preencherAnexos() {
+    const body = document.getElementById('anexos-body');
+    body.innerHTML = '';
+    anexos.forEach((item, idx) => {
+      const row = body.insertRow();
+      const isCustom = item.isCustom === true;
+      
+      // Coluna Anexo exigido
+      const anexoCell = row.insertCell(0);
+      if (isCustom) {
+        const anexoInput = document.createElement('input');
+        anexoInput.type = 'text';
+        anexoInput.className = 'form-control form-control-sm';
+        anexoInput.value = item.anexo;
+        anexoInput.style.width = '100%';
+        anexoInput.addEventListener('input', function() {
+          anexos[idx].anexo = this.value;
+          atualizarStatusSalvamento();
+        });
+        anexoCell.appendChild(anexoInput);
+      } else {
+        const div = document.createElement('div');
+        div.className = 'readonly-cell';
+        div.style.padding = '6px 8px';
+        div.style.backgroundColor = '#f8f9fa';
+        div.style.borderRadius = '6px';
+        div.style.fontSize = '13px';
+        div.textContent = item.anexo;
+        anexoCell.appendChild(div);
+      }
+      
+      // Apresentado?
+      const apresCell = row.insertCell(1);
+      const apresSelect = document.createElement('select');
+      apresSelect.className = 'form-control form-control-sm';
+      apresSelect.style.width = '110px';
+      const opts = ['SIM', 'NÃO', 'NÃO APLICÁVEL', 'N/A'];
+      opts.forEach(opt => {
+        const option = document.createElement('option');
+        option.value = opt;
+        option.textContent = opt;
+        if (item.apresentado === opt) option.selected = true;
+        apresSelect.appendChild(option);
+      });
+      apresSelect.addEventListener('change', function() {
+        anexos[idx].apresentado = this.value;
+        aplicarCorNaLinha(row, this.value, 'anexo');
+        renderizarPendencias();
+        atualizarStatusSalvamento();
+      });
+      apresCell.appendChild(apresSelect);
+      
+      // Aplicar cor inicial
+      aplicarCorNaLinha(row, item.apresentado, 'anexo');
+      
+      // Localização no PRAD
+      const localCell = row.insertCell(2);
+      const localInput = document.createElement('input');
+      localInput.type = 'text';
+      localInput.className = 'form-control form-control-sm';
+      localInput.style.width = '100%';
+      localInput.value = item.localizacao || '';
+      localInput.addEventListener('input', function() {
+        anexos[idx].localizacao = this.value;
+        atualizarStatusSalvamento();
+      });
+      localCell.appendChild(localInput);
+      
+      // Observação
+      const obsCell = row.insertCell(3);
+      const obsInput = document.createElement('input');
+      obsInput.type = 'text';
+      obsInput.className = 'form-control form-control-sm';
+      obsInput.style.width = '100%';
+      obsInput.value = item.obs || '';
+      obsInput.addEventListener('input', function() {
+        anexos[idx].obs = this.value;
+        renderizarPendencias();
+        atualizarStatusSalvamento();
+      });
+      obsCell.appendChild(obsInput);
+      
+      // Botão remover (apenas custom)
+      const removeCell = row.insertCell(4);
+      if (isCustom) {
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'btn-remove';
+        btn.innerHTML = '<i class="fas fa-trash"></i>';
+        btn.addEventListener('click', () => removerItemAnexo(idx));
+        removeCell.appendChild(btn);
+      } else {
+        removeCell.innerHTML = '';
+      }
+    });
+    renderizarPendencias();
+  }
+
+  function adicionarItemAnalise() { 
+    itensAnalise.push({ 
+      item: (itensAnalise.length+1).toString(), 
+      exigencia: "", 
+      atende: "N/A", 
+      fls: "", 
+      obs: "", 
+      isCustom: true 
+    }); 
+    preencherAnalise(); 
+    atualizarStatusSalvamento(); 
+  }
+  function removerItemAnalise(idx) { 
+    if (itensAnalise[idx].isCustom) { 
+      itensAnalise.splice(idx, 1); 
+      itensAnalise.forEach((item, i) => item.item = (i+1).toString()); 
+      preencherAnalise(); 
+      atualizarStatusSalvamento(); 
+    } else mostrarStatus('Itens padrão não podem ser removidos.', 'info'); 
+  }
+  function adicionarItemAnexo() { 
+    anexos.push({ 
+      anexo: "", 
+      apresentado: "N/A", 
+      localizacao: "", 
+      obs: "", 
+      isCustom: true 
+    }); 
+    preencherAnexos(); 
+    atualizarStatusSalvamento(); 
+  }
+  function removerItemAnexo(idx) { 
+    if (anexos[idx].isCustom) { 
+      anexos.splice(idx, 1); 
+      preencherAnexos(); 
+      atualizarStatusSalvamento(); 
+    } else mostrarStatus('Anexos padrão não podem ser removidos.', 'info'); 
+  }
 
   // Status de salvamento
   let unsaved = false;
@@ -1000,7 +1254,7 @@
     mostrarStatus('Novo PRAD iniciado!');
   }
 
-  // ==================== FUNÇÃO PDF COMPLETA (ORIGINAL) ====================
+  // ==================== FUNÇÃO PDF COMPLETA (MODIFICADA: seções 7 e 8 em nova página) ====================
   function desenharLinhaCategoria(texto, y, pdf, marginLeft, pageWidth, marginRight) {
     const larguraTotal = pageWidth - marginLeft - marginRight;
     const alturaLinha = 7;
@@ -1394,6 +1648,13 @@
         pdf.text('Não há pendências registradas.', marginLeft, yPos);
         yPos += 8;
       }
+
+      // ========== NOVA PÁGINA PARA AS SEÇÕES 7 E 8 ==========
+      adicionarRodape(pdf, marginLeft, pageWidth, marginRight);
+      pdf.addPage();
+      adicionarCabecalho(pdf, tituloCompleto, marginLeft, pageWidth, marginRight);
+      yPos = 48; // reinicia no topo da nova página
+
       // 7. CONCLUSÃO
       verificarPagina(30);
       pdf.setFont('helvetica', 'bold');
@@ -1430,7 +1691,8 @@
       if (!dataInfo) { const hoje = new Date(); dataInfo = `${hoje.getDate().toString().padStart(2,'0')}/${(hoje.getMonth()+1).toString().padStart(2,'0')}/${hoje.getFullYear()}`; }
       pdf.text(`Curitiba, ${dataInfo}`, pageWidth - marginRight, yPos, { align: 'right' });
       yPos += 15;
-      // 8. RESPONSÁVEIS
+      
+      // 8. RESPONSÁVEIS TÉCNICOS PELA ANÁLISE
       verificarPagina(30);
       pdf.setFont('helvetica', 'bold');
       pdf.setFontSize(10);
