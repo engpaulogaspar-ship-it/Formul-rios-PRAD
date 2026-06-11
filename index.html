@@ -13,18 +13,15 @@
       --primary-color: #003366;
       --secondary-color: #0056b3;
       --accent-color: #28a745;
-      --warning-color: #ffc107;
-      --danger-color: #dc3545;
-      --light-bg: #f8fafc;
-      --card-shadow: 0 2px 15px rgba(0, 0, 0, 0.08);
       --border-radius: 12px;
     }
+    * { box-sizing: border-box; }
     body {
-      font-family: 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
+      font-family: 'Segoe UI', Arial, sans-serif;
       background: linear-gradient(135deg, #f5f7fa 0%, #e4e8f0 100%);
       min-height: 100vh;
       padding: 20px 10px;
-      color: #333;
+      margin: 0;
     }
     .dashboard-container { max-width: 1400px; margin: 0 auto; }
     .dashboard-header {
@@ -33,247 +30,109 @@
       padding: 20px 30px;
       border-radius: var(--border-radius);
       margin-bottom: 30px;
-      box-shadow: var(--card-shadow);
-      position: relative;
-      overflow: hidden;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      min-height: 120px;
+      flex-wrap: wrap;
     }
-    .dashboard-header::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      right: 0;
-      width: 200px;
-      height: 100%;
-      background: rgba(255, 255, 255, 0.1);
-      transform: skewX(-20deg);
-      z-index: 1;
-    }
-    .logo-left, .logo-right { position: relative; z-index: 2; flex: 0 0 auto; }
-    .logo-img {
-      height: 80px;
-      width: auto;
-      object-fit: contain;
-      background: white;
-      padding: 8px;
-      border-radius: 10px;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-      transition: transform 0.3s ease;
-    }
-    .org-info { position: relative; z-index: 2; text-align: center; flex: 1; padding: 0 20px; }
-    .org-title { font-size: 20px; font-weight: 700; margin-bottom: 5px; text-shadow: 1px 1px 3px rgba(0,0,0,0.3); }
-    .org-department { font-size: 16px; font-weight: 500; opacity: 0.95; margin-bottom: 5px; }
+    .logo-img { height: 80px; background: white; padding: 8px; border-radius: 10px; }
+    .org-info { text-align: center; flex: 1; padding: 0 20px; }
+    .org-title { font-size: 20px; font-weight: 700; margin-bottom: 5px; }
     .report-title {
       font-size: 16px;
-      background: rgba(255, 255, 255, 0.15);
+      background: rgba(255,255,255,0.15);
       padding: 8px 20px;
       border-radius: 10px;
       display: inline-block;
       margin-top: 8px;
-      font-weight: 600;
-      backdrop-filter: blur(10px);
-      border: 1px solid rgba(255, 255, 255, 0.2);
     }
     .dashboard-card {
       background: white;
       border-radius: var(--border-radius);
       padding: 25px;
-      box-shadow: var(--card-shadow);
+      box-shadow: 0 2px 15px rgba(0,0,0,0.08);
       margin-bottom: 25px;
     }
     .card-header {
       display: flex;
-      align-items: center;
       justify-content: space-between;
+      align-items: center;
       margin-bottom: 20px;
       padding-bottom: 15px;
       border-bottom: 2px solid #f0f0f0;
+      flex-wrap: wrap;
     }
     .card-title { font-size: 20px; font-weight: 700; color: var(--primary-color); margin: 0; display: flex; align-items: center; gap: 10px; }
-    .card-title i { font-size: 22px; }
-    .card-subtitle { font-size: 14px; color: #666; margin-top: 5px; font-weight: 400; }
     .form-control {
       border: 2px solid #e9ecef;
       border-radius: 8px;
       padding: 12px 15px;
-      transition: all 0.3s;
       font-size: 15px;
-    }
-    .form-control:focus {
-      border-color: var(--primary-color);
-      box-shadow: 0 0 0 3px rgba(0,51,102,0.1);
-      outline: none;
-    }
-    .form-group { margin-bottom: 20px; }
-    .form-label { font-weight: 600; color: #495057; margin-bottom: 8px; font-size: 14px; display: flex; align-items: center; gap: 8px; }
-    .table-container {
-      background: white;
-      border-radius: 10px;
-      overflow-x: auto;
-      box-shadow: 0 4px 6px rgba(0,0,0,0.05);
-      border: 1px solid #e9ecef;
-      margin-bottom: 15px;
-    }
-    .custom-table {
       width: 100%;
-      margin-bottom: 0;
-      border-collapse: separate;
-      border-spacing: 0;
-      min-width: 800px;
     }
-    .custom-table thead th {
-      background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-      color: white;
-      font-weight: 600;
-      padding: 12px 16px;
-      border: none;
-      font-size: 13px;
-    }
-    .custom-table tbody td {
-      padding: 10px 12px;
-      border-bottom: 1px solid #e9ecef;
-      vertical-align: top;
-    }
-    .custom-table tbody tr:hover { background-color: #f8f9fa; }
-    .row-na-atendimento {
-      background-color: #fff3e0 !important;
-    }
+    .form-control:focus { border-color: var(--primary-color); outline: none; }
+    .form-group { margin-bottom: 20px; }
+    .form-label { font-weight: 600; margin-bottom: 8px; }
+    .table-container { overflow-x: auto; border: 1px solid #e9ecef; border-radius: 10px; margin-bottom: 15px; }
+    .custom-table { width: 100%; border-collapse: collapse; min-width: 800px; }
+    .custom-table thead th { background: var(--primary-color); color: white; padding: 12px; }
+    .custom-table tbody td { padding: 10px; border-bottom: 1px solid #e9ecef; }
     .btn-add {
       background: linear-gradient(135deg, #6610f2, #6f42c1);
       color: white;
       padding: 10px 20px;
       border-radius: 8px;
-      font-weight: 500;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      transition: all 0.3s ease;
       border: none;
       cursor: pointer;
-      font-size: 14px;
       width: 100%;
-      justify-content: center;
+      font-size: 14px;
     }
-    .btn-add:hover { transform: translateY(-2px); box-shadow: 0 6px 15px rgba(102,16,242,0.3); }
     .btn-remove {
-      background: linear-gradient(135deg, #fd7e14, #e36209);
+      background: #dc3545;
       color: white;
-      padding: 6px 12px;
+      padding: 5px 10px;
       border-radius: 6px;
-      font-weight: 500;
-      display: inline-flex;
-      align-items: center;
-      gap: 5px;
       border: none;
       cursor: pointer;
       font-size: 12px;
     }
-    .btn-remove:hover { background: linear-gradient(135deg, #dc3545, #c82333); transform: translateY(-2px); }
-    .btn-remove-small {
-      background: linear-gradient(135deg, #dc3545, #c82333);
-      color: white;
-      padding: 4px 10px;
-      border-radius: 6px;
-      font-weight: 500;
-      display: inline-flex;
-      align-items: center;
-      gap: 5px;
-      border: none;
-      cursor: pointer;
-      font-size: 11px;
-    }
-    .table-footer {
-      background: #f8f9fa;
-      padding: 15px;
-      border-radius: 0 0 10px 10px;
-      border-top: 1px solid #e9ecef;
-    }
+    .table-footer { background: #f8f9fa; padding: 15px; border-top: 1px solid #e9ecef; }
     .info-table-modern {
       width: 100%;
       border-collapse: collapse;
-      margin-bottom: 20px;
       background: #f9fafb;
       border-radius: 12px;
-      overflow: hidden;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+      margin-bottom: 20px;
     }
-    .info-table-modern td {
-      padding: 12px 15px;
-      border-bottom: 1px solid #e2e8f0;
-      vertical-align: top;
-    }
-    .info-table-modern td:first-child {
-      font-weight: 700;
-      background-color: #f1f5f9;
-      width: 280px;
-      color: var(--primary-color);
-    }
-    .info-table-modern tr:last-child td { border-bottom: none; }
-    .info-table-modern input, .info-table-modern .form-control, .info-table-modern select {
-      background: white;
-      border: 1px solid #cbd5e1;
-      border-radius: 8px;
-      padding: 10px 12px;
-      width: 100%;
-    }
-    .radio-group { display: flex; gap: 25px; align-items: center; flex-wrap: wrap; }
+    .info-table-modern td { padding: 12px; border-bottom: 1px solid #e2e8f0; }
+    .info-table-modern td:first-child { font-weight: 700; background: #f1f5f9; width: 280px; color: var(--primary-color); }
+    .radio-group { display: flex; gap: 25px; flex-wrap: wrap; }
     .radio-option { display: flex; align-items: center; gap: 8px; cursor: pointer; }
-    .radio-option input[type="radio"] { width: 18px; height: 18px; accent-color: var(--primary-color); }
-    .btn-group-custom {
-      display: flex;
-      gap: 15px;
-      justify-content: center;
-      margin-top: 40px;
-      flex-wrap: wrap;
-    }
+    .btn-group-custom { display: flex; gap: 15px; justify-content: center; margin-top: 40px; flex-wrap: wrap; }
     .btn-custom {
       padding: 14px 28px;
       border-radius: 10px;
       font-weight: 600;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      transition: all 0.3s ease;
       border: none;
       cursor: pointer;
       font-size: 15px;
       min-width: 160px;
-      justify-content: center;
     }
-    .btn-save { background: linear-gradient(135deg, #28a745, #20c997); color: white; }
-    .btn-load { background: linear-gradient(135deg, #17a2b8, #138496); color: white; }
-    .btn-pdf { background: linear-gradient(135deg, #dc3545, #c82333); color: white; }
-    .btn-clear { background: linear-gradient(135deg, #6c757d, #5a6268); color: white; }
-    .btn-print { background: linear-gradient(135deg, #ffc107, #e0a800); color: #212529; }
-    .btn-toggle-reparo {
-      background: linear-gradient(135deg, #6f42c1, #e83e8c);
-      color: white;
-    }
-    .btn-toggle-reparo.excluir {
-      background: linear-gradient(135deg, #6c757d, #495057);
-    }
+    .btn-save { background: #28a745; color: white; }
+    .btn-load { background: #17a2b8; color: white; }
+    .btn-pdf { background: #dc3545; color: white; }
+    .btn-clear { background: #6c757d; color: white; }
     .status-bar {
       position: fixed;
       bottom: 25px;
       right: 25px;
-      background: var(--accent-color);
+      background: #28a745;
       color: white;
       padding: 14px 22px;
       border-radius: 10px;
-      box-shadow: 0 6px 20px rgba(0,0,0,0.15);
       display: none;
       z-index: 1000;
-      font-weight: 500;
-      animation: slideIn 0.3s ease;
     }
-    @keyframes slideIn {
-      from { transform: translateX(100%); opacity: 0; }
-      to { transform: translateX(0); opacity: 1; }
-    }
-    .dashboard-footer { text-align: center; margin-top: 30px; padding-top: 20px; border-top: 1px solid #dee2e6; color: #666; font-size: 14px; }
     .status-badge {
       display: inline-flex;
       align-items: center;
@@ -281,157 +140,21 @@
       padding: 6px 12px;
       border-radius: 20px;
       font-size: 12px;
-      font-weight: 600;
       margin-left: 10px;
     }
-    .status-badge.saved { background: rgba(40,167,69,0.1); color: var(--accent-color); border: 1px solid rgba(40,167,69,0.2); }
-    .status-badge.unsaved { background: rgba(255,193,7,0.1); color: #e0a800; border: 1px solid rgba(255,193,7,0.2); }
-    @media (max-width: 992px) {
-      .dashboard-header { flex-direction: column; gap: 15px; text-align: center; min-height: auto; padding: 20px; }
-      .logo-img { height: 60px; }
-      .org-title { font-size: 16px; }
-      .report-title { font-size: 13px; }
-    }
-    @media print {
-      .no-print { display: none !important; }
-      body { background: white; padding: 0; }
-      .dashboard-card { box-shadow: none; border: 1px solid #ddd; }
-      .btn-group-custom, .table-footer, .btn-remove { display: none !important; }
-    }
-    ::-webkit-scrollbar { width: 8px; height: 8px; }
-    ::-webkit-scrollbar-track { background: #f1f1f1; border-radius: 10px; }
-    ::-webkit-scrollbar-thumb { background: var(--primary-color); border-radius: 10px; }
-    .assinatura-item {
-      background: #f8f9fa;
-      padding: 15px;
-      border-radius: 8px;
-      margin-bottom: 15px;
-      border: 1px solid #e9ecef;
-      position: relative;
-    }
-    .assinatura-item .btn-remove-small {
-      position: absolute;
-      top: 10px;
-      right: 10px;
-    }
-    .pendencia-automatica {
-      background-color: #fff3e0;
-    }
-    .pendencia-text {
-      white-space: pre-wrap;
-      word-break: break-word;
-      line-height: 1.4;
-    }
-    .no-print-pdf { display: block; }
-    @media print { .no-print-pdf { display: none !important; } }
-    .readonly-cell {
-      background-color: #f8f9fa;
-    }
-    .numero-container {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-    .btn-auto-number {
-      background: linear-gradient(135deg, #28a745, #20c997);
-      color: white;
-      border: none;
-      border-radius: 8px;
-      padding: 0 15px;
-      cursor: pointer;
-      font-size: 14px;
-      font-weight: 500;
-      transition: all 0.3s ease;
-    }
-    .btn-auto-number:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 4px 12px rgba(40,167,69,0.3);
-    }
-    .aia-item {
-      background: #fff;
-      border: 1px solid #dee2e6;
-      border-radius: 8px;
-      padding: 10px;
-      margin-bottom: 10px;
-      position: relative;
-    }
-    .aia-item .btn-remove-small {
-      position: absolute;
-      top: 5px;
-      right: 5px;
-    }
-    .aia-fields {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      align-items: flex-end;
-    }
-    .aia-fields .field-group {
-      flex: 1;
-      min-width: 150px;
-    }
-    .aia-fields label {
-      font-weight: 600;
-      font-size: 12px;
-      margin-bottom: 4px;
-      display: block;
-    }
-    .aia-fields input, .aia-fields select {
-      width: 100%;
-      padding: 6px 10px;
-      border-radius: 6px;
-      border: 1px solid #ced4da;
-    }
-    .reparo-card {
-      background: #f8f9fa;
-      border-radius: 10px;
-      padding: 15px;
-      margin-top: 15px;
-      border-left: 4px solid var(--primary-color);
-    }
-    .resultado-conforme {
-      background: #d4edda;
-      border: 1px solid #c3e6cb;
-      color: #155724;
-      padding: 10px;
-      border-radius: 8px;
-      margin-top: 10px;
-    }
-    .resultado-nao-conforme {
-      background: #f8d7da;
-      border: 1px solid #f5c6cb;
-      color: #721c24;
-      padding: 10px;
-      border-radius: 8px;
-      margin-top: 10px;
-    }
-    .custom-field-item {
-      background: #f8f9fa;
-      padding: 10px;
-      border-radius: 8px;
-      margin-bottom: 10px;
-      border: 1px solid #e2e8f0;
-      position: relative;
-    }
-    .custom-field-item .btn-remove-small {
-      position: absolute;
-      top: 5px;
-      right: 5px;
-    }
+    .status-badge.saved { background: rgba(40,167,69,0.1); color: #28a745; }
+    .status-badge.unsaved { background: rgba(255,193,7,0.1); color: #e0a800; }
     .user-bar {
       position: fixed;
       top: 20px;
       right: 20px;
-      z-index: 100;
       background: white;
       padding: 8px 15px;
       border-radius: 30px;
       box-shadow: 0 2px 10px rgba(0,0,0,0.15);
       display: flex;
       gap: 12px;
-      align-items: center;
-      font-size: 14px;
-      font-weight: 500;
+      z-index: 100;
     }
     .user-bar button {
       background: var(--primary-color);
@@ -440,9 +163,7 @@
       border-radius: 20px;
       padding: 5px 12px;
       cursor: pointer;
-      font-size: 12px;
     }
-    .user-bar button:hover { opacity: 0.9; }
     .modal-lista {
       display: none;
       position: fixed;
@@ -472,20 +193,22 @@
       align-items: center;
       flex-wrap: wrap;
     }
-    .prad-item:last-child { border-bottom: none; }
-    .prad-actions button { margin-left: 8px; }
-    .login-container {
-      text-align: center;
-    }
-    .toggle-form {
-      margin-top: 15px;
-      color: var(--primary-color);
-      cursor: pointer;
-      text-decoration: underline;
-    }
-    .toggle-form:hover {
-      color: var(--secondary-color);
-    }
+    .toggle-form { color: var(--primary-color); cursor: pointer; text-decoration: underline; }
+    .btn-close { background: none; border: none; font-size: 24px; cursor: pointer; }
+    .badge { padding: 4px 8px; border-radius: 12px; font-size: 11px; }
+    .bg-success { background: #28a745; color: white; }
+    .bg-warning { background: #ffc107; color: #333; }
+    .numero-container { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+    .btn-auto-number { background: #28a745; color: white; border: none; border-radius: 8px; padding: 0 15px; cursor: pointer; height: 48px; }
+    .reparo-card { background: #f8f9fa; padding: 15px; margin-top: 15px; border-left: 4px solid var(--primary-color); border-radius: 8px; }
+    .resultado-conforme { background: #d4edda; padding: 10px; border-radius: 8px; margin-top: 10px; color: #155724; }
+    .resultado-nao-conforme { background: #f8d7da; padding: 10px; border-radius: 8px; margin-top: 10px; color: #721c24; }
+    .assinatura-item { background: #f8f9fa; padding: 15px; border-radius: 8px; margin-bottom: 15px; position: relative; }
+    .assinatura-item .btn-remove-small { position: absolute; top: 10px; right: 10px; background: #dc3545; color: white; border: none; border-radius: 6px; padding: 4px 10px; cursor: pointer; }
+    .custom-field-item { background: #f8f9fa; padding: 10px; border-radius: 8px; margin-bottom: 10px; position: relative; }
+    .custom-field-item .btn-remove-small { position: absolute; top: 5px; right: 5px; background: #dc3545; color: white; border: none; border-radius: 6px; padding: 4px 10px; cursor: pointer; }
+    .readonly-cell { background: #f8f9fa; padding: 6px 8px; border-radius: 6px; }
+    @media (max-width: 768px) { .logo-img { height: 50px; } .org-title { font-size: 14px; } }
   </style>
 </head>
 <body>
@@ -493,114 +216,88 @@
 <!-- Modal de login/registro -->
 <div id="authModal" style="position: fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.85); z-index:2000; display:flex; align-items:center; justify-content:center;">
   <div style="background:white; border-radius:20px; padding:30px; width:400px; max-width:90%;">
-    <div id="loginForm">
-      <i class="fas fa-tree fa-3x mb-3" style="color: var(--primary-color);"></i>
-      <h4>Sistema PRAD - ERCBA/IAT</h4>
-      <p class="text-muted small">Acesse sua conta para continuar<br>Seus dados ficam salvos na nuvem</p>
-      
-      <div class="mb-3">
-        <input type="email" id="loginEmail" class="form-control" placeholder="E-mail" autocomplete="email">
+    <div id="loginFormDiv">
+      <div style="text-align:center;">
+        <i class="fas fa-tree fa-3x mb-3" style="color: #003366;"></i>
+        <h4>Sistema PRAD - ERCBA/IAT</h4>
+        <p class="text-muted small">Acesse sua conta para continuar</p>
       </div>
-      <div class="mb-3">
-        <input type="password" id="loginSenha" class="form-control" placeholder="Senha" autocomplete="current-password">
-      </div>
-      <button class="btn btn-primary w-100 mb-2" onclick="fazerLogin()">
-        <i class="fas fa-sign-in-alt"></i> Entrar
-      </button>
-      <p class="text-center mb-0">
-        <small>Não tem conta? <span class="toggle-form" onclick="mostrarRegistro()">Registrar-se</span></small>
-      </p>
+      <div class="mb-3"><input type="email" id="loginEmail" class="form-control" placeholder="E-mail"></div>
+      <div class="mb-3"><input type="password" id="loginSenha" class="form-control" placeholder="Senha"></div>
+      <button class="btn btn-primary w-100 mb-2" id="btnLogin">Entrar</button>
+      <p class="text-center mb-0"><small>Não tem conta? <span class="toggle-form" id="btnMostrarRegistro">Registrar-se</span></small></p>
     </div>
-    
-    <div id="registroForm" style="display: none;">
-      <i class="fas fa-user-plus fa-3x mb-3" style="color: var(--primary-color);"></i>
-      <h4>Criar nova conta</h4>
-      <p class="text-muted small">Seus dados ficam salvos na nuvem</p>
-      
-      <div class="mb-3">
-        <input type="text" id="regNome" class="form-control" placeholder="Seu nome completo">
+    <div id="registroFormDiv" style="display: none;">
+      <div style="text-align:center;">
+        <i class="fas fa-user-plus fa-3x mb-3" style="color: #003366;"></i>
+        <h4>Criar nova conta</h4>
       </div>
-      <div class="mb-3">
-        <input type="email" id="regEmail" class="form-control" placeholder="E-mail">
-      </div>
-      <div class="mb-3">
-        <input type="password" id="regSenha" class="form-control" placeholder="Senha (mínimo 6 caracteres)">
-      </div>
-      <div class="mb-3">
-        <input type="password" id="regConfirmSenha" class="form-control" placeholder="Confirmar senha">
-      </div>
-      <button class="btn btn-primary w-100 mb-2" onclick="fazerRegistro()">
-        <i class="fas fa-user-check"></i> Criar conta
-      </button>
-      <p class="text-center mb-0">
-        <small>Já tem conta? <span class="toggle-form" onclick="mostrarLogin()">Fazer login</span></small>
-      </p>
+      <div class="mb-3"><input type="text" id="regNome" class="form-control" placeholder="Nome completo"></div>
+      <div class="mb-3"><input type="email" id="regEmail" class="form-control" placeholder="E-mail"></div>
+      <div class="mb-3"><input type="password" id="regSenha" class="form-control" placeholder="Senha (mínimo 6 caracteres)"></div>
+      <div class="mb-3"><input type="password" id="regConfirmSenha" class="form-control" placeholder="Confirmar senha"></div>
+      <button class="btn btn-primary w-100 mb-2" id="btnRegistrar">Criar conta</button>
+      <p class="text-center mb-0"><small>Já tem conta? <span class="toggle-form" id="btnMostrarLogin">Fazer login</span></small></p>
     </div>
   </div>
 </div>
 
 <!-- Barra do usuário -->
 <div class="user-bar" id="userBar" style="display: none;">
-  <span id="userNameDisplay"><i class="fas fa-user"></i> </span>
-  <button onclick="sincronizarComNuvem()"><i class="fas fa-cloud-upload-alt"></i> Sincronizar</button>
-  <button onclick="listarMeusPRADs()"><i class="fas fa-folder-open"></i> Meus PRADs</button>
-  <button onclick="limparFormularioParaNovo()"><i class="fas fa-file"></i> Novo PRAD</button>
-  <button onclick="fazerLogout()"><i class="fas fa-sign-out-alt"></i> Sair</button>
+  <span id="userNameDisplay"></span>
+  <button id="btnSincronizar">Sincronizar</button>
+  <button id="btnMeusPRADs">Meus PRADs</button>
+  <button id="btnNovoPRAD">Novo PRAD</button>
+  <button id="btnLogout">Sair</button>
 </div>
 
 <!-- Modal de listagem -->
 <div id="listaModal" class="modal-lista">
   <div class="modal-card">
     <div class="d-flex justify-content-between align-items-center mb-3">
-      <h4><i class="fas fa-cloud"></i> Meus Processos PRAD (Nuvem)</h4>
-      <button class="btn-close" onclick="fecharLista()">✕</button>
+      <h4>Meus Processos PRAD</h4>
+      <button class="btn-close" id="fecharListaBtn">✕</button>
     </div>
     <div id="listaContainer">Carregando...</div>
   </div>
 </div>
 
-<!-- ========== FORMULÁRIO PRINCIPAL ========== -->
+<!-- Formulário Principal -->
 <div class="dashboard-container" id="mainForm" style="display: none;">
   <div class="dashboard-header">
-    <div class="logo-left"><img src="https://upload.wikimedia.org/wikipedia/pt/b/ba/Logo_IAT_PR.png" alt="Logo ERCBA" class="logo-img"></div>
+    <div class="logo-left"><img src="https://upload.wikimedia.org/wikipedia/pt/b/ba/Logo_IAT_PR.png" alt="Logo" class="logo-img" onerror="this.style.display='none'"></div>
     <div class="org-info">
       <h1 class="org-title">ESCRITÓRIO REGIONAL DE CURITIBA – ERCBA</h1>
       <div class="org-department">SETOR DE LICENCIAMENTO FLORESTAL</div>
       <div class="report-title" id="reportTitle">INFORMAÇÃO TÉCNICA PRAD</div>
     </div>
-    <div class="logo-right"><img src="https://upload.wikimedia.org/wikipedia/pt/b/ba/Logo_IAT_PR.png" alt="Logo IAT" class="logo-img"></div>
+    <div class="logo-right"><img src="https://upload.wikimedia.org/wikipedia/pt/b/ba/Logo_IAT_PR.png" alt="Logo" class="logo-img" onerror="this.style.display='none'"></div>
   </div>
 
   <div class="dashboard-card">
     <div class="card-header">
-      <h3 class="card-title"><i class="fas fa-tree"></i> INFORMAÇÃO TÉCNICA PRAD
-        <span id="saveStatus" class="status-badge unsaved"><i class="fas fa-sync-alt"></i> NÃO SALVO</span>
-      </h3>
-      <span class="card-subtitle">Baseado na Portaria IAT nº 17/2025</span>
+      <h3 class="card-title">INFORMAÇÃO TÉCNICA PRAD <span id="saveStatus" class="status-badge unsaved">NÃO SALVO</span></h3>
     </div>
 
-    <div class="form-group no-print-pdf" style="margin-bottom: 20px;">
-      <label class="form-label"><i class="fas fa-hashtag"></i> Nº DA INFORMAÇÃO TÉCNICA (apenas o número):</label>
+    <div class="form-group">
+      <label class="form-label">Nº DA INFORMAÇÃO TÉCNICA:</label>
       <div class="numero-container">
-        <div class="input-group" style="max-width: 300px;">
-          <input type="text" id="prad_numero_info" class="form-control" value="" placeholder="Ex: 001" required>
-          <span class="input-group-text">/<span id="anoAtualDisplay"></span></span>
+        <div style="display: flex; align-items: center;">
+          <input type="text" id="prad_numero_info" class="form-control" style="width: 150px;" placeholder="001">
+          <span style="margin-left: 5px;">/<span id="anoAtualDisplay"></span></span>
         </div>
-        <button type="button" class="btn-auto-number" onclick="gerarProximoNumero()">
-          <i class="fas fa-magic"></i> Gerar próximo número
-        </button>
+        <button type="button" class="btn-auto-number" id="btnGerarNumero">Gerar próximo número</button>
       </div>
-      <small class="text-muted">Clique em "Gerar próximo número" para obter o próximo número disponível automaticamente</small>
     </div>
 
-    <h5 style="color: var(--primary-color); margin: 15px 0 10px 0;"><i class="fas fa-info-circle"></i> 1. INFORMAÇÕES GERAIS</h5>
+    <h5 style="color: #003366;">1. INFORMAÇÕES GERAIS</h5>
     <table class="info-table-modern">
-      <tbody id="infoTableBody">
-        <tr><td style="width:280px">INTERESSADO:</td><td><input type="text" id="prad_interessado" class="form-control"></td></tr>
-        <tr><td>TIPO DE DOCUMENTO:</td><td><div class="radio-group"><div class="radio-option"><input type="radio" name="tipo_documento" value="CPF" id="tipo_cpf" checked> <label for="tipo_cpf">CPF</label></div><div class="radio-option"><input type="radio" name="tipo_documento" value="CNPJ" id="tipo_cnpj"> <label for="tipo_cnpj">CNPJ</label></div></div><div style="margin-top: 8px;"><input type="text" id="prad_documento" class="form-control" placeholder="Nº do documento"></div></td></tr>
+      <tbody>
+        <tr><td>INTERESSADO:</td><td><input type="text" id="prad_interessado" class="form-control"></td></tr>
+        <tr><td>TIPO DE DOCUMENTO:</td><td><div class="radio-group"><div class="radio-option"><input type="radio" name="tipo_documento" value="CPF" id="tipo_cpf" checked> CPF</div><div class="radio-option"><input type="radio" name="tipo_documento" value="CNPJ" id="tipo_cnpj"> CNPJ</div></div><div style="margin-top: 8px;"><input type="text" id="prad_documento" class="form-control" placeholder="Nº do documento"></div></td></tr>
         <tr><td>PROCESSO PRAD:</td><td><input type="text" id="prad_processo" class="form-control"></td></tr>
-        <tr><td>RAZÃO DA APRESENTAÇÃO DO PRAD:</td><td><div class="radio-group" id="razao-group"><div class="radio-option"><input type="radio" name="prad_razao" value="AIA" id="razao_aia"> <label for="razao_aia">AIA</label></div><div class="radio-option"><input type="radio" name="prad_razao" value="TAC" id="razao_tac"> <label for="razao_tac">TAC</label></div><div class="radio-option"><input type="radio" name="prad_razao" value="Licenciamento" id="razao_lic"> <label for="razao_lic">Licenciamento</label></div><div class="radio-option"><input type="radio" name="prad_razao" value="Substituição de Exóticas" id="razao_exoticas"> <label for="razao_exoticas">Substituição de Exóticas em APP</label></div><div class="radio-option"><input type="radio" name="prad_razao" value="Regularização Ambiental" id="razao_reg_amb"> <label for="razao_reg_amb">Regularização Ambiental de Imóvel Rural não integrado ao PRA</label></div><div class="radio-option"><input type="radio" name="prad_razao" value="Voluntário" id="razao_voluntario"> <label for="razao_voluntario">Voluntário</label></div><div class="radio-option"><input type="radio" name="prad_razao" value="Outro" id="razao_outro"> <label for="razao_outro">Outro:</label></div></div><div id="razao_numero_container"><div id="outro_razao_desc_container" style="margin-top:8px; display:none;"><label for="prad_razao_outro_desc">Especificação (Outro):</label><input type="text" id="prad_razao_outro_desc" class="form-control" placeholder="Descreva a razão"></div></div></td></tr>
-        <tr id="aiaSectionPlaceholder" style="display: none;"><td colspan="2"></td></tr>
+        <tr><td>RAZÃO DA APRESENTAÇÃO:</td><td><div class="radio-group" id="razao-group"><div class="radio-option"><input type="radio" name="prad_razao" value="AIA"> AIA</div><div class="radio-option"><input type="radio" name="prad_razao" value="TAC"> TAC</div><div class="radio-option"><input type="radio" name="prad_razao" value="Licenciamento"> Licenciamento</div><div class="radio-option"><input type="radio" name="prad_razao" value="Substituição de Exóticas"> Substituição de Exóticas</div><div class="radio-option"><input type="radio" name="prad_razao" value="Regularização Ambiental"> Regularização Ambiental</div><div class="radio-option"><input type="radio" name="prad_razao" value="Voluntário"> Voluntário</div><div class="radio-option"><input type="radio" name="prad_razao" value="Outro"> Outro</div></div><div id="outro_razao_desc_container" style="margin-top:8px; display:none;"><input type="text" id="prad_razao_outro_desc" class="form-control" placeholder="Descreva a razão"></div></td></tr>
+        <tr id="aiaSectionPlaceholder" style="display: none;"><td colspan="2">-- Seção AIA --</td></tr>
         <tr><td>RESPONSÁVEL TÉCNICO DO PRAD:</td><td><input type="text" id="prad_rt_nome" class="form-control" placeholder="Nome completo" style="margin-bottom: 8px;"><input type="text" id="prad_rt_curso" class="form-control" placeholder="Curso / Formação" style="margin-bottom: 8px;"><input type="text" id="prad_rt_crea" class="form-control" placeholder="Nº do CREA"></td></tr>
         <tr><td>ART nº:</td><td><input type="text" id="prad_art" class="form-control"></td></tr>
         <tr><td>MUNICÍPIO:</td><td><input type="text" id="prad_municipio" class="form-control"></td></tr>
@@ -608,89 +305,89 @@
     </table>
 
     <div style="margin-top: 20px;">
-      <h5 style="color: var(--primary-color);"><i class="fas fa-plus-circle"></i> Campos personalizados</h5>
+      <h5 style="color: #003366;">Campos personalizados</h5>
       <div id="custom-fields-container"></div>
-      <button type="button" class="btn-add" onclick="adicionarCampoPersonalizado()"><i class="fas fa-plus"></i> Adicionar campo personalizado</button>
+      <button type="button" class="btn-add" id="btnAddCampo">Adicionar campo personalizado</button>
     </div>
 
-    <h5 style="color: var(--primary-color); margin: 15px 0 10px 0;"><i class="fas fa-clipboard-list"></i> 2. ANÁLISE DOS ITENS EXIGIDOS NO ANEXO I DA PORTARIA 17/2025</h5>
+    <h5 style="color: #003366; margin-top: 20px;">2. ANÁLISE DOS ITENS EXIGIDOS</h5>
     <div class="table-container">
       <table class="custom-table">
-        <thead><tr><th>Item</th><th>Exigência</th><th>Atendeu?</th><th>Fls.</th><th>Observação</th><th style="width:50px"></th></tr></thead>
+        <thead><tr><th>Item</th><th>Exigência</th><th>Atendeu?</th><th>Fls.</th><th>Observação</th><th></th></tr></thead>
         <tbody id="analise-itens-body"></tbody>
-       </table>
+      </table>
     </div>
-    <div class="table-footer no-print"><button type="button" class="btn-add" onclick="adicionarItemAnalise()"><i class="fas fa-plus-circle"></i> Adicionar Item à Análise</button></div>
+    <div class="table-footer"><button type="button" class="btn-add" id="btnAddItemAnalise">Adicionar Item à Análise</button></div>
 
-    <h5 style="color: var(--primary-color); margin: 25px 0 10px 0;"><i class="fas fa-paperclip"></i> 3. ANEXOS EXIGIDOS PELA PORTARIA 17/2025 (ITEM 16 DO ANEXO I)</h5>
+    <h5 style="color: #003366;">3. ANEXOS EXIGIDOS</h5>
     <div class="table-container">
       <table class="custom-table">
-        <thead><tr><th>Anexo exigido</th><th>Apresentado?</th><th>Localização no PRAD</th><th>Observação</th><th style="width:50px"></th></tr></thead>
+        <thead><tr><th>Anexo exigido</th><th>Apresentado?</th><th>Localização</th><th>Observação</th><th></th></tr></thead>
         <tbody id="anexos-body"></tbody>
-       </table>
+      </table>
     </div>
-    <div class="table-footer no-print"><button type="button" class="btn-add" onclick="adicionarItemAnexo()"><i class="fas fa-plus-circle"></i> Adicionar Anexo</button></div>
+    <div class="table-footer"><button type="button" class="btn-add" id="btnAddAnexo">Adicionar Anexo</button></div>
 
-    <h5 style="color: var(--primary-color); margin: 25px 0 10px 0;"><i class="fas fa-comment"></i> 4. OBSERVAÇÕES</h5>
+    <h5 style="color: #003366;">4. OBSERVAÇÕES</h5>
     <textarea id="prad_observacoes" class="form-control" rows="6"></textarea>
 
-    <h5 style="color: var(--primary-color); margin: 25px 0 10px 0;"><i class="fas fa-question-circle"></i> 5. REPARAÇÃO DO DANO</h5>
+    <h5 style="color: #003366;">5. REPARAÇÃO DO DANO</h5>
     <div class="form-group">
-      <label class="form-label">Foi proposto reparar o dano no local?</label>
       <div class="radio-group">
-        <div class="radio-option"><input type="radio" name="reparo_local" value="SIM" id="reparo_sim" onchange="toggleReparoForm()"> <label for="reparo_sim">SIM</label></div>
-        <div class="radio-option"><input type="radio" name="reparo_local" value="NAO" id="reparo_nao" checked onchange="toggleReparoForm()"> <label for="reparo_nao">NÃO</label></div>
+        <div class="radio-option"><input type="radio" name="reparo_local" value="SIM" id="reparo_sim"> SIM</div>
+        <div class="radio-option"><input type="radio" name="reparo_local" value="NAO" id="reparo_nao" checked> NÃO</div>
       </div>
     </div>
     <div id="reparoSimForm" style="display: none;">
       <div class="reparo-card">
-        <h6><i class="fas fa-check-circle"></i> Reparo no local do dano</h6>
-        <div class="row"><div class="col-md-6"><label class="form-label">Área que foi ilegalmente desmatada/suprimida (ha):</label><input type="number" id="area_suprimida_sim" class="form-control" step="0.01" oninput="calcularReparoSim()"></div><div class="col-md-6"><label class="form-label">Área a reparar o dano (no local):</label><div class="input-group"><input type="number" id="area_restaurada_valor" class="form-control" step="0.01" oninput="calcularReparoSim()"><select id="area_restaurada_unidade" class="form-control" style="width: 100px;" onchange="calcularReparoSim()"><option value="ha">ha</option><option value="m2">m²</option></select></div></div></div>
-        <div id="resultadoReparoSim" class="mt-3"></div>
+        <h6>Reparo no local do dano</h6>
+        <div><label>Área desmatada (ha):</label><input type="number" id="area_suprimida_sim" class="form-control" step="0.01"></div>
+        <div><label>Área a reparar:</label><input type="number" id="area_restaurada_valor" class="form-control" step="0.01"></div>
+        <div id="resultadoReparoSim"></div>
       </div>
     </div>
     <div id="reparoNaoForm" style="display: block;">
       <div class="reparo-card">
-        <h6><i class="fas fa-map-marker-alt"></i> Reparo em local diverso (Compensação)</h6>
-        <div class="row"><div class="col-md-6"><label class="form-label">Área que foi ilegalmente desmatada/suprimida (ha):</label><input type="number" id="area_suprimida_nao" class="form-control" step="0.01" oninput="calcularReparoNao()"></div><div class="col-md-6"><label class="form-label">Área que o PRAD efetivamente propõe restaurar/recuperar:</label><div class="input-group"><input type="number" id="area_compensada_valor" class="form-control" step="0.01" oninput="calcularReparoNao()"><select id="area_compensada_unidade" class="form-control" style="width: 100px;" onchange="calcularReparoNao()"><option value="ha">ha</option><option value="m2">m²</option></select></div></div></div>
-        <div class="row mt-3"><div class="col-md-12"><label class="form-label">Local da compensação:</label><select id="local_compensacao" class="form-control" onchange="calcularReparoNao()"><option value="4">Mesma propriedade (4x)</option><option value="6">Mesma microbacia (6x)</option><option value="10">Mesma bacia hidrográfica (10x)</option></select></div></div>
-        <div id="resultadoReparoNao" class="mt-3"></div>
+        <h6>Reparo em local diverso</h6>
+        <div><label>Área desmatada (ha):</label><input type="number" id="area_suprimida_nao" class="form-control" step="0.01"></div>
+        <div><label>Área a compensar:</label><input type="number" id="area_compensada_valor" class="form-control" step="0.01"></div>
+        <div><label>Local da compensação:</label><select id="local_compensacao" class="form-control"><option value="4">Mesma propriedade (4x)</option><option value="6">Mesma microbacia (6x)</option><option value="10">Mesma bacia (10x)</option></select></div>
+        <div id="resultadoReparoNao"></div>
       </div>
     </div>
 
-    <h5 style="color: var(--primary-color); margin: 25px 0 10px 0;"><i class="fas fa-exclamation-triangle"></i> 6. PENDÊNCIAS A SEREM APRESENTADAS</h5>
+    <h5 style="color: #003366;">6. PENDÊNCIAS</h5>
     <div class="table-container">
       <table class="custom-table">
-        <thead><tr><th style="width:40px">Item</th><th>Pendência identificada</th><th>Providência necessária</th><th>Fundamentação normativa</th><th style="width:50px"></th></tr></thead>
+        <thead><tr><th>Item</th><th>Pendência</th><th>Providência</th><th>Fundamentação</th><th></th></tr></thead>
         <tbody id="pendencias-body"></tbody>
       </table>
     </div>
-    <div class="table-footer no-print"><button type="button" class="btn-add" onclick="adicionarPendenciaManual()"><i class="fas fa-plus-circle"></i> Adicionar Pendência Manual</button></div>
+    <div class="table-footer"><button type="button" class="btn-add" id="btnAddPendencia">Adicionar Pendência</button></div>
 
-    <h5 style="color: var(--primary-color); margin: 25px 0 10px 0;"><i class="fas fa-check-circle"></i> 7. CONCLUSÃO E ENCAMINHAMENTO</h5>
-    <div class="form-group"><div class="radio-group"><div class="radio-option"><input type="radio" name="conclusao_prad" value="APTO" id="prad_apto"> <label for="prad_apto"><strong>APTO À APROVAÇÃO</strong></label></div><div class="radio-option"><input type="radio" name="conclusao_prad" value="NAO_APTO" id="prad_nao_apto" checked> <label for="prad_nao_apto"><strong>NÃO APTO À APROVAÇÃO</strong></label></div></div></div>
-    <div class="form-group"><label class="form-label">Prazo para correções (dias):</label><input type="number" id="prad_prazo" class="form-control" style="width: 150px;" value="60"></div>
-    <div class="form-group"><label class="form-label">Texto da Conclusão (automático):</label><textarea id="prad_conclusao_texto" class="form-control" rows="8" readonly style="background-color: #f8f9fa;"></textarea></div>
-    <div class="form-group"><label class="form-label">Data da Informação (DD/MM/AAAA):</label><input type="text" id="prad_data_info" class="form-control" style="width: auto; display: inline-block;" placeholder="DD/MM/AAAA"></div>
+    <h5 style="color: #003366;">7. CONCLUSÃO</h5>
+    <div class="radio-group">
+      <div class="radio-option"><input type="radio" name="conclusao_prad" value="APTO" id="prad_apto"> APTO À APROVAÇÃO</div>
+      <div class="radio-option"><input type="radio" name="conclusao_prad" value="NAO_APTO" id="prad_nao_apto" checked> NÃO APTO À APROVAÇÃO</div>
+    </div>
+    <div class="form-group"><label>Prazo (dias):</label><input type="number" id="prad_prazo" class="form-control" style="width: 150px;" value="60"></div>
+    <div class="form-group"><label>Texto da Conclusão:</label><textarea id="prad_conclusao_texto" class="form-control" rows="6" readonly style="background:#f8f9fa;"></textarea></div>
+    <div class="form-group"><label>Data:</label><input type="text" id="prad_data_info" class="form-control" style="width: 150px;" placeholder="DD/MM/AAAA"></div>
 
-    <h5 style="color: var(--primary-color); margin: 35px 0 15px 0;"><i class="fas fa-signature"></i> 8. RESPONSÁVEIS TÉCNICOS PELA ANÁLISE</h5>
+    <h5 style="color: #003366;">8. RESPONSÁVEIS TÉCNICOS</h5>
     <div id="responsaveis-container"></div>
-    <div class="table-footer no-print"><button type="button" class="btn-add" onclick="adicionarResponsavel()"><i class="fas fa-plus-circle"></i> Adicionar Responsável Técnico</button></div>
+    <div class="table-footer"><button type="button" class="btn-add" id="btnAddResponsavel">Adicionar Responsável</button></div>
 
-    <div class="form-group no-print-pdf" style="margin-top: 30px; padding: 15px; background-color: #e9ecef; border-radius: 8px; text-align: center;">
-      <strong><i class="fas fa-hashtag"></i> INFORMAÇÃO TÉCNICA PRAD Nº <span id="infoNumeroFinal">---</span></strong>
+    <div style="margin-top: 30px; padding: 15px; background: #e9ecef; border-radius: 8px; text-align: center;">
+      <strong>INFORMAÇÃO TÉCNICA PRAD Nº <span id="infoNumeroFinal">---</span></strong>
     </div>
   </div>
 
-  <div class="dashboard-footer"><p><i class="fas fa-shield-alt"></i> Documento oficial - ERCBA/IAT - Setor de Licenciamento Florestal</p></div>
-
-  <div class="btn-group-custom no-print">
-    <button type="button" id="btnToggleReparo" class="btn-custom btn-toggle-reparo" onclick="toggleIncluirReparoPDF()"><i class="fas fa-toggle-on"></i> Incluir Reparo no PDF</button>
-    <button type="button" class="btn-custom btn-save" onclick="salvarPRADLocal(false)"><i class="fas fa-save"></i> Salvar</button>
-    <button type="button" class="btn-custom btn-load" onclick="listarMeusPRADs()"><i class="fas fa-cloud-download-alt"></i> Meus PRADs</button>
-    <button type="button" class="btn-custom btn-pdf" onclick="gerarPDF()"><i class="fas fa-file-pdf"></i> Gerar PDF</button>
-    <button type="button" class="btn-custom btn-clear" onclick="limparFormulario()"><i class="fas fa-trash-alt"></i> Limpar</button>
-    <button type="button" class="btn-custom btn-print" onclick="window.print()"><i class="fas fa-print"></i> Imprimir</button>
+  <div class="btn-group-custom">
+    <button type="button" id="btnSalvar" class="btn-custom btn-save">Salvar</button>
+    <button type="button" id="btnCarregar" class="btn-custom btn-load">Meus PRADs</button>
+    <button type="button" id="btnPDF" class="btn-custom btn-pdf">Gerar PDF</button>
+    <button type="button" id="btnLimpar" class="btn-custom btn-clear">Limpar</button>
   </div>
 </div>
 
@@ -699,443 +396,202 @@
 <script>
   // ==================== CONFIGURAÇÃO SUPABASE ====================
   const SUPABASE_URL = 'https://mxsturttrohvgxxcxdeo.supabase.co';
-  const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im14c3R1cnR0cm9odmd4eGN4ZGVvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODExNzYyMjAsImV4cCI6MjA5Njc1MjIyMH0.lxnFQ-ZR7F6-RlWpsYXTd1RyBLqIjErQNWHp3A5rUa8';
+  const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im14c3R1cnR0cm9odmd4eGN4ZGVvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODExNzYyMjAsImV4cCI6MjA5Njc1MjIyMH0.lxnFQ-ZR7F6-RlWpsYXTd1RyBLqIjErQNWHp3A5rUa8';
   
   const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
   let usuarioAtual = null;
   let usuarioId = null;
-  let incluirReparoPDF = true;
-  let unsaved = false;
   let pendenciasManuais = [];
   let itensAnalise = [];
   let anexos = [];
   let responsaveis = [{ nome: "Paulo Francisco Nginga Gaspar", curso: "Engenharia de Energias", crea: "2523337967" }];
   let camposPersonalizados = [];
-  let aiasList = [];
-  let pendenciaReparoId = null;
   
-  const itensAnalisePadrao = [ "Dados do PRAD (nome, RT, razão)", "Dados do proprietário", "Identificação do RT (elaboração)", "Identificação do RT (execução)", "Descrição da propriedade/posse", "Diagnóstico ambiental da área degradada", "Objetivo geral e específicos", "Descrição das metodologias", "Espécies vegetais a serem empregadas", "Monitoramento", "Manutenção (tratos culturais)", "Cronogramas físico e financeiro", "Equipe técnica", "Documentação cartográfica", "Referências bibliográficas", "Anexos" ];
-  const anexosPadrao = [ "Fotografias", "Fotos aéreas", "Mapas", "Arquivos vetoriais (KML/SHP)", "ART", "Documentos de identificação (RG/CPF)", "Procuração / representação legal", "Recibo do CAR", "Certidão de Registro de Imóveis", "Comprovante de taxa ambiental", "Imagens de satélite", "Inventário florestal", "Auto de Infração Ambiental (AIA)", "Manifestações concordantes de terceiros", "Termo de Ajustamento de Conduta (TAC)", "Licença Ambiental", "Autorização de Supressão de Vegetação (ASV) ou Uso Alternativo do Solo (UAS)" ];
-  
-  const pendenciaItens = [
-    { titulo: "Dados do PRAD não apresentados ou incompletos", providencia: "Preencher corretamente todos os campos do item 1 do Anexo I", fundamentacao: "Anexo I, item 1 da Portaria 17/2025" },
-    { titulo: "Dados do proprietário/possuidor (restaurador) não informados", providencia: "Informar nome/razão social, CPF/CNPJ, RG, endereço completo, e-mail e telefone", fundamentacao: "Anexo I, item 2 da Portaria 17/2025" },
-    { titulo: "Identificação do responsável técnico pela elaboração do PRAD não apresentada", providencia: "Apresentar nome, CPF, RG, formação, registro no conselho de classe, endereço, e-mail, telefone e número da ART de elaboração", fundamentacao: "Anexo I, item 3 da Portaria 17/2025" },
-    { titulo: "Identificação do responsável técnico pela execução do PRAD não apresentada", providencia: "Apresentar nome, CPF, RG, formação, registro no conselho de classe, endereço, e-mail, telefone e número da ART de execução", fundamentacao: "Anexo I, item 4 da Portaria 17/2025" },
-    { titulo: "Descrição da propriedade/posse não apresentada", providencia: "Informar nome do imóvel, endereço, município, número do recibo CAR, área total, área consolidada, área de vegetação nativa, passivos em APP e RL", fundamentacao: "Anexo I, item 5 da Portaria 17/2025" },
-    { titulo: "Diagnóstico ambiental da área degradada não apresentado", providencia: "Descrever: localização da área degradada, causa da degradação, atividades causadoras, efeitos ao ambiente", fundamentacao: "Anexo I, item 6 da Portaria 17/2025" },
-    { titulo: "Objetivos (geral e específicos) não apresentados", providencia: "Informar objetivo geral e objetivos específicos", fundamentacao: "Anexo I, item 7 da Portaria 17/2025" },
-    { titulo: "Metodologias de recuperação e ações não descritas", providencia: "Descrever metodologias, justificar a escolha, detalhar ações", fundamentacao: "Anexo I, item 8 da Portaria 17/2025" },
-    { titulo: "Espécies vegetais a serem empregadas não apresentadas", providencia: "Apresentar tabela de espécies nativas com nome científico, nome comum, classificação", fundamentacao: "Anexo I, item 9 da Portaria 17/2025" },
-    { titulo: "Monitoramento não detalhado", providencia: "Detalhar métodos de avaliação para cada indicador ecológico", fundamentacao: "Anexo I, item 10 da Portaria 17/2025" },
-    { titulo: "Manutenção (tratos culturais e intervenções) não descrita", providencia: "Descrever medidas de manutenção", fundamentacao: "Anexo I, item 11 da Portaria 17/2025" },
-    { titulo: "Cronogramas de execução (físico e financeiro) não apresentados", providencia: "Apresentar cronograma físico e financeiro", fundamentacao: "Anexo I, item 12 da Portaria 17/2025" },
-    { titulo: "Equipe técnica não identificada", providencia: "Informar dados do responsável técnico e demais integrantes da equipe", fundamentacao: "Anexo I, item 13 da Portaria 17/2025" },
-    { titulo: "Documentação cartográfica (mapas e imagens) não apresentada", providencia: "Apresentar mapa georreferenciado", fundamentacao: "Anexo I, item 14 da Portaria 17/2025" },
-    { titulo: "Referências bibliográficas não apresentadas", providencia: "Informar referências utilizadas", fundamentacao: "Anexo I, item 15 da Portaria 17/2025" }
-  ];
-  
-  const pendenciaAnexos = [
-    { titulo: "Fotografias não anexadas", providencia: "Anexar fotografias nítidas, coloridas, contendo coordenadas geográficas", fundamentacao: "Anexo I, item 16 da Portaria 17/2025" },
-    { titulo: "Fotos aéreas não anexadas", providencia: "Anexar fotos aéreas da área degradada e do entorno", fundamentacao: "Anexo I, item 16 da Portaria 17/2025" },
-    { titulo: "Mapas não anexados", providencia: "Anexar mapas georreferenciados (formato PDF)", fundamentacao: "Anexo I, item 16 da Portaria 17/2025" },
-    { titulo: "Arquivos vetoriais (KML/SHP) não anexados", providencia: "Anexar arquivo shapefile (.shp) ou KML compactado", fundamentacao: "Art. 28 da Portaria 17/2025" },
-    { titulo: "Anotação de Responsabilidade Técnica (ART) não apresentada", providencia: "Apresentar ART de elaboração e ART de execução", fundamentacao: "Art. 16, inciso V da Portaria 17/2025" },
-    { titulo: "Documentos de identificação (RG/CPF) não anexados", providencia: "Anexar cópia do RG e CPF do proprietário/possuidor", fundamentacao: "Art. 16, inciso I da Portaria 17/2025" },
-    { titulo: "Procuração / representação legal não apresentada", providencia: "Apresentar procuração com poderes específicos", fundamentacao: "Art. 16, inciso II da Portaria 17/2025" },
-    { titulo: "Recibo do Cadastro Ambiental Rural (CAR) não anexado", providencia: "Anexar o recibo de inscrição do imóvel no CAR", fundamentacao: "Art. 16, inciso III da Portaria 17/2025" },
-    { titulo: "Certidão de Registro de Imóveis não anexada", providencia: "Anexar certidão atualizada", fundamentacao: "Art. 16, inciso IV da Portaria 17/2025" },
-    { titulo: "Comprovante de recolhimento da taxa ambiental não anexado", providencia: "Recolher a taxa ambiental e anexar o comprovante", fundamentacao: "Art. 20 da Portaria 17/2025" }
-  ];
+  const itensAnalisePadrao = [ "Dados do PRAD", "Dados do proprietário", "Identificação do RT", "Descrição da propriedade", "Diagnóstico ambiental", "Objetivos", "Metodologias", "Espécies vegetais", "Monitoramento", "Manutenção", "Cronogramas", "Equipe técnica", "Documentação cartográfica", "Referências" ];
+  const anexosPadrao = [ "Fotografias", "Mapas", "ART", "Documentos", "CAR", "Certidão", "Comprovante de taxa", "AIA" ];
 
-  // ==================== FUNÇÕES DE AUTENTICAÇÃO ====================
-  async function fazerLogin() {
-    const email = document.getElementById('loginEmail').value.trim();
-    const senha = document.getElementById('loginSenha').value;
-    
-    if (!email || !senha) {
-      mostrarStatus('Preencha e-mail e senha!', 'error');
-      return;
-    }
-    
-    mostrarStatus('Autenticando...', 'info');
-    
-    try {
-      const { data, error } = await supabase.auth.signInWithPassword({ email, password: senha });
-      if (error) throw error;
-      
-      usuarioAtual = data.user.email;
-      usuarioId = data.user.id;
-      
-      document.getElementById('userNameDisplay').innerHTML = `<i class="fas fa-user-circle"></i> ${email.split('@')[0]}`;
-      document.getElementById('authModal').style.display = 'none';
-      document.getElementById('mainForm').style.display = 'block';
-      document.getElementById('userBar').style.display = 'flex';
-      
-      inicializarDados();
-      preencherAnalise();
-      preencherAnexos();
-      preencherResponsaveis();
-      renderizarPendencias();
-      atualizarTituloRelatorio();
-      setupRazaoEventos();
-      renderizarCamposPersonalizados();
-      
-      const hoje = new Date();
-      if (!document.getElementById('prad_data_info').value) {
-        document.getElementById('prad_data_info').value = `${hoje.getDate().toString().padStart(2,'0')}/${(hoje.getMonth()+1).toString().padStart(2,'0')}/${hoje.getFullYear()}`;
-      }
-      
-      mostrarStatus(`Bem-vindo, ${email}!`, 'success');
-      
-    } catch (error) {
-      mostrarStatus(`Erro: ${error.message}`, 'error');
-    }
-  }
-  
-  async function fazerRegistro() {
-    const nome = document.getElementById('regNome').value.trim();
-    const email = document.getElementById('regEmail').value.trim();
-    const senha = document.getElementById('regSenha').value;
-    const confirmSenha = document.getElementById('regConfirmSenha').value;
-    
-    if (!nome || !email || !senha) {
-      mostrarStatus('Preencha todos os campos!', 'error');
-      return;
-    }
-    if (senha !== confirmSenha) {
-      mostrarStatus('As senhas não coincidem!', 'error');
-      return;
-    }
-    if (senha.length < 6) {
-      mostrarStatus('A senha deve ter no mínimo 6 caracteres!', 'error');
-      return;
-    }
-    
-    mostrarStatus('Criando conta...', 'info');
-    
-    try {
-      const { data, error } = await supabase.auth.signUp({ email, password: senha });
-      if (error) throw error;
-      
-      if (data.user) {
-        const { error: insertError } = await supabase
-          .from('usuarios')
-          .insert([{ id: data.user.id, email: email, nome: nome }]);
-        
-        if (insertError) console.warn('Erro ao inserir usuário:', insertError);
-        
-        mostrarStatus('Conta criada com sucesso! Faça login.', 'success');
-        mostrarLogin();
-      }
-    } catch (error) {
-      mostrarStatus(`Erro: ${error.message}`, 'error');
-    }
-  }
-  
-  async function fazerLogout() {
-    if (confirm('Deseja realmente sair?')) {
-      await supabase.auth.signOut();
-      location.reload();
-    }
-  }
-  
-  function mostrarRegistro() {
-    document.getElementById('loginForm').style.display = 'none';
-    document.getElementById('registroForm').style.display = 'block';
-  }
-  
-  function mostrarLogin() {
-    document.getElementById('loginForm').style.display = 'block';
-    document.getElementById('registroForm').style.display = 'none';
-  }
-  
-  // ==================== FUNÇÕES DE CRUD ====================
-  async function salvarPRADLocal(concluido = false) {
-    if (!usuarioId) {
-      mostrarStatus('Usuário não autenticado!', 'error');
-      return false;
-    }
-    
-    const numero = document.getElementById('prad_numero_info').value.trim();
-    if (!numero) {
-      mostrarStatus('Nº da Informação Técnica é obrigatório!', 'error');
-      return false;
-    }
-    
-    const ano = getAnoCorrente();
-    const id = `${numero}_${ano}`;
-    const dados = coletarDadosFormulario();
-    dados.id = id;
-    dados.status = concluido ? 'concluido' : 'rascunho';
-    dados.atualizado_em = new Date().toISOString();
-    
-    mostrarStatus('Salvando na nuvem...', 'info');
-    
-    try {
-      const { error } = await supabase
-        .from('prads')
-        .upsert({
-          id: id,
-          usuario_id: usuarioId,
-          numero_info: numero,
-          ano: ano,
-          dados: dados,
-          status: concluido ? 'concluido' : 'rascunho',
-          atualizado_em: new Date().toISOString()
-        });
-      
-      if (error) throw error;
-      
-      atualizarStatusSalvo();
-      mostrarStatus(concluido ? 'PRAD concluído e salvo!' : 'PRAD salvo na nuvem!', 'success');
-      
-      if (concluido) limparFormularioCompleto();
-      return true;
-      
-    } catch (error) {
-      mostrarStatus(`Erro ao salvar: ${error.message}`, 'error');
-      return false;
-    }
-  }
-  
-  async function carregarPRADLocal(id) {
-    if (!usuarioId) return;
-    
-    mostrarStatus('Carregando PRAD...', 'info');
-    
-    try {
-      const { data, error } = await supabase
-        .from('prads')
-        .select('dados')
-        .eq('id', id)
-        .eq('usuario_id', usuarioId)
-        .single();
-      
-      if (error) throw error;
-      if (data && data.dados) {
-        preencherFormularioComDados(data.dados);
-        fecharLista();
-        mostrarStatus(`PRAD ${id} carregado!`, 'success');
-      }
-    } catch (error) {
-      mostrarStatus(`Erro ao carregar: ${error.message}`, 'error');
-    }
-  }
-  
-  async function excluirPRADLocal(id) {
-    if (!usuarioId) return;
-    
-    if (confirm(`Excluir permanentemente o PRAD ${id}?`)) {
-      mostrarStatus('Excluindo...', 'info');
-      
-      try {
-        const { error } = await supabase
-          .from('prads')
-          .delete()
-          .eq('id', id)
-          .eq('usuario_id', usuarioId);
-        
-        if (error) throw error;
-        
-        mostrarStatus(`PRAD ${id} excluído!`, 'success');
-        listarMeusPRADs();
-      } catch (error) {
-        mostrarStatus(`Erro ao excluir: ${error.message}`, 'error');
-      }
-    }
-  }
-  
-  async function listarMeusPRADs() {
-    if (!usuarioId) return;
-    
-    const modal = document.getElementById('listaModal');
-    modal.style.display = 'flex';
-    const container = document.getElementById('listaContainer');
-    container.innerHTML = '<div class="text-center p-3"><i class="fas fa-spinner fa-spin"></i> Carregando...</div>';
-    
-    try {
-      const { data, error } = await supabase
-        .from('prads')
-        .select('*')
-        .eq('usuario_id', usuarioId)
-        .order('atualizado_em', { ascending: false });
-      
-      if (error) throw error;
-      
-      if (!data || data.length === 0) {
-        container.innerHTML = '<p class="text-center p-3">Nenhum PRAD encontrado. Clique em "Novo PRAD" para começar.</p>';
-        return;
-      }
-      
-      let html = '<div class="list-group">';
-      data.forEach(p => {
-        const dados = p.dados;
-        const statusBadge = p.status === 'concluido' ? '<span class="badge bg-success">Concluído</span>' : '<span class="badge bg-warning">Rascunho</span>';
-        const interessado = dados.interessado || 'Sem interessado';
-        const dataAtualizacao = new Date(p.atualizado_em).toLocaleString();
-        
-        html += `
-          <div class="prad-item">
-            <div>
-              <strong>${p.id}</strong> ${statusBadge}<br>
-              <small>Interessado: ${interessado}</small><br>
-              <small>Atualizado: ${dataAtualizacao}</small>
-            </div>
-            <div class="prad-actions">
-              <button class="btn btn-sm btn-primary" onclick="carregarPRADLocal('${p.id}')"><i class="fas fa-edit"></i> Editar</button>
-              <button class="btn btn-sm btn-danger" onclick="excluirPRADLocal('${p.id}')"><i class="fas fa-trash"></i> Excluir</button>
-            </div>
-          </div>
-        `;
-      });
-      html += '</div>';
-      container.innerHTML = html;
-      
-    } catch (error) {
-      container.innerHTML = `<p class="text-danger">Erro ao carregar: ${error.message}</p>`;
-    }
-  }
-  
-  async function sincronizarComNuvem() {
-    mostrarStatus('Sincronizando...', 'info');
-    await listarMeusPRADs();
-    mostrarStatus('Sincronização concluída!', 'success');
-  }
-  
-  function fecharLista() {
-    document.getElementById('listaModal').style.display = 'none';
-  }
-  
-  // ==================== FUNÇÕES AUXILIARES ====================
-  function getAnoCorrente() { return new Date().getFullYear(); }
-  
-  function getNumeroInfoCompleto() {
-    const numero = document.getElementById('prad_numero_info').value.trim();
-    const ano = getAnoCorrente();
-    return numero ? `${numero}/${ano}` : "";
-  }
-  
-  function atualizarTituloRelatorio() {
-    const numeroCompleto = getNumeroInfoCompleto();
-    const tituloElement = document.getElementById('reportTitle');
-    const finalSpan = document.getElementById('infoNumeroFinal');
-    const anoDisplay = document.getElementById('anoAtualDisplay');
-    if (anoDisplay) anoDisplay.innerText = getAnoCorrente();
-    if (numeroCompleto) {
-      tituloElement.innerHTML = `INFORMAÇÃO TÉCNICA PRAD Nº ${numeroCompleto}`;
-      finalSpan.innerHTML = numeroCompleto;
-    } else {
-      tituloElement.innerHTML = `INFORMAÇÃO TÉCNICA PRAD`;
-      finalSpan.innerHTML = "---";
-    }
-  }
-  
-  function atualizarStatusSalvamento() {
-    unsaved = true;
-    document.getElementById('saveStatus').className = 'status-badge unsaved';
-    document.getElementById('saveStatus').innerHTML = '<i class="fas fa-sync-alt"></i> NÃO SALVO';
-  }
-  
-  function atualizarStatusSalvo() {
-    unsaved = false;
-    document.getElementById('saveStatus').className = 'status-badge saved';
-    document.getElementById('saveStatus').innerHTML = '<i class="fas fa-check-circle"></i> SALVO NA NUVEM';
-  }
-  
-  function mostrarStatus(msg, tipo = 'success') {
+  // ==================== FUNÇÕES ====================
+  function mostrarStatus(msg, tipo) {
     const bar = document.getElementById('statusBar');
     bar.textContent = msg;
-    bar.style.background = tipo == 'error' ? 'linear-gradient(135deg, #dc3545, #c82333)' : tipo == 'info' ? 'linear-gradient(135deg, #17a2b8, #138496)' : 'linear-gradient(135deg, #28a745, #20c997)';
     bar.style.display = 'block';
     setTimeout(() => bar.style.display = 'none', 3000);
   }
   
-  function toggleIncluirReparoPDF() {
-    incluirReparoPDF = !incluirReparoPDF;
-    const btn = document.getElementById('btnToggleReparo');
-    if (incluirReparoPDF) {
-      btn.innerHTML = '<i class="fas fa-toggle-on"></i> Incluir Reparo no PDF';
-      btn.classList.remove('excluir');
-    } else {
-      btn.innerHTML = '<i class="fas fa-toggle-off"></i> Excluir Reparo do PDF';
-      btn.classList.add('excluir');
+  function getAnoCorrente() { return new Date().getFullYear(); }
+  
+  function atualizarTituloRelatorio() {
+    const numero = document.getElementById('prad_numero_info').value;
+    const ano = getAnoCorrente();
+    document.getElementById('anoAtualDisplay').innerText = ano;
+    if (numero) {
+      document.getElementById('reportTitle').innerHTML = `INFORMAÇÃO TÉCNICA PRAD Nº ${numero}/${ano}`;
+      document.getElementById('infoNumeroFinal').innerHTML = `${numero}/${ano}`;
     }
   }
   
-  function numeroPorExtenso(numero) {
+  function atualizarStatusSalvamento() {
+    document.getElementById('saveStatus').className = 'status-badge unsaved';
+    document.getElementById('saveStatus').innerHTML = 'NÃO SALVO';
+  }
+  
+  function atualizarStatusSalvo() {
+    document.getElementById('saveStatus').className = 'status-badge saved';
+    document.getElementById('saveStatus').innerHTML = 'SALVO NA NUVEM';
+  }
+  
+  function numeroPorExtenso(num) {
     const unidades = ['zero', 'um', 'dois', 'três', 'quatro', 'cinco', 'seis', 'sete', 'oito', 'nove'];
-    const especiais = { 10: 'dez', 11: 'onze', 12: 'doze', 13: 'treze', 14: 'quatorze', 15: 'quinze', 16: 'dezesseis', 17: 'dezessete', 18: 'dezoito', 19: 'dezenove' };
-    const dezenas = { 2: 'vinte', 3: 'trinta', 4: 'quarenta', 5: 'cinquenta', 6: 'sessenta', 7: 'setenta', 8: 'oitenta', 9: 'noventa' };
-    const n = parseInt(numero);
-    if (n < 10) return unidades[n];
-    if (n >= 10 && n <= 19) return especiais[n];
-    const dezena = Math.floor(n / 10);
-    const unidade = n % 10;
-    if (unidade === 0) return dezenas[dezena];
+    if (num < 10) return unidades[num];
+    if (num === 10) return 'dez';
+    if (num === 20) return 'vinte';
+    if (num === 30) return 'trinta';
+    if (num === 40) return 'quarenta';
+    if (num === 50) return 'cinquenta';
+    if (num === 60) return 'sessenta';
+    const dezena = Math.floor(num / 10);
+    const unidade = num % 10;
+    const dezenas = {2:'vinte',3:'trinta',4:'quarenta',5:'cinquenta',6:'sessenta'};
     return `${dezenas[dezena]} e ${unidades[unidade]}`;
   }
   
-  async function gerarProximoNumero() {
-    if (!usuarioId) {
-      mostrarStatus('Usuário não identificado!', 'error');
-      return;
+  function gerarConclusaoAutomatica() {
+    const status = document.querySelector('input[name="conclusao_prad"]:checked')?.value;
+    const prazo = document.getElementById('prad_prazo').value;
+    if (status === 'APTO') {
+      return 'O PRAD atende às exigências da Portaria IAT 17/2025. APTO À APROVAÇÃO.';
     }
-    
-    try {
-      const anoAtual = getAnoCorrente();
-      const { data, error } = await supabase
-        .from('prads')
-        .select('numero_info')
-        .eq('usuario_id', usuarioId)
-        .eq('ano', anoAtual);
-      
-      if (error) throw error;
-      
-      const numerosUsados = data.map(p => parseInt(p.numero_info)).filter(n => !isNaN(n));
-      let proximoNumero = 1;
-      numerosUsados.sort((a, b) => a - b);
-      
-      for (let i = 0; i < numerosUsados.length; i++) {
-        if (numerosUsados[i] > proximoNumero) break;
-        if (numerosUsados[i] === proximoNumero) proximoNumero++;
-      }
-      
-      document.getElementById('prad_numero_info').value = proximoNumero.toString().padStart(3, '0');
-      atualizarTituloRelatorio();
-      atualizarStatusSalvamento();
-      mostrarStatus(`Número ${proximoNumero}/${anoAtual} gerado!`, 'success');
-      
-    } catch (error) {
-      mostrarStatus(`Erro ao gerar número: ${error.message}`, 'error');
-    }
+    return `O PRAD NÃO ESTÁ APTO À APROVAÇÃO. Prazo de ${prazo} (${numeroPorExtenso(parseInt(prazo))}) dias para correções.`;
   }
   
-  function getDocumentoTexto() {
-    const tipo = document.querySelector('input[name="tipo_documento"]:checked')?.value || 'CPF';
-    const numero = document.getElementById('prad_documento').value;
-    return `${tipo}: ${numero}`;
+  function atualizarConclusao() {
+    document.getElementById('prad_conclusao_texto').value = gerarConclusaoAutomatica();
   }
   
-  function getRazaoENumeroSeparados() {
-    const radios = document.querySelectorAll('input[name="prad_razao"]');
-    let selectedValue = null;
-    for (let radio of radios) if (radio.checked) { selectedValue = radio.value; break; }
-    if (!selectedValue) return { razao: 'Não informado', numero: '' };
-    let razaoTexto = selectedValue;
-    if (selectedValue === 'Outro') {
-      const outroDesc = document.getElementById('prad_razao_outro_desc').value.trim();
-      razaoTexto = outroDesc ? `Outro: ${outroDesc}` : 'Outro';
-    }
-    return { razao: razaoTexto, numero: '' };
+  function toggleReparoForm() {
+    const isSim = document.getElementById('reparo_sim').checked;
+    document.getElementById('reparoSimForm').style.display = isSim ? 'block' : 'none';
+    document.getElementById('reparoNaoForm').style.display = isSim ? 'none' : 'block';
+  }
+  
+  function calcularReparoSim() {
+    const areaSup = parseFloat(document.getElementById('area_suprimida_sim').value) || 0;
+    const areaRes = parseFloat(document.getElementById('area_restaurada_valor').value) || 0;
+    const conforme = Math.abs(areaSup - areaRes) < 0.01;
+    document.getElementById('resultadoReparoSim').innerHTML = conforme ? 
+      '<div class="resultado-conforme">CONFORME - Áreas equivalentes</div>' : 
+      '<div class="resultado-nao-conforme">NÃO CONFORME - Áreas diferentes</div>';
+  }
+  
+  function calcularReparoNao() {
+    const areaSup = parseFloat(document.getElementById('area_suprimida_nao').value) || 0;
+    const areaComp = parseFloat(document.getElementById('area_compensada_valor').value) || 0;
+    const fator = parseInt(document.getElementById('local_compensacao').value);
+    const areaMinima = areaSup * fator;
+    const conforme = areaComp >= areaMinima;
+    document.getElementById('resultadoReparoNao').innerHTML = conforme ?
+      '<div class="resultado-conforme">CONFORME - Área compensada atende o fator</div>' :
+      '<div class="resultado-nao-conforme">NÃO CONFORME - Área compensada insuficiente</div>';
+  }
+  
+  function preencherAnalise() {
+    const body = document.getElementById('analise-itens-body');
+    body.innerHTML = '';
+    itensAnalise.forEach((item, idx) => {
+      const row = body.insertRow();
+      row.innerHTML = `
+        <td><input class="form-control" value="${item.item}" style="width:60px" onchange="itensAnalise[${idx}].item=this.value"></td>
+        <td>${item.isCustom ? `<input class="form-control" value="${item.exigencia}" onchange="itensAnalise[${idx}].exigencia=this.value">` : `<div class="readonly-cell">${item.exigencia}</div>`}</td>
+        <td><select class="form-control" onchange="itensAnalise[${idx}].atende=this.value">${['SIM','NÃO','PARCIAL','N/A'].map(o => `<option ${item.atende===o?'selected':''}>${o}</option>`).join('')}</select></td>
+        <td><input class="form-control" value="${item.fls}" onchange="itensAnalise[${idx}].fls=this.value"></td>
+        <td><input class="form-control" value="${item.obs}" onchange="itensAnalise[${idx}].obs=this.value"></td>
+        <td>${item.isCustom ? `<button class="btn-remove" onclick="removerItemAnalise(${idx})">Remover</button>` : ''}</td>
+      `;
+    });
+  }
+  
+  function preencherAnexos() {
+    const body = document.getElementById('anexos-body');
+    body.innerHTML = '';
+    anexos.forEach((item, idx) => {
+      const row = body.insertRow();
+      row.innerHTML = `
+        <td>${item.isCustom ? `<input class="form-control" value="${item.anexo}" onchange="anexos[${idx}].anexo=this.value">` : `<div class="readonly-cell">${item.anexo}</div>`}</td>
+        <td><select class="form-control" onchange="anexos[${idx}].apresentado=this.value">${['SIM','NÃO','N/A'].map(o => `<option ${item.apresentado===o?'selected':''}>${o}</option>`).join('')}</select></td>
+        <td><input class="form-control" value="${item.localizacao}" onchange="anexos[${idx}].localizacao=this.value"></td>
+        <td><input class="form-control" value="${item.obs}" onchange="anexos[${idx}].obs=this.value"></td>
+        <td>${item.isCustom ? `<button class="btn-remove" onclick="removerItemAnexo(${idx})">Remover</button>` : ''}</td>
+      `;
+    });
+  }
+  
+  function renderizarPendencias() {
+    const body = document.getElementById('pendencias-body');
+    body.innerHTML = '';
+    pendenciasManuais.forEach((p, idx) => {
+      const row = body.insertRow();
+      row.innerHTML = `
+        <td>${idx+1}</td>
+        <td><textarea class="form-control" onchange="pendenciasManuais[${idx}].pendencia=this.value">${p.pendencia || ''}</textarea></td>
+        <td><textarea class="form-control" onchange="pendenciasManuais[${idx}].providencia=this.value">${p.providencia || ''}</textarea></td>
+        <td><textarea class="form-control" onchange="pendenciasManuais[${idx}].fundamentacao=this.value">${p.fundamentacao || ''}</textarea></td>
+        <td><button class="btn-remove" onclick="removerPendenciaManual(${idx})">Remover</button></td>
+      `;
+    });
+  }
+  
+  function preencherResponsaveis() {
+    const container = document.getElementById('responsaveis-container');
+    container.innerHTML = '';
+    responsaveis.forEach((resp, idx) => {
+      const div = document.createElement('div');
+      div.className = 'assinatura-item';
+      div.innerHTML = `
+        <button class="btn-remove-small" onclick="removerResponsavel(${idx})">Remover</button>
+        <input class="form-control mb-2" placeholder="Nome" value="${resp.nome}" onchange="responsaveis[${idx}].nome=this.value">
+        <input class="form-control mb-2" placeholder="Curso" value="${resp.curso}" onchange="responsaveis[${idx}].curso=this.value">
+        <input class="form-control" placeholder="CREA" value="${resp.crea}" onchange="responsaveis[${idx}].crea=this.value">
+      `;
+      container.appendChild(div);
+    });
+  }
+  
+  function renderizarCamposPersonalizados() {
+    const container = document.getElementById('custom-fields-container');
+    container.innerHTML = '';
+    camposPersonalizados.forEach((campo, idx) => {
+      const div = document.createElement('div');
+      div.className = 'custom-field-item';
+      div.innerHTML = `
+        <button class="btn-remove-small" onclick="removerCampoPersonalizado(${idx})">Remover</button>
+        <div class="row"><div class="col-md-6"><input class="form-control" placeholder="Rótulo" value="${campo.rotulo}" onchange="camposPersonalizados[${idx}].rotulo=this.value"></div>
+        <div class="col-md-6"><input class="form-control" placeholder="Valor" value="${campo.valor}" onchange="camposPersonalizados[${idx}].valor=this.value"></div></div>
+      `;
+      container.appendChild(div);
+    });
+  }
+  
+  function adicionarCampoPersonalizado() { camposPersonalizados.push({ rotulo: "", valor: "" }); renderizarCamposPersonalizados(); atualizarStatusSalvamento(); }
+  function removerCampoPersonalizado(idx) { camposPersonalizados.splice(idx, 1); renderizarCamposPersonalizados(); atualizarStatusSalvamento(); }
+  function adicionarResponsavel() { responsaveis.push({ nome: "", curso: "", crea: "" }); preencherResponsaveis(); atualizarStatusSalvamento(); }
+  function removerResponsavel(idx) { if (responsaveis.length > 1) { responsaveis.splice(idx, 1); preencherResponsaveis(); atualizarStatusSalvamento(); } }
+  function adicionarItemAnalise() { itensAnalise.push({ item: (itensAnalise.length+1).toString(), exigencia: "", atende: "N/A", fls: "", obs: "", isCustom: true }); preencherAnalise(); atualizarStatusSalvamento(); }
+  function removerItemAnalise(idx) { if (itensAnalise[idx].isCustom) { itensAnalise.splice(idx, 1); preencherAnalise(); atualizarStatusSalvamento(); } }
+  function adicionarItemAnexo() { anexos.push({ anexo: "", apresentado: "N/A", localizacao: "", obs: "", isCustom: true }); preencherAnexos(); atualizarStatusSalvamento(); }
+  function removerItemAnexo(idx) { if (anexos[idx].isCustom) { anexos.splice(idx, 1); preencherAnexos(); atualizarStatusSalvamento(); } }
+  function adicionarPendenciaManual() { pendenciasManuais.push({ pendencia: "", providencia: "", fundamentacao: "" }); renderizarPendencias(); atualizarStatusSalvamento(); }
+  function removerPendenciaManual(idx) { pendenciasManuais.splice(idx, 1); renderizarPendencias(); atualizarStatusSalvamento(); }
+  
+  function inicializarDados() {
+    itensAnalise = itensAnalisePadrao.map((ex, idx) => ({ item: (idx+1).toString(), exigencia: ex, atende: "N/A", fls: "", obs: "", isCustom: false }));
+    anexos = anexosPadrao.map((a, idx) => ({ anexo: a, apresentado: "N/A", localizacao: "", obs: "", isCustom: false }));
   }
   
   function coletarDadosFormulario() {
     return {
       numero_info: document.getElementById('prad_numero_info').value,
       interessado: document.getElementById('prad_interessado').value,
-      tipo_documento: document.querySelector('input[name="tipo_documento"]:checked')?.value,
-      documento_numero: document.getElementById('prad_documento').value,
+      documento: document.getElementById('prad_documento').value,
       processo: document.getElementById('prad_processo').value,
       razao_apresentacao: document.querySelector('input[name="prad_razao"]:checked')?.value,
       razao_outro_desc: document.getElementById('prad_razao_outro_desc').value,
@@ -1145,16 +601,6 @@
       art: document.getElementById('prad_art').value,
       municipio: document.getElementById('prad_municipio').value,
       observacoes: document.getElementById('prad_observacoes').value,
-      reparo_local: document.querySelector('input[name="reparo_local"]:checked')?.value,
-      dados_reparo: {
-        area_suprimida_sim: document.getElementById('area_suprimida_sim').value,
-        area_restaurada_valor: document.getElementById('area_restaurada_valor').value,
-        area_restaurada_unidade: document.getElementById('area_restaurada_unidade').value,
-        area_suprimida_nao: document.getElementById('area_suprimida_nao').value,
-        area_compensada_valor: document.getElementById('area_compensada_valor').value,
-        area_compensada_unidade: document.getElementById('area_compensada_unidade').value,
-        local_compensacao: document.getElementById('local_compensacao').value
-      },
       conclusao_texto: document.getElementById('prad_conclusao_texto').value,
       conclusao_status: document.querySelector('input[name="conclusao_prad"]:checked')?.value,
       data_info: document.getElementById('prad_data_info').value,
@@ -1163,16 +609,14 @@
       itensAnalise: itensAnalise,
       anexos: anexos,
       pendenciasManuais: pendenciasManuais,
-      camposPersonalizados: camposPersonalizados,
-      aiasList: aiasList
+      camposPersonalizados: camposPersonalizados
     };
   }
   
   function preencherFormularioComDados(dados) {
     document.getElementById('prad_numero_info').value = dados.numero_info || '';
     document.getElementById('prad_interessado').value = dados.interessado || '';
-    if (dados.tipo_documento) document.querySelector(`input[name="tipo_documento"][value="${dados.tipo_documento}"]`).checked = true;
-    document.getElementById('prad_documento').value = dados.documento_numero || '';
+    document.getElementById('prad_documento').value = dados.documento || '';
     document.getElementById('prad_processo').value = dados.processo || '';
     if (dados.razao_apresentacao) {
       const radio = document.querySelector(`input[name="prad_razao"][value="${dados.razao_apresentacao}"]`);
@@ -1185,455 +629,247 @@
     document.getElementById('prad_art').value = dados.art || '';
     document.getElementById('prad_municipio').value = dados.municipio || '';
     document.getElementById('prad_observacoes').value = dados.observacoes || '';
-    if (dados.reparo_local) {
-      document.querySelector(`input[name="reparo_local"][value="${dados.reparo_local}"]`).checked = true;
-      const r = dados.dados_reparo;
-      if (dados.reparo_local === 'SIM') {
-        document.getElementById('area_suprimida_sim').value = r.area_suprimida_sim || '';
-        document.getElementById('area_restaurada_valor').value = r.area_restaurada_valor || '';
-        document.getElementById('area_restaurada_unidade').value = r.area_restaurada_unidade || 'ha';
-      } else {
-        document.getElementById('area_suprimida_nao').value = r.area_suprimida_nao || '';
-        document.getElementById('area_compensada_valor').value = r.area_compensada_valor || '';
-        document.getElementById('area_compensada_unidade').value = r.area_compensada_unidade || 'ha';
-        document.getElementById('local_compensacao').value = r.local_compensacao || '4';
-      }
-    }
-    toggleReparoForm();
     document.getElementById('prad_conclusao_texto').value = dados.conclusao_texto || '';
     document.getElementById('prad_data_info').value = dados.data_info || '';
     document.getElementById('prad_prazo').value = dados.prazo || '60';
-    if (dados.responsaveis) { responsaveis = dados.responsaveis; preencherResponsaveis(); }
     if (dados.conclusao_status) document.querySelector(`input[name="conclusao_prad"][value="${dados.conclusao_status}"]`).checked = true;
+    if (dados.responsaveis) { responsaveis = dados.responsaveis; preencherResponsaveis(); }
     if (dados.camposPersonalizados) { camposPersonalizados = dados.camposPersonalizados; renderizarCamposPersonalizados(); }
-    if (dados.aiasList) { aiasList = dados.aiasList; renderAiaSection(); }
-    if (dados.itensAnalise && dados.itensAnalise.length) {
-      itensAnalise = dados.itensAnalise;
-    } else {
-      itensAnalise = itensAnalisePadrao.map((ex, idx) => ({ item: (idx + 1).toString(), exigencia: ex, atende: "N/A", fls: "", obs: "", isCustom: false }));
-    }
-    if (dados.anexos && dados.anexos.length) {
-      anexos = dados.anexos;
-    } else {
-      anexos = anexosPadrao.map((a, idx) => ({ anexo: a, apresentado: "N/A", localizacao: "", obs: "", isCustom: false }));
-    }
-    pendenciasManuais = dados.pendenciasManuais || [];
-    preencherAnalise();
-    preencherAnexos();
-    renderizarPendencias();
+    if (dados.itensAnalise) { itensAnalise = dados.itensAnalise; preencherAnalise(); }
+    if (dados.anexos) { anexos = dados.anexos; preencherAnexos(); }
+    if (dados.pendenciasManuais) { pendenciasManuais = dados.pendenciasManuais; renderizarPendencias(); }
     atualizarTituloRelatorio();
     atualizarConclusao();
   }
   
-  function inicializarDados() {
-    itensAnalise = itensAnalisePadrao.map((exigencia, idx) => ({
-      item: (idx + 1).toString(),
-      exigencia: exigencia,
-      atende: "N/A",
-      fls: "",
-      obs: "",
-      isCustom: false
-    }));
-    anexos = anexosPadrao.map((anexo, idx) => ({
-      anexo: anexo,
-      apresentado: "N/A",
-      localizacao: "",
-      obs: "",
-      isCustom: false
-    }));
+  async function gerarProximoNumero() {
+    if (!usuarioId) return mostrarStatus('Usuário não logado!', 'error');
+    const ano = getAnoCorrente();
+    const { data } = await supabase.from('prads').select('numero_info').eq('usuario_id', usuarioId).eq('ano', ano);
+    const numeros = data.map(p => parseInt(p.numero_info)).filter(n => !isNaN(n));
+    let prox = 1;
+    while (numeros.includes(prox)) prox++;
+    document.getElementById('prad_numero_info').value = prox.toString().padStart(3, '0');
+    atualizarTituloRelatorio();
+    mostrarStatus(`Número ${prox}/${ano} gerado!`, 'success');
+  }
+  
+  async function salvarPRADLocal() {
+    if (!usuarioId) return mostrarStatus('Usuário não autenticado!', 'error');
+    const numero = document.getElementById('prad_numero_info').value.trim();
+    if (!numero) return mostrarStatus('Nº da Informação é obrigatório!', 'error');
+    const ano = getAnoCorrente();
+    const id = `${numero}_${ano}`;
+    const dados = coletarDadosFormulario();
+    dados.id = id;
+    dados.atualizado_em = new Date().toISOString();
+    mostrarStatus('Salvando...', 'info');
+    const { error } = await supabase.from('prads').upsert({ id, usuario_id: usuarioId, numero_info: numero, ano, dados, status: 'rascunho', atualizado_em: new Date().toISOString() });
+    if (error) return mostrarStatus(`Erro: ${error.message}`, 'error');
+    atualizarStatusSalvo();
+    mostrarStatus('PRAD salvo na nuvem!', 'success');
+  }
+  
+  async function carregarPRADLocal(id) {
+    mostrarStatus('Carregando...', 'info');
+    const { data, error } = await supabase.from('prads').select('dados').eq('id', id).eq('usuario_id', usuarioId).single();
+    if (error) return mostrarStatus(`Erro: ${error.message}`, 'error');
+    if (data && data.dados) preencherFormularioComDados(data.dados);
+    fecharLista();
+    mostrarStatus(`PRAD ${id} carregado!`, 'success');
+  }
+  
+  async function excluirPRADLocal(id) {
+    if (!confirm(`Excluir ${id}?`)) return;
+    const { error } = await supabase.from('prads').delete().eq('id', id).eq('usuario_id', usuarioId);
+    if (error) return mostrarStatus(`Erro: ${error.message}`, 'error');
+    mostrarStatus('PRAD excluído!', 'success');
+    listarMeusPRADs();
+  }
+  
+  async function listarMeusPRADs() {
+    if (!usuarioId) return;
+    document.getElementById('listaModal').style.display = 'flex';
+    const container = document.getElementById('listaContainer');
+    container.innerHTML = 'Carregando...';
+    const { data, error } = await supabase.from('prads').select('*').eq('usuario_id', usuarioId).order('atualizado_em', { ascending: false });
+    if (error) return container.innerHTML = `<p class="text-danger">Erro: ${error.message}</p>`;
+    if (!data || data.length === 0) return container.innerHTML = '<p>Nenhum PRAD encontrado.</p>';
+    let html = '';
+    data.forEach(p => {
+      html += `<div class="prad-item">
+        <div><strong>${p.id}</strong> <span class="badge ${p.status === 'concluido' ? 'bg-success' : 'bg-warning'}">${p.status === 'concluido' ? 'Concluído' : 'Rascunho'}</span><br><small>${new Date(p.atualizado_em).toLocaleString()}</small></div>
+        <div><button class="btn btn-sm btn-primary" onclick="carregarPRADLocal('${p.id}')">Editar</button> <button class="btn btn-sm btn-danger" onclick="excluirPRADLocal('${p.id}')">Excluir</button></div>
+      </div>`;
+    });
+    container.innerHTML = html;
+  }
+  
+  function fecharLista() { document.getElementById('listaModal').style.display = 'none'; }
+  
+  async function fazerLogin() {
+    const email = document.getElementById('loginEmail').value.trim();
+    const senha = document.getElementById('loginSenha').value;
+    if (!email || !senha) return mostrarStatus('Preencha e-mail e senha!', 'error');
+    mostrarStatus('Autenticando...', 'info');
+    const { data, error } = await supabase.auth.signInWithPassword({ email, password: senha });
+    if (error) return mostrarStatus(`Erro: ${error.message}`, 'error');
+    usuarioAtual = data.user.email;
+    usuarioId = data.user.id;
+    document.getElementById('userNameDisplay').innerHTML = `<i class="fas fa-user"></i> ${email.split('@')[0]}`;
+    document.getElementById('authModal').style.display = 'none';
+    document.getElementById('mainForm').style.display = 'block';
+    document.getElementById('userBar').style.display = 'flex';
+    inicializarDados();
+    preencherAnalise();
+    preencherAnexos();
+    preencherResponsaveis();
+    renderizarPendencias();
+    renderizarCamposPersonalizados();
+    const hoje = new Date();
+    document.getElementById('prad_data_info').value = `${hoje.getDate().toString().padStart(2,'0')}/${(hoje.getMonth()+1).toString().padStart(2,'0')}/${hoje.getFullYear()}`;
+    document.getElementById('prad_prazo').addEventListener('input', atualizarConclusao);
+    document.querySelectorAll('input[name="conclusao_prad"]').forEach(r => r.addEventListener('change', atualizarConclusao));
+    document.getElementById('reparo_sim').addEventListener('change', toggleReparoForm);
+    document.getElementById('reparo_nao').addEventListener('change', toggleReparoForm);
+    document.getElementById('area_suprimida_sim').addEventListener('input', calcularReparoSim);
+    document.getElementById('area_restaurada_valor').addEventListener('input', calcularReparoSim);
+    document.getElementById('area_suprimida_nao').addEventListener('input', calcularReparoNao);
+    document.getElementById('area_compensada_valor').addEventListener('input', calcularReparoNao);
+    document.getElementById('local_compensacao').addEventListener('change', calcularReparoNao);
+    document.querySelectorAll('input, textarea, select').forEach(el => el.addEventListener('input', () => { atualizarStatusSalvamento(); atualizarTituloRelatorio(); }));
+    atualizarConclusao();
+    mostrarStatus(`Bem-vindo, ${email}!`, 'success');
+  }
+  
+  async function fazerRegistro() {
+    const nome = document.getElementById('regNome').value.trim();
+    const email = document.getElementById('regEmail').value.trim();
+    const senha = document.getElementById('regSenha').value;
+    const confirm = document.getElementById('regConfirmSenha').value;
+    if (!nome || !email || !senha) return mostrarStatus('Preencha todos os campos!', 'error');
+    if (senha !== confirm) return mostrarStatus('Senhas não coincidem!', 'error');
+    if (senha.length < 6) return mostrarStatus('Senha deve ter 6+ caracteres!', 'error');
+    mostrarStatus('Criando conta...', 'info');
+    const { data, error } = await supabase.auth.signUp({ email, password: senha });
+    if (error) return mostrarStatus(`Erro: ${error.message}`, 'error');
+    if (data.user) {
+      await supabase.from('usuarios').insert([{ id: data.user.id, email, nome }]);
+      mostrarStatus('Conta criada! Faça login.', 'success');
+      mostrarLogin();
+    }
+  }
+  
+  function mostrarRegistro() {
+    document.getElementById('loginFormDiv').style.display = 'none';
+    document.getElementById('registroFormDiv').style.display = 'block';
+  }
+  
+  function mostrarLogin() {
+    document.getElementById('loginFormDiv').style.display = 'block';
+    document.getElementById('registroFormDiv').style.display = 'none';
+  }
+  
+  async function fazerLogout() {
+    if (confirm('Sair?')) { await supabase.auth.signOut(); location.reload(); }
   }
   
   function limparFormulario() {
-    if (confirm('Tem certeza que deseja limpar o formulário?')) {
-      limparFormularioCompleto();
+    if (confirm('Limpar formulário?')) {
+      document.getElementById('prad_numero_info').value = '';
+      document.getElementById('prad_interessado').value = '';
+      document.getElementById('prad_documento').value = '';
+      document.getElementById('prad_processo').value = '';
+      document.getElementById('prad_rt_nome').value = '';
+      document.getElementById('prad_rt_curso').value = '';
+      document.getElementById('prad_rt_crea').value = '';
+      document.getElementById('prad_art').value = '';
+      document.getElementById('prad_municipio').value = '';
+      document.getElementById('prad_observacoes').value = '';
+      inicializarDados();
+      preencherAnalise();
+      preencherAnexos();
+      renderizarPendencias();
+      atualizarTituloRelatorio();
+      atualizarConclusao();
+      mostrarStatus('Formulário limpo!', 'success');
     }
   }
   
   function limparFormularioParaNovo() {
-    if (confirm("Deseja criar um novo PRAD? Os dados atuais não salvos serão perdidos.")) {
-      limparFormularioCompleto();
-    }
+    if (confirm('Criar novo PRAD?')) limparFormulario();
   }
   
-  function limparFormularioCompleto() {
-    document.getElementById('prad_numero_info').value = '';
-    document.getElementById('prad_interessado').value = '';
-    document.getElementById('prad_documento').value = '';
-    document.getElementById('prad_processo').value = '';
-    document.getElementById('prad_rt_nome').value = '';
-    document.getElementById('prad_rt_curso').value = '';
-    document.getElementById('prad_rt_crea').value = '';
-    document.getElementById('prad_art').value = '';
-    document.getElementById('prad_municipio').value = '';
-    document.getElementById('prad_razao_outro_desc').value = '';
-    
-    document.getElementById('tipo_cpf').checked = true;
-    const razaoRadios = document.querySelectorAll('input[name="prad_razao"]');
-    razaoRadios.forEach(radio => radio.checked = false);
-    document.getElementById('outro_razao_desc_container').style.display = 'none';
-    
-    aiasList = [];
-    renderAiaSection();
-    
-    itensAnalise.forEach(item => {
-      item.atende = "N/A";
-      item.fls = "";
-      item.obs = "";
+  async function gerarPDF() {
+    const numero = document.getElementById('prad_numero_info').value.trim();
+    if (!numero) return mostrarStatus('Nº da Informação é obrigatório!', 'error');
+    const { jsPDF } = window.jspdf;
+    const pdf = new jsPDF();
+    let y = 20;
+    pdf.setFontSize(16);
+    pdf.text(`INFORMAÇÃO TÉCNICA PRAD Nº ${numero}/${getAnoCorrente()}`, 105, y, { align: 'center' });
+    y += 15;
+    pdf.setFontSize(12);
+    pdf.text(`Interessado: ${document.getElementById('prad_interessado').value || '-'}`, 20, y);
+    y += 8;
+    pdf.text(`Processo: ${document.getElementById('prad_processo').value || '-'}`, 20, y);
+    y += 8;
+    pdf.text(`Município: ${document.getElementById('prad_municipio').value || '-'}`, 20, y);
+    y += 15;
+    pdf.setFontSize(11);
+    const conclusao = document.getElementById('prad_conclusao_texto').value;
+    const lines = pdf.splitTextToSize(conclusao, 170);
+    pdf.text(lines, 20, y);
+    y += lines.length * 6 + 15;
+    pdf.text(`Curitiba, ${document.getElementById('prad_data_info').value || new Date().toLocaleDateString()}`, 105, y, { align: 'center' });
+    y += 20;
+    responsaveis.forEach(resp => {
+      pdf.text(resp.nome || '_________________', 20, y);
+      y += 6;
+      pdf.setFontSize(10);
+      pdf.text(`${resp.curso || ''} ${resp.crea ? `CREA-${resp.crea}` : ''}`, 20, y);
+      y += 10;
+      pdf.setFontSize(12);
     });
-    preencherAnalise();
+    pdf.save(`PRAD_${numero}_${getAnoCorrente()}.pdf`);
+    mostrarStatus('PDF gerado!', 'success');
+  }
+  
+  // ==================== INICIALIZAÇÃO ====================
+  document.addEventListener('DOMContentLoaded', function() {
+    document.getElementById('btnMostrarRegistro').addEventListener('click', mostrarRegistro);
+    document.getElementById('btnMostrarLogin').addEventListener('click', mostrarLogin);
+    document.getElementById('btnLogin').addEventListener('click', fazerLogin);
+    document.getElementById('btnRegistrar').addEventListener('click', fazerRegistro);
+    document.getElementById('btnLogout').addEventListener('click', fazerLogout);
+    document.getElementById('btnSincronizar').addEventListener('click', listarMeusPRADs);
+    document.getElementById('btnMeusPRADs').addEventListener('click', listarMeusPRADs);
+    document.getElementById('btnNovoPRAD').addEventListener('click', limparFormularioParaNovo);
+    document.getElementById('fecharListaBtn').addEventListener('click', fecharLista);
+    document.getElementById('btnGerarNumero').addEventListener('click', gerarProximoNumero);
+    document.getElementById('btnAddCampo').addEventListener('click', adicionarCampoPersonalizado);
+    document.getElementById('btnAddItemAnalise').addEventListener('click', adicionarItemAnalise);
+    document.getElementById('btnAddAnexo').addEventListener('click', adicionarItemAnexo);
+    document.getElementById('btnAddPendencia').addEventListener('click', adicionarPendenciaManual);
+    document.getElementById('btnAddResponsavel').addEventListener('click', adicionarResponsavel);
+    document.getElementById('btnSalvar').addEventListener('click', salvarPRADLocal);
+    document.getElementById('btnCarregar').addEventListener('click', listarMeusPRADs);
+    document.getElementById('btnPDF').addEventListener('click', gerarPDF);
+    document.getElementById('btnLimpar').addEventListener('click', limparFormulario);
     
-    anexos.forEach(item => {
-      item.apresentado = "N/A";
-      item.localizacao = "";
-      item.obs = "";
-    });
-    preencherAnexos();
-    
-    document.getElementById('prad_observacoes').value = '';
-    document.getElementById('reparo_nao').checked = true;
-    document.getElementById('reparo_sim').checked = false;
-    document.getElementById('area_suprimida_sim').value = '';
-    document.getElementById('area_restaurada_valor').value = '';
-    document.getElementById('area_suprimida_nao').value = '';
-    document.getElementById('area_compensada_valor').value = '';
-    document.getElementById('local_compensacao').value = '4';
-    toggleReparoForm();
-    
-    camposPersonalizados = [];
-    renderizarCamposPersonalizados();
-    
-    document.getElementById('prad_nao_apto').checked = true;
-    const hoje = new Date();
-    document.getElementById('prad_data_info').value = `${hoje.getDate().toString().padStart(2,'0')}/${(hoje.getMonth()+1).toString().padStart(2,'0')}/${hoje.getFullYear()}`;
-    document.getElementById('prad_prazo').value = '60';
-    
-    atualizarTituloRelatorio();
-    atualizarConclusao();
-    atualizarStatusSalvamento();
-    mostrarStatus('Formulário limpo!');
-  }
-  
-  function gerarConclusaoAutomatica() {
-    const status = document.querySelector('input[name="conclusao_prad"]:checked')?.value || 'NAO_APTO';
-    const prazo = parseInt(document.getElementById('prad_prazo').value) || 60;
-    const prazoExtenso = numeroPorExtenso(prazo);
-    if (status === "APTO") {
-      return `Diante do exposto, considerando que o PRAD atende às exigências da Portaria IAT nº 17/2025 e da Instrução Normativa IAT nº 50/2025, conclui-se que o projeto está APTO À APROVAÇÃO. Recomenda-se o encaminhamento para assinatura do Termo de Compromisso de Recuperação Ambiental (TCRA) e subsequente início da execução.`;
-    } else {
-      return `Diante do exposto, considerando as inconformidades e pendências identificadas no PRAD, conclui-se que o projeto NÃO ESTÁ APTO À APROVAÇÃO, por não cumprir as exigências mínimas descritas na Portaria IAT 17/2025 e IN 50/2025.\n\nAssim, cria-se pendência no processo, com a devida notificação ao interessado para apresentação das correções e complementações indicadas em conformidade com a Portaria n.º 17/2025, junto ao sistema e-protocolo, no prazo de ${prazo} (${prazoExtenso}) dias. Reforçamos que o não atendimento à pendência incorrerá em INDEFERIMENTO DEFINITIVO DO PRAD.`;
-    }
-  }
-  
-  function atualizarConclusao() {
-    document.getElementById('prad_conclusao_texto').value = gerarConclusaoAutomatica();
-  }
-  
-  // ==================== FUNÇÕES DE UI (resumidas por espaço) ====================
-  function toggleReparoForm() {
-    const reparoSim = document.getElementById('reparo_sim').checked;
-    document.getElementById('reparoSimForm').style.display = reparoSim ? 'block' : 'none';
-    document.getElementById('reparoNaoForm').style.display = reparoSim ? 'none' : 'block';
-    if (reparoSim) calcularReparoSim();
-    else calcularReparoNao();
-  }
-  
-  function calcularReparoSim() {
-    let areaSuprimida = parseFloat(document.getElementById('area_suprimida_sim').value) || 0;
-    let areaRestaurada = parseFloat(document.getElementById('area_restaurada_valor').value) || 0;
-    if (document.getElementById('area_restaurada_unidade').value === 'm2') areaRestaurada /= 10000;
-    const conforme = Math.abs(areaSuprimida - areaRestaurada) < 0.0001;
-    document.getElementById('resultadoReparoSim').innerHTML = conforme ?
-      `<div class="resultado-conforme">✅ CONFORME - Área restaurada: ${areaRestaurada.toFixed(4)} ha / Área suprimida: ${areaSuprimida.toFixed(4)} ha</div>` :
-      `<div class="resultado-nao-conforme">❌ NÃO CONFORME - Área restaurada: ${areaRestaurada.toFixed(4)} ha ≠ Área suprimida: ${areaSuprimida.toFixed(4)} ha</div>`;
-  }
-  
-  function calcularReparoNao() {
-    let areaSuprimida = parseFloat(document.getElementById('area_suprimida_nao').value) || 0;
-    let areaCompensada = parseFloat(document.getElementById('area_compensada_valor').value) || 0;
-    let fator = parseInt(document.getElementById('local_compensacao').value);
-    if (document.getElementById('area_compensada_unidade').value === 'm2') areaCompensada /= 10000;
-    let areaMinima = areaSuprimida * fator;
-    let conforme = areaCompensada >= areaMinima - 0.0001;
-    document.getElementById('resultadoReparoNao').innerHTML = conforme ?
-      `<div class="resultado-conforme">✅ CONFORME - Área compensada: ${areaCompensada.toFixed(4)} ha ≥ Mínimo: ${areaMinima.toFixed(4)} ha (fator ${fator}x)</div>` :
-      `<div class="resultado-nao-conforme">❌ NÃO CONFORME - Área compensada: ${areaCompensada.toFixed(4)} ha &lt; Mínimo: ${areaMinima.toFixed(4)} ha (fator ${fator}x)</div>`;
-  }
-  
-  function renderAiaSection() {
-    const razao = document.querySelector('input[name="prad_razao"]:checked')?.value;
-    const placeholder = document.getElementById('aiaSectionPlaceholder');
-    if (razao !== 'AIA') {
-      if (window.aiaSectionRow) window.aiaSectionRow.remove();
-      if (window.totalAreaRow) window.totalAreaRow.remove();
-      return;
-    }
-    // Implementação resumida - manter funcionamento
-    mostrarStatus('Seção AIA ativada', 'info');
-  }
-  
-  function adicionarCampoPersonalizado() {
-    camposPersonalizados.push({ rotulo: "", valor: "" });
-    renderizarCamposPersonalizados();
-  }
-  
-  function renderizarCamposPersonalizados() {
-    const container = document.getElementById('custom-fields-container');
-    container.innerHTML = '';
-    camposPersonalizados.forEach((campo, idx) => {
-      const div = document.createElement('div');
-      div.className = 'custom-field-item';
-      div.innerHTML = `
-        <button class="btn-remove-small" onclick="removerCampoPersonalizado(${idx})"><i class="fas fa-trash"></i></button>
-        <div class="row"><div class="col-md-6"><input class="form-control" placeholder="Rótulo" value="${campo.rotulo.replace(/"/g, '&quot;')}" onchange="camposPersonalizados[${idx}].rotulo=this.value; atualizarStatusSalvamento()"></div>
-        <div class="col-md-6"><input class="form-control" placeholder="Valor" value="${campo.valor.replace(/"/g, '&quot;')}" onchange="camposPersonalizados[${idx}].valor=this.value; atualizarStatusSalvamento()"></div></div>`;
-      container.appendChild(div);
-    });
-  }
-  
-  function removerCampoPersonalizado(idx) {
-    camposPersonalizados.splice(idx, 1);
-    renderizarCamposPersonalizados();
-    atualizarStatusSalvamento();
-  }
-  
-  function preencherResponsaveis() {
-    const container = document.getElementById('responsaveis-container');
-    container.innerHTML = '';
-    responsaveis.forEach((resp, idx) => {
-      const div = document.createElement('div');
-      div.className = 'assinatura-item';
-      div.innerHTML = `
-        <button class="btn-remove-small" onclick="removerResponsavel(${idx})"><i class="fas fa-trash"></i></button>
-        <input class="form-control mb-2" placeholder="Nome" value="${resp.nome.replace(/"/g, '&quot;')}" onchange="responsaveis[${idx}].nome=this.value; atualizarStatusSalvamento()">
-        <input class="form-control mb-2" placeholder="Curso" value="${resp.curso.replace(/"/g, '&quot;')}" onchange="responsaveis[${idx}].curso=this.value; atualizarStatusSalvamento()">
-        <input class="form-control" placeholder="CREA" value="${resp.crea.replace(/"/g, '&quot;')}" onchange="responsaveis[${idx}].crea=this.value; atualizarStatusSalvamento()">`;
-      container.appendChild(div);
-    });
-  }
-  
-  function adicionarResponsavel() {
-    responsaveis.push({ nome: "", curso: "", crea: "" });
-    preencherResponsaveis();
-    atualizarStatusSalvamento();
-  }
-  
-  function removerResponsavel(idx) {
-    if (responsaveis.length > 1) {
-      responsaveis.splice(idx, 1);
-      preencherResponsaveis();
-      atualizarStatusSalvamento();
-    } else {
-      mostrarStatus('Deve haver pelo menos um responsável', 'info');
-    }
-  }
-  
-  function adicionarItemAnalise() {
-    itensAnalise.push({ item: (itensAnalise.length + 1).toString(), exigencia: "", atende: "N/A", fls: "", obs: "", isCustom: true });
-    preencherAnalise();
-    atualizarStatusSalvamento();
-  }
-  
-  function removerItemAnalise(idx) {
-    if (itensAnalise[idx].isCustom) {
-      itensAnalise.splice(idx, 1);
-      itensAnalise.forEach((item, i) => item.item = (i + 1).toString());
-      preencherAnalise();
-      atualizarStatusSalvamento();
-    }
-  }
-  
-  function adicionarItemAnexo() {
-    anexos.push({ anexo: "", apresentado: "N/A", localizacao: "", obs: "", isCustom: true });
-    preencherAnexos();
-    atualizarStatusSalvamento();
-  }
-  
-  function removerItemAnexo(idx) {
-    if (anexos[idx].isCustom) {
-      anexos.splice(idx, 1);
-      preencherAnexos();
-      atualizarStatusSalvamento();
-    }
-  }
-  
-  function adicionarPendenciaManual() {
-    pendenciasManuais.push({ id: `manual_${Date.now()}`, pendencia: "", providencia: "", fundamentacao: "", categoria: "PENDÊNCIAS MANUAIS" });
-    renderizarPendencias();
-    atualizarStatusSalvamento();
-  }
-  
-  function removerPendenciaManual(id) {
-    pendenciasManuais = pendenciasManuais.filter(p => p.id !== id);
-    renderizarPendencias();
-    atualizarStatusSalvamento();
-  }
-  
-  function gerarPendenciasAutomaticas() {
-    const auto = [];
-    for (let i = 0; i < Math.min(itensAnalise.length, 15); i++) {
-      if (['NÃO', 'PARCIAL'].includes(itensAnalise[i].atende?.toUpperCase())) {
-        auto.push({ ...pendenciaItens[i], id: `auto_${i}`, categoria: "ITENS DO PRAD" });
-      }
-    }
-    for (let i = 0; i < Math.min(anexos.length, pendenciaAnexos.length); i++) {
-      if (anexos[i].apresentado?.toUpperCase() === 'NÃO') {
-        auto.push({ ...pendenciaAnexos[i], id: `auto_anexo_${i}`, categoria: "ANEXOS" });
-      }
-    }
-    return auto;
-  }
-  
-  function renderizarPendencias() {
-    const todas = [...gerarPendenciasAutomaticas(), ...pendenciasManuais];
-    const body = document.getElementById('pendencias-body');
-    body.innerHTML = '';
-    let num = 1;
-    todas.forEach(p => {
-      const row = body.insertRow();
-      row.innerHTML = `
-        <td>${num++}</td>
-        <td><textarea class="form-control" ${p.id?.startsWith('auto_') ? 'readonly' : ''} onchange="${!p.id?.startsWith('auto_') ? 'atualizarPendencia(this)' : ''}">${p.pendencia || ''}</textarea></td>
-        <td><textarea class="form-control" ${p.id?.startsWith('auto_') ? 'readonly' : ''}>${p.providencia || ''}</textarea></td>
-        <td><textarea class="form-control" ${p.id?.startsWith('auto_') ? 'readonly' : ''}>${p.fundamentacao || ''}</textarea></td>
-        <td>${!p.id?.startsWith('auto_') ? '<button class="btn-remove" onclick="removerPendenciaManual(\'' + p.id + '\')"><i class="fas fa-trash"></i></button>' : ''}</td>`;
-    });
-  }
-  
-  function preencherAnalise() {
-    const body = document.getElementById('analise-itens-body');
-    body.innerHTML = '';
-    itensAnalise.forEach((item, idx) => {
-      const row = body.insertRow();
-      row.innerHTML = `
-        <td><input class="form-control" value="${item.item}" onchange="itensAnalise[${idx}].item=this.value; atualizarStatusSalvamento()" style="width:60px"></td>
-        <td>${item.isCustom ? `<input class="form-control" value="${item.exigencia.replace(/"/g, '&quot;')}" onchange="itensAnalise[${idx}].exigencia=this.value; atualizarStatusSalvamento()">` : `<div class="readonly-cell">${item.exigencia}</div>`}</td>
-        <td><select class="form-control" onchange="itensAnalise[${idx}].atende=this.value; renderizarPendencias(); atualizarStatusSalvamento()">${['SIM','NÃO','PARCIAL','N/A'].map(o => `<option ${item.atende===o?'selected':''}>${o}</option>`).join('')}</select></td>
-        <td><input class="form-control" value="${item.fls}" onchange="itensAnalise[${idx}].fls=this.value; atualizarStatusSalvamento()"></td>
-        <td><input class="form-control" value="${item.obs.replace(/"/g, '&quot;')}" onchange="itensAnalise[${idx}].obs=this.value; atualizarStatusSalvamento()"></td>
-        <td>${item.isCustom ? `<button class="btn-remove" onclick="removerItemAnalise(${idx})"><i class="fas fa-trash"></i></button>` : ''}</td>`;
-    });
-  }
-  
-  function preencherAnexos() {
-    const body = document.getElementById('anexos-body');
-    body.innerHTML = '';
-    anexos.forEach((item, idx) => {
-      const row = body.insertRow();
-      row.innerHTML = `
-        <td>${item.isCustom ? `<input class="form-control" value="${item.anexo.replace(/"/g, '&quot;')}" onchange="anexos[${idx}].anexo=this.value; atualizarStatusSalvamento()">` : `<div class="readonly-cell">${item.anexo}</div>`}</td>
-        <td><select class="form-control" onchange="anexos[${idx}].apresentado=this.value; renderizarPendencias(); atualizarStatusSalvamento()">${['SIM','NÃO','NÃO APLICÁVEL','N/A'].map(o => `<option ${item.apresentado===o?'selected':''}>${o}</option>`).join('')}</select></td>
-        <td><input class="form-control" value="${item.localizacao}" onchange="anexos[${idx}].localizacao=this.value; atualizarStatusSalvamento()"></td>
-        <td><input class="form-control" value="${item.obs.replace(/"/g, '&quot;')}" onchange="anexos[${idx}].obs=this.value; atualizarStatusSalvamento()"></td>
-        <td>${item.isCustom ? `<button class="btn-remove" onclick="removerItemAnexo(${idx})"><i class="fas fa-trash"></i></button>` : ''}</td>`;
-    });
-  }
-  
-  function setupRazaoEventos() {
     document.querySelectorAll('input[name="prad_razao"]').forEach(radio => {
       radio.addEventListener('change', () => {
-        const isOutro = radio.value === 'Outro';
-        document.getElementById('outro_razao_desc_container').style.display = isOutro ? 'block' : 'none';
-        if (radio.value === 'AIA') renderAiaSection();
-        atualizarStatusSalvamento();
+        document.getElementById('outro_razao_desc_container').style.display = radio.value === 'Outro' ? 'block' : 'none';
       });
     });
-  }
-  
-  // ==================== FUNÇÃO PDF SIMPLIFICADA ====================
-  async function gerarPDF() {
-    const numeroInfo = document.getElementById('prad_numero_info').value.trim();
-    if (!numeroInfo) {
-      mostrarStatus('Nº da Informação Técnica é obrigatório!', 'error');
-      return;
-    }
-    
-    try {
-      const { jsPDF } = window.jspdf;
-      const pdf = new jsPDF({ orientation: 'p', unit: 'mm', format: 'a4' });
-      const pageWidth = 210, margin = 25;
-      let y = 40;
-      
-      pdf.setFontSize(16);
-      pdf.setTextColor(0, 51, 102);
-      pdf.text(`INFORMAÇÃO TÉCNICA PRAD Nº ${numeroInfo}/${getAnoCorrente()}`, pageWidth / 2, y, { align: 'center' });
-      y += 15;
-      
-      pdf.setFontSize(12);
-      pdf.setTextColor(0, 0, 0);
-      pdf.text(`Interessado: ${document.getElementById('prad_interessado').value || 'Não informado'}`, margin, y);
-      y += 8;
-      pdf.text(`Processo: ${document.getElementById('prad_processo').value || 'Não informado'}`, margin, y);
-      y += 8;
-      pdf.text(`Município: ${document.getElementById('prad_municipio').value || 'Não informado'}`, margin, y);
-      y += 15;
-      
-      pdf.setFontSize(14);
-      pdf.setTextColor(0, 51, 102);
-      pdf.text('Conclusão:', margin, y);
-      y += 10;
-      pdf.setFontSize(10);
-      const conclusao = document.getElementById('prad_conclusao_texto').value || gerarConclusaoAutomatica();
-      const lines = pdf.splitTextToSize(conclusao, pageWidth - 2 * margin);
-      pdf.text(lines, margin, y);
-      y += lines.length * 5 + 15;
-      
-      pdf.setFontSize(12);
-      pdf.setTextColor(0, 0, 0);
-      pdf.text(`Curitiba, ${document.getElementById('prad_data_info').value || new Date().toLocaleDateString()}`, pageWidth - margin, y, { align: 'right' });
-      y += 20;
-      
-      responsaveis.forEach(resp => {
-        pdf.setFontSize(11);
-        pdf.text(resp.nome || '_________________________', margin, y);
-        y += 6;
-        pdf.setFontSize(9);
-        pdf.text(`${resp.curso || ''} ${resp.crea ? `| CREA-${resp.crea}` : ''}`, margin, y);
-        y += 10;
-      });
-      
-      pdf.save(`Informacao_Tecnica_PRAD_${numeroInfo}_${getAnoCorrente()}.pdf`);
-      mostrarStatus('PDF gerado com sucesso!', 'success');
-    } catch (e) {
-      mostrarStatus(`Erro ao gerar PDF: ${e.message}`, 'error');
-    }
-  }
-  
-  // Eventos e inicialização
-  document.querySelectorAll('input, textarea, select').forEach(el => {
-    el.addEventListener('input', () => { atualizarStatusSalvamento(); atualizarTituloRelatorio(); });
   });
-  document.getElementById('prad_prazo')?.addEventListener('input', atualizarConclusao);
-  document.querySelectorAll('input[name="conclusao_prad"]').forEach(r => r.addEventListener('change', atualizarConclusao));
   
-  // Expor funções globais
-  window.fazerLogin = fazerLogin;
-  window.fazerRegistro = fazerRegistro;
-  window.fazerLogout = fazerLogout;
-  window.mostrarRegistro = mostrarRegistro;
-  window.mostrarLogin = mostrarLogin;
-  window.salvarPRADLocal = salvarPRADLocal;
   window.carregarPRADLocal = carregarPRADLocal;
   window.excluirPRADLocal = excluirPRADLocal;
-  window.listarMeusPRADs = listarMeusPRADs;
-  window.sincronizarComNuvem = sincronizarComNuvem;
-  window.fecharLista = fecharLista;
-  window.limparFormulario = limparFormulario;
-  window.limparFormularioParaNovo = limparFormularioParaNovo;
-  window.gerarPDF = gerarPDF;
-  window.toggleIncluirReparoPDF = toggleIncluirReparoPDF;
-  window.gerarProximoNumero = gerarProximoNumero;
-  window.toggleReparoForm = toggleReparoForm;
-  window.calcularReparoSim = calcularReparoSim;
-  window.calcularReparoNao = calcularReparoNao;
-  window.adicionarCampoPersonalizado = adicionarCampoPersonalizado;
   window.removerCampoPersonalizado = removerCampoPersonalizado;
-  window.adicionarResponsavel = adicionarResponsavel;
   window.removerResponsavel = removerResponsavel;
-  window.adicionarItemAnalise = adicionarItemAnalise;
   window.removerItemAnalise = removerItemAnalise;
-  window.adicionarItemAnexo = adicionarItemAnexo;
   window.removerItemAnexo = removerItemAnexo;
-  window.adicionarPendenciaManual = adicionarPendenciaManual;
   window.removerPendenciaManual = removerPendenciaManual;
 </script>
 </body>
