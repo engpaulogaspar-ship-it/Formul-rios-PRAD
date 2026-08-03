@@ -1943,6 +1943,7 @@ const SUB_ETAPAS_IC_ID_ARSH = {
         opcoes: [
           { valor: 'Freático', grau: 2, decisao: 'complementacao' },
           { valor: 'Profundo', grau: 2, decisao: 'complementacao' },
+          { valor: 'OK', grau: 1, decisao: 'proxima_etapa' },
           { valor: 'Não informado - Alto grau de incerteza', grau: 3, decisao: 'complementacao' }
         ]
       },
@@ -1954,6 +1955,7 @@ const SUB_ETAPAS_IC_ID_ARSH = {
         peso: 1,
         opcoes: [
           { valor: 'Não interceptado', grau: 2, decisao: 'complementacao' },
+          { valor: 'OK', grau: 1, decisao: 'proxima_etapa' },
           { valor: 'Não informado - Alto grau de incerteza', grau: 3, decisao: 'complementacao' }
         ]
       },
@@ -2047,6 +2049,7 @@ const SUB_ETAPAS_IC_ID_ARSH = {
         peso: 1,
         opcoes: [
           { valor: 'Não há fase livre - Médio grau de incerteza', grau: 2, decisao: 'complementacao' },
+          { valor: 'OK', grau: 1, decisao: 'proxima_etapa' },
           { valor: 'Não informado - Alto grau de incerteza', grau: 3, decisao: 'complementacao' }
         ]
       },
@@ -2061,6 +2064,7 @@ const SUB_ETAPAS_IC_ID_ARSH = {
           { valor: 'Amostragem outubro a abril - Abaixo do VI - Sem critério de seleção - Alto grau de incerteza', grau: 3, decisao: 'complementacao' },
           { valor: 'Amostragem maio a setembro - Abaixo do VI - Sem critério de seleção - Alto grau de incerteza', grau: 3, decisao: 'complementacao' },
           { valor: 'Amostragem maio a setembro - Acima do VI - Sem critério de seleção - Alto grau de incerteza', grau: 3, decisao: 'complementacao' },
+          { valor: 'OK', grau: 1, decisao: 'proxima_etapa' },
           { valor: 'Amostragem outubro a abril - Acima do VI - Sem critério de seleção - Alto grau de incerteza', grau: 3, decisao: 'complementacao' }
         ]
       },
@@ -2075,6 +2079,7 @@ const SUB_ETAPAS_IC_ID_ARSH = {
           { valor: 'Amostragem outubro a abril - Abaixo do VI - Sem critério de seleção - Alto grau de incerteza', grau: 3, decisao: 'complementacao' },
           { valor: 'Amostragem maio a setembro - Abaixo do VI - Sem critério de seleção - Alto grau de incerteza', grau: 3, decisao: 'complementacao' },
           { valor: 'Amostragem maio a setembro - Acima do VI - Sem critério de seleção - Alto grau de incerteza', grau: 3, decisao: 'complementacao' },
+          { valor: 'OK', grau: 1, decisao: 'proxima_etapa' },
           { valor: 'Amostragem outubro a abril - Acima do VI - Sem critério de seleção - Alto grau de incerteza', grau: 3, decisao: 'complementacao' }
         ]
       },
@@ -6340,7 +6345,7 @@ function gerarPDFTecnico() {
     pdf.setFont('helvetica', 'bold');
     pdf.setFontSize(8);
     pdf.setTextColor(corDecisao[0], corDecisao[1], corDecisao[2]);
-    pdf.text(decisaoLabel, marginLeft + 60, yPos);
+    pdf.text(decisaoLabel, marginLeft + 15, yPos);
     yPos += 10;
     resetarEstilo();
     
