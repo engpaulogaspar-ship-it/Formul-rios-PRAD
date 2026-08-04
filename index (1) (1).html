@@ -24,6 +24,10 @@
       --cor-azul: #3b82f6;
       --cor-roxo: #8b5cf6;
       --ia-color: #7c3aed;
+      --cor-federal: #1a56db;
+      --cor-estadual: #059669;
+      --cor-iat: #7c3aed;
+      --cor-revogada: #6b7280;
     }
     * { box-sizing: border-box; }
     body {
@@ -35,7 +39,6 @@
     }
     .dashboard-container { max-width: 1200px; margin: 0 auto; }
     
-    /* ========== ESTILOS DA PÁGINA INICIAL ========== */
     .home-container {
       max-width: 1200px;
       margin: 0 auto;
@@ -207,7 +210,6 @@
       margin: 0 4px;
     }
 
-    /* ========== ESTILOS DO FORMULÁRIO ========== */
     .dashboard-header {
       background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
       color: white;
@@ -244,7 +246,6 @@
       background: rgba(255,255,255,0.35);
     }
 
-    /* ========== BOTÃO DE CONCLUIR ETAPA ========== */
     .btn-concluir {
       background: var(--success-color);
       color: white;
@@ -263,7 +264,6 @@
       transform: none;
     }
 
-    /* ========== PROGRESS STEPS ========== */
     .progress-steps {
       display: flex;
       justify-content: space-between;
@@ -371,7 +371,6 @@
       50% { transform: scale(1.1); }
     }
 
-    /* ========== DEMAIS ESTILOS ========== */
     .dashboard-card {
       background: white;
       border-radius: var(--border-radius);
@@ -759,10 +758,14 @@
       border-color: var(--primary-color);
       background: #e8f4f8;
     }
-    .resolucao-checkboxes label.fixa {
-      opacity: 0.85;
-      cursor: default;
-      background: #e9ecef;
+    .resolucao-checkboxes label.revogada {
+      opacity: 0.7;
+      border-color: #d1d5db;
+      background: #f3f4f6;
+    }
+    .resolucao-checkboxes label.revogada.checked {
+      border-color: #6b7280;
+      background: #e5e7eb;
     }
     .resolucao-checkboxes input[type="checkbox"] {
       accent-color: var(--primary-color);
@@ -770,23 +773,21 @@
       height: 16px;
       cursor: pointer;
     }
-    .resolucao-checkboxes label.fixa input[type="checkbox"] {
-      cursor: default;
+    .resolucao-checkboxes label.revogada input[type="checkbox"] {
+      accent-color: #6b7280;
     }
     .resolucao-checkboxes .badge-resolucao {
-      font-size: 9px;
+      font-size: 8px;
       padding: 1px 8px;
       border-radius: 10px;
-      background: var(--primary-color);
       color: white;
+      font-weight: 600;
     }
-    .resolucao-checkboxes .badge-fixa {
-      font-size: 8px;
-      padding: 1px 6px;
-      border-radius: 10px;
-      background: #6c757d;
-      color: white;
-    }
+    .badge-resolucao.federal { background: var(--cor-federal); }
+    .badge-resolucao.estadual { background: var(--cor-estadual); }
+    .badge-resolucao.iat { background: var(--cor-iat); }
+    .badge-resolucao.revogada { background: var(--cor-revogada); }
+    
     .resolucao-selecionadas-info {
       font-size: 11px;
       color: #666;
@@ -1097,7 +1098,6 @@
       display: none;
     }
 
-    /* ========== ESTILO PARA ETAPAS BLOQUEADAS ========== */
     .etapa-bloqueada {
       opacity: 0.6;
       pointer-events: none;
@@ -1144,6 +1144,20 @@
       font-size: 24px;
     }
 
+    /* Badge de resolução na tabela */
+    .badge-resolucao-item {
+      font-size: 7px;
+      padding: 1px 6px;
+      border-radius: 8px;
+      color: white;
+      font-weight: 600;
+      margin: 0 2px;
+    }
+    .badge-resolucao-item.federal { background: var(--cor-federal); }
+    .badge-resolucao-item.estadual { background: var(--cor-estadual); }
+    .badge-resolucao-item.iat { background: var(--cor-iat); }
+    .badge-resolucao-item.revogada { background: var(--cor-revogada); }
+
     @media (max-width: 992px) {
       .dados-grid-4 { grid-template-columns: 1fr; }
       .home-grid { grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
@@ -1182,7 +1196,7 @@
     <h4>GAC - Gerenciamento de Áreas Contaminadas</h4>
     <p class="text-muted small">Sistema de Informação Técnica - 7 Etapas</p>
     <p class="text-muted small" style="font-size:10px; color:#888;">
-      <i class="fas fa-gavel"></i> Resoluções fixas: CONAMA 420/2009 | CEMA 129/2023
+      <i class="fas fa-gavel"></i> Selecione as resoluções aplicáveis ao processo
     </p>
     <input type="text" id="localUsername" class="form-control mb-3" placeholder="Seu nome" autocomplete="off">
     <button class="btn btn-primary w-100" onclick="iniciarSessao()">Acessar</button>
@@ -1252,9 +1266,9 @@
     <a class="home-card card-ic" onclick="abrirAnaliseAP()">
       <span class="card-badge em-breve"><i class="fas fa-clock"></i> Em breve</span>
       <span class="card-icon"><i class="fas fa-clipboard-check"></i></span>
-      <div class="card-title">Análise AP (Portaria nº 498)</div>
+      <div class="card-title">Análise AP (Portaria nº 578)</div>
       <div class="card-desc">
-        Análise específica para Avaliação Preliminar (AP) conforme Portaria nº 498/2026.
+        Análise específica para Avaliação Preliminar (AP) conforme Portaria IAT nº 578/2026.
         <br><small class="text-muted">Em desenvolvimento - em breve disponível.</small>
       </div>
       <div class="card-footer">
@@ -1267,9 +1281,9 @@
     <a class="home-card card-amostragem" onclick="abrirAnaliseIC()">
       <span class="card-badge em-breve"><i class="fas fa-clock"></i> Em breve</span>
       <span class="card-icon"><i class="fas fa-flask"></i></span>
-      <div class="card-title">Análise IC (Portaria nº 498)</div>
+      <div class="card-title">Análise IC (Portaria nº 578)</div>
       <div class="card-desc">
-        Análise específica para Investigação Confirmatória (IC) conforme Portaria nº 498/2026.
+        Análise específica para Investigação Confirmatória (IC) conforme Portaria IAT nº 578/2026.
         <br><small class="text-muted">Em desenvolvimento - em breve disponível.</small>
       </div>
       <div class="card-footer">
@@ -1282,9 +1296,9 @@
     <a class="home-card card-ia" onclick="abrirAmostragem()">
       <span class="card-badge em-breve"><i class="fas fa-clock"></i> Em breve</span>
       <span class="card-icon"><i class="fas fa-vial"></i></span>
-      <div class="card-title">Amostragem (Portaria nº 498)</div>
+      <div class="card-title">Amostragem (Portaria nº 578)</div>
       <div class="card-desc">
-        Módulo de amostragem conforme Portaria nº 498/2026.
+        Módulo de amostragem conforme Portaria IAT nº 578/2026.
         <br><small class="text-muted">Em desenvolvimento - em breve disponível.</small>
       </div>
       <div class="card-footer">
@@ -1372,42 +1386,44 @@
       </div>
       
       <div class="campo-item" style="grid-column: span 2;">
-        <label><i class="fas fa-gavel"></i> Resolução(ões) Vigente(s):</label>
+        <label><i class="fas fa-gavel"></i> Resolução(ões) Vigente(s) - Selecione as aplicáveis:</label>
         <div class="resolucao-checkboxes" id="resolucaoCheckboxes">
-          <label class="checked fixa" data-value="CONAMA 420/2009">
-            <input type="checkbox" value="CONAMA 420/2009" checked disabled>
+          <label class="checked" data-value="CONAMA 420/2009">
+            <input type="checkbox" value="CONAMA 420/2009" checked onchange="atualizarResolucoesSelecionadas()">
             CONAMA 420/2009
-            <span class="badge-resolucao">Federal</span>
-            <span class="badge-fixa">Fixa</span>
+            <span class="badge-resolucao federal">Federal</span>
           </label>
-          <label class="checked fixa" data-value="CEMA 129/2023">
-            <input type="checkbox" value="CEMA 129/2023" checked disabled>
+          <label class="checked" data-value="CEMA 129/2023">
+            <input type="checkbox" value="CEMA 129/2023" checked onchange="atualizarResolucoesSelecionadas()">
             CEMA 129/2023
-            <span class="badge-resolucao">Estadual</span>
-            <span class="badge-fixa">Fixa</span>
+            <span class="badge-resolucao estadual">Estadual</span>
           </label>
           <label class="checked" data-value="IN IAT 39/2025">
             <input type="checkbox" value="IN IAT 39/2025" checked onchange="atualizarResolucoesSelecionadas()">
             IN IAT 39/2025
-            <span class="badge-resolucao">IAT</span>
+            <span class="badge-resolucao iat">IAT</span>
           </label>
-          <label data-value="Portaria 498/2026">
-            <input type="checkbox" value="Portaria 498/2026" onchange="atualizarResolucoesSelecionadas()">
-            Portaria 498/2026
-            <span class="badge-resolucao">IAT</span>
+          <label class="checked" data-value="Portaria IAT nº 578/2026">
+            <input type="checkbox" value="Portaria IAT nº 578/2026" checked onchange="atualizarResolucoesSelecionadas()">
+            Portaria IAT nº 578/2026
+            <span class="badge-resolucao iat">IAT</span>
           </label>
-          <label data-value="SEDEST 003/2020" style="opacity:0.6; border-color:#ddd;">
+          <label class="revogada" data-value="SEDEST 003/2020">
             <input type="checkbox" value="SEDEST 003/2020" onchange="atualizarResolucoesSelecionadas()">
             SEDEST 003/2020
-            <span class="badge-resolucao" style="background:#6c757d;">Revogada</span>
-            <span style="font-size:8px;color:#888;">(absorvida pela 498/2026)</span>
+            <span class="badge-resolucao revogada">Revogada</span>
+            <span style="font-size:8px;color:#888;">(absorvida pela Portaria IAT nº 578/2026)</span>
           </label>
         </div>
         <div class="resolucao-selecionadas-info" id="resolucaoInfo">
-          <strong>Selecionadas:</strong> <span id="resolucaoSelecionadasLista">CONAMA 420/2009 | CEMA 129/2023 | IN IAT 39/2025</span>
+          <strong>Selecionadas:</strong> <span id="resolucaoSelecionadasLista">CONAMA 420/2009 | CEMA 129/2023 | IN IAT 39/2025 | Portaria IAT nº 578/2026</span>
         </div>
         <div style="font-size:10px; color:#888; margin-top:4px;">
-          <i class="fas fa-lock" style="color:#6c757d;"></i> CONAMA 420/2009 e CEMA 129/2023 são fixas (sempre aplicadas).
+          <i class="fas fa-info-circle"></i> Selecione as resoluções que serão utilizadas como base legal para análise do processo.
+          <span class="badge-resolucao-item federal">Federal</span>
+          <span class="badge-resolucao-item estadual">Estadual</span>
+          <span class="badge-resolucao-item iat">IAT</span>
+          <span class="badge-resolucao-item revogada">Revogada</span>
         </div>
       </div>
       
@@ -1507,7 +1523,7 @@
 <div class="dashboard-container pagina-analise-ap" id="paginaAnaliseAP">
   <div class="dashboard-header" style="background: linear-gradient(135deg, #f97316, #ea580c);">
     <div class="org-info">
-      <div class="org-title">ANÁLISE AP - Portaria nº 498/2026</div>
+      <div class="org-title">ANÁLISE AP - Portaria IAT nº 578/2026</div>
       <div class="org-department">Avaliação Preliminar - Módulo Específico</div>
     </div>
     <button class="btn-back-home" onclick="voltarHome()"><i class="fas fa-arrow-left"></i> Voltar ao Início</button>
@@ -1520,7 +1536,7 @@
     <div class="text-center py-5">
       <i class="fas fa-clipboard-check" style="font-size:64px; color:#f97316; opacity:0.5;"></i>
       <h3 class="mt-3">Módulo de Análise AP</h3>
-      <p class="text-muted">Este módulo específico para Avaliação Preliminar (AP) conforme Portaria nº 498/2026 está em desenvolvimento.</p>
+      <p class="text-muted">Este módulo específico para Avaliação Preliminar (AP) conforme Portaria IAT nº 578/2026 está em desenvolvimento.</p>
       <p class="text-muted">Em breve, você poderá realizar análises detalhadas da AP com critérios específicos da Portaria.</p>
       <button class="btn btn-primary mt-3" onclick="voltarHome()"><i class="fas fa-home"></i> Voltar ao Início</button>
     </div>
@@ -1531,7 +1547,7 @@
 <div class="dashboard-container pagina-analise-ic" id="paginaAnaliseIC">
   <div class="dashboard-header" style="background: linear-gradient(135deg, #3b82f6, #1d4ed8);">
     <div class="org-info">
-      <div class="org-title">ANÁLISE IC - Portaria nº 498/2026</div>
+      <div class="org-title">ANÁLISE IC - Portaria IAT nº 578/2026</div>
       <div class="org-department">Investigação Confirmatória - Módulo Específico</div>
     </div>
     <button class="btn-back-home" onclick="voltarHome()"><i class="fas fa-arrow-left"></i> Voltar ao Início</button>
@@ -1544,7 +1560,7 @@
     <div class="text-center py-5">
       <i class="fas fa-flask" style="font-size:64px; color:#3b82f6; opacity:0.5;"></i>
       <h3 class="mt-3">Módulo de Análise IC</h3>
-      <p class="text-muted">Este módulo específico para Investigação Confirmatória (IC) conforme Portaria nº 498/2026 está em desenvolvimento.</p>
+      <p class="text-muted">Este módulo específico para Investigação Confirmatória (IC) conforme Portaria IAT nº 578/2026 está em desenvolvimento.</p>
       <p class="text-muted">Em breve, você poderá realizar análises detalhadas da IC com critérios específicos da Portaria.</p>
       <button class="btn btn-primary mt-3" onclick="voltarHome()"><i class="fas fa-home"></i> Voltar ao Início</button>
     </div>
@@ -1555,7 +1571,7 @@
 <div class="dashboard-container pagina-amostragem" id="paginaAmostragem">
   <div class="dashboard-header" style="background: linear-gradient(135deg, #22c55e, #16a34a);">
     <div class="org-info">
-      <div class="org-title">AMOSTRAGEM - Portaria nº 498/2026</div>
+      <div class="org-title">AMOSTRAGEM - Portaria IAT nº 578/2026</div>
       <div class="org-department">Módulo de Amostragem</div>
     </div>
     <button class="btn-back-home" onclick="voltarHome()"><i class="fas fa-arrow-left"></i> Voltar ao Início</button>
@@ -1568,7 +1584,7 @@
     <div class="text-center py-5">
       <i class="fas fa-vial" style="font-size:64px; color:#22c55e; opacity:0.5;"></i>
       <h3 class="mt-3">Módulo de Amostragem</h3>
-      <p class="text-muted">Este módulo específico para Amostragem conforme Portaria nº 498/2026 está em desenvolvimento.</p>
+      <p class="text-muted">Este módulo específico para Amostragem conforme Portaria IAT nº 578/2026 está em desenvolvimento.</p>
       <p class="text-muted">Em breve, você poderá gerenciar planos de amostragem, coletas e análises laboratoriais.</p>
       <button class="btn btn-primary mt-3" onclick="voltarHome()"><i class="fas fa-home"></i> Voltar ao Início</button>
     </div>
@@ -1576,6 +1592,1099 @@
 </div>
 
 <script>
+// ============================================================
+// NOVA TABELA DE RESOLUÇÕES
+// ============================================================
+
+const RESOLUCOES_CONFIG = {
+  'CONAMA 420/2009': { 
+    tipo: 'Federal', 
+    classe: 'federal',
+    nome: 'CONAMA 420/2009',
+    descricao: 'Resolução CONAMA nº 420/2009 - Dispõe sobre critérios e valores orientadores de qualidade do solo quanto à presença de substâncias químicas e estabelece diretrizes para o gerenciamento ambiental de áreas contaminadas por essas substâncias em decorrência de atividades antrópicas.'
+  },
+  'CEMA 129/2023': { 
+    tipo: 'Estadual', 
+    classe: 'estadual',
+    nome: 'CEMA 129/2023',
+    descricao: 'Resolução CEMA nº 129/2023 - Dispõe sobre os procedimentos para o gerenciamento de áreas contaminadas no Estado do Paraná.'
+  },
+  'IN IAT 39/2025': { 
+    tipo: 'IAT', 
+    classe: 'iat',
+    nome: 'IN IAT 39/2025',
+    descricao: 'Instrução Normativa IAT nº 39/2025 - Estabelece procedimentos para o monitoramento e gerenciamento de áreas contaminadas no âmbito do Instituto Água e Terra.'
+  },
+  'Portaria IAT nº 578/2026': { 
+    tipo: 'IAT', 
+    classe: 'iat',
+    nome: 'Portaria IAT nº 578/2026',
+    descricao: 'Portaria IAT nº 578/2026 - Estabelece os procedimentos e critérios técnicos para o gerenciamento de áreas contaminadas no Estado do Paraná.'
+  },
+  'SEDEST 003/2020': { 
+    tipo: 'Revogada', 
+    classe: 'revogada',
+    nome: 'SEDEST 003/2020',
+    descricao: 'Resolução SEDEST nº 003/2020 - Dispõe sobre o gerenciamento de áreas contaminadas no Estado do Paraná. (Revogada, absorvida pela Portaria IAT nº 578/2026)'
+  }
+};
+
+// ============================================================
+// NOVAS BASES LEGAIS - FUNDAMENTAÇÃO POR RESOLUÇÃO
+// ============================================================
+
+// Estrutura: itemId -> { resolucao: fundamentacao }
+const BASES_LEGAIS_COMPLETAS = {
+  // MOTIVO DO ESTUDO
+  'motivo_estudo': {
+    'CONAMA 420/2009': 'Art. 14, II e Art. 33: O estudo pode ser motivado por renovação de licença, encerramento de atividades ou para viabilizar um novo uso da área (reabilitação para uso declarado). O Art. 23 estabelece as etapas de identificação, diagnóstico e intervenção, que se aplicam a qualquer um desses motivos.',
+    'CEMA 129/2023': 'Art. 22, §1º e Art. 24: O estudo pode ser motivado por denúncias, reclamações, ou ser realizado espontaneamente, aplicando-se a situações como novo uso ou encerramento de atividades. [Art. 61]: O órgão ambiental pode exigir estudos a qualquer momento, como na renovação de licenças.',
+    'IN IAT 39/2025': 'Art. 74, 75 e 76: O estudo de GAC é motivado por: implantação de novos empreendimentos em áreas com passivo, acidentes com derramamento, detecção de vazamento pelo SMDV, não cumprimento do automonitoramento, falhas estruturais/operacionais graves, ou a critério do órgão ambiental. A renovação de licença com não apresentação de RVT também exige estudo (Art. 21, §3º). O encerramento exige Estudo de Investigação Preliminar e Confirmatória de Passivos Ambientais (Art. 83, VII).',
+    'Portaria IAT nº 578/2026': 'Art. 2º, II, III, IV, V e Art. 13: A AP identifica Áreas com Potencial (AP) ou Suspeitas (AS). A ocorrência de vazamentos ou falhas operacionais exige correção imediata (Art. 13). O fluxograma do Anexo VI estabelece que a AP é a primeira etapa do GAC, sendo motivada por qualquer suspeita de contaminação.',
+    'SEDEST 003/2020': 'Art. 41, 42 e 43: O estudo é motivado por: acidentes com derramamento, implantação em áreas com passivo, detecção de vazamento pelo monitoramento eletrônico, identificação de concentrações acima dos Valores de Intervenção (VI) ou presença de fase livre. O encerramento exige Estudo de Identificação de Passivos Ambientais (Art. 48 e Art. 78 da Resolução CEMA nº 105/2019).'
+  },
+
+  // ============================================================
+  // ETAPA 1 - AVALIAÇÃO PRELIMINAR (AP)
+  // ============================================================
+
+  // Fontes de contaminação desativadas - Retirada de tanques
+  'e3_retirada_tanques': {
+    'CONAMA 420/2009': 'Art. 6º, II: A Avaliação Preliminar é a etapa inicial que busca evidências, indícios ou fatos que permitam suspeitar da existência de contaminação. A informação consistente sobre a retirada de tanques reduz incertezas, enquanto a ausência ou inconsistência a aumenta.',
+    'CEMA 129/2023': 'Art. 20, II e Art. 22, §2º: A Avaliação Preliminar visa identificar fontes potenciais e primárias de contaminação. A informação consistente sobre a retirada de tanques reduz a incerteza, enquanto a ausência ou inconsistência a aumenta.',
+    'IN IAT 39/2025': 'Art. 11, I e Art. 12: A remoção de tanques requer Autorização Ambiental e apresentação de projeto executivo. O Anexo II detalha os procedimentos para remoção, incluindo medição de gases, coleta de amostras e emissão de relatório conclusivo.',
+    'Portaria IAT nº 578/2026': 'Anexo II, itens 3 e 7: A AP deve levantar informações sobre equipamentos instalados (item 3.e) e identificar fontes primárias de contaminação (tanques). A informação consistente sobre retirada de tanques reduz incertezas.',
+    'SEDEST 003/2020': 'Art. 13 e Anexo III: A remoção de tanques requer Autorização Ambiental e apresentação de projeto executivo. O Anexo III detalha os procedimentos, incluindo medição de gases, coleta de amostras e emissão de relatório.'
+  },
+
+  // Estudo de passivo
+  'e3_estudo_passivo': {
+    'CONAMA 420/2009': 'Art. 14, II e Art. 23, I: O estudo de passivo ambiental é uma ferramenta para identificar fontes potenciais de contaminação, sendo fundamental para a avaliação preliminar e para o encerramento de atividades.',
+    'CEMA 129/2023': 'Art. 44, VII: O estudo de passivo ambiental é um documento obrigatório para a desativação de atividades. Sua qualidade e completude impactam diretamente o grau de incerteza sobre a contaminação.',
+    'IN IAT 39/2025': 'Art. 75, 76 e 85: Os Estudos de Passivos Ambientais (Avaliação Preliminar e Investigação Confirmatória) são exigidos em diversas situações. O estudo deve ser apresentado em período não superior a 12 anos (Art. 85).',
+    'Portaria IAT nº 578/2026': 'Anexo II, itens 1 (Histórico) e 7: O estudo de passivo é parte da AP, que deve levantar registros de acidentes, vazamentos, estudos ambientais anteriores e investigações geotécnicas.',
+    'SEDEST 003/2020': 'Art. 8, IX e Art. 41: O Estudo de Identificação de Passivos Ambientais (Avaliação Preliminar e Investigação Confirmatória) é exigido para empreendimentos em operação (após 2000) e em casos de acidentes, vazamentos ou áreas com passivo.'
+  },
+
+  // AP e IC
+  'e3_ap_ic': {
+    'CONAMA 420/2009': 'Art. 23, I: A Avaliação Preliminar e a Investigação Confirmatória são as duas primeiras etapas do gerenciamento de áreas contaminadas, sendo essenciais para a classificação da área como suspeita (AS) ou contaminada sob investigação (AI).',
+    'CEMA 129/2023': 'Art. 22 e Art. 23: São as duas primeiras etapas do GAC. Sua execução consistente é fundamental para classificar a área como suspeita (AS) ou contaminada sob investigação (AC).',
+    'IN IAT 39/2025': 'Art. 75 e 76: A Avaliação Preliminar e a Investigação Confirmatória são as etapas iniciais do GAC para postos de combustíveis, exigidas nos casos listados no art. 75. Devem seguir os procedimentos estabelecidos em portaria específica ou normas ABNT (Art. 81).',
+    'Portaria IAT nº 578/2026': 'Art. 5º e Anexo VI: As etapas do GAC são sequenciais: AP → IC → ID → AR → PI. A AP e a IC são as primeiras etapas obrigatórias.',
+    'SEDEST 003/2020': 'Art. 41 e Anexo VI: A Avaliação Preliminar e a Investigação Confirmatória são as etapas iniciais do GAC, devendo seguir o roteiro do Anexo VI. Deve ser apresentado em até 90 dias nos casos previstos no Art. 41 (parágrafo único).'
+  },
+
+  // ID
+  'e3_id': {
+    'CONAMA 420/2009': 'Art. 6º, IX e Art. 23, II: A Investigação Detalhada é a etapa de diagnóstico que visa entender a dinâmica da contaminação, sendo crucial para reduzir incertezas e subsidiar a avaliação de risco.',
+    'CEMA 129/2023': 'Art. 19, §1º, III e Art. 25: A Investigação Detalhada tem por objetivo caracterizar a contaminação em detalhes. A sua realização consistente é crucial para reduzir incertezas e fundamentar a avaliação de risco.',
+    'IN IAT 39/2025': 'Art. 76: A Investigação Detalhada deve ser apresentada quando identificadas concentrações acima dos Valores de Investigação (VI) ou identificação de fase livre. Deve ser apresentada em até 90 dias.',
+    'Portaria IAT nº 578/2026': 'Art. 4º, §1º e Anexo VI: A ID é a etapa seguinte à IC, quando confirmada a contaminação. Até a revisão da Portaria, aplicam-se as normas ABNT NBR 15.515-3, 16.209 e 16.784.',
+    'SEDEST 003/2020': 'Art. 42 e Anexo VII: A Investigação Detalhada deve ser apresentada quando identificadas concentrações acima dos VI ou presença de fase livre. Deve ser apresentada em até 120 dias da finalização da AP/IC.'
+  },
+
+  // PCA
+  'e3_pca_2024': {
+    'CONAMA 420/2009': 'Art. 14, I e Art. 16: O monitoramento preventivo da qualidade do solo e das águas subterrâneas é um instrumento de prevenção e controle, e um plano de controle ambiental demonstra proatividade.',
+    'CEMA 129/2023': 'Art. 5º, III: O programa de monitoramento preventivo é um dos instrumentos para a proteção do solo e GAC. Um plano de controle ambiental consistente demonstra proatividade.',
+    'IN IAT 39/2025': 'Art. 17, VII e Anexo V: O Projeto de Controle de Poluição Ambiental (PCPA) é um documento exigido para a Licença de Instalação (LI), detalhando os sistemas de controle de efluentes, resíduos e emissões.',
+    'Portaria IAT nº 578/2026': 'Anexo II, item 3.d: A AP deve levantar informações sobre o layout atual do SASC/SAAC. O plano de controle ambiental é um instrumento de gestão que complementa a investigação.',
+    'SEDEST 003/2020': 'Art. 8, VIII e Anexo II: O Plano de Controle Ambiental (PCA) é exigido para a Licença de Instalação (LI), incluindo o Projeto de Controle de Poluição Ambiental, isolamento acústico e diagnóstico de impactos.'
+  },
+
+  // Complementação ID
+  'e3_complementacao_id': {
+    'CONAMA 420/2009': 'Art. 32, III: O órgão ambiental deve avaliar o diagnóstico ambiental e pode, a qualquer momento, solicitar complementações para garantir a qualidade das informações.',
+    'CEMA 129/2023': 'Art. 31, Parágrafo único: O órgão ambiental pode exigir adequações e complementações a qualquer momento se identificar desconformidades que comprometam os objetivos do estudo.',
+    'IN IAT 39/2025': 'Art. 86: Estudos ambientais considerados incompletos ou inadequados devem ser corrigidos e reapresentados pelo empreendedor, conforme solicitação de complementação e prazos fixados pelo órgão ambiental.',
+    'Portaria IAT nº 578/2026': 'Art. 16: Na aplicação dos procedimentos, devem ser atendidas as diretrizes da Resolução CEMA n° 129/2023, que prevê a possibilidade de complementação de estudos.',
+    'SEDEST 003/2020': 'Art. 22: O órgão ambiental pode solicitar, a qualquer momento, outros documentos e/ou informações complementares, assim como anotação de responsabilidade técnica.'
+  },
+
+  // Entrevista no entorno
+  'e1_entrevista': {
+    'CONAMA 420/2009': 'Art. 6º, II: A avaliação preliminar é baseada em informações históricas disponíveis e inspeção do local. A entrevista com funcionários e vizinhos é uma fonte de informação que reduz incertezas.',
+    'CEMA 129/2023': 'Art. 22, §2º: A avaliação preliminar deve caracterizar as atividades no entorno, e a entrevista com funcionários e vizinhos é uma fonte de informação histórica que reduz incertezas sobre potenciais contaminações.',
+    'IN IAT 39/2025': 'Anexo II, item 3.2: A coleta de dados básicos do local para remoção de tanques inclui a realização de levantamentos e entrevistas para obter informações sobre características dos equipamentos, movimentação de combustíveis e eventos de vazamento.',
+    'Portaria IAT nº 578/2026': 'Anexo II, Roteiro de Execução: A AP compreende a coleta de dados em campo por meio de inspeções e entrevistas, devendo considerar múltiplas fontes de informação.',
+    'SEDEST 003/2020': 'Anexo VI, item 6.2.2: O levantamento histórico do uso da área e entorno deve incluir entrevistas com moradores locais e pesquisa junto a instituições.'
+  },
+
+  // Análise multitemporal
+  'e1_multitemporal': {
+    'CONAMA 420/2009': 'Art. 6º, II: A análise multitemporal é uma ferramenta para obter informações históricas sobre o uso e ocupação do solo, sendo essencial para uma avaliação preliminar consistente.',
+    'CEMA 129/2023': 'Art. 22, §2º: A análise multitemporal é uma ferramenta para identificar o histórico de atividades e fontes potenciais, sendo essencial para uma avaliação preliminar consistente.',
+    'IN IAT 39/2025': 'Art. 75, I: Para implantação de novos empreendimentos em local onde antes era desenvolvida atividade com potencial de gerar áreas contaminadas, deve ser apresentada AP e IC, o que requer análise do histórico da área.',
+    'Portaria IAT nº 578/2026': 'Anexo II, item 1 (Histórico): O levantamento de dados deve incluir plantas, fotografias aéreas ou imagens de satélite multitemporais.',
+    'SEDEST 003/2020': 'Anexo VI, item 6.2.2: O levantamento histórico deve ser feito com auxílio de imagens multitemporais e pesquisa junto a instituições.'
+  },
+
+  // Atividades potencialmente poluidoras no entorno
+  'e1_atividades_poluidoras': {
+    'CONAMA 420/2009': 'Art. 24: A área suspeita de contaminação é identificada após a avaliação preliminar, que deve considerar a presença de atividades potencialmente poluidoras no entorno.',
+    'CEMA 129/2023': 'Art. 22, §2º: É obrigatório caracterizar as atividades desenvolvidas no entorno para identificar fontes potenciais de contaminação que possam afetar a área em estudo.',
+    'IN IAT 39/2025': 'Anexo III e IV: O MCE e o RAP exigem a caracterização das atividades no entorno do empreendimento, incluindo a identificação de fontes potenciais de contaminação.',
+    'Portaria IAT nº 578/2026': 'Anexo II, item 4: A caracterização do entorno deve identificar locais onde são desenvolvidas atividades com potencial de contaminação, num raio de 200 metros.',
+    'SEDEST 003/2020': 'Anexo VI, item 6.2.2: A caracterização do entorno deve identificar locais onde foram ou são desenvolvidas atividades com potencial de contaminação, num raio de 200 metros.'
+  },
+
+  // Receptores no entorno
+  'e1_receptores': {
+    'CONAMA 420/2009': 'Art. 6º, III: Bens a proteger incluem a saúde e o bem-estar da população, fauna, flora, qualidade do solo, águas e ar. A AP deve identificar receptores para avaliar riscos potenciais.',
+    'CEMA 129/2023': 'Art. 2º, XL e Art. 22, §2º: "Receptor" é um bem a proteger, e o Art. 22, §2º exige sua identificação na avaliação preliminar para entender os potenciais riscos.',
+    'IN IAT 39/2025': 'Anexo III, item 2.j e Anexo IV, item 2.k: Exige-se a caracterização das edificações existentes num raio de 100 metros, com destaque para escolas, creches, hospitais, poços de captação, etc.',
+    'Portaria IAT nº 578/2026': 'Anexo II, itens 4 (Entorno) e 5 (MCI): A AP deve identificar receptores potenciais e bens a proteger no entorno, para subsidiar o modelo conceitual.',
+    'SEDEST 003/2020': 'Anexo VI, item 6.2.2: A caracterização do entorno deve identificar receptores potenciais ou bens a proteger, como áreas residenciais, escolas, hospitais, poços de captação, etc.'
+  },
+
+  // Poços de captação no entorno
+  'e1_pocos_captacao': {
+    'CONAMA 420/2009': 'Art. 6º, III e Art. 29: Poços de captação são bens a proteger. A AP deve identificar sua presença e vulnerabilidade para resguardar os receptores do risco.',
+    'CEMA 129/2023': 'Art. 2º, XV e Art. 22, §2º: Poços de captação são bens a proteger. Sua identificação e caracterização correta no entorno é obrigatória na AP para avaliar a exposição.',
+    'IN IAT 39/2025': 'Art. 42, I: Os empreendimentos devem estar a uma distância superior a 100 metros de poços de captação de águas subterrâneas para abastecimento público. A identificação desses poços no entorno é obrigatória.',
+    'Portaria IAT nº 578/2026': 'Anexo II, item 4.b: Deve-se identificar pontos de captação de água superficial ou subterrânea, com destaque para os utilizados no abastecimento público em um raio de 500 metros.',
+    'SEDEST 003/2020': 'Art. 24, I: Os empreendimentos devem estar a uma distância superior a 100 metros de poços de captação de águas subterrâneas para abastecimento público. A identificação desses poços no entorno é obrigatória.'
+  },
+
+  // Rede de abastecimento no entorno
+  'e1_rede_abastecimento': {
+    'CONAMA 420/2009': 'Art. 6º, III e Art. 29: A rede de abastecimento de água é um bem a proteger. Sua presença e condição devem ser avaliadas para compreender os riscos de contaminação.',
+    'CEMA 129/2023': 'Art. 2º, XV e Art. 22, §2º: A rede de abastecimento de água é um bem a proteger. Sua presença e condição devem ser avaliadas para compreender os riscos de contaminação.',
+    'IN IAT 39/2025': 'Art. 42, I: A rede de abastecimento público de água é um bem a proteger, e a distância mínima de 100 metros de poços de captação visa proteger a qualidade da água distribuída.',
+    'Portaria IAT nº 578/2026': 'Anexo II, item 4.e: A caracterização do entorno deve identificar a existência de redes de esgoto, de água tratada e de drenagem de águas pluviais.',
+    'SEDEST 003/2020': 'Art. 24, I: A rede de abastecimento público de água é um bem a proteger, e a distância mínima de 100 metros de poços de captação visa proteger a qualidade da água distribuída.'
+  },
+
+  // Rios no entorno
+  'e1_rios': {
+    'CONAMA 420/2009': 'Art. 6º, III e Art. 29: Rios são bens a proteger (recursos hídricos), e a AP deve considerar sua presença e vulnerabilidade.',
+    'CEMA 129/2023': 'Art. 2º, XV e Art. 22, §2º: Rios são bens a proteger (recursos hídricos), e a avaliação preliminar deve considerar sua presença e vulnerabilidade.',
+    'IN IAT 39/2025': 'Anexo III e IV: Os recursos hídricos (rios, nascentes) devem ser identificados e mapeados na caracterização da área, com indicação das distâncias e áreas de preservação permanente.',
+    'Portaria IAT nº 578/2026': 'Anexo II, item 4.c: A AP deve identificar nascentes e corpos d\'água superficiais, com indicação de sua classe.',
+    'SEDEST 003/2020': 'Art. 24, III e Anexo VI, item 6.2.2: O empreendimento deve estar a 1.000 metros à montante de captação de água superficial. A caracterização do entorno deve incluir corpos d\'água superficiais.'
+  },
+
+  // Nascentes no entorno
+  'e1_nascentes': {
+    'CONAMA 420/2009': 'Art. 6º, III e Art. 29: Nascentes são bens a proteger e fontes de água. Sua caracterização é essencial na AP para prevenir impactos.',
+    'CEMA 129/2023': 'Art. 2º, XV e Art. 22, §2º: Nascentes são bens a proteger e fontes de água. Sua caracterização é essencial na AP para prevenir impactos.',
+    'IN IAT 39/2025': 'Anexo III e IV: As nascentes e olhos d\'água devem ser identificados, com descrição do uso e estado de conservação, e das restrições de proteção.',
+    'Portaria IAT nº 578/2026': 'Anexo II, item 4.c: A AP deve identificar nascentes e corpos d\'água superficiais no entorno.',
+    'SEDEST 003/2020': 'Art. 24, IV: O empreendimento não pode estar localizado em áreas úmidas, que incluem nascentes e áreas de recarga de aquíferos.'
+  },
+
+  // Mapa do entorno
+  'e1_mapa': {
+    'CONAMA 420/2009': 'Art. 6º, II e Art. 23: O mapa do entorno é fundamental para a construção do modelo conceitual e para a identificação de fontes e receptores, reduzindo incertezas.',
+    'CEMA 129/2023': 'Art. 2º, XLVII e Art. 22, §2º: O mapa do entorno é fundamental para a construção do modelo conceitual e para a identificação de fontes e receptores, reduzindo incertezas.',
+    'IN IAT 39/2025': 'Anexo IV, item 2: Exige-se a apresentação de mapas da área do empreendimento e seu entorno, com indicação de núcleos urbanos, vias de acesso, Unidades de Conservação, cursos d\'água e outras interferências.',
+    'Portaria IAT nº 578/2026': 'Anexo II, item 4.b e item 3.4.b: Exige-se a representação em planta georreferenciada dos pontos de captação de água num raio de 500 metros. O mapa do entorno é parte integrante do relatório.',
+    'SEDEST 003/2020': 'Art. 7, XI e Anexo VI, item 6.2.2: Exige-se mapa ou croqui de localização com caracterização das edificações num raio de 100 metros (LP) e caracterização do entorno em 200 metros (AP/IC).'
+  },
+
+  // Registro fotográfico entorno
+  'e1_registro_fotografico': {
+    'CONAMA 420/2009': 'Art. 6º, II: O registro fotográfico é uma evidência visual que corrobora as informações levantadas durante a inspeção do local, diminuindo o grau de incerteza.',
+    'CEMA 129/2023': 'Art. 22, §2º: O registro fotográfico é uma evidência visual que corrobora as informações levantadas na AP, diminuindo o grau de incerteza.',
+    'IN IAT 39/2025': 'Anexo II, item 6.e e Anexo III: O registro fotográfico é exigido em diversas etapas, incluindo a remoção de tanques (etapas da operação), caracterização da área (MCE/RAP) e Relatório de Vistoria Técnica (RVT).',
+    'Portaria IAT nº 578/2026': 'Art. 9 e Anexo II, item 3.3.a e 3.4.b: Todo registro fotográfico deve incluir coordenadas, data e indicação do local. O relatório da AP deve ser evidenciado por registros fotográficos.',
+    'SEDEST 003/2020': 'Anexo III, item 6.e e Anexo VIII: O registro fotográfico é exigido na remoção de tanques (etapas da operação), no Relatório de Vistoria Técnica (RVT) e na Ficha de Vistoria.'
+  },
+
+  // ============================================================
+  // SUB-ETAPA EMPREENDIMENTO
+  // ============================================================
+
+  // Abastecimento
+  'e2_abastecimento': {
+    'CONAMA 420/2009': 'Art. 6º, II e Art. 29: A caracterização do abastecimento de água do empreendimento é essencial para a AP, pois identifica um potencial receptor (poço) ou uma via de exposição.',
+    'CEMA 129/2023': 'Art. 22, §2º: A caracterização do abastecimento de água do empreendimento é essencial para a AP, pois identifica um potencial receptor (poço) ou uma via de exposição.',
+    'IN IAT 39/2025': 'Art. 68: As atividades com poço tubular ou poço cacimba devem realizar monitoramento semestral da qualidade da água para BTEX, PAH\'s e TPH\'s. O tipo de abastecimento é uma informação relevante para a caracterização do empreendimento.',
+    'Portaria IAT nº 578/2026': 'Anexo II, item 3.g: A AP deve identificar outras fontes de água utilizadas (concessionária, reúso, captação superficial) e poços tubulares ou cacimba/rasos eventualmente presentes.',
+    'SEDEST 003/2020': 'Art. 36: As atividades com poço tubular profundo ou poço cacimba devem realizar monitoramento anual da qualidade da água para BTEX, PAH\'s e TPH\'s.'
+  },
+
+  // Receptores no local
+  'e2_receptores': {
+    'CONAMA 420/2009': 'Art. 6º, III: A identificação de receptores (como trabalhadores) no local é obrigatória para a avaliação de risco, e sua ausência bem documentada também reduz incertezas.',
+    'CEMA 129/2023': 'Art. 2º, XL e Art. 22, §2º: A identificação de receptores (como trabalhadores) no local é obrigatória para a avaliação de risco, e sua ausência bem documentada também reduz incertezas.',
+    'IN IAT 39/2025': 'Art. 42, I: A presença de receptores vulneráveis (escolas, creches, hospitais) no local ou no entorno exige distanciamento mínimo de 100 metros dos tanques, bombas e filtros.',
+    'Portaria IAT nº 578/2026': 'Anexo II, item 3.j: A AP deve identificar receptores potenciais no local, observando local e tempo de permanência.',
+    'SEDEST 003/2020': 'Art. 24, I e Art. 7, XI.c: A presença de receptores vulneráveis (funcionários, clientes) no local exige distanciamento mínimo de 100 metros de tanques, bombas e filtros de escolas e hospitais.'
+  },
+
+  // Áreas fontes no local
+  'e2_areas_fontes': {
+    'CONAMA 420/2009': 'Art. 6º, II e Art. 24: A identificação das áreas fonte de contaminação é o coração da AP, pois define onde a investigação deve ser focada.',
+    'CEMA 129/2023': 'Art. 2º, XXIII e Art. 22, §2º: A identificação das áreas fonte de contaminação é o coração da AP, pois define onde a investigação deve ser focada.',
+    'IN IAT 39/2025': 'Art. 71: Os poços de monitoramento devem ser locados à jusante e o mais próximo possível das fontes primárias de contaminação, como pista de abastecimento, área de tancagem, filtros e CSAO.',
+    'Portaria IAT nº 578/2026': 'Anexo II, item 3 (Caracterização do Empreendimento): A AP tem por objetivo identificar áreas fonte, fontes potenciais e primárias de contaminação. A Observação 2 lista exemplos de áreas fonte.',
+    'SEDEST 003/2020': 'Anexo VI, item 6.2.3: A caracterização do empreendimento deve incluir a localização de fontes primárias de contaminação, como tanques, bombas, filtros, CSAO, áreas de troca de óleo e lavagem.'
+  },
+
+  // Poços de captação no local
+  'e2_pocos_captacao_local': {
+    'CONAMA 420/2009': 'Art. 6º, III e Art. 29: A presença de poços no local os torna bens a proteger prioritários, e sua caracterização é essencial para a gestão de risco.',
+    'CEMA 129/2023': 'Art. 2º, XV e Art. 22, §2º: A presença de poços no local os torna bens a proteger prioritários, e sua caracterização é essencial para a gestão de risco.',
+    'IN IAT 39/2025': 'Art. 68: Poços de captação no local devem ser monitorados semestralmente. Art. 42, I: Poços de captação para abastecimento público devem estar a mais de 100 m do empreendimento.',
+    'Portaria IAT nº 578/2026': 'Anexo II, item 3.f: A AP deve identificar e localizar poços tubulares ou cacimba/rasos eventualmente presentes no empreendimento (ativos ou não).',
+    'SEDEST 003/2020': 'Art. 36: Poços de captação no local devem ser monitorados anualmente. Art. 24, I: Poços de captação para abastecimento público devem estar a mais de 100 m do empreendimento.'
+  },
+
+  // Outorga
+  'e2_outorga': {
+    'CONAMA 420/2009': 'Art. 6º, III: A outorga é um ato legal que regulariza o uso da água, e sua existência ou ausência qualifica o poço como um bem a proteger formalmente.',
+    'CEMA 129/2023': 'Art. 2º, XV: A outorga é um ato legal que regulariza o uso da água, e sua existência ou ausência qualifica o poço como um bem a proteger formalmente.',
+    'IN IAT 39/2025': 'Art. 8, VIII e Art. 14, XI: A outorga prévia ou declaração de uso independente/insignificante de outorga é exigida para empreendimentos que necessitem de uso de recursos hídricos (captação, lançamento, derivação).',
+    'Portaria IAT nº 578/2026': 'Anexo II, item 3.f: A AP deve verificar a existência de Outorga de Direito de Uso de Recursos Hídricos ou Dispensa de Outorga para os poços presentes.',
+    'SEDEST 003/2020': 'Art. 7, VII: É exigido o número da Outorga Prévia do Instituto das Águas do Paraná para utilização de recursos hídricos.'
+  },
+
+  // Perfil construtivo do poço
+  'e2_perfil_poco': {
+    'CONAMA 420/2009': 'Art. 6º, IX: O perfil construtivo é uma informação técnica necessária para a investigação detalhada, pois ajuda a entender a vulnerabilidade do poço.',
+    'CEMA 129/2023': 'Art. 22, §2º: O perfil construtivo é uma informação técnica necessária para a investigação detalhada.',
+    'IN IAT 39/2025': 'Art. 70, Parágrafo único: O perfil construtivo dos poços de monitoramento deve ser apresentado, identificando as unidades hidroestratigráficas de interesse. Para poços de captação, o perfil é igualmente relevante.',
+    'Portaria IAT nº 578/2026': 'Anexo II, item 3.f: A AP deve levantar as características construtivas dos poços tubulares ou cacimba/rasos presentes no empreendimento.',
+    'SEDEST 003/2020': 'Anexo VI, item 6.2.3: A localização de poços de extração de água subterrânea deve incluir informações sobre suas características construtivas, idade e perfil descritivo.'
+  },
+
+  // Rios no local
+  'e2_rios_local': {
+    'CONAMA 420/2009': 'Art. 6º, III e Art. 29: A presença de rios no local os torna bens a proteger, e sua identificação é crucial para prevenir impactos.',
+    'CEMA 129/2023': 'Art. 2º, XV e Art. 22, §2º: A presença de rios no local os torna bens a proteger, e sua identificação é crucial para prevenir impactos.',
+    'IN IAT 39/2025': 'Art. 42, III: O empreendimento deve estar a uma distância mínima de 1.000 metros à montante do ponto de captação de água de corpos hídricos superficiais para abastecimento público.',
+    'Portaria IAT nº 578/2026': 'Anexo II, item 3 (Caracterização do Empreendimento): A AP deve identificar bens a proteger no local, incluindo corpos d\'água superficiais, para subsidiar o modelo conceitual.',
+    'SEDEST 003/2020': 'Art. 24, III: O empreendimento deve estar a uma distância mínima de 1.000 metros à montante do ponto de captação de água de corpos hídricos superficiais para abastecimento público.'
+  },
+
+  // Nascentes no local
+  'e2_nascentes_local': {
+    'CONAMA 420/2009': 'Art. 6º, III e Art. 29: Nascentes são bens a proteger e a AP deve identificar sua presença para avaliar riscos.',
+    'CEMA 129/2023': 'Art. 2º, XV e Art. 22, §2º: Nascentes são bens a proteger e a AP deve identificar sua presença para avaliar riscos.',
+    'IN IAT 39/2025': 'Art. 42, IV: O empreendimento não pode estar localizado em áreas úmidas, que incluem nascentes e áreas de recarga de aquíferos.',
+    'Portaria IAT nº 578/2026': 'Anexo II, item 3 (Caracterização do Empreendimento): A AP deve identificar nascentes no local como bens a proteger.',
+    'SEDEST 003/2020': 'Art. 24, IV: O empreendimento não pode estar localizado em áreas úmidas, que incluem nascentes e áreas de recarga de aquíferos.'
+  },
+
+  // Planta baixa
+  'e2_planta_baixa': {
+    'CONAMA 420/2009': 'Art. 6º, II: A planta baixa com a localização das atividades e fontes potenciais é um elemento essencial da AP para a correta identificação dos riscos.',
+    'CEMA 129/2023': 'Art. 22, §2º: A planta baixa com a localização das atividades e fontes potenciais é um elemento essencial da AP para a correta identificação dos riscos.',
+    'IN IAT 39/2025': 'Art. 12, II.b, Art. 17, VI, Art. 27, VI e Anexo II: A planta baixa é um documento obrigatório em diversas fases do licenciamento (AA, LI, LIA, LIR, LOR) e na remoção de tanques. Deve conter a localização de todos os equipamentos e sistemas.',
+    'Portaria IAT nº 578/2026': 'Anexo II, item 3.d: A AP exige plantas contendo layout atual do SASC e/ou SAAC, incluindo os equipamentos desativados ainda presentes na área de interesse.',
+    'SEDEST 003/2020': 'Art. 8, VII e Anexo III: A planta baixa é um documento obrigatório para a LI e para a remoção de tanques. Deve conter a localização de todos os equipamentos e sistemas.'
+  },
+
+  // Registro fotográfico empreendimento
+  'e2_registro_fotografico_local': {
+    'CONAMA 420/2009': 'Art. 6º, II: O registro fotográfico é uma evidência para comprovar as condições do empreendimento, sendo fundamental para a consistência da AP.',
+    'CEMA 129/2023': 'Art. 22, §2º: O registro fotográfico é uma evidência para comprovar as condições do empreendimento, sendo fundamental para a consistência da AP.',
+    'IN IAT 39/2025': 'Art. 8, VI e Art. 82, II: O registro fotográfico é exigido no memorial descritivo da DLAM, no Relatório de Vistoria Técnica (RVT) e em diversas outras etapas para comprovar a situação das instalações.',
+    'Portaria IAT nº 578/2026': 'Art. 9 e Anexo II, item 3.3.a: O relatório da AP deve ser evidenciado por registro fotográfico (com data e coordenadas) de todos os componentes descritos.',
+    'SEDEST 003/2020': 'Art. 26, II e Anexo VIII: O Relatório de Vistoria Técnica (RVT) deve conter imagens fotográficas atualizadas da situação das instalações e infraestrutura do empreendimento.'
+  },
+
+  // Ano de operação
+  'e2_ano_operacao': {
+    'CONAMA 420/2009': 'Art. 6º, II: O histórico operacional é usado para avaliar a probabilidade de contaminação. Quanto mais tempo de operação, maior a necessidade de investigação detalhada.',
+    'CEMA 129/2023': 'Art. 22, §2º: O histórico operacional é usado para avaliar a probabilidade de contaminação. Quanto mais tempo de operação, maior a necessidade de investigação detalhada.',
+    'IN IAT 39/2025': 'Art. 43, §1º: A vida útil dos tanques subterrâneos é de 25 anos a partir da data de fabricação. O ano de início de operação é relevante para avaliar a necessidade de substituição ou remoção.',
+    'Portaria IAT nº 578/2026': 'Anexo II, item 1.b: O histórico operacional do empreendimento, incluindo data de implantação e eventos relevantes, é essencial para a AP.',
+    'SEDEST 003/2020': 'Art. 30: A vida útil dos tanques de paredes duplas é de 25 anos a partir da data de fabricação. O ano de início de operação é relevante para avaliar a necessidade de substituição ou remoção.'
+  },
+
+  // Bandeira branca
+  'e2_bandeira_branca': {
+    'CONAMA 420/2009': 'Art. 14: A bandeira branca é um indicador de conformidade ambiental em sistemas de licenciamento. Sua ausência pode indicar um histórico de problemas.',
+    'CEMA 129/2023': 'Art. 7º: A bandeira branca é um indicador de conformidade ambiental. Sua ausência pode indicar um histórico de problemas, aumentando a incerteza.',
+    'IN IAT 39/2025': 'Art. 21, V e VI: A apresentação da DCP e dos RVT\'s é exigida na renovação da LO. A bandeira branca é um indicador de conformidade, e sua ausência pode indicar problemas, aumentando a incerteza.',
+    'Portaria IAT nº 578/2026': 'Anexo II, item 1.c: O histórico de áreas contaminadas e reabilitadas, com concentrações acima dos valores orientadores, é parte do levantamento histórico da AP.',
+    'SEDEST 003/2020': 'Art. 11, V e XII: A apresentação da Declaração de Carga Poluidora (DCP) e do Relatório de Monitoramento e Operação (RMO) é exigida na renovação da LO. A bandeira branca é um indicador de conformidade.'
+  },
+
+  // Bandeira atual
+  'e2_bandeira_atual': {
+    'CONAMA 420/2009': 'Art. 14: A bandeira atual reflete a situação de regularidade do empreendimento, influenciando o nível de atenção e controle exigido.',
+    'CEMA 129/2023': 'Art. 7º: A bandeira atual reflete a situação de regularidade do empreendimento, influenciando o nível de atenção e controle exigido.',
+    'IN IAT 39/2025': 'Art. 21, V e VI: A bandeira atual reflete a situação de regularidade do empreendimento, influenciando o nível de atenção e controle exigido.',
+    'Portaria IAT nº 578/2026': 'Anexo II, item 1.b e 1.c: O histórico operacional e de regularidade ambiental é relevante para a AP, incluindo informações sobre eventuais autuações ou irregularidades.',
+    'SEDEST 003/2020': 'Art. 11, V e XII: A bandeira atual reflete a situação de regularidade do empreendimento, influenciando o nível de atenção e controle exigido.'
+  },
+
+  // ============================================================
+  // SUB-ETAPA ENTORNO PRETÉRITO
+  // ============================================================
+
+  // Atividades pretéritas
+  'e1p_atividades_pretéritas': {
+    'CONAMA 420/2009': 'Art. 6º, II e Art. 23, I: A AP deve considerar o histórico de uso do solo, identificando atividades pretéritas que possam ter deixado um passivo ambiental.',
+    'CEMA 129/2023': 'Art. 22, §2º: A AP deve considerar o histórico de uso do solo, identificando atividades pretéritas que possam ter deixado um passivo ambiental.',
+    'IN IAT 39/2025': 'Art. 75, I: Para novos empreendimentos em áreas com histórico de atividades potencialmente poluidoras, exige-se Avaliação Preliminar e Investigação Confirmatória, considerando o passivo deixado por estas atividades.',
+    'Portaria IAT nº 578/2026': 'Anexo II, item 1 (Histórico): O levantamento de dados deve considerar o histórico de uso da área e do seu entorno, com especial atenção às atividades potencialmente geradoras de contaminação.',
+    'SEDEST 003/2020': 'Anexo VI, item 6.2.2: O levantamento histórico do uso da área e entorno deve pesquisar os tipos de uso pretéritos da área de interesse e entorno, ilustrados com a sequência histórica de imagens aéreas.'
+  },
+
+  // Bens a proteger pretérito
+  'e1p_bens_proteger': {
+    'CONAMA 420/2009': 'Art. 6º, III e Art. 23, I: Bens a proteger, como poços, que existiram no passado devem ser identificados, pois podem ter sido impactados por atividades pretéritas.',
+    'CEMA 129/2023': 'Art. 2º, XV e Art. 22, §2º: Bens a proteger, como poços, que existiram no passado devem ser identificados, pois podem ter sido impactados por atividades pretéritas.',
+    'IN IAT 39/2025': 'Art. 75, I e Art. 76: Bens a proteger que existiram no passado podem ter sido impactados por atividades pretéritas, devendo ser considerados na AP e IC.',
+    'Portaria IAT nº 578/2026': 'Anexo II, item 1 (Histórico): Bens a proteger que existiram no passado podem ter sido impactados por atividades pretéritas, devendo ser considerados na AP.',
+    'SEDEST 003/2020': 'Anexo VI, item 6.2.2: A caracterização do entorno deve identificar poços cacimba e poços tubulares num raio de 200 metros e 500 metros de poços cadastrados. Bens a proteger que existiram no passado podem ter sido impactados.'
+  },
+
+  // ============================================================
+  // CONTINUAÇÃO - FONTES DESATIVADAS (Sub-etapa FD)
+  // ============================================================
+
+  // Entrevista no local
+  'e3_entrevista_local': {
+    'CONAMA 420/2009': 'Art. 6º, II: A entrevista com funcionários e vizinhos é uma técnica para levantar informações históricas sobre a operação e possíveis incidentes.',
+    'CEMA 129/2023': 'Art. 22, §2º: A entrevista com funcionários e vizinhos é uma técnica para levantar informações históricas sobre a operação e possíveis incidentes.',
+    'IN IAT 39/2025': 'Anexo II, item 3.2: A coleta de dados básicos para remoção de tanques inclui a realização de entrevistas para obter informações sobre características dos equipamentos, movimentação de combustíveis e eventos de vazamento.',
+    'Portaria IAT nº 578/2026': 'Anexo II, Roteiro de Execução: A AP inclui a coleta de dados em campo por meio de inspeções e entrevistas, devendo considerar múltiplas fontes de informação.',
+    'SEDEST 003/2020': 'Anexo III, item 3.2 e Anexo VI, item 6.2.2: A coleta de dados básicos para remoção de tanques inclui a realização de levantamentos e entrevistas para obter informações sobre características dos equipamentos, movimentação de combustíveis e eventos de vazamento.'
+  },
+
+  // Fonte secundária pretérita
+  'e3_fonte_secundaria': {
+    'CONAMA 420/2009': 'Art. 6º, V e Art. 23, II: A fonte secundária é o meio físico impactado pela contaminação. Sua delimitação é uma das etapas da investigação detalhada, e a falta dela gera grande incerteza sobre a extensão da contaminação.',
+    'CEMA 129/2023': 'Art. 2º, XXIV: Fonte secundária é o meio impactado. Sua delimitação é uma das etapas da investigação, e a falta dela gera grande incerteza sobre a extensão da contaminação.',
+    'IN IAT 39/2025': 'Art. 76: A investigação detalhada deve caracterizar a contaminação, incluindo a delimitação da fonte secundária. A ausência de delimitação aumenta a incerteza e pode exigir complementação.',
+    'Portaria IAT nº 578/2026': 'Art. 2º, XV: Fonte secundária de contaminação é o compartimento ambiental contaminado. A delimitação da fonte secundária é um objetivo da ID, que segue a IC.',
+    'SEDEST 003/2020': 'Anexo VII, item 3.2.3: A Investigação Detalhada deve caracterizar as plumas de contaminação (fase retida, dissolvida e livre). A delimitação espacial da fonte secundária é obrigatória para a avaliação de risco.'
+  },
+
+  // SASC pretérito
+  'e3_sasc_preterito': {
+    'CONAMA 420/2009': 'Art. 6º, V e Art. 24: A AP classifica as fontes como primárias ou suspeitas. Em postos de combustíveis, o SASC é uma fonte primária típica.',
+    'CEMA 129/2023': 'Art. 2º, XXIII: SASC (Sistema de Armazenamento Subterrâneo de Combustíveis) é uma fonte primária típica em postos de combustíveis. A AP deve classificar seu estado para avaliar o risco de contaminação.',
+    'IN IAT 39/2025': 'Art. 43 e 44: Os tanques subterrâneos (SASC) têm vida útil de 25 anos. A avaliação da integridade e histórico de vazamentos é essencial para a AP. Anexo II detalha os procedimentos de remoção e avaliação de passivo.',
+    'Portaria IAT nº 578/2026': 'Art. 2º, XIV: Fonte primária é a instalação ou material a partir do qual as SQIs se originam. O SASC é uma fonte primária típica. Anexo II, item 3.e exige descrição e registro fotográfico dos equipamentos.',
+    'SEDEST 003/2020': 'Art. 30: A vida útil dos tanques é de 25 anos. A avaliação da integridade e histórico de vazamentos é essencial para a AP. Anexo III e VI detalham os procedimentos de remoção e avaliação de passivo.'
+  },
+
+  // SASC - tipo de contaminante
+  'e3_sasc_contaminante': {
+    'CONAMA 420/2009': 'Art. 6º, V: A identificação dos contaminantes é crucial para a investigação. Em postos, os combustíveis são os principais contaminantes de interesse.',
+    'CEMA 129/2023': 'Art. 2º, XVIII: A identificação dos contaminantes é crucial para a investigação. Em postos, os combustíveis são os principais contaminantes de interesse.',
+    'IN IAT 39/2025': 'Art. 68 e 69: O monitoramento preventivo de águas subterrâneas exige análise de BTEX (Benzeno, Tolueno, Etilbenzeno, Xilenos), PAH\'s e TPH\'s, que são os contaminantes típicos de combustíveis.',
+    'Portaria IAT nº 578/2026': 'Anexo II, item 3.a: A AP deve levantar os combustíveis armazenados, tancagem utilizada e movimentação mensal por produto. Os combustíveis são as principais SQIs.',
+    'SEDEST 003/2020': 'Art. 36 e Anexo VI, item 7.3.5: O monitoramento de águas subterrâneas exige análise de BTEX, PAH\'s e TPH\'s, que são os contaminantes típicos de combustíveis.'
+  },
+
+  // Respiros pretérito
+  'e3_respiros_preterito': {
+    'CONAMA 420/2009': 'Art. 6º, V: Os respiros dos tanques são fontes potenciais de emissão de vapores. A AP deve avaliar seu estado e o risco de contaminação.',
+    'CEMA 129/2023': 'Art. 2º, XXIII: Os respiros dos tanques são fontes potenciais de emissão de vapores. A AP deve avaliar seu estado e o risco de contaminação.',
+    'IN IAT 39/2025': 'Art. 47 e 48: Os respiros dos tanques, com válvulas de alívio de pressão e vácuo, são fontes potenciais de emissão de vapores. A manutenção anual deve ser comprovada por laudo técnico.',
+    'Portaria IAT nº 578/2026': 'Anexo II, item 3.e.ii: A AP deve descrever e registrar fotograficamente equipamentos instalados que armazenam e conduzem combustíveis, equipamentos periféricos de segurança e seu estado de conservação.',
+    'SEDEST 003/2020': 'Art. 47 (da IAT 39/2025, que substituiu a SEDEST) e Anexo VIII: Os respiros dos tanques, com válvulas de alívio de pressão e vácuo, são fontes potenciais de emissão de vapores e devem ser inspecionados.'
+  },
+
+  // Respiros - tipo de contaminante
+  'e3_respiros_contaminante': {
+    'CONAMA 420/2009': 'Art. 6º, V: A identificação dos contaminantes, como combustíveis, é essencial para a investigação e avaliação de risco.',
+    'CEMA 129/2023': 'Art. 2º, XVIII: A identificação dos contaminantes, como combustíveis, é essencial para a investigação e avaliação de risco.',
+    'IN IAT 39/2025': 'Art. 68 e 69: Os contaminantes de interesse em postos são BTEX, PAH\'s e TPH\'s, associados aos combustíveis armazenados.',
+    'Portaria IAT nº 578/2026': 'Anexo II, item 3.a e item 5.b: A AP deve identificar as SQIs compatíveis com os produtos ou materiais presentes.',
+    'SEDEST 003/2020': 'Art. 36 e Anexo VI: Os contaminantes de interesse em postos são BTEX, PAH\'s e TPH\'s, associados aos combustíveis armazenados.'
+  },
+
+  // Linhas pretérito
+  'e3_linhas_preterito': {
+    'CONAMA 420/2009': 'Art. 6º, V e Art. 24: As linhas de abastecimento são fontes potenciais de vazamento. A AP deve avaliar seu histórico de manutenção e integridade.',
+    'CEMA 129/2023': 'Art. 2º, XXIII: As linhas de abastecimento são fontes potenciais de vazamento. A AP deve avaliar seu histórico de manutenção e integridade.',
+    'IN IAT 39/2025': 'Art. 46: O teste de estanqueidade completo do SASC (linhas, tanques, conexões e tubulações) deve ser realizado em periodicidade não superior a três anos, para verificar a integridade do sistema.',
+    'Portaria IAT nº 578/2026': 'Anexo II, item 3 (Caracterização do Empreendimento): A AP deve levantar informações sobre linhas de sucção de combustível como fontes primárias de contaminação.',
+    'SEDEST 003/2020': 'Art. 27: O teste de estanqueidade completo do SASC (linhas, tanques, conexões e tubulações) deve ser realizado em periodicidade não superior a 5 anos, para verificar a integridade do sistema.'
+  },
+
+  // Linhas - tipo de contaminante
+  'e3_linhas_contaminante': {
+    'CONAMA 420/2009': 'Art. 6º, V: A identificação do tipo de contaminante (combustíveis) é fundamental para o direcionamento da investigação.',
+    'CEMA 129/2023': 'Art. 2º, XVIII: A identificação do tipo de contaminante (combustíveis) é fundamental para o direcionamento da investigação.',
+    'IN IAT 39/2025': 'Art. 68 e 69: Os contaminantes monitorados incluem BTEX, PAH\'s e TPH\'s, que são os principais componentes de combustíveis derivados de petróleo.',
+    'Portaria IAT nº 578/2026': 'Anexo II, item 3.a e item 5.b: A AP deve identificar as SQIs associadas às fontes, como BTEX, HPA e TPH.',
+    'SEDEST 003/2020': 'Art. 36 e Anexo VI: Os contaminantes monitorados incluem BTEX, PAH\'s e TPH\'s, que são os principais componentes de combustíveis derivados de petróleo.'
+  },
+
+  // Bombas pretérito
+  'e3_bombas_preterito': {
+    'CONAMA 420/2009': 'Art. 6º, V e Art. 24: As bombas de abastecimento são fontes potenciais de vazamento. A AP deve classificar seu estado e histórico.',
+    'CEMA 129/2023': 'Art. 2º, XXIII: As bombas de abastecimento são fontes potenciais de vazamento. A AP deve classificar seu estado e histórico.',
+    'IN IAT 39/2025': 'Art. 46, §1º: Deve ser realizado teste hidrostático para sumps e spills (câmaras de contenção sob bombas e filtros) em período não superior a um ano.',
+    'Portaria IAT nº 578/2026': 'Anexo II, item 3 (Caracterização do Empreendimento): A AP deve levantar informações sobre unidades de abastecimento (bombas) como fontes primárias de contaminação.',
+    'SEDEST 003/2020': 'Art. 27, §1º: Deve ser realizado teste hidrostático para sumps e spills (câmaras de contenção sob bombas e filtros) em periodicidade não superior a 5 anos.'
+  },
+
+  // Bombas - tipo de contaminante
+  'e3_bombas_contaminante': {
+    'CONAMA 420/2009': 'Art. 6º, V: A identificação dos contaminantes (combustíveis) é essencial para a investigação.',
+    'CEMA 129/2023': 'Art. 2º, XVIII: A identificação dos contaminantes (combustíveis) é essencial para a investigação.',
+    'IN IAT 39/2025': 'Art. 68 e 69: Os contaminantes BTEX, PAH\'s e TPH\'s são monitorados para detectar vazamentos de combustíveis.',
+    'Portaria IAT nº 578/2026': 'Anexo II, item 3.a e item 5.b: A AP deve identificar as SQIs associadas às fontes.',
+    'SEDEST 003/2020': 'Art. 36 e Anexo VI: Os contaminantes BTEX, PAH\'s e TPH\'s são monitorados para detectar vazamentos de combustíveis.'
+  },
+
+  // CSAO pretérito
+  'e3_csao_preterito': {
+    'CONAMA 420/2009': 'Art. 6º, V e Art. 24: CSAO (Coleta de Solo e Água Oleosa) são fontes de contaminação por óleos. A AP deve avaliar sua condição e manutenção.',
+    'CEMA 129/2023': 'Art. 2º, XXIII: CSAO (Coleta de Solo e Água Oleosa) são fontes de contaminação por óleos. A AP deve avaliar sua condição e manutenção.',
+    'IN IAT 39/2025': 'Art. 59 e 60: O sistema de tratamento de efluentes (CSAO) deve ser projetado e mantido conforme ABNT NBR 14605. A limpeza e manutenção devem ser realizadas com frequência mínima trimestral.',
+    'Portaria IAT nº 578/2026': 'Anexo II, Observação 3: O levantamento de fontes potenciais e primárias deve considerar, dentre outras, a CSAO e o sistema de drenagem oleosa.',
+    'SEDEST 003/2020': 'Art. 33 e Anexo II: O sistema de tratamento de efluentes (CSAO) deve ser projetado e mantido conforme ABNT NBR 14605. A manutenção deve ser comprovada no RMO.'
+  },
+
+  // CSAO - Substâncias acima dos valores padrão
+  'e3_csao_contaminante': {
+    'CONAMA 420/2009': 'Art. 6º, V e Art. 10: A presença de substâncias acima do Valor de Investigação (VI) é o que caracteriza uma área como contaminada. Os BTEX são parâmetros típicos.',
+    'CEMA 129/2023': 'Art. 2º, XVIII e Art. 11: A presença de substâncias acima do Valor de Investigação (VI) é o que caracteriza uma área como contaminada. Os BTEX são parâmetros típicos.',
+    'IN IAT 39/2025': 'Art. 61: Os efluentes tratados devem atender a padrões específicos, incluindo BTEX (benzeno, etilbenzeno, tolueno, xileno), pH, DBO, DQO e substâncias tensoativas.',
+    'Portaria IAT nº 578/2026': 'Anexo V: Os valores orientadores para hidrocarbonetos (BTEX, TPH) devem ser utilizados para comparação com os resultados analíticos.',
+    'SEDEST 003/2020': 'Art. 34: Os efluentes tratados devem atender a padrões específicos, incluindo BTEX (benzeno, etilbenzeno, tolueno, xileno), pH, DBO, DQO e substâncias tensoativas.'
+  },
+
+  // Filtro de óleo pretérito
+  'e3_filtro_oleo': {
+    'CONAMA 420/2009': 'Art. 6º, V e Art. 24: Filtros de óleo são fontes potenciais de vazamento. A AP deve avaliar seu estado e histórico.',
+    'CEMA 129/2023': 'Art. 2º, XXIII: Filtros de óleo são fontes potenciais de vazamento. A AP deve avaliar seu estado e histórico.',
+    'IN IAT 39/2025': 'Art. 65 e 66: Os resíduos perigosos Classe I (OLUC, filtros de óleo usados) devem ser alienados para empresas licenciadas. A área de filtros é uma fonte potencial de contaminação.',
+    'Portaria IAT nº 578/2026': 'Anexo II, Observação 3: O levantamento de fontes potenciais e primárias deve considerar, dentre outras, sistemas de filtragem de diesel e local de armazenamento de óleo usado.',
+    'SEDEST 003/2020': 'Anexo XIV: Os resíduos perigosos Classe I (OLUC, filtros de óleo usados) devem ser gerenciados conforme PGRS. A área de filtros é uma fonte potencial de contaminação.'
+  },
+
+  // Filtro de óleo - tipo de contaminante
+  'e3_filtro_contaminante': {
+    'CONAMA 420/2009': 'Art. 6º, V: OLUC (Óleo Lubrificante Usado ou Contaminado) é um contaminante típico dessas fontes.',
+    'CEMA 129/2023': 'Art. 2º, XVIII: OLUC (Óleo Lubrificante Usado ou Contaminado) é um contaminante típico dessas fontes.',
+    'IN IAT 39/2025': 'Art. 66: O OLUC (Óleo Lubrificante Usado ou Contaminado) deve ser destinado a coletores autorizados pela ANP. É o principal contaminante de filtros e áreas de troca de óleo.',
+    'Portaria IAT nº 578/2026': 'Anexo II, item 5.b: A AP deve identificar as SQIs associadas às fontes, incluindo TPH e compostos específicos de óleos lubrificantes.',
+    'SEDEST 003/2020': 'Art. 32 e Anexo XIV: O OLUC (Óleo Lubrificante Usado ou Contaminado) deve ser armazenado em tanques aéreos com bacia de contenção. É o principal contaminante de filtros e áreas de troca de óleo.'
+  },
+
+  // Troca de óleo pretérito
+  'e3_troca_oleo': {
+    'CONAMA 420/2009': 'Art. 6º, V e Art. 24: A área de troca de óleo é uma fonte potencial de vazamento para o solo.',
+    'CEMA 129/2023': 'Art. 2º, XXIII: A área de troca de óleo é uma fonte potencial de vazamento para o solo.',
+    'IN IAT 39/2025': 'Art. 51 e 52: O piso das áreas de troca de óleo deve ser impermeabilizado, e os efluentes devem ser contidos e direcionados para sistema de tratamento.',
+    'Portaria IAT nº 578/2026': 'Anexo II, Observação 3: O levantamento de fontes potenciais e primárias deve considerar sistema de troca de óleo.',
+    'SEDEST 003/2020': 'Anexo VIII (Ficha de Vistoria): A área de troca de óleo deve ter piso impermeável e drenagem oleosa. A ausência destes itens aumenta a incerteza sobre contaminação.'
+  },
+
+  // Troca de óleo - tipo de contaminante
+  'e3_troca_contaminante': {
+    'CONAMA 420/2009': 'Art. 6º, V: A identificação do tipo de contaminante (OLUC, etc.) é essencial para a investigação.',
+    'CEMA 129/2023': 'Art. 2º, XVIII: A identificação do tipo de contaminante (OLUC, etc.) é essencial para a investigação.',
+    'IN IAT 39/2025': 'Art. 66: O OLUC é o principal contaminante da troca de óleo, devendo ser gerenciado como resíduo Classe I.',
+    'Portaria IAT nº 578/2026': 'Anexo II, item 5.b: A AP deve identificar as SQIs associadas às fontes.',
+    'SEDEST 003/2020': 'Art. 32: O OLUC é o principal contaminante da troca de óleo, devendo ser gerenciado como resíduo Classe I.'
+  },
+
+  // Lavagem de veículos pretérito
+  'e3_lavagem_veiculos': {
+    'CONAMA 420/2009': 'Art. 6º, V e Art. 24: A área de lavagem de veículos é uma fonte potencial de contaminação por óleos e solventes.',
+    'CEMA 129/2023': 'Art. 2º, XXIII: A área de lavagem de veículos é uma fonte potencial de contaminação por óleos e solventes.',
+    'IN IAT 39/2025': 'Art. 53 e 54: A lavagem de veículos deve ser integrada à licença ambiental. Exige piso impermeável, sistema de tratamento de efluentes específico e, para veículos pesados, sistema de reuso.',
+    'Portaria IAT nº 578/2026': 'Anexo II, Observação 1 e 3: O levantamento das atividades realizadas na área deve considerar lavanderias e rampa de lavagem de veículos como áreas fonte.',
+    'SEDEST 003/2020': 'Art. 33: A lavagem de veículos exige sistema de tratamento de efluentes específico. A existência de piso impermeável e CSAO própria é essencial.'
+  },
+
+  // Lavagem de veículos - tipo de contaminante
+  'e3_lavagem_contaminante': {
+    'CONAMA 420/2009': 'Art. 6º, V: A identificação dos contaminantes (combustíveis, OLUC) é crucial para a investigação.',
+    'CEMA 129/2023': 'Art. 2º, XVIII: A identificação dos contaminantes (combustíveis, OLUC) é crucial para a investigação.',
+    'IN IAT 39/2025': 'Art. 61: Os efluentes da lavagem devem atender a padrões específicos, incluindo óleos e graxas, substâncias tensoativas e BTEX.',
+    'Portaria IAT nº 578/2026': 'Anexo II, item 5.b: A AP deve identificar as SQIs associadas às fontes.',
+    'SEDEST 003/2020': 'Art. 34: Os efluentes da lavagem devem atender a padrões específicos, incluindo óleos e graxas, substâncias tensoativas e BTEX.'
+  },
+
+  // Depósito de produtos pretérito
+  'e3_deposito_produtos': {
+    'CONAMA 420/2009': 'Art. 6º, V e Art. 24: Depósitos de produtos são fontes potenciais de contaminação se não forem adequadamente impermeabilizados.',
+    'CEMA 129/2023': 'Art. 2º, XXIII: Depósitos de produtos são fontes potenciais de contaminação se não forem adequadamente impermeabilizados.',
+    'IN IAT 39/2025': 'Art. 64: Os resíduos Classe I devem ser armazenados em bacia de contenção impermeabilizada e local coberto até a destinação final.',
+    'Portaria IAT nº 578/2026': 'Anexo II, Observação 3: O levantamento de fontes potenciais e primárias deve considerar locais de armazenamento de resíduos contaminados.',
+    'SEDEST 003/2020': 'Anexo XIV: Os resíduos Classe I devem ser armazenados em área coberta e impermeabilizada até a destinação final.'
+  },
+
+  // Depósito de produtos - tipo de contaminante
+  'e3_deposito_contaminante': {
+    'CONAMA 420/2009': 'Art. 6º, V: A identificação dos contaminantes (como OLUC) é essencial para o escopo da investigação.',
+    'CEMA 129/2023': 'Art. 2º, XVIII: A identificação dos contaminantes (como OLUC) é essencial para o escopo da investigação.',
+    'IN IAT 39/2025': 'Art. 66: O OLUC é o principal contaminante de depósitos de produtos oleosos.',
+    'Portaria IAT nº 578/2026': 'Anexo II, item 5.b: A AP deve identificar as SQIs associadas às fontes.',
+    'SEDEST 003/2020': 'Art. 32: O OLUC é o principal contaminante de depósitos de produtos oleosos.'
+  },
+
+  // Planta fontes pretéritas
+  'e3_planta_fontes': {
+    'CONAMA 420/2009': 'Art. 6º, II e Art. 24: A localização das fontes na planta baixa é uma informação crítica para a AP, e sua qualidade define o grau de incerteza sobre o passivo.',
+    'CEMA 129/2023': 'Art. 22, §2º: A localização das fontes na planta baixa é uma informação crítica para a AP, e sua qualidade define o grau de incerteza sobre o passivo.',
+    'IN IAT 39/2025': 'Anexo II, item 3.2: O layout do empreendimento com identificação dos locais dos antigos tanques e indicação da posição dos novos deve ser apresentado em escala adequada.',
+    'Portaria IAT nº 578/2026': 'Anexo II, item 3.d: A AP exige plantas contendo layout atual e layouts anteriores recuperados, com localização das fontes de contaminação.',
+    'SEDEST 003/2020': 'Anexo III, item 6.c: O relatório de remoção de tanques deve conter planta ou croqui com a indicação dos pontos de sondagem e a localização dos tanques retirados e remanescentes.'
+  },
+
+  // Planta áreas pretéritas
+  'e3_planta_areas': {
+    'CONAMA 420/2009': 'Art. 6º, II e Art. 24: A identificação de áreas com potencial para contaminação é fundamental para o planejamento da investigação confirmatória.',
+    'CEMA 129/2023': 'Art. 22, §2º: A identificação de áreas com potencial para contaminação é fundamental para o planejamento da investigação confirmatória.',
+    'IN IAT 39/2025': 'Anexo II, item 3.2: O layout do empreendimento deve identificar os locais das antigas instalações e áreas com potencial de contaminação.',
+    'Portaria IAT nº 578/2026': 'Anexo II, item 3.d: A planta baixa deve incluir áreas com potenciais fontes de contaminação, mesmo que desativadas.',
+    'SEDEST 003/2020': 'Anexo VI, item 6.2.3: A planta baixa deve conter layout atual do SASC e informações sobre eventual layout antigo, com descrição e localização de equipamentos desativados.'
+  },
+
+  // Registro fotográfico pretérito
+  'e3_registro_fotografico_fd': {
+    'CONAMA 420/2009': 'Art. 6º, II: O registro fotográfico histórico corrobora as informações sobre o estado das fontes pretéritas, reduzindo incertezas.',
+    'CEMA 129/2023': 'Art. 22, §2º: O registro fotográfico histórico corrobora as informações sobre o estado das fontes pretéritas, reduzindo incertezas.',
+    'IN IAT 39/2025': 'Anexo II, item 6.e: O relatório de remoção de tanques deve conter um conjunto de imagens fotográficas datadas, com registros de todas as etapas da operação.',
+    'Portaria IAT nº 578/2026': 'Art. 9 e Anexo II, item 3.3.a: O registro fotográfico é obrigatório e deve conter coordenadas e data. Fotos de pouca representação aumentam a incerteza.',
+    'SEDEST 003/2020': 'Anexo III, item 6.e: O relatório de remoção de tanques deve conter um conjunto de imagens fotográficas datadas, com registros de todas as etapas da operação.'
+  },
+
+  // ============================================================
+  // SUB-ETAPA FONTES ATIVAS (FA)
+  // ============================================================
+
+  // Laudo de estanqueidade
+  'e4_laudo_estanqueidade': {
+    'CONAMA 420/2009': 'Art. 14, I: O laudo de estanqueidade é uma medida preventiva para sistemas de armazenamento. Sua validade é um indicador da integridade da fonte.',
+    'CEMA 129/2023': 'Art. 7º: O laudo de estanqueidade é uma medida preventiva para sistemas de armazenamento. Sua validade é um indicador da integridade da fonte.',
+    'IN IAT 39/2025': 'Art. 46: O teste de estanqueidade completo do SASC e/ou SAAC deve ser apresentado em periodicidade não superior a três anos, inclusive para sistemas com SMDV.',
+    'Portaria IAT nº 578/2026': 'Anexo II, item 3.e.ii: A AP deve descrever equipamentos periféricos de segurança, como sistemas de detecção de vazamentos, e seu estado de conservação.',
+    'SEDEST 003/2020': 'Art. 27: O teste de estanqueidade completo do SASC e/ou SAAC deve ser apresentado em periodicidade não superior a 5 anos, inclusive para sistemas com monitoramento eletrônico.'
+  },
+
+  // Ficha de vistoria
+  'e4_ficha_vistoria': {
+    'CONAMA 420/2009': 'Art. 14: A ficha de vistoria é um instrumento de controle. Informações completas indicam uma gestão preventiva adequada.',
+    'CEMA 129/2023': 'Art. 7º: A ficha de vistoria é um instrumento de controle. Informações completas indicam uma gestão preventiva adequada.',
+    'IN IAT 39/2025': 'Art. 82: O Relatório de Vistoria Técnica (RVT) anual deve incluir a Ficha de Vistoria da Infraestrutura do Empreendimento (Anexo IX), com informações completas sobre todos os componentes.',
+    'Portaria IAT nº 578/2026': 'Anexo II, item 3 (Caracterização do Empreendimento): A AP exige a caracterização detalhada das instalações, que pode ser subsidiar por fichas de vistoria.',
+    'SEDEST 003/2020': 'Art. 26, VII e Anexo VIII: O Relatório de Vistoria Técnica (RVT) anual deve incluir a Ficha de Vistoria da Infraestrutura do Empreendimento, com informações completas sobre todos os componentes.'
+  },
+
+  // SASC ativo
+  'e4_sasc_ativo': {
+    'CONAMA 420/2009': 'Art. 6º, V e Art. 24: A classificação da fonte na AP define o nível de evidência de contaminação.',
+    'CEMA 129/2023': 'Art. 2º, XXIII e Art. 22, §2º: A classificação da fonte (primária, suspeita, potencial) na AP define o nível de evidência de contaminação.',
+    'IN IAT 39/2025': 'Art. 43 e 44: A vida útil dos tanques subterrâneos é de 25 anos. Tanques com data de fabricação anterior a 2000 exigem atenção especial. A classificação da fonte (primária, suspeita, potencial) é baseada nas evidências de integridade.',
+    'Portaria IAT nº 578/2026': 'Art. 2º, XIV e Anexo II, item 3.e: O SASC é uma fonte primária. A classificação da fonte depende da qualidade das informações e evidências disponíveis.',
+    'SEDEST 003/2020': 'Art. 30: A vida útil dos tanques subterrâneos é de 25 anos. Tanques com data de fabricação anterior a 1995 exigem atenção especial. A classificação da fonte (primária, suspeita, potencial) é baseada nas evidências de integridade.'
+  },
+
+  // Respiros ativo
+  'e4_respiros_ativo': {
+    'CONAMA 420/2009': 'Art. 6º, V e Art. 24: A avaliação dos respiros ativos, com base em evidências visuais, é parte da identificação de fontes na AP.',
+    'CEMA 129/2023': 'Art. 2º, XXIII: A avaliação dos respiros ativos, com base em evidências visuais, é parte da identificação de fontes na AP.',
+    'IN IAT 39/2025': 'Art. 47 e 48: Os respiros devem ter válvulas de alívio de pressão e vácuo, com manutenção anual comprovada por laudo técnico com ART. A falta de manutenção é um indicador de fonte suspeita.',
+    'Portaria IAT nº 578/2026': 'Anexo II, item 3.e.ii: A AP deve descrever e registrar fotograficamente o estado de conservação dos equipamentos, como respiros.',
+    'SEDEST 003/2020': 'Anexo VIII (Ficha de Vistoria): Os respiros devem ser inspecionados e sua condição (oxidados, manchas) é um indicador de fonte suspeita.'
+  },
+
+  // Pista de abastecimento
+  'e4_pista_abastecimento': {
+    'CONAMA 420/2009': 'Art. 6º, II e Art. 24: A condição da pista de abastecimento (presença de rachaduras) é um indício de possível contaminação do solo subjacente.',
+    'CEMA 129/2023': 'Art. 22, §2º: A condição da pista de abastecimento (presença de rachaduras) é um indício de possível contaminação do solo subjacente.',
+    'IN IAT 39/2025': 'Art. 59 e 60: A pista de abastecimento deve ter piso impermeável e canaletas de drenagem interligadas à CSAO. Rachaduras são indícios de possível contaminação do solo subjacente.',
+    'Portaria IAT nº 578/2026': 'Anexo II, item 3 (Caracterização do Empreendimento): A AP deve inspecionar as instalações e registrar indícios de vazamentos ou infiltração de produtos ou efluentes. Rachaduras são indícios de contaminação.',
+    'SEDEST 003/2020': 'Anexo II: A pista de abastecimento deve ter piso impermeável e canaletas de drenagem interligadas à CSAO. Rachaduras são indícios de possível contaminação do solo subjacente.'
+  },
+
+  // Linhas ativa
+  'e4_linhas_ativa': {
+    'CONAMA 420/2009': 'Art. 6º, V e Art. 24: A integridade das linhas é avaliada por testes de estanqueidade, sendo a base para a classificação da fonte.',
+    'CEMA 129/2023': 'Art. 2º, XXIII: A integridade das linhas é avaliada por testes de estanqueidade, sendo a base para a classificação da fonte.',
+    'IN IAT 39/2025': 'Art. 46: O teste de estanqueidade das linhas é obrigatório em periodicidade não superior a três anos. A ausência ou resultado do teste define a classificação da fonte.',
+    'Portaria IAT nº 578/2026': 'Anexo II, item 3 (Caracterização do Empreendimento): A AP deve levantar informações sobre linhas de sucção de combustível, incluindo testes de estanqueidade, se disponíveis.',
+    'SEDEST 003/2020': 'Art. 27: O teste de estanqueidade das linhas é obrigatório em periodicidade não superior a 5 anos. A ausência ou resultado do teste define a classificação da fonte.'
+  },
+
+  // Bombas
+  'e4_bombas_ativa': {
+    'CONAMA 420/2009': 'Art. 6º, V e Art. 24: A condição das bombas é avaliada com base em manutenção e testes, definindo seu potencial como fonte de contaminação.',
+    'CEMA 129/2023': 'Art. 2º, XXIII: A condição das bombas é avaliada com base em manutenção e testes, definindo seu potencial como fonte de contaminação.',
+    'IN IAT 39/2025': 'Art. 46, §1º: O teste hidrostático para sumps e spills deve ser realizado em período não superior a um ano. A falta de manutenção ou teste é indicador de fonte suspeita.',
+    'Portaria IAT nº 578/2026': 'Anexo II, item 3 (Caracterização do Empreendimento): A AP deve levantar informações sobre unidades de abastecimento (bombas) como fontes primárias de contaminação.',
+    'SEDEST 003/2020': 'Art. 27, §1º: O teste hidrostático para sumps e spills deve ser realizado em período não superior a 5 anos. A falta de manutenção ou teste é indicador de fonte suspeita.'
+  },
+
+  // Tipo de contaminante - SASC, respiros, bombas e linhas
+  'e4_tipo_contaminante': {
+    'CONAMA 420/2009': 'Art. 6º, V: A identificação do tipo de produto manuseado define os contaminantes de interesse para a investigação.',
+    'CEMA 129/2023': 'Art. 2º, XVIII: A identificação do tipo de produto manuseado define os contaminantes de interesse para a investigação.',
+    'IN IAT 39/2025': 'Art. 68 e 69: Os contaminantes monitorados em postos são BTEX, PAH\'s e TPH\'s, que incluem os componentes da gasolina, diesel, etanol e OLUC.',
+    'Portaria IAT nº 578/2026': 'Anexo II, item 3.a e item 5.b: A AP deve identificar as SQIs associadas às fontes, incluindo BTEX, HPA e TPH.',
+    'SEDEST 003/2020': 'Art. 36 e Anexo VI: Os contaminantes monitorados em postos são BTEX, PAH\'s e TPH\'s, que incluem os componentes da gasolina, diesel, etanol e OLUC.'
+  },
+
+  // CSAO pista de abastecimento
+  'e4_csao_pista': {
+    'CONAMA 420/2009': 'Art. 6º, V e Art. 24: O Sistema de Coleta de Água Oleosa (CSAO) é uma fonte potencial de contaminação se mal mantido.',
+    'CEMA 129/2023': 'Art. 2º, XXIII: O Sistema de Coleta de Água Oleosa (CSAO) é uma fonte potencial de contaminação se mal mantido.',
+    'IN IAT 39/2025': 'Art. 60, §4º: A limpeza e manutenção da CSAO devem ser realizadas com frequência mínima trimestral. A falta de manutenção a torna uma fonte suspeita de contaminação.',
+    'Portaria IAT nº 578/2026': 'Anexo II, Observação 3: O levantamento de fontes potenciais e primárias deve considerar a CSAO e o sistema de drenagem oleosa.',
+    'SEDEST 003/2020': 'Art. 33 e Anexo VIII: A CSAO deve ter manutenção periódica comprovada. A falta de manutenção a torna uma fonte suspeita de contaminação.'
+  },
+
+  // CSAO pista - tipo de contaminante
+  'e4_csao_contaminante': {
+    'CONAMA 420/2009': 'Art. 6º, V: Os contaminantes do CSAO são derivados de combustíveis e óleos.',
+    'CEMA 129/2023': 'Art. 2º, XVIII: Os contaminantes do CSAO são derivados de combustíveis e óleos.',
+    'IN IAT 39/2025': 'Art. 61: Os efluentes da CSAO devem atender a padrões para BTEX, óleos e graxas, que são os contaminantes de interesse.',
+    'Portaria IAT nº 578/2026': 'Anexo II, item 5.b: A AP deve identificar as SQIs associadas às fontes.',
+    'SEDEST 003/2020': 'Art. 34: Os efluentes da CSAO devem atender a padrões para BTEX, óleos e graxas, que são os contaminantes de interesse.'
+  },
+
+  // Filtro de óleo ativo
+  'e4_filtro_oleo_ativo': {
+    'CONAMA 420/2009': 'Art. 6º, V e Art. 24: Filtros de óleo são fontes potenciais de vazamento. Sua avaliação na AP define o nível de suspeita.',
+    'CEMA 129/2023': 'Art. 2º, XXIII: Filtros de óleo são fontes potenciais de vazamento. Sua avaliação na AP define o nível de suspeita.',
+    'IN IAT 39/2025': 'Art. 65 e 66: Filtros de óleo usados são resíduos Classe I e devem ser destinados a empresas licenciadas. A ausência de registro fotográfico ou informações sobre a destinação aumenta a incerteza.',
+    'Portaria IAT nº 578/2026': 'Anexo II, Observação 3: O levantamento de fontes potenciais e primárias deve considerar sistemas de filtragem de diesel.',
+    'SEDEST 003/2020': 'Anexo XIV: Filtros de óleo usados são resíduos Classe I e devem ser destinados a empresas licenciadas. A ausência de registro fotográfico ou informações sobre a destinação aumenta a incerteza.'
+  },
+
+  // Filtro de óleo - tipo de contaminante
+  'e4_filtro_oleo_contaminante': {
+    'CONAMA 420/2009': 'Art. 6º, V: O contaminante típico do filtro de óleo é o próprio óleo lubrificante (OLUC).',
+    'CEMA 129/2023': 'Art. 2º, XVIII: O contaminante típico do filtro de óleo é o próprio óleo lubrificante (OLUC).',
+    'IN IAT 39/2025': 'Art. 66: O OLUC é o contaminante típico de filtros de óleo.',
+    'Portaria IAT nº 578/2026': 'Anexo II, item 5.b: A AP deve identificar as SQIs associadas às fontes.',
+    'SEDEST 003/2020': 'Art. 32: O OLUC é o contaminante típico de filtros de óleo.'
+  },
+
+  // Troca de óleo ativo
+  'e4_troca_oleo_ativo': {
+    'CONAMA 420/2009': 'Art. 6º, V e Art. 24: A área de troca de óleo é avaliada na AP por evidências de contaminação (manchas, fissuras).',
+    'CEMA 129/2023': 'Art. 2º, XXIII: A área de troca de óleo é avaliada na AP por evidências de contaminação (manchas, fissuras).',
+    'IN IAT 39/2025': 'Art. 51 e 52: O piso da área de troca de óleo deve ser impermeável. Rachaduras ou manchas são evidências de possível contaminação do solo.',
+    'Portaria IAT nº 578/2026': 'Anexo II, Observação 3: O levantamento de fontes potenciais e primárias deve considerar sistema de troca de óleo.',
+    'SEDEST 003/2020': 'Anexo VIII (Ficha de Vistoria): O piso da área de troca de óleo deve ser impermeável. Rachaduras ou manchas são evidências de possível contaminação do solo.'
+  },
+
+  // Troca de óleo - tipo de contaminante
+  'e4_troca_oleo_contaminante': {
+    'CONAMA 420/2009': 'Art. 6º, V: O OLUC é o principal contaminante associado à troca de óleo.',
+    'CEMA 129/2023': 'Art. 2º, XVIII: O OLUC é o principal contaminante associado à troca de óleo.',
+    'IN IAT 39/2025': 'Art. 66: O OLUC é o principal contaminante associado à troca de óleo.',
+    'Portaria IAT nº 578/2026': 'Anexo II, item 5.b: A AP deve identificar as SQIs associadas às fontes.',
+    'SEDEST 003/2020': 'Art. 32: O OLUC é o principal contaminante associado à troca de óleo.'
+  },
+
+  // Lavagem de veículos ativo
+  'e4_lavagem_veiculos_ativo': {
+    'CONAMA 420/2009': 'Art. 6º, II e Art. 24: A AP avalia a área de lavagem, e a existência de registro fotográfico é um diferencial para o grau de certeza da informação.',
+    'CEMA 129/2023': 'Art. 2º, XXIII e Art. 22, §2º: A AP avalia a área de lavagem, e a existência de registro fotográfico é um diferencial para o grau de certeza da informação.',
+    'IN IAT 39/2025': 'Art. 53: A lavagem de veículos exige sistema de tratamento de efluentes específico. A existência de registro fotográfico e condições adequadas reduzem a incerteza sobre o risco de contaminação.',
+    'Portaria IAT nº 578/2026': 'Anexo II, Observação 1 e 3: O levantamento das atividades realizadas na área deve considerar lavanderias e rampa de lavagem de veículos como áreas fonte. O registro fotográfico reduz incertezas.',
+    'SEDEST 003/2020': 'Art. 33: A lavagem de veículos exige sistema de tratamento de efluentes específico. A existência de registro fotográfico e condições adequadas reduzem a incerteza sobre o risco de contaminação.'
+  },
+
+  // Lavagem de veículos - tipo de contaminante
+  'e4_lavagem_contaminante': {
+    'CONAMA 420/2009': 'Art. 6º, V: Solventes como querosene e solupan são contaminantes típicos de lavagem.',
+    'CEMA 129/2023': 'Art. 2º, XVIII: Solventes como querosene e solupan são contaminantes típicos de lavagem.',
+    'IN IAT 39/2025': 'Art. 61: Os efluentes da lavagem devem atender a padrões de óleos e graxas e substâncias tensoativas. Os contaminantes típicos incluem solventes como querosene e solupan.',
+    'Portaria IAT nº 578/2026': 'Anexo II, item 5.b: A AP deve identificar as SQIs associadas às fontes, como solventes clorados em lavagem ou desengraxe de peças.',
+    'SEDEST 003/2020': 'Art. 34: Os efluentes da lavagem devem atender a padrões de óleos e graxas e substâncias tensoativas. Os contaminantes típicos incluem solventes como querosene e solupan.'
+  },
+
+  // CSAO lavagem ativa
+  'e4_csao_lavagem': {
+    'CONAMA 420/2009': 'Art. 6º, V e Art. 24: O CSAO da lavagem é uma fonte potencial de contaminação se não for adequadamente mantido.',
+    'CEMA 129/2023': 'Art. 2º, XXIII: O CSAO da lavagem é uma fonte potencial de contaminação se não for adequadamente mantido.',
+    'IN IAT 39/2025': 'Art. 60, §5º: Não pode existir interligação entre a CSAO da lavagem e a CSAO das demais atividades. A CSAO da lavagem deve ter manutenção específica.',
+    'Portaria IAT nº 578/2026': 'Anexo II, Observação 3: O levantamento de fontes potenciais e primárias deve considerar a CSAO e o sistema de drenagem oleosa.',
+    'SEDEST 003/2020': 'Art. 33, §1º: A CSAO da lavagem deve ser própria e com manutenção específica. Não pode haver interligação com a CSAO das demais atividades.'
+  },
+
+  // CSAO lavagem tipo de contaminante
+  'e4_csao_lavagem_contaminante': {
+    'CONAMA 420/2009': 'Art. 6º, V: Os contaminantes do CSAO da lavagem são os mesmos da pista, incluindo combustíveis e óleos.',
+    'CEMA 129/2023': 'Art. 2º, XVIII: Os contaminantes do CSAO da lavagem são os mesmos da pista, incluindo combustíveis e óleos.',
+    'IN IAT 39/2025': 'Art. 61: Os contaminantes da CSAO da lavagem são os mesmos de outras áreas, incluindo óleos, graxas e BTEX.',
+    'Portaria IAT nº 578/2026': 'Anexo II, item 5.b: A AP deve identificar as SQIs associadas às fontes.',
+    'SEDEST 003/2020': 'Art. 34: Os contaminantes da CSAO da lavagem são os mesmos de outras áreas, incluindo óleos, graxas e BTEX.'
+  },
+
+  // Depósito de produtos ativo
+  'e4_deposito_produtos_ativo': {
+    'CONAMA 420/2009': 'Art. 6º, V e Art. 24: A condição do piso do depósito é um indicador de possível contaminação do solo.',
+    'CEMA 129/2023': 'Art. 2º, XXIII: A condição do piso do depósito é um indicador de possível contaminação do solo.',
+    'IN IAT 39/2025': 'Art. 64: Os resíduos Classe I devem ser armazenados em bacia de contenção impermeabilizada. Fissuras no piso são indicadores de possível contaminação.',
+    'Portaria IAT nº 578/2026': 'Anexo II, Observação 3: O levantamento de fontes potenciais e primárias deve considerar locais de armazenamento de resíduos contaminados.',
+    'SEDEST 003/2020': 'Anexo XIV: Os resíduos Classe I devem ser armazenados em bacia de contenção impermeabilizada. Fissuras no piso são indicadores de possível contaminação.'
+  },
+
+  // Depósito de produtos - tipo de contaminante
+  'e4_deposito_contaminante': {
+    'CONAMA 420/2009': 'Art. 6º, V: OLUC é o contaminante mais comum em depósitos de produtos lubrificantes.',
+    'CEMA 129/2023': 'Art. 2º, XVIII: OLUC é o contaminante mais comum em depósitos de produtos lubrificantes.',
+    'IN IAT 39/2025': 'Art. 66: O OLUC é o principal contaminante de depósitos de produtos oleosos.',
+    'Portaria IAT nº 578/2026': 'Anexo II, item 5.b: A AP deve identificar as SQIs associadas às fontes.',
+    'SEDEST 003/2020': 'Art. 32: O OLUC é o principal contaminante de depósitos de produtos oleosos.'
+  },
+
+  // Planta fontes ativas
+  'e4_planta_fontes_ativo': {
+    'CONAMA 420/2009': 'Art. 6º, II e Art. 24: A planta baixa com a localização e classificação de todas as fontes é um documento essencial para uma AP consistente.',
+    'CEMA 129/2023': 'Art. 22, §2º: A planta baixa com a localização e classificação de todas as fontes é um documento essencial para uma AP consistente.',
+    'IN IAT 39/2025': 'Art. 17, VI e Art. 27, VI: A planta baixa deve conter a localização de todas as fontes de contaminação (tanques, linhas, bombas, filtros, áreas de descarga, etc.). A especificação das fontes potenciais e suspeitas é essencial para a AP.',
+    'Portaria IAT nº 578/2026': 'Anexo II, item 3.d: A planta baixa deve conter a localização de todas as fontes de contaminação, com a devida classificação.',
+    'SEDEST 003/2020': 'Art. 8, VII e Anexo VI, item 6.2.3: A planta baixa deve conter a localização de todas as fontes de contaminação (tanques, linhas, bombas, filtros, áreas de descarga, etc.). A especificação das fontes potenciais e suspeitas é essencial para a AP.'
+  },
+
+  // Planta áreas ativas
+  'e4_planta_areas_ativo': {
+    'CONAMA 420/2009': 'Art. 6º, II e Art. 24: A AP deve identificar e delimitar as áreas com potencial ou suspeita de contaminação para o planejamento da investigação.',
+    'CEMA 129/2023': 'Art. 22, §2º: A AP deve identificar e delimitar as áreas com potencial ou suspeita de contaminação para o planejamento da investigação.',
+    'IN IAT 39/2025': 'Art. 17, VI e Art. 27, VI: A planta baixa deve identificar as áreas com potencial de contaminação, como CSAO, depósitos de resíduos, áreas de troca de óleo e lavagem.',
+    'Portaria IAT nº 578/2026': 'Anexo II, item 3.d: A planta baixa deve identificar todas as áreas fonte, classificando-as como AP ou AS.',
+    'SEDEST 003/2020': 'Art. 8, VII e Anexo VI, item 6.2.3: A planta baixa deve identificar as áreas com potencial de contaminação, como CSAO, depósitos de resíduos, áreas de troca de óleo e lavagem.'
+  },
+
+  // Registro fotográfico FA
+  'e4_registro_fotografico_fa': {
+    'CONAMA 420/2009': 'Art. 6º, II: O registro fotográfico atual é a evidência que comprova as condições operacionais e de manutenção do empreendimento.',
+    'CEMA 129/2023': 'Art. 22, §2º: O registro fotográfico atual é a evidência que comprova as condições operacionais e de manutenção do empreendimento.',
+    'IN IAT 39/2025': 'Art. 82, II: O RVT anual deve conter um conjunto de imagens fotográficas atualizadas da situação das instalações e infraestruturas do empreendimento, de todos os itens descritos na Ficha de Vistoria.',
+    'Portaria IAT nº 578/2026': 'Art. 9 e Anexo II, item 3.3.a: O registro fotográfico é obrigatório e deve conter coordenadas e data, com resolução adequada.',
+    'SEDEST 003/2020': 'Art. 26, II e Anexo VIII: O RVT anual deve conter um conjunto de imagens fotográficas atualizadas da situação das instalações e infraestruturas do empreendimento, de todos os itens descritos na Ficha de Vistoria.'
+  },
+
+  // ============================================================
+  // ITENS IC/ID/ARSH - Contaminação no Solo (CS)
+  // ============================================================
+
+  // Método de sondagem
+  'ic_cs_metodo_sondagem': {
+    'CONAMA 420/2009': 'Art. 23, I e II: O método de sondagem deve ser adequado para a investigação confirmatória e detalhada. Métodos mais precisos e com registro fotográfico reduzem incertezas.',
+    'CEMA 129/2023': 'Art. 23, §1º e Art. 25: O método de sondagem deve ser adequado para a investigação confirmatória e detalhada. Métodos mais precisos e com registro fotográfico reduzem incertezas.',
+    'IN IAT 39/2025': 'Art. 81: Os responsáveis pela execução da investigação detalhada devem atender aos procedimentos estabelecidos em portaria específica, e na ausência destas, considerar as normas ABNT. O método de sondagem deve ser adequado à geologia local.',
+    'Portaria IAT nº 578/2026': 'Anexo I, item 1.1.c: As sondagens deverão ser realizadas com Amostragem de Solo de Perfil Completo (ASPC), utilizando metodologia de cravação contínua (direct push) com amostrador tubular. Não deverão ser utilizados trados sólidos ou ocos helicoidais para amostragem.',
+    'SEDEST 003/2020': 'Anexo VI, item 7.3.2 e Anexo VII: As sondagens devem ser executadas com equipamento adequado, com justificativa técnica para o método escolhido. O método deve ser compatível com a geologia local.'
+  },
+
+  // Mecanismo de identificação
+  'ic_cs_mecanismo_id': {
+    'CONAMA 420/2009': 'Art. 6º, IX e Art. 23, II: A investigação detalhada visa caracterizar a contaminação. A identificação de VOCs é um dos mecanismos para delimitar a pluma de contaminação.',
+    'CEMA 129/2023': 'Art. 25, IV e Art. 27: A investigação detalhada visa caracterizar a contaminação. A identificação de VOCs é um dos mecanismos para delimitar a pluma de contaminação.',
+    'IN IAT 39/2025': 'Art. 76, §1º: A identificação de concentrações acima dos Valores de Investigação (VI) ou de fase livre exige a apresentação de Investigação Detalhada e Avaliação de Risco. O uso de PID para medição de VOC\'s é um mecanismo comum.',
+    'Portaria IAT nº 578/2026': 'Anexo I, item 1.3.b: A seleção de amostras para análise deve incluir a medição com detector de COV por fotoionização (PID) ao longo do perfil de solo, com espaçamento mínimo de 20 cm. Recomenda-se o uso da Varredura Vertical de VOC com Aquecimento em Campo (VVVAC).',
+    'SEDEST 003/2020': 'Anexo VI, item 7.3.1: A malha de COV\'s (medição de gases em campo) é utilizada para orientar a investigação. O uso de PID para medição de VOC\'s é um mecanismo comum.'
+  },
+
+  // Perfil estratigráfico
+  'ic_cs_perfil_estratigrafico': {
+    'CONAMA 420/2009': 'Art. 23, II: O perfil estratigráfico é essencial para entender a migração dos contaminantes. Informações completas são fundamentais para uma investigação precisa.',
+    'CEMA 129/2023': 'Art. 23, §1º e Art. 25, II: O perfil estratigráfico é essencial para entender a migração dos contaminantes. Informações completas são fundamentais para uma investigação precisa.',
+    'IN IAT 39/2025': 'Art. 70, Parágrafo único: O perfil construtivo dos poços de monitoramento deve identificar as unidades hidroestratigráficas de interesse. O perfil estratigráfico é fundamental para entender a migração de contaminantes.',
+    'Portaria IAT nº 578/2026': 'Anexo I, item 1.2.d: As sondagens devem ser registradas individualmente com a descrição detalhada do solo, incluindo granulação, cor, umidade, estruturas observáveis, compacidade/consistência e indícios sensoriais de contaminação.',
+    'SEDEST 003/2020': 'Anexo VI, item 7.3.3 e Anexo VII: O perfil descritivo do material identificado deve ser elaborado para cada sondagem de solo executada, com descrição detalhada do material sondado.'
+  },
+
+  // Varredura Vertical de VOCs - malha VOC
+  'ic_cs_varredura_vocs': {
+    'CONAMA 420/2009': 'Art. 6º, IX e Art. 23, II: A varredura vertical de VOCs é uma técnica de investigação detalhada para mapear a contaminação no solo e vapor.',
+    'CEMA 129/2023': 'Art. 25, IV: A varredura vertical de VOCs é uma técnica de investigação detalhada para mapear a contaminação no solo e vapor.',
+    'IN IAT 39/2025': 'Art. 76: A Investigação Detalhada deve caracterizar a contaminação. A malha VOC (medição de gases em campo) é uma ferramenta para delimitar a extensão da contaminação no solo.',
+    'Portaria IAT nº 578/2026': 'Anexo I, item 1.3.b.ii: A medição com PID deve ser realizada ao longo do perfil de solo (liner fechado), com leitura em espaçamento mínimo de 20 cm.',
+    'SEDEST 003/2020': 'Anexo VI, item 7.3.1: A malha de COV\'s deve ter espaçamento regular (5x5m) nas áreas comprometidas com instalações, para orientar a definição dos locais de sondagem.'
+  },
+
+  // Varredura Vertical - poço temporário de vapor
+  'ic_cs_poco_vapor': {
+    'CONAMA 420/2009': 'Art. 23, II: A instalação de poços temporários de vapor é um método para a coleta de amostras de gases do solo.',
+    'CEMA 129/2023': 'Art. 25, IV: A instalação de poços temporários de vapor é um método para a coleta de amostras de gases do solo.',
+    'IN IAT 39/2025': 'Art. 76 e 81: A instalação de poços temporários de vapor é um método de investigação detalhada para coletar amostras de gases do solo, seguindo procedimentos técnicos adequados.',
+    'Portaria IAT nº 578/2026': 'Anexo III, item 1.5.b: A amostragem de ar do solo é obrigatória para auxiliar a investigação de fontes quando houver impossibilidade de amostrar o solo, com aplicação de amostragem ativa em poços de vapor.',
+    'SEDEST 003/2020': 'Anexo VI: A instalação de poços de monitoramento (PM\'s) e a coleta de amostras de água subterrânea seguem procedimentos específicos descritos no Anexo VI (itens 7.3.4 e 7.3.5).'
+  },
+
+  // Varredura Horizontal com aquecimento em campo (VVVAC)
+  'ic_cs_aquecimento_campo': {
+    'CONAMA 420/2009': 'Art. 23, II: A varredura horizontal com aquecimento em campo é uma técnica para identificar a extensão lateral da contaminação por VOCs.',
+    'CEMA 129/2023': 'Art. 25, IV: A varredura horizontal com aquecimento em campo é uma técnica para identificar a extensão lateral da contaminação por VOCs.',
+    'IN IAT 39/2025': 'Art. 76: A Investigação Detalhada busca delimitar a fonte secundária de contaminação. A varredura horizontal com aquecimento em campo é uma técnica para identificar a extensão lateral da contaminação por VOCs.',
+    'Portaria IAT nº 578/2026': 'Anexo I, item 1.3.b.iv: Recomenda-se o uso da Varredura Vertical de VOC com Aquecimento em Campo (VVVAC) para identificar zonas de armazenamento.',
+    'SEDEST 003/2020': 'Anexo VII: A Investigação Detalhada busca delimitar a fonte secundária de contaminação. A varredura horizontal com aquecimento em campo é uma técnica para identificar a extensão lateral da contaminação por VOCs.'
+  },
+
+  // Varredura Horizontal com UV
+  'ic_cs_uv': {
+    'CONAMA 420/2009': 'Art. 23, II: A aplicação de luz UV é um método para detectar a presença de certos hidrocarbonetos em amostras de solo.',
+    'CEMA 129/2023': 'Art. 25, IV: A aplicação de luz UV é um método para detectar a presença de certos hidrocarbonetos em amostras de solo.',
+    'IN IAT 39/2025': 'Art. 76 e 81: A investigação detalhada pode utilizar técnicas complementares, como a aplicação de luz UV, para detectar hidrocarbonetos em amostras de solo, seguindo normas técnicas.',
+    'Portaria IAT nº 578/2026': 'Anexo I, item 1.3.b.vi: Existindo suspeita de LNAPL em fase retida/móvel, recomenda-se realizar varredura com luz UV, testes rápidos (por exemplo, com Sudan IV) ou outros indicadores disponíveis.',
+    'SEDEST 003/2020': 'Anexo VII: A investigação detalhada pode utilizar técnicas complementares, como a aplicação de luz UV, para detectar hidrocarbonetos em amostras de solo, seguindo normas técnicas.'
+  },
+
+  // Perfil construtivo do poço de vapor
+  'ic_cs_perfil_poco_vapor': {
+    'CONAMA 420/2009': 'Art. 23, II: O perfil construtivo do poço de vapor é necessário para garantir a representatividade das amostras coletadas.',
+    'CEMA 129/2023': 'Art. 25: O perfil construtivo do poço de vapor é necessário para garantir a representatividade das amostras coletadas.',
+    'IN IAT 39/2025': 'Art. 70, Parágrafo único: O perfil construtivo deve identificar claramente as unidades hidroestratigráficas de interesse. Para poços de vapor, o perfil é essencial para garantir a representatividade das amostras.',
+    'Portaria IAT nº 578/2026': 'Anexo I, item 3.2.f: O perfil construtivo do poço de monitoramento de ar do solo deve ser registrado, com desenho esquemático indicando os materiais utilizados, extensão e posicionamento de filtro e pré-filtro.',
+    'SEDEST 003/2020': 'Anexo VI, item 7.3.4: Os perfis construtivos dos poços de monitoramento devem constar do relatório final, identificando as unidades hidroestratigráficas e a localização dos filtros.'
+  },
+
+  // Caminhos dos contaminantes
+  'ic_cs_caminhos_contaminantes': {
+    'CONAMA 420/2009': 'Art. 6º, IX: A identificação dos caminhos dos contaminantes (porosidade, fraturas) e a qualidade da descrição do perfil são essenciais para o modelo conceitual e avaliação de risco.',
+    'CEMA 129/2023': 'Art. 2º, XXXV e Art. 25, III: A identificação dos caminhos dos contaminantes (porosidade, fraturas) e a qualidade da descrição do perfil são essenciais para o modelo conceitual e avaliação de risco.',
+    'IN IAT 39/2025': 'Art. 76 e 81: A identificação dos caminhos de migração dos contaminantes (porosidade primária/secundária) e a qualidade da descrição do perfil (com ou sem liner, cravação contínua, foto) são essenciais para o modelo conceitual.',
+    'Portaria IAT nº 578/2026': 'Anexo I, item 1.2.d: A descrição do solo deve incluir estruturas observáveis e a gênese (aterro, solo residual, colúvio, solo transportado). Anexo III, item 2.1: Ao final da IC, espera-se obter descrição da porosidade primária e secundária das unidades hidroestratigráficas.',
+    'SEDEST 003/2020': 'Anexo VII, item 3.2.1: A caracterização geológica e hidrogeológica detalhada é essencial para identificar os caminhos de migração dos contaminantes. A descrição do solo deve incluir granulometria, porosidade e fração de carbono orgânico.'
+  },
+
+  // Zona de armazenamento principal
+  'ic_cs_zona_armazenamento': {
+    'CONAMA 420/2009': 'Art. 23, II: A identificação da zona de armazenamento principal (ex: presença de argila) é crucial para entender a retenção e migração dos contaminantes.',
+    'CEMA 129/2023': 'Art. 25: A identificação da zona de armazenamento principal (ex: presença de argila) é crucial para entender a retenção e migração dos contaminantes.',
+    'IN IAT 39/2025': 'Art. 76: A identificação da zona de armazenamento principal (onde os contaminantes se acumulam) é crucial para entender a retenção e migração.',
+    'Portaria IAT nº 578/2026': 'Anexo I, item 1.3.b: A seleção de amostras deve considerar as características do solo e a correlação com as leituras de PID, preservando amostras em pontos que apresentem indícios de serem zonas de armazenamento.',
+    'SEDEST 003/2020': 'Anexo VII, item 3.2.1: A identificação da zona de armazenamento principal (onde os contaminantes se acumulam) é crucial para entender a retenção e migração. A coleta de amostras para determinação de granulometria, porosidade e fração de carbono orgânico é necessária.'
+  },
+
+  // Fase retida - posicionamento horizontal
+  'ic_cs_fase_retida': {
+    'CONAMA 420/2009': 'Art. 6º, IX e Art. 23, II: A delimitação da fase retida (contaminante adsorvido) é um objetivo da investigação detalhada, e a amostragem deve ser suficiente para sua caracterização.',
+    'CEMA 129/2023': 'Art. 25, IV: A delimitação da fase retida (contaminante adsorvido) é um objetivo da investigação detalhada, e a amostragem deve ser suficiente para sua caracterização.',
+    'IN IAT 39/2025': 'Art. 76: A Investigação Detalhada deve delimitar a contaminação no solo, incluindo a fase retida (contaminante adsorvido). A amostragem deve ser suficiente para sua caracterização.',
+    'Portaria IAT nº 578/2026': 'Anexo III, item 1.2.c: O número de amostras por sondagem deve ser suficiente para confirmar ou refutar a existência de contaminação em solo. A delimitação da fase retida é um objetivo da ID.',
+    'SEDEST 003/2020': 'Anexo VII, item 3.2.3.a: O mapeamento da fase retida no solo deve ser realizado a partir das sondagens onde foi verificada SQI acima dos VI\'s, com malha de 5x5 metros no plano horizontal e coleta de pelo menos 2 amostras no plano vertical.'
+  },
+
+  // Fase vapor - posicionamento horizontal
+  'ic_cs_fase_vapor': {
+    'CONAMA 420/2009': 'Art. 6º, IX e Art. 23, II: A delimitação da fase vapor (gases no solo) é um objetivo da investigação detalhada, para avaliar riscos de explosão e inalação.',
+    'CEMA 129/2023': 'Art. 25, IV: A delimitação da fase vapor (gases no solo) é um objetivo da investigação detalhada, para avaliar riscos de explosão e inalação.',
+    'IN IAT 39/2025': 'Art. 76: A Investigação Detalhada deve delimitar a fase vapor (gases no solo), para avaliar riscos de explosão e inalação.',
+    'Portaria IAT nº 578/2026': 'Anexo III, item 1.5: A amostragem de ar do solo é obrigatória para investigar a fase vapor em diversas situações. A delimitação da pluma de vapor é parte da investigação.',
+    'SEDEST 003/2020': 'Anexo VII, item 3.2.3: A delimitação da fase vapor é parte da Investigação Detalhada, devendo considerar a geologia e hidrogeologia local.'
+  },
+
+  // Concentrações do VI e local de amostragem
+  'ic_cs_concentracoes_vi': {
+    'CONAMA 420/2009': 'Art. 25 e Art. 23, II: A comparação dos resultados analíticos com os Valores de Investigação (VI) define se a área é classificada como AI. A qualidade da amostragem é essencial para a confiabilidade do dado.',
+    'CEMA 129/2023': 'Art. 11, §3º e Art. 25: A comparação dos resultados analíticos com os Valores de Investigação (VI) define se a área é classificada como AC. A qualidade da amostragem é essencial para a confiabilidade do dado.',
+    'IN IAT 39/2025': 'Art. 76: A identificação de concentrações acima dos Valores de Investigação (VI) exige a apresentação de Investigação Detalhada e Avaliação de Risco. Os VI são definidos em portaria específica pelo órgão ambiental.',
+    'Portaria IAT nº 578/2026': 'Art. 2º, III e Anexo V: Área Contaminada sob Investigação (AC) é aquela com concentrações iguais ou acima dos valores de investigação. O Anexo V apresenta os valores orientadores (VI e VP) para hidrocarbonetos em solo e água subterrânea.',
+    'SEDEST 003/2020': 'Art. 42, I e II e Anexo VI, item 8: A identificação de concentrações acima dos Valores de Investigação (VI) exige a apresentação de Investigação Detalhada e Avaliação de Risco. Os VI estão listados na Tabela 2 do Anexo VI.'
+  },
+
+  // Cálculo de massa - fase retida (ID/ARSH)
+  'ic_cs_calculo_massa_retida': {
+    'CONAMA 420/2009': 'Art. 6º, IX e Art. 23, II: A quantificação de massa da fase retida é um produto da investigação detalhada, fundamental para avaliar a magnitude da contaminação.',
+    'CEMA 129/2023': 'Art. 25, IV: A quantificação de massa da fase retida é um produto da investigação detalhada, fundamental para avaliar a magnitude da contaminação.',
+    'IN IAT 39/2025': 'Art. 76 e 78: A quantificação de massa é um produto da Investigação Detalhada, fundamental para dimensionar a contaminação e planejar a intervenção.',
+    'Portaria IAT nº 578/2026': 'Art. 4º, §1º: Até a revisão da Portaria, aplicam-se as diretrizes das Normas Técnicas ABNT NBR 15.515-3 (Investigação Detalhada), 16.209 (Avaliação de Risco) e 16.784 (Plano de Intervenção).',
+    'SEDEST 003/2020': 'Anexo VII, item 3.2.3.a: O mapeamento da fase retida no solo e a delimitação da pluma de contaminação são produtos da Investigação Detalhada. A quantificação de massa é necessária para dimensionar a contaminação.'
+  },
+
+  // Cálculo de massa - fase vapor (ID/ARSH)
+  'ic_cs_calculo_massa_vapor': {
+    'CONAMA 420/2009': 'Art. 23, II: A quantificação de massa da fase vapor (malha VOC) é um produto da investigação detalhada para avaliar riscos à saúde.',
+    'CEMA 129/2023': 'Art. 25, IV: A quantificação de massa da fase vapor (malha VOC) é um produto da investigação detalhada para avaliar riscos à saúde.',
+    'IN IAT 39/2025': 'Art. 76 e 78: A quantificação de massa da fase vapor é um produto da Investigação Detalhada para avaliar riscos à saúde e segurança.',
+    'Portaria IAT nº 578/2026': 'Art. 4º, §1º: Aplicam-se as normas ABNT NBR 15.515-3 e 16.209 para a ID e AR, que incluem a quantificação de massa para avaliação de risco.',
+    'SEDEST 003/2020': 'Anexo VII, item 3.2.3.b: A quantificação de massa da fase dissolvida e a delimitação da pluma de contaminação na água subterrânea são produtos da Investigação Detalhada.'
+  },
+
+  // ============================================================
+  // ITENS IC/ID/ARSH - Contaminação na Água (CA)
+  // ============================================================
+
+  // Poço de monitoramento - existência
+  'ic_ca_poco_monitoramento': {
+    'CONAMA 420/2009': 'Art. 23, II: A investigação detalhada deve caracterizar a contaminação da água subterrânea. A existência e tipo de poço de monitoramento é uma informação fundamental.',
+    'CEMA 129/2023': 'Art. 25: A investigação detalhada deve caracterizar a contaminação da água subterrânea. A existência e tipo de poço de monitoramento é uma informação fundamental.',
+    'IN IAT 39/2025': 'Art. 69 e 70: Os empreendimentos sujeitos ao monitoramento preventivo devem proceder à instalação de poços de monitoramento antes da entrada em operação. A existência e tipo de poço (freático ou profundo) é uma informação fundamental.',
+    'Portaria IAT nº 578/2026': 'Anexo III, item 1.3.c: A amostragem de água subterrânea deve ser realizada em poços de monitoramento situados próximos e a jusante das fontes potenciais.',
+    'SEDEST 003/2020': 'Art. 37 e 38 e Anexo VIII: O Relatório de Monitoramento e Operação (RMO) exige a avaliação dos laudos analíticos das amostras de água subterrânea dos poços de monitoramento. A existência e tipo de poço é uma informação fundamental.'
+  },
+
+  // Poço de monitoramento - mapa potenciométrico
+  'ic_ca_mapa_potenciometrico': {
+    'CONAMA 420/2009': 'Art. 23, II: O mapa potenciométrico é essencial para determinar a direção e gradiente do fluxo da água subterrânea.',
+    'CEMA 129/2023': 'Art. 25: O mapa potenciométrico é essencial para determinar a direção e gradiente do fluxo da água subterrânea.',
+    'IN IAT 39/2025': 'Art. 81: Os procedimentos de investigação devem seguir normas técnicas. O mapa potenciométrico é essencial para determinar a direção e gradiente do fluxo da água subterrânea.',
+    'Portaria IAT nº 578/2026': 'Anexo III, item 2.1: Ao final da IC, espera-se obter nível da água subterrânea medido (caso interceptado) e mapa potenciométrico.',
+    'SEDEST 003/2020': 'Anexo VIII, item 4.5: Deverá ser apresentado um mapa potenciométrico, em escala, contendo a potenciometria e a direção do fluxo da água subterrânea.'
+  },
+
+  // Poço de monitoramento - sentido de fluxo
+  'ic_ca_sentido_fluxo': {
+    'CONAMA 420/2009': 'Art. 23, II: O sentido do fluxo é um dado crítico para prever a direção da migração da pluma de contaminação.',
+    'CEMA 129/2023': 'Art. 25: O sentido do fluxo é um dado crítico para prever a direção da migração da pluma de contaminação.',
+    'IN IAT 39/2025': 'Art. 71: Os poços de monitoramento devem ser locados à jusante das fontes primárias. Conhecer o sentido do fluxo é crítico para posicionar os poços corretamente.',
+    'Portaria IAT nº 578/2026': 'Anexo III, item 2.1: A IC deve resultar na interpretação de direções e sentidos de fluxo da água subterrânea.',
+    'SEDEST 003/2020': 'Anexo V, item 4.4 e Anexo VIII: O mapa potenciométrico deve definir a direção e sentido de deslocamento da água subterrânea. O sentido do fluxo é crítico para posicionar os poços de monitoramento.'
+  },
+
+  // Poço de monitoramento - tipo de aquífero
+  'ic_ca_tipo_aquifero': {
+    'CONAMA 420/2009': 'Art. 23, II: A caracterização do aquífero (livre ou confinado) é essencial para entender o comportamento da contaminação.',
+    'CEMA 129/2023': 'Art. 25: A caracterização do aquífero (livre ou confinado) é essencial para entender o comportamento da contaminação.',
+    'IN IAT 39/2025': 'Art. 70, Parágrafo único: O perfil construtivo dos poços deve identificar as unidades hidroestratigráficas de interesse. O tipo de aquífero (freático ou profundo) influencia a migração da contaminação.',
+    'Portaria IAT nº 578/2026': 'Anexo I, item 2.1.b: O projeto do poço de monitoramento deve indicar a(s) zona(s) de maior fluxo de água subterrânea (unidade hidroestratigráfica de interesse).',
+    'SEDEST 003/2020': 'Anexo V, item 4.4: Deve-se descrever as características dos aquíferos superficial e profundo e seu grau de vulnerabilidade. O tipo de aquífero (freático ou profundo) influencia a migração da contaminação.'
+  },
+
+  // Poço de monitoramento - nível de água subterrâneo
+  'ic_ca_na': {
+    'CONAMA 420/2009': 'Art. 23, II: A medição do nível da água (NA) é um dado básico e obrigatório para qualquer estudo de contaminação de aquíferos.',
+    'CEMA 129/2023': 'Art. 25: A medição do nível da água (NA) é um dado básico e obrigatório para qualquer estudo de contaminação de aquíferos.',
+    'IN IAT 39/2025': 'Art. 69: O monitoramento preventivo exige a medição do nível da água (NA) para a correta interpretação dos resultados analíticos.',
+    'Portaria IAT nº 578/2026': 'Anexo III, item 2.1: A medição do nível da água subterrânea é um dado obrigatório para a consolidação do modelo conceitual hidrogeológico.',
+    'SEDEST 003/2020': 'Anexo V, item 4.6: O perfil de sondagem deve incluir a posição do nível d\'água. O monitoramento requer a medição do nível da água (NA) para a correta interpretação dos resultados analíticos.'
+  },
+
+  // Poço de monitoramento existentes - perfil construtivo
+  'ic_ca_perfil_pocos_existentes': {
+    'CONAMA 420/2009': 'Art. 23, II: O perfil construtivo do poço de monitoramento (diâmetro, profundidade, tipo de filtro) é essencial para interpretar os dados.',
+    'CEMA 129/2023': 'Art. 25: O perfil construtivo do poço de monitoramento (diâmetro, profundidade, tipo de filtro) é essencial para interpretar os dados.',
+    'IN IAT 39/2025': 'Art. 70, Parágrafo único: O perfil construtivo do poço de monitoramento deve ser apresentado de maneira clara, identificando as unidades hidroestratigráficas e a localização dos filtros.',
+    'Portaria IAT nº 578/2026': 'Anexo I, item 2.1: O projeto do poço de monitoramento deve seguir a norma ABNT NBR 15495-1:2024. O perfil construtivo deve ser representado graficamente.',
+    'SEDEST 003/2020': 'Anexo VI, item 7.3.4: Os perfis construtivos dos poços de monitoramento devem constar do relatório final, identificando as unidades hidroestratigráficas e a localização dos filtros.'
+  },
+
+  // Poço de monitoramento desativados - perfil construtivo
+  'ic_ca_perfil_pocos_desativados': {
+    'CONAMA 420/2009': 'Art. 23: Para poços desativados, o histórico e perfil construtivo, se disponível, ajudam a entender contaminações passadas.',
+    'CEMA 129/2023': 'Art. 25: Para poços desativados, o histórico e perfil construtivo, se disponível, ajudam a entender contaminações passadas.',
+    'IN IAT 39/2025': 'Art. 76: Para poços desativados, o histórico e perfil construtivo, se disponível, ajudam a entender contaminações passadas.',
+    'Portaria IAT nº 578/2026': 'Anexo II, item 3.h: A AP deve levantar informações sobre poços de monitoramento instalados, suas características construtivas e estado de conservação.',
+    'SEDEST 003/2020': 'Art. 42: Para poços desativados, o histórico e perfil construtivo, se disponível, ajudam a entender contaminações passadas.'
+  },
+
+  // Zona de fluxo principal - mecanismo de identificação
+  'ic_ca_zona_fluxo': {
+    'CONAMA 420/2009': 'Art. 23, II: A caracterização da zona de fluxo principal (zona mais permeável) por métodos diretos (ensaios de bombeamento) ou indiretos (granulometria) é crucial para avaliar a velocidade de migração.',
+    'CEMA 129/2023': 'Art. 25, III: A caracterização da zona de fluxo principal (zona mais permeável) por métodos diretos (ensaios de bombeamento) ou indiretos (granulometria) é crucial para avaliar a velocidade de migração.',
+    'IN IAT 39/2025': 'Art. 70, Parágrafo único e Art. 81: A caracterização da zona de fluxo principal (porosidade, permeabilidade) deve seguir normas técnicas. Métodos diretos (ensaios de bombeamento) ou indiretos (granulometria) são aceitos.',
+    'Portaria IAT nº 578/2026': 'Anexo I, item 2.1, Observação: Recomenda-se realizar ensaios para confirmação da condutividade hidráulica horizontal das unidades hidroestratigráficas de fluxo, conforme Norma ABGE 107/2024.',
+    'SEDEST 003/2020': 'Anexo VII, item 3.2.1.a e 3.2.1.b: A caracterização da zona de fluxo principal (porosidade, permeabilidade) deve incluir a descrição granulométrica e, quando possível, ensaios de condutividade hidráulica.'
+  },
+
+  // Zona de fluxo - porosidade
+  'ic_ca_porosidade': {
+    'CONAMA 420/2009': 'Art. 23, II: A identificação do tipo de porosidade (primária em sedimentos ou secundária em rochas fraturadas) e sua relação com o NA é fundamental para o modelo de fluxo.',
+    'CEMA 129/2023': 'Art. 25, III: A identificação do tipo de porosidade (primária em sedimentos ou secundária em rochas fraturadas) e sua relação com o NA é fundamental para o modelo de fluxo.',
+    'IN IAT 39/2025': 'Art. 70, Parágrafo único e Art. 81: A identificação do tipo de porosidade (primária em sedimentos ou secundária em rochas fraturadas) e sua relação com o NA é fundamental para o modelo de fluxo.',
+    'Portaria IAT nº 578/2026': 'Anexo III, item 2.1: A IC deve resultar na descrição da porosidade primária e secundária das unidades hidroestratigráficas de interesse, com ênfase às zonas de armazenamento e de fluxo subterrâneo.',
+    'SEDEST 003/2020': 'Anexo V, item 4.4 e Anexo VII: A identificação do tipo de porosidade (primária em sedimentos ou secundária em rochas fraturadas) e sua relação com o NA é fundamental para o modelo de fluxo.'
+  },
+
+  // Amostragem - Parâmetros de estabilização
+  'ic_ca_parametros_estabilizacao': {
+    'CONAMA 420/2009': 'Art. 17: O monitoramento de parâmetros de campo (pH, temperatura, condutividade) durante a amostragem garante a representatividade da amostra.',
+    'CEMA 129/2023': 'Art. 2º, XXXVI e Art. 25: O monitoramento de parâmetros de campo (pH, temperatura, condutividade) durante a amostragem garante a representatividade da amostra.',
+    'IN IAT 39/2025': 'Art. 81: As investigações devem seguir normas ABNT. O monitoramento de parâmetros de campo (pH, temperatura, condutividade) durante a amostragem garante a representatividade da amostra.',
+    'Portaria IAT nº 578/2026': 'Anexo I, item 2.4.f: Durante a amostragem, devem ser monitorados parâmetros de estabilização (pH, condutividade, temperatura, oxigênio dissolvido, potencial de oxirredução), com variação permitida conforme quadro. O registro fotográfico é obrigatório.',
+    'SEDEST 003/2020': 'Anexo VI, item 7.3.5: Durante a coleta por baixa vazão, devem ser monitorados parâmetros físico-químicos (pH, condutividade, oxigênio dissolvido, potencial de oxirredução, temperatura), com estabilização para conclusão da purga.'
+  },
+
+  // Amostragem - Método de amostragem
+  'ic_ca_metodo_amostragem': {
+    'CONAMA 420/2009': 'Art. 17, I: O método de amostragem (baixa vazão, purga por volume) e a documentação fotográfica são evidências da qualidade do procedimento.',
+    'CEMA 129/2023': 'Art. 25: O método de amostragem (baixa vazão, purga por volume) e a documentação fotográfica são evidências da qualidade do procedimento.',
+    'IN IAT 39/2025': 'Art. 81: As investigações devem seguir normas ABNT. O método de amostragem (baixa vazão, purga por volume) e a documentação fotográfica são evidências da qualidade do procedimento.',
+    'Portaria IAT nº 578/2026': 'Anexo I, item 2.4.d: A amostragem deverá ser realizada pelos procedimentos de purga de baixa vazão ou purga mínima. Diante da impossibilidade, deve-se apresentar justificativa técnica para o uso de outros procedimentos.',
+    'SEDEST 003/2020': 'Anexo VI, item 7.3.5: É recomendada a adoção do método de amostragem por purga de baixa-vazão, conforme ABNT NBR 15.847. A adoção de outros métodos deve ser justificada tecnicamente.'
+  },
+
+  // Fase livre
+  'ic_ca_fase_livre': {
+    'CONAMA 420/2009': 'Art. 6º, VI e Art. 26: A detecção de fase livre é uma condição que classifica a área como Área Contaminada sob Intervenção (ACI).',
+    'CEMA 129/2023': 'Art. 2º, XX e Art. 25: A detecção de fase livre (NAPL) é uma situação de risco confirmado, exigindo medidas de intervenção imediatas.',
+    'IN IAT 39/2025': 'Art. 76 e 77: A identificação de fase livre exige comunicação imediata ao órgão ambiental (em até 10 dias) e a adoção de medidas emergenciais. A presença de fase livre demanda a apresentação de ID e AR em até 90 dias.',
+    'Portaria IAT nº 578/2026': 'Art. 2º, XI: Fase livre é a ocorrência de NAPL com mobilidade. A detecção de fase livre é uma condição que exige ações específicas no GAC.',
+    'SEDEST 003/2020': 'Art. 42, IV e Art. 43: A identificação de fase livre exige comunicação imediata ao órgão ambiental (em até 10 dias) e a adoção de medidas de intervenção. A presença de fase livre demanda a apresentação de ID e AR.'
+  },
+
+  // Poço de monitoramento - Período de amostragem e concentrações do VI
+  'ic_ca_poco_monitoramento_vi': {
+    'CONAMA 420/2009': 'Art. 10 e Art. 23, II: A comparação das concentrações com os Valores de Investigação (VI) é o critério para classificar a contaminação, mas a sazonalidade pode influenciar os resultados.',
+    'CEMA 129/2023': 'Art. 11 e Art. 25: A comparação das concentrações com os Valores de Investigação (VI) é o critério para classificar a contaminação, mas a sazonalidade pode influenciar os resultados.',
+    'IN IAT 39/2025': 'Art. 76, §3º: Os Valores de Investigação (VI) são definidos em portaria específica. A comparação das concentrações com os VI é o critério para determinar a necessidade de Investigação Detalhada.',
+    'Portaria IAT nº 578/2026': 'Art. 2º, III e Anexo V: Área Contaminada sob Investigação (AC) é aquela com concentrações iguais ou acima dos VI. Os VI estão listados no Anexo V. A sazonalidade pode influenciar os resultados.',
+    'SEDEST 003/2020': 'Art. 42, I e Anexo VI, item 8: Os Valores de Investigação (VI) estão listados na Tabela 2 do Anexo VI. A comparação das concentrações com os VI é o critério para determinar a necessidade de Investigação Detalhada.'
+  },
+
+  // Poço de captação - Período de amostragem e concentrações do VI
+  'ic_ca_poco_captacao_vi': {
+    'CONAMA 420/2009': 'Art. 6º, III e Art. 23, II: A amostragem de poços de captação (bens a proteger) é crítica para avaliar o risco à saúde pública.',
+    'CEMA 129/2023': 'Art. 2º, XV e Art. 25: A amostragem de poços de captação (bens a proteger) é crítica para avaliar o risco à saúde pública.',
+    'IN IAT 39/2025': 'Art. 68: Os poços de captação devem ser monitorados semestralmente. A comparação com os VI é essencial para avaliar o risco à saúde pública.',
+    'Portaria IAT nº 578/2026': 'Anexo III, item 1.4: Quando houver captação de água no empreendimento, a amostragem é obrigatória. A comparação com os VI é essencial para avaliar o risco à saúde pública.',
+    'SEDEST 003/2020': 'Art. 36: Os poços de captação devem ser monitorados anualmente. A comparação com os VI é essencial para avaliar o risco à saúde pública.'
+  },
+
+  // Cálculo de massa - fase dissolvida (ID/ARSH)
+  'ic_ca_calculo_massa_dissolvida': {
+    'CONAMA 420/2009': 'Art. 6º, IX e Art. 23, II: A quantificação de massa da fase dissolvida é um produto da investigação detalhada para dimensionar a pluma de contaminação.',
+    'CEMA 129/2023': 'Art. 25, IV: A quantificação de massa da fase dissolvida é um produto da investigação detalhada para dimensionar a pluma de contaminação.',
+    'IN IAT 39/2025': 'Art. 76 e 78: A quantificação de massa da fase dissolvida é um produto da Investigação Detalhada para dimensionar a pluma de contaminação e planejar a intervenção.',
+    'Portaria IAT nº 578/2026': 'Art. 4º, §1º: Aplicam-se as normas ABNT NBR 15.515-3 e 16.209 para a ID e AR.',
+    'SEDEST 003/2020': 'Anexo VII, item 3.2.3.b: O mapeamento da fase dissolvida e a delimitação da pluma de contaminação são produtos da Investigação Detalhada, necessários para a avaliação de risco.'
+  },
+
+  // Cálculo de massa - fase livre (ID/ARSH)
+  'ic_ca_calculo_massa_fase_livre': {
+    'CONAMA 420/2009': 'Art. 6º, VI e Art. 26: A quantificação da fase livre é essencial para planejar a remediação, pois sua presença classifica a área como ACI.',
+    'CEMA 129/2023': 'Art. 20, V e Art. 25: A quantificação da fase livre é essencial para planejar a remediação, pois sua presença classifica a área como ACR.',
+    'IN IAT 39/2025': 'Art. 77, §3º: A presença de fase livre exige um Plano de Intervenção com medidas para remoção de massa. A quantificação da fase livre é essencial para o dimensionamento da remediação.',
+    'Portaria IAT nº 578/2026': 'Art. 4º, §1º: Aplicam-se as normas ABNT NBR 15.515-3 e 16.209 para a ID e AR.',
+    'SEDEST 003/2020': 'Art. 43, §1º e Anexo VII, item 3.2.3.c: A presença de fase livre exige um Plano de Intervenção com medidas para remoção de massa. A quantificação da fase livre é essencial para o dimensionamento da remediação.'
+  },
+
+  // ============================================================
+  // MEIO FÍSICO (MF)
+  // ============================================================
+
+  // Contexto hidrográfico com mapa
+  'ic_mf_contexto_hidrografico': {
+    'CONAMA 420/2009': 'Art. 6º, III e Art. 23, II: O contexto hidrográfico (rios, córregos) é um recurso ambiental a proteger e deve ser mapeado.',
+    'CEMA 129/2023': 'Art. 2º, XLI e Art. 25: O contexto hidrográfico (rios, córregos) é um recurso ambiental a proteger e deve ser mapeado.',
+    'IN IAT 39/2025': 'Art. 42, III e IV e Anexo III/IV: O contexto hidrográfico (rios, nascentes) deve ser mapeado para verificar distanciamentos mínimos e áreas de preservação permanente.',
+    'Portaria IAT nº 578/2026': 'Anexo II, item 2.d: A AP deve levantar informações sobre hidrografia, com identificação de bacias hidrográficas, rios e nascentes. A IC deve aprofundar esse conhecimento.',
+    'SEDEST 003/2020': 'Art. 24, III e IV e Anexo V, item 4.1: O contexto hidrográfico (rios, nascentes) deve ser mapeado para verificar distanciamentos mínimos e áreas de preservação permanente. A microbacia hidrográfica deve ser identificada.'
+  },
+
+  // Contexto hidrogeológico com mapa potenciométrico
+  'ic_mf_mapa_potenciometrico': {
+    'CONAMA 420/2009': 'Art. 23, II: O mapa potenciométrico com as curvas de nível da água subterrânea é fundamental para entender o fluxo e a migração da contaminação.',
+    'CEMA 129/2023': 'Art. 25, III: O mapa potenciométrico com as curvas de nível da água subterrânea é fundamental para entender o fluxo e a migração da contaminação.',
+    'IN IAT 39/2025': 'Art. 81: O mapa potenciométrico com as curvas de nível da água subterrânea é fundamental para entender o fluxo e a migração da contaminação.',
+    'Portaria IAT nº 578/2026': 'Anexo III, item 2.1: Ao final da IC, espera-se obter nível da água subterrânea medido (caso interceptado) e mapa potenciométrico.',
+    'SEDEST 003/2020': 'Anexo V, item 4.4 e Anexo VIII, item 4.5: O mapa potenciométrico com as curvas de nível da água subterrânea é fundamental para entender o fluxo e a migração da contaminação.'
+  },
+
+  // Contexto hidrogeológico com seção
+  'ic_mf_secao': {
+    'CONAMA 420/2009': 'Art. 23, II: As seções hidrogeológicas mostram a relação entre a geologia, o nível da água e a possível contaminação.',
+    'CEMA 129/2023': 'Art. 25, III: As seções hidrogeológicas mostram a relação entre a geologia, o nível da água e a possível contaminação.',
+    'IN IAT 39/2025': 'Art. 70, Parágrafo único e Art. 81: As seções hidrogeológicas mostram a relação entre a geologia, o nível da água e a possível contaminação, sendo essenciais para o modelo conceitual.',
+    'Portaria IAT nº 578/2026': 'Anexo III, item 3.2.b: O relatório deve apresentar duas seções hidrogeológicas interpretativas da estratigrafia e potenciometria local.',
+    'SEDEST 003/2020': 'Anexo V, item 4.3 e Anexo VII: As seções hidrogeológicas mostram a relação entre a geologia, o nível da água e a possível contaminação, sendo essenciais para o modelo conceitual.'
+  },
+
+  // Registro fotográfico - Meio Físico
+  'ic_mf_registro_fotografico': {
+    'CONAMA 420/2009': 'Art. 23: Fotos de campo dos poços, sondagens e amostras são evidências documentais do trabalho realizado.',
+    'CEMA 129/2023': 'Art. 25: Fotos de campo dos poços, sondagens e amostras são evidências documentais do trabalho realizado.',
+    'IN IAT 39/2025': 'Art. 82, II: O RVT deve conter imagens fotográficas atualizadas. Fotos de campo dos poços, sondagens e amostras são evidências documentais do trabalho realizado.',
+    'Portaria IAT nº 578/2026': 'Art. 9 e Anexo III, item 3.1.m: O relatório deve conter registro fotográfico relativo aos serviços de campo.',
+    'SEDEST 003/2020': 'Art. 26, II e Anexo VIII: O RVT deve conter imagens fotográficas atualizadas. Fotos de campo dos poços, sondagens e amostras são evidências documentais do trabalho realizado.'
+  }
+};
+
 // ============================================================
 // CONFIGURAÇÃO DAS SUB-ETAPAS (REUTILIZÁVEL)
 // ============================================================
@@ -1779,7 +2888,6 @@ const SUB_ETAPAS_IC_ID_ARSH = {
           { valor: 'Acima do VI - insaturada - matéria orgânica', grau: 3, decisao: 'complementacao' }
         ]
       },
-      // Item de cálculo de massa - presente apenas nas etapas 3 e 4, removido da etapa 2
       {
         id: 'ic_cs_calibracao_pid',
         label: 'Certificado de calibração do PID',
@@ -1818,7 +2926,7 @@ const SUB_ETAPAS_IC_ID_ARSH = {
           { valor: 'Todas as fontes potenciais/primárias investigadas - Georreferênciada e não apresenta os elementos cartográficos - Médio grau de incerteza', grau: 2, decisao: 'complementacao' },
           { valor: 'Nem todas as fontes potenciais/primárias foram investigadas - Médio grau de incerteza', grau: 2, decisao: 'complementacao' },
           { valor: 'Todas as fontes potenciais/primárias investigadas - Não georreferênciada e sem elementos cartográficos - Alto grau de incerteza', grau: 3, decisao: 'complementacao' },
-           { valor: 'ok', grau: 1, decisao: 'proxima_etapa' },
+          { valor: 'ok', grau: 1, decisao: 'proxima_etapa' },
           { valor: 'Não apresentada - Alto grau de incerteza', grau: 3, decisao: 'complementacao' }
         ]
       },
@@ -2291,90 +3399,7 @@ const ITENS_CALCULO_MASSA = [
 ];
 
 // ============================================================
-// CONFIGURAÇÃO COMPLETA - CONFIG_ETAPAS
-// ============================================================
-
-function getItensSubEtapa(etapaId, subEtapaId) {
-  // Etapa 1 usa sua própria configuração
-  if (etapaId === 1) {
-    const subEtapas = CONFIG_ETAPAS.ap.subEtapas;
-    if (subEtapas[subEtapaId]) {
-      return subEtapas[subEtapaId].itens || [];
-    }
-    return [];
-  }
-  
-  // Etapas 2, 3, 4 usam SUB_ETAPAS_IC_ID_ARSH
-  if (etapaId >= 2 && etapaId <= 4) {
-    const subEtapa = SUB_ETAPAS_IC_ID_ARSH[subEtapaId];
-    if (!subEtapa) return [];
-    
-    let itens = [...subEtapa.itens];
-    
-    // Para a etapa 2 (IC), REMOVE os itens de cálculo de massa de TODAS as sub-etapas
-    if (etapaId === 2) {
-      itens = itens.filter(item => 
-        item.id !== 'ic_cs_calculo_massa_retida' && 
-        item.id !== 'ic_cs_calculo_massa_vapor'
-      );
-    }
-    
-    // Para as etapas 3 (ID) e 4 (ARSH), ADICIONA os itens de cálculo de massa 
-    // APENAS na sub-etapa "contaminacao_solo" (CS)
-    if (etapaId === 3 || etapaId === 4) {
-      // SÓ adiciona os itens de cálculo de massa se for a sub-etapa "contaminacao_solo"
-      if (subEtapaId === 'contaminacao_solo') {
-        const hasMassaRetida = itens.some(item => item.id === 'ic_cs_calculo_massa_retida');
-        const hasMassaVapor = itens.some(item => item.id === 'ic_cs_calculo_massa_vapor');
-        
-        if (!hasMassaRetida) {
-          itens.push(JSON.parse(JSON.stringify(ITENS_CALCULO_MASSA[0])));
-        }
-        if (!hasMassaVapor) {
-          itens.push(JSON.parse(JSON.stringify(ITENS_CALCULO_MASSA[1])));
-        }
-      }
-    }
-    
-    return itens;
-  }
-  
-  return [];
-}
-
-function getSubEtapas(etapaId) {
-  if (etapaId === 1) {
-    return CONFIG_ETAPAS.ap.subEtapas;
-  }
-  if (etapaId >= 2 && etapaId <= 4) {
-    return SUB_ETAPAS_IC_ID_ARSH;
-  }
-  return {};
-}
-
-// ============================================================
-// FUNÇÃO PARA GERAR CHAVE ÚNICA POR ETAPA E ITEM
-// ============================================================
-
-function getChaveResposta(etapaId, itemId) {
-  return `etapa${etapaId}_${itemId}`;
-}
-
-function getRespostasDaEtapa(etapaId) {
-  if (!processoAtual || !processoAtual.dados) return {};
-  const prefix = `etapa${etapaId}_`;
-  const result = {};
-  for (const key in processoAtual.dados) {
-    if (key.startsWith(prefix)) {
-      const itemId = key.substring(prefix.length);
-      result[itemId] = processoAtual.dados[key];
-    }
-  }
-  return result;
-}
-
-// ============================================================
-// CONFIG_ETAPAS - ETAPA 1 (AP)
+// CONFIGURAÇÃO COMPLETA - CONFIG_ETAPAS (AP)
 // ============================================================
 
 const CONFIG_ETAPAS = {
@@ -2561,7 +3586,7 @@ const CONFIG_ETAPAS = {
             ]
           },
           {
-            id: 'e2_pocos_captacao',
+            id: 'e2_pocos_captacao_local',
             label: 'Bens a proteger (poços de captação) no local',
             tipo: 'fechada_multipla',
             cor: 'azul',
@@ -3460,162 +4485,105 @@ const CONFIG_ETAPAS = {
 };
 
 // ============================================================
-// BASES LEGAIS POR ITEM - ETAPA 1 (AP)
+// FUNÇÃO PARA OBTER FUNDAMENTAÇÃO POR RESOLUÇÃO
 // ============================================================
 
-const BASES_LEGAIS_AP = {
-  'e1_entrevista': 'NBR 15515-1:2021 5.2; IN 39/2025 Art. 82, 86; CEMA 129/2023 Art. 9º, III',
-  'e1_multitemporal': 'NBR 15515-1:2021 5.1; CEMA 129/2023 Art. 9º, I; IN 39/2025 Art. 75, I',
-  'e1_atividades_poluidoras': 'NBR 15515-1:2021 5.3; CEMA 129/2023 Art. 9º, II; IN 39/2025 Art. 75, V',
-  'e1_receptores': 'CONAMA 420/2009 Art. 11; NBR 16209:2013; IN 39/2025 Art. 42, I',
-  'e1_pocos_captacao': 'IN 39/2025 Art. 42, I e III; CEMA 129/2023 Art. 9º, VI; IN 39/2025 Art. 68',
-  'e1_rede_abastecimento': 'NBR 15515-1:2021 5.4.1; IN 39/2025 Art. 42',
-  'e1_rios': 'NBR 15515-1:2021 5.4.2; IN 39/2025 Art. 42, III e IV',
-  'e1_nascentes': 'NBR 15515-1:2021 5.4.2; CEMA 129/2023 Art. 9º, VI',
-  'e1_mapa': 'NBR 15515-1:2021 Anexo A; IN 39/2025 Art. 14, V; Art. 86',
-  'e1_registro_fotografico': 'NBR 15515-1:2021 5.6; IN 39/2025 Art. 82, II',
-  
-  'e2_abastecimento': 'IN 39/2025 Art. 68; NBR 15515-1:2021 5.4.1',
-  'e2_receptores': 'NBR 16209:2013; NBR 15515-1:2021 5.4',
-  'e2_areas_fontes': 'NBR 15515-1:2021 5.3; IN 39/2025 Art. 82; CEMA 129/2023 Art. 9º, II',
-  'e2_pocos_captacao': 'IN 39/2025 Art. 68; CEMA 129/2023 Art. 9º, VI',
-  'e2_outorga': 'IN 39/2025 Art. 14, XI; 20, XIV; 68',
-  'e2_perfil_poco': 'NBR 15515-3:2013; IN 39/2025 Art. 68',
-  'e2_rios_local': 'NBR 15515-1:2021 5.4.2; IN 39/2025 Art. 42, III e IV',
-  'e2_nascentes_local': 'NBR 15515-1:2021 5.4.2; CEMA 129/2023 Art. 9º, VI',
-  'e2_planta_baixa': 'IN 39/2025 Art. 14, V; 17, VI; 32, IX; 82, I; Art. 86',
-  'e2_registro_fotografico_local': 'IN 39/2025 Art. 82, II; NBR 15515-1:2021 5.6',
-  'e2_ano_operacao': 'IN 39/2025 Art. 43, §1º; Art. 44',
-  'e2_bandeira_branca': 'IN 39/2025 Art. 75; Res. ANP 41/2013',
-  'e2_bandeira_atual': 'IN 39/2025 Art. 75',
-  
-  'e1p_atividades_pretéritas': 'NBR 15515-1:2021 5.3',
-  'e1p_bens_proteger': 'NBR 15515-1:2021 5.4',
-  
-  'e3_retirada_tanques': 'IN 39/2025 Art. 75, I; Art. 43, §2º; Art. 44',
-  'e3_estudo_passivo': 'IN 39/2025 Art. 85, 86',
-  'e3_ap_ic': 'IN 39/2025 Art. 85; CEMA 129/2023 Art. 38',
-  'e3_id': 'IN 39/2025 Art. 85; NBR 15515-3:2013',
-  'e3_pca_2024': 'IN 39/2025 Art. 82; CEMA 129/2023',
-  'e3_complementacao_id': 'IN 39/2025 Art. 86',
-  'e3_entrevista_local': 'NBR 15515-1:2021 4.3; 5.2; IN 39/2025 Art. 82, 86',
-  'e3_fonte_secundaria': 'NBR 15515-1:2021 5.3; NBR 15515-2:2011',
-  'e3_sasc_preterito': 'IN 39/2025 Art. 75, I; Art. 43, §2º; Art. 44',
-  'e3_sasc_contaminante': 'IN 39/2025 Art. 75, I; CONAMA 420/2009 Art. 13',
-  'e3_respiros_preterito': 'NBR 15515-1:2021 5.3; IN 39/2025 Art. 47-48',
-  'e3_respiros_contaminante': 'IN 39/2025 Art. 47-48',
-  'e3_linhas_preterito': 'IN 39/2025 Art. 46; NBR 15515-1:2021 5.3',
-  'e3_linhas_contaminante': 'IN 39/2025 Art. 46',
-  'e3_bombas_preterito': 'NBR 15515-1:2021 5.3; IN 39/2025 Art. 46, §1º',
-  'e3_bombas_contaminante': 'IN 39/2025 Art. 46, §1º',
-  'e3_csao_preterito': 'IN 39/2025 Art. 59-60; NBR 15515-1:2021 5.3',
-  'e3_csao_contaminante': 'IN 39/2025 Art. 59-60; CONAMA 420/2009',
-  'e3_filtro_oleo': 'CONAMA 362/2005; IN 39/2025 Art. 50',
-  'e3_filtro_contaminante': 'CONAMA 362/2005',
-  'e3_troca_oleo': 'IN 39/2025 Art. 50-52; CONAMA 362/2005',
-  'e3_troca_contaminante': 'IN 39/2025 Art. 50-52',
-  'e3_lavagem_veiculos': 'IN 39/2025 Art. 53-54; Art. 60, §5º',
-  'e3_lavagem_contaminante': 'IN 39/2025 Art. 53-54; CONAMA 362/2005',
-  'e3_deposito_produtos': 'IN 39/2025 Art. 64-65; NBR 12235',
-  'e3_deposito_contaminante': 'IN 39/2025 Art. 64-65',
-  'e3_planta_fontes': 'IN 39/2025 Art. 14, V; 17, VI; Art. 86',
-  'e3_planta_areas': 'IN 39/2025 Art. 14, V; Art. 86',
-  'e3_registro_fotografico_fd': 'IN 39/2025 Art. 82, II; NBR 15515-1:2021 5.6',
-  
-  'e4_laudo_estanqueidade': 'IN 39/2025 Art. 46, caput, §4º e §5º; NBR 13784; Port. INMETRO 259/2008',
-  'e4_ficha_vistoria': 'IN 39/2025 Art. 82 (ANEXO VIII)',
-  'e4_sasc_ativo': 'IN 39/2025 Art. 43-45',
-  'e4_respiros_ativo': 'IN 39/2025 Art. 47-48',
-  'e4_pista_abastecimento': 'IN 39/2025 Art. 59, II',
-  'e4_linhas_ativa': 'IN 39/2025 Art. 46; NBR 13784',
-  'e4_bombas_ativa': 'IN 39/2025 Art. 46, §1º',
-  'e4_tipo_contaminante': 'IN 39/2025 Art. 43-48; CONAMA 420/2009',
-  'e4_csao_pista': 'IN 39/2025 Art. 59-60; NBR 14605',
-  'e4_csao_contaminante': 'IN 39/2025 Art. 59-60; CONAMA 420/2009',
-  'e4_filtro_oleo_ativo': 'IN 39/2025 Art. 50; CONAMA 362/2005',
-  'e4_filtro_oleo_contaminante': 'CONAMA 362/2005',
-  'e4_troca_oleo_ativo': 'IN 39/2025 Art. 50-52; CONAMA 362/2005',
-  'e4_troca_oleo_contaminante': 'CONAMA 362/2005',
-  'e4_lavagem_veiculos_ativo': 'IN 39/2025 Art. 53-54; Art. 60, §5º',
-  'e4_lavagem_contaminante': 'IN 39/2025 Art. 53-54',
-  'e4_csao_lavagem': 'IN 39/2025 Art. 59-60; Art. 60, §5º',
-  'e4_csao_lavagem_contaminante': 'IN 39/2025 Art. 59-60',
-  'e4_deposito_produtos_ativo': 'IN 39/2025 Art. 64-65; NBR 12235',
-  'e4_deposito_contaminante': 'IN 39/2025 Art. 64-65',
-  'e4_planta_fontes_ativo': 'IN 39/2025 Art. 14, V; Art. 86',
-  'e4_planta_areas_ativo': 'IN 39/2025 Art. 14, V; Art. 86',
-  'e4_registro_fotografico_fa': 'IN 39/2025 Art. 82, II'
-};
-
-// Bases legais para IC/ID/ARSH (etapas 2, 3 e 4)
-const BASES_LEGAIS_IC = {
-  'ic_cs_metodo_sondagem': 'NBR 15515-3:2013',
-  'ic_cs_mecanismo_id': 'NBR 15515-3:2013; NBR 16209:2013',
-  'ic_cs_perfil_estratigrafico': 'NBR 15515-3:2013',
-  'ic_cs_varredura_vocs': 'NBR 15515-3:2013; NBR 16209:2013',
-  'ic_cs_poco_vapor': 'NBR 15515-3:2013; NBR 16209:2013',
-  'ic_cs_aquecimento_campo': 'NBR 15515-3:2013; NBR 16209:2013',
-  'ic_cs_uv': 'NBR 15515-3:2013; NBR 16209:2013',
-  'ic_cs_perfil_poco_vapor': 'NBR 15515-3:2013; NBR 16209:2013',
-  'ic_cs_caminhos_contaminantes': 'NBR 15515-3:2013; NBR 16209:2013',
-  'ic_cs_zona_armazenamento': 'NBR 15515-3:2013; NBR 16209:2013',
-  'ic_cs_fase_retida': 'NBR 15515-3:2013; NBR 16209:2013',
-  'ic_cs_fase_vapor': 'NBR 15515-3:2013; NBR 16209:2013',
-  'ic_cs_concentracoes_vi': 'CONAMA 420/2009; NBR 15515-3:2013',
-  'ic_cs_calculo_massa_retida': 'NBR 15515-3:2013; NBR 16209:2013',
-  'ic_cs_calculo_massa_vapor': 'NBR 15515-3:2013; NBR 16209:2013',
-  'ic_cs_calibracao_pid': 'NBR 15515-3:2013; NBR 16209:2013',
-  'ic_cs_planta_pocos_vapor': 'NBR 15515-3:2013; NBR 16209:2013',
-  'ic_cs_planta_sondagens': 'NBR 15515-3:2013; NBR 16209:2013',
-  'ic_cs_planta_delimitacao': 'NBR 15515-3:2013; NBR 16209:2013',
-  'ic_cs_secao_delimitacao': 'NBR 15515-3:2013; NBR 16209:2013',
-  'ic_cs_registro_fotografico': 'IN 39/2025 Art. 82, II; NBR 15515-3:2013',
-  'ic_cs_ccl_solo': 'CONAMA 420/2009; NBR 15515-3:2013',
-  
-  'ic_ca_poco_monitoramento': 'NBR 15515-3:2013; NBR 16209:2013',
-  'ic_ca_mapa_potenciometrico': 'NBR 15515-3:2013; NBR 16209:2013',
-  'ic_ca_sentido_fluxo': 'NBR 15515-3:2013',
-  'ic_ca_tipo_aquifero': 'NBR 15515-3:2013',
-  'ic_ca_na': 'NBR 15515-3:2013',
-  'ic_ca_perfil_pocos_existentes': 'NBR 15515-3:2013; NBR 16209:2013',
-  'ic_ca_perfil_pocos_desativados': 'NBR 15515-3:2013',
-  'ic_ca_zona_fluxo': 'NBR 15515-3:2013; NBR 16209:2013',
-  'ic_ca_porosidade': 'NBR 15515-3:2013; NBR 16209:2013',
-  'ic_ca_parametros_estabilizacao': 'NBR 15515-3:2013; NBR 16209:2013',
-  'ic_ca_metodo_amostragem': 'NBR 15515-3:2013; NBR 16209:2013',
-  'ic_ca_fase_livre': 'IN 39/2025 Art. 77; NBR 16209:2013',
-  'ic_ca_poco_monitoramento_vi': 'CONAMA 420/2009; NBR 15515-3:2013',
-  'ic_ca_poco_captacao_vi': 'CONAMA 420/2009; IN 39/2025 Art. 68',
-  'ic_ca_calculo_massa_dissolvida': 'NBR 15515-3:2013; NBR 16209:2013',
-  'ic_ca_calculo_massa_fase_livre': 'NBR 15515-3:2013; NBR 16209:2013',
-  'ic_ca_planta_pocos_desativados': 'NBR 15515-3:2013; NBR 16209:2013',
-  'ic_ca_planta_pocos_existentes': 'NBR 15515-3:2013; NBR 16209:2013',
-  'ic_ca_planta_pocos_captacao': 'NBR 15515-3:2013; IN 39/2025 Art. 68',
-  'ic_ca_planta_delimitacao_pluma': 'NBR 15515-3:2013; NBR 16209:2013',
-  'ic_ca_secao_delimitacao_pluma': 'NBR 15515-3:2013; NBR 16209:2013',
-  'ic_ca_registro_fotografico': 'IN 39/2025 Art. 82, II; NBR 15515-3:2013',
-  
-  'ic_mf_contexto_hidrografico': 'NBR 15515-3:2013; IN 39/2025 Art. 42',
-  'ic_mf_mapa_potenciometrico': 'NBR 15515-3:2013; NBR 16209:2013',
-  'ic_mf_secao': 'NBR 15515-3:2013; NBR 16209:2013',
-  'ic_mf_registro_fotografico': 'IN 39/2025 Art. 82, II; NBR 15515-3:2013'
-};
-
-// ============================================================
-// FUNÇÕES AUXILIARES
-// ============================================================
-
-function getBaseLegal(itemId, etapaId = 1) {
-  if (etapaId === 1) {
-    return BASES_LEGAIS_AP[itemId] || '-';
-  } else if (etapaId >= 2 && etapaId <= 4) {
-    return BASES_LEGAIS_IC[itemId] || '-';
+function getBaseLegalPorResolucao(itemId, resolucao) {
+  if (BASES_LEGAIS_COMPLETAS[itemId]) {
+    return BASES_LEGAIS_COMPLETAS[itemId][resolucao] || '';
   }
-  return '-';
+  return '';
+}
+
+function getBaseLegalCompleta(itemId, resolucoesSelecionadas) {
+  if (!resolucoesSelecionadas || resolucoesSelecionadas.length === 0) {
+    return '-';
+  }
+  
+  const partes = [];
+  for (const resolucao of resolucoesSelecionadas) {
+    const texto = getBaseLegalPorResolucao(itemId, resolucao);
+    if (texto) {
+      partes.push(`<span class="badge-resolucao-item ${RESOLUCOES_CONFIG[resolucao]?.classe || 'iat'}">${resolucao}</span> ${texto}`);
+    }
+  }
+  
+  return partes.length > 0 ? partes.join('<br>') : '-';
 }
 
 // ============================================================
-// VARIÁVEIS GLOBAIS E FUNÇÕES AUXILIARES
+// FUNÇÕES AUXILIARES PARA ITENS
+// ============================================================
+
+function getItensSubEtapa(etapaId, subEtapaId) {
+  if (etapaId === 1) {
+    const subEtapas = CONFIG_ETAPAS.ap.subEtapas;
+    if (subEtapas[subEtapaId]) {
+      return subEtapas[subEtapaId].itens || [];
+    }
+    return [];
+  }
+  
+  if (etapaId >= 2 && etapaId <= 4) {
+    const subEtapa = SUB_ETAPAS_IC_ID_ARSH[subEtapaId];
+    if (!subEtapa) return [];
+    
+    let itens = [...subEtapa.itens];
+    
+    if (etapaId === 2) {
+      itens = itens.filter(item => 
+        item.id !== 'ic_cs_calculo_massa_retida' && 
+        item.id !== 'ic_cs_calculo_massa_vapor'
+      );
+    }
+    
+    if (etapaId === 3 || etapaId === 4) {
+      if (subEtapaId === 'contaminacao_solo') {
+        const hasMassaRetida = itens.some(item => item.id === 'ic_cs_calculo_massa_retida');
+        const hasMassaVapor = itens.some(item => item.id === 'ic_cs_calculo_massa_vapor');
+        
+        if (!hasMassaRetida) {
+          itens.push(JSON.parse(JSON.stringify(ITENS_CALCULO_MASSA[0])));
+        }
+        if (!hasMassaVapor) {
+          itens.push(JSON.parse(JSON.stringify(ITENS_CALCULO_MASSA[1])));
+        }
+      }
+    }
+    
+    return itens;
+  }
+  
+  return [];
+}
+
+function getSubEtapas(etapaId) {
+  if (etapaId === 1) {
+    return CONFIG_ETAPAS.ap.subEtapas;
+  }
+  if (etapaId >= 2 && etapaId <= 4) {
+    return SUB_ETAPAS_IC_ID_ARSH;
+  }
+  return {};
+}
+
+function getChaveResposta(etapaId, itemId) {
+  return `etapa${etapaId}_${itemId}`;
+}
+
+function getChaveFls(etapaId, itemId) {
+  return `fls_etapa${etapaId}_${itemId}`;
+}
+
+function getChaveObs(etapaId, itemId) {
+  return `obs_etapa${etapaId}_${itemId}`;
+}
+
+function getAnoCorrente() { return new Date().getFullYear(); }
+function getStorageKey() { return `gacs_${usuarioAtual}`; }
+
+// ============================================================
+// VARIÁVEIS GLOBAIS
 // ============================================================
 
 let usuarioAtual = null;
@@ -3628,22 +4596,12 @@ let subEtapaAtual = 'entorno';
 let subEtapaAtualIC = 'contaminacao_solo';
 let flsData = {};
 let obsData = {};
-
-// NOVAS VARIÁVEIS IA
 let documentosIA = [];
 let processandoIA = false;
 
-// As chaves de FLs e Observações também devem ser prefixadas por etapa
-function getChaveFls(etapaId, itemId) {
-  return `fls_etapa${etapaId}_${itemId}`;
-}
-
-function getChaveObs(etapaId, itemId) {
-  return `obs_etapa${etapaId}_${itemId}`;
-}
-
-function getAnoCorrente() { return new Date().getFullYear(); }
-function getStorageKey() { return `gacs_${usuarioAtual}`; }
+// ============================================================
+// FUNÇÕES AUXILIARES
+// ============================================================
 
 function mostrarStatus(msg, tipo = 'success') {
   const bar = document.getElementById('statusBar');
@@ -3707,53 +4665,64 @@ function atualizarTitulo() {
   document.getElementById('reportTitle').innerHTML = `INFORMAÇÃO TÉCNICA GAC - Nº ${num ? `${num}/${ano}` : '---'}`;
 }
 
-// ============================================================
-// FUNÇÕES DE SELEÇÃO MÚLTIPLA DE RESOLUÇÕES
-// ============================================================
-
 function getResolucoesSelecionadas() {
   const checkboxes = document.querySelectorAll('#resolucaoCheckboxes input[type="checkbox"]');
   const selecionadas = [];
   checkboxes.forEach(cb => {
-    if (cb.checked && !cb.disabled) { selecionadas.push(cb.value); }
-    else if (cb.disabled && cb.checked) { selecionadas.push(cb.value); }
+    if (cb.checked) { selecionadas.push(cb.value); }
   });
   return selecionadas;
 }
 
-function getResolucoesFixas() {
-  const checkboxes = document.querySelectorAll('#resolucaoCheckboxes input[type="checkbox"][disabled]');
-  return Array.from(checkboxes).filter(cb => cb.checked).map(cb => cb.value);
-}
-
 function atualizarResolucoesSelecionadas() {
   const checkboxes = document.querySelectorAll('#resolucaoCheckboxes input[type="checkbox"]');
-  const resolucoesSelecionadas = getResolucoesSelecionadas();
-  const resolucoesFixas = getResolucoesFixas();
+  const selecionadas = getResolucoesSelecionadas();
   
   checkboxes.forEach(cb => {
     const label = cb.closest('label');
-    if (cb.checked || cb.disabled) { label.classList.add('checked'); } 
-    else { label.classList.remove('checked'); }
+    if (cb.checked) { 
+      label.classList.add('checked'); 
+    } else { 
+      label.classList.remove('checked'); 
+    }
   });
   
   const listaSpan = document.getElementById('resolucaoSelecionadasLista');
-  const todas = [...resolucoesFixas, ...resolucoesSelecionadas.filter(r => !resolucoesFixas.includes(r))];
-  if (todas.length === 0) {
+  if (selecionadas.length === 0) {
     listaSpan.textContent = '⚠️ Nenhuma resolução selecionada!';
     listaSpan.style.color = '#dc3545';
     mostrarStatus('Selecione pelo menos uma resolução!', 'error');
     return;
   } else {
-    listaSpan.textContent = todas.join(' | ');
+    listaSpan.textContent = selecionadas.join(' | ');
     listaSpan.style.color = 'inherit';
   }
   
-  if (processoAtual) { processoAtual.resolucoesSelecionadas = todas; }
+  if (processoAtual) { processoAtual.resolucoesSelecionadas = selecionadas; }
+}
+
+function getResolucaoClass(resolucao) {
+  const config = RESOLUCOES_CONFIG[resolucao];
+  return config ? config.classe : 'iat';
+}
+
+function getResolucaoTipo(resolucao) {
+  const config = RESOLUCOES_CONFIG[resolucao];
+  return config ? config.tipo : 'IAT';
+}
+
+function getResolucaoNome(resolucao) {
+  const config = RESOLUCOES_CONFIG[resolucao];
+  return config ? config.nome : resolucao;
+}
+
+function getResolucaoDescricao(resolucao) {
+  const config = RESOLUCOES_CONFIG[resolucao];
+  return config ? config.descricao : '';
 }
 
 // ============================================================
-// FUNÇÕES DE SUB-ETAPA COM OBSERVAÇÕES (PREFIXADAS POR ETAPA)
+// FUNÇÕES DE SUB-ETAPA
 // ============================================================
 
 function getSubEtapaStatus(etapaId, subEtapaKey, respostas) {
@@ -3842,7 +4811,7 @@ function getDecisao(item, valor) {
 }
 
 // ============================================================
-// FUNÇÕES DE ANÁLISE - ETAPA 1 (adaptada para usar chaves prefixadas)
+// ANÁLISE DA ETAPA 1 (AP)
 // ============================================================
 
 function analisarEtapa1(respostas) {
@@ -3954,10 +4923,6 @@ function analisarEtapa1(respostas) {
   };
 }
 
-// ============================================================
-// FUNÇÃO PARA OBTER ITENS NÃO RESPONDIDOS
-// ============================================================
-
 function getItensNaoRespondidos(etapaId) {
   const respostas = processoAtual?.dados || {};
   const itensNaoRespondidos = [];
@@ -4002,7 +4967,7 @@ function getItensNaoRespondidos(etapaId) {
 }
 
 // ============================================================
-// FUNÇÕES DE RENDERIZAÇÃO
+// FUNÇÕES DE NAVEGAÇÃO E RENDERIZAÇÃO
 // ============================================================
 
 function getEtapaAtual() {
@@ -4020,19 +4985,14 @@ function getEtapaAtual() {
 
 function getTotalEtapas() { return 7; }
 
-// Verifica se uma etapa está liberada para acesso
 function isEtapaLiberada(etapaId) {
-  if (etapaId === 1) return true; // Etapa 1 sempre liberada
-  
-  // Verifica se a etapa anterior foi concluída
+  if (etapaId === 1) return true;
   const etapaAnteriorId = etapaId - 1;
   const historico = processoAtual?.historico || [];
   const etapaAnteriorConcluida = historico.some(h => h.etapaId === etapaAnteriorId);
-  
   return etapaAnteriorConcluida;
 }
 
-// Verifica se uma etapa está concluída
 function isEtapaConcluida(etapaId) {
   const historico = processoAtual?.historico || [];
   return historico.some(h => h.etapaId === etapaId);
@@ -4051,7 +5011,6 @@ function renderizarProgresso() {
     { id: 7, nome: 'Monitoramento de Medidas de Engenharia', sigla: 'MME' }
   ];
   
-  // Verifica qual é a última etapa concluída
   let ultimaConcluida = 0;
   const historico = processoAtual?.historico || [];
   for (const etapa of todasEtapas) {
@@ -4084,7 +5043,7 @@ function renderizarProgresso() {
     const circle = document.createElement('div');
     circle.className = 'step-circle';
     if (isConcluida) {
-      circle.innerHTML = ''; // O ::after mostra o ✓
+      circle.innerHTML = '';
     } else if (!isLiberada && !isConcluida) {
       circle.innerHTML = '🔒';
     } else {
@@ -4114,12 +5073,11 @@ function renderizarEtapa() {
   const isLiberada = isEtapaLiberada(etapa.id);
   const respostas = processoAtual?.dados || {};
   const isEditing = modoEdicao && etapaEditando === etapa.id;
+  const resolucoesSelecionadas = getResolucoesSelecionadas();
   
-  // Carregar flsData e obsData do processo
   if (processoAtual?.flsData) { flsData = { ...processoAtual.flsData }; }
   if (processoAtual?.obsData) { obsData = { ...processoAtual.obsData }; }
   
-  // Verifica se a etapa está bloqueada
   if (!isLiberada && !isConcluida && etapa.id > 1) {
     container.innerHTML = `
       <div class="card-header">
@@ -4144,11 +5102,9 @@ function renderizarEtapa() {
     return;
   }
   
-  // Restaura visibilidade dos botões
   document.getElementById('btnGroupActions').querySelectorAll('.btn-pdf-group, .btn-save').forEach(el => el.style.display = 'inline-flex');
   document.getElementById('btnConcluir').style.display = 'inline-flex';
   
-  // Se a etapa já foi concluída, mostra mensagem
   if (isConcluida && !isEditing) {
     container.innerHTML = `
       <div class="card-header">
@@ -4174,11 +5130,10 @@ function renderizarEtapa() {
     return;
   }
   
-  // Renderiza o conteúdo da etapa normalmente
   if (etapa.id === 1) {
-    container.innerHTML = renderizarEtapa1(respostas, isEditing);
+    container.innerHTML = renderizarEtapa1(respostas, isEditing, resolucoesSelecionadas);
   } else if (etapa.id >= 2 && etapa.id <= 4) {
-    container.innerHTML = renderizarEtapaICIDARSH(respostas, isEditing, etapa);
+    container.innerHTML = renderizarEtapaICIDARSH(respostas, isEditing, etapa, resolucoesSelecionadas);
   } else if (etapa.id === 5) {
     container.innerHTML = renderizarEtapaPI(respostas, isEditing);
   } else if (etapa.id === 6) {
@@ -4191,7 +5146,6 @@ function renderizarEtapa() {
   
   document.getElementById('btnBack').style.display = etapaAtualIndex > 0 ? 'inline-flex' : 'none';
   
-  // Configura o botão de concluir
   const btnConcluir = document.getElementById('btnConcluir');
   if (isEditing) {
     btnConcluir.textContent = '🔄 Reprocessar Etapa';
@@ -4206,9 +5160,12 @@ function renderizarEtapa() {
   renderizarProgresso();
 }
 
-function renderizarEtapa1(respostas, isEditing) {
-  const resolucoes = getResolucoesSelecionadas();
-  const resolucaoTexto = resolucoes.length > 0 ? resolucoes.join(' | ') : 'Nenhuma selecionada';
+// ============================================================
+// RENDERIZAÇÃO DA ETAPA 1 (AP) - COM BASES LEGAIS POR RESOLUÇÃO
+// ============================================================
+
+function renderizarEtapa1(respostas, isEditing, resolucoesSelecionadas) {
+  const resolucaoTexto = resolucoesSelecionadas.length > 0 ? resolucoesSelecionadas.join(' | ') : 'Nenhuma selecionada';
   const etapaId = 1;
   
   let html = `
@@ -4224,7 +5181,7 @@ function renderizarEtapa1(respostas, isEditing) {
       <br><small class="text-muted"><span class="peso-badge peso-2">2 - Obrigatório sempre</span> <span class="peso-badge peso-1">1 - Obrigatório às vezes</span> <span class="peso-badge peso-0">0 - Não obrigatório</span></small>
     </div>
     <div class="alert alert-info">
-      <i class="fas fa-gavel"></i> <strong>Base Legal Consolidada (${resolucoes.length} resolução(ões)):</strong> 
+      <i class="fas fa-gavel"></i> <strong>Base Legal Consolidada (${resolucoesSelecionadas.length} resolução(ões) selecionadas):</strong> 
       <span style="font-size:12px;">${resolucaoTexto}</span>
     </div>
   `;
@@ -4269,11 +5226,11 @@ function renderizarEtapa1(respostas, isEditing) {
             <thead class="table-primary">
               <tr>
                 <th style="width:3%;">#</th>
-                <th style="width:25%;">Item</th>
-                <th style="width:20%;">Resposta</th>
-                <th style="width:25%;">Base Legal</th>
-                <th style="width:10%;">Grau</th>
-                <th style="width:7%;">Fls.</th>
+                <th style="width:20%;">Item</th>
+                <th style="width:18%;">Resposta</th>
+                <th style="width:30%;">Base Legal (resolução selecionada)</th>
+                <th style="width:8%;">Grau</th>
+                <th style="width:6%;">Fls.</th>
                 <th style="width:10%;">Observação</th>
               </tr>
             </thead>
@@ -4288,7 +5245,21 @@ function renderizarEtapa1(respostas, isEditing) {
       const obsVal = getObs(etapaId, item.id);
       const corClasse = `cor-${item.cor}`;
       const grauBadge = grau ? `<span class="grau-badge grau-${grau}">${grau}</span>` : '<span class="badge bg-secondary">N/A</span>';
-      const baseLegal = getBaseLegal(item.id, etapaId);
+      
+      let baseLegalHtml = '-';
+      const baseLegalObj = BASES_LEGAIS_COMPLETAS[item.id];
+      if (baseLegalObj) {
+        const partes = [];
+        for (const resolucao of resolucoesSelecionadas) {
+          if (baseLegalObj[resolucao]) {
+            const classe = getResolucaoClass(resolucao);
+            partes.push(`<span class="badge-resolucao-item ${classe}" style="font-size:7px;padding:1px 4px;border-radius:4px;color:white;margin:0 1px;">${resolucao}</span> ${baseLegalObj[resolucao].substring(0, 60)}...`);
+          }
+        }
+        if (partes.length > 0) {
+          baseLegalHtml = partes.join('<br>');
+        }
+      }
       
       html += `<tr class="${corClasse}">
         <td>${idx + 1}</td>
@@ -4301,7 +5272,7 @@ function renderizarEtapa1(respostas, isEditing) {
         html += `<option value="${op.valor}" ${selected}>${op.valor}</option>`;
       });
       html += `</select></td>
-        <td style="font-size:9px;word-wrap:break-word;max-width:140px;">${baseLegal}</td>
+        <td style="font-size:8px;word-wrap:break-word;max-width:150px;">${baseLegalHtml}</td>
         <td>${grauBadge}</td>
         <td><input type="text" class="form-control form-control-sm fls-input" value="${flsVal}" placeholder="Fls." onchange="salvarFls(${etapaId}, '${item.id}', this.value)"></td>
         <td><textarea class="form-control form-control-sm obs-input" rows="1" placeholder="Observação" onchange="salvarObs(${etapaId}, '${item.id}', this.value)">${obsVal}</textarea></td>
@@ -4310,7 +5281,6 @@ function renderizarEtapa1(respostas, isEditing) {
     html += `</tbody></table></div>`;
   }
   
-  // Verificar se todas as sub-etapas estão respondidas
   let todasRespondidas = true;
   for (const key of Object.keys(CONFIG_ETAPAS.ap.subEtapas)) {
     const itens = getItensSubEtapa(etapaId, key);
@@ -4389,9 +5359,12 @@ function renderizarEtapa1(respostas, isEditing) {
   return html;
 }
 
-function renderizarEtapaICIDARSH(respostas, isEditing, etapa) {
-  const resolucoes = getResolucoesSelecionadas();
-  const resolucaoTexto = resolucoes.length > 0 ? resolucoes.join(' | ') : 'Nenhuma selecionada';
+// ============================================================
+// RENDERIZAÇÃO ETAPAS IC/ID/ARSH
+// ============================================================
+
+function renderizarEtapaICIDARSH(respostas, isEditing, etapa, resolucoesSelecionadas) {
+  const resolucaoTexto = resolucoesSelecionadas.length > 0 ? resolucoesSelecionadas.join(' | ') : 'Nenhuma selecionada';
   const etapaId = etapa.id;
   
   const nomesEtapa = {
@@ -4417,7 +5390,7 @@ function renderizarEtapaICIDARSH(respostas, isEditing, etapa) {
       <br><small class="text-muted"><span class="peso-badge peso-2">2 - Obrigatório sempre</span> <span class="peso-badge peso-1">1 - Obrigatório às vezes</span> <span class="peso-badge peso-0">0 - Não obrigatório</span></small>
     </div>
     <div class="alert alert-info">
-      <i class="fas fa-gavel"></i> <strong>Base Legal Consolidada (${resolucoes.length} resolução(ões)):</strong> 
+      <i class="fas fa-gavel"></i> <strong>Base Legal Consolidada (${resolucoesSelecionadas.length} resolução(ões) selecionadas):</strong> 
       <span style="font-size:12px;">${resolucaoTexto}</span>
     </div>
   `;
@@ -4466,11 +5439,11 @@ function renderizarEtapaICIDARSH(respostas, isEditing, etapa) {
             <thead class="table-primary">
               <tr>
                 <th style="width:3%;">#</th>
-                <th style="width:25%;">Item</th>
-                <th style="width:20%;">Resposta</th>
-                <th style="width:25%;">Base Legal</th>
-                <th style="width:10%;">Grau</th>
-                <th style="width:7%;">Fls.</th>
+                <th style="width:20%;">Item</th>
+                <th style="width:18%;">Resposta</th>
+                <th style="width:30%;">Base Legal (resolução selecionada)</th>
+                <th style="width:8%;">Grau</th>
+                <th style="width:6%;">Fls.</th>
                 <th style="width:10%;">Observação</th>
               </tr>
             </thead>
@@ -4484,7 +5457,21 @@ function renderizarEtapaICIDARSH(respostas, isEditing, etapa) {
       const obsVal = getObs(etapaId, item.id);
       const corClasse = `cor-${item.cor}`;
       const grauBadge = grau ? `<span class="grau-badge grau-${grau}">${grau}</span>` : '<span class="badge bg-secondary">N/A</span>';
-      const baseLegal = getBaseLegal(item.id, etapaId);
+      
+      let baseLegalHtml = '-';
+      const baseLegalObj = BASES_LEGAIS_COMPLETAS[item.id];
+      if (baseLegalObj) {
+        const partes = [];
+        for (const resolucao of resolucoesSelecionadas) {
+          if (baseLegalObj[resolucao]) {
+            const classe = getResolucaoClass(resolucao);
+            partes.push(`<span class="badge-resolucao-item ${classe}" style="font-size:7px;padding:1px 4px;border-radius:4px;color:white;margin:0 1px;">${resolucao}</span> ${baseLegalObj[resolucao].substring(0, 60)}...`);
+          }
+        }
+        if (partes.length > 0) {
+          baseLegalHtml = partes.join('<br>');
+        }
+      }
       
       const isCalculoMassa = item.id === 'ic_cs_calculo_massa_retida' || item.id === 'ic_cs_calculo_massa_vapor';
       const destaqueMassa = isCalculoMassa ? ' ⭐' : '';
@@ -4500,7 +5487,7 @@ function renderizarEtapaICIDARSH(respostas, isEditing, etapa) {
         html += `<option value="${op.valor}" ${selected}>${op.valor}</option>`;
       });
       html += `</select></td>
-        <td style="font-size:9px;word-wrap:break-word;max-width:140px;">${baseLegal}</td>
+        <td style="font-size:8px;word-wrap:break-word;max-width:150px;">${baseLegalHtml}</td>
         <td>${grauBadge}</td>
         <td><input type="text" class="form-control form-control-sm fls-input" value="${flsVal}" placeholder="Fls." onchange="salvarFls(${etapaId}, '${item.id}', this.value)"></td>
         <td><textarea class="form-control form-control-sm obs-input" rows="1" placeholder="Observação" onchange="salvarObs(${etapaId}, '${item.id}', this.value)">${obsVal}</textarea></td>
@@ -4511,6 +5498,10 @@ function renderizarEtapaICIDARSH(respostas, isEditing, etapa) {
   
   return html;
 }
+
+// ============================================================
+// RENDERIZAÇÃO ETAPAS 5, 6, 7
+// ============================================================
 
 function renderizarEtapaPI(respostas, isEditing) {
   return `
@@ -4560,14 +5551,11 @@ function renderizarEtapaMME(respostas, isEditing) {
 
 function irParaEtapa(idx) {
   if (idx < 0 || idx >= getTotalEtapas()) return;
-  
   const etapaId = idx + 1;
-  // Verifica se a etapa está liberada (concluiu a anterior)
   if (!isEtapaLiberada(etapaId) && etapaId > 1) {
     mostrarStatus(`🔒 Conclua a etapa ${etapaId - 1} primeiro!`, 'info');
     return;
   }
-  
   etapaAtualIndex = idx;
   renderizarEtapa();
   renderizarHistorico();
@@ -4575,10 +5563,8 @@ function irParaEtapa(idx) {
 
 function etapaAnterior() {
   if (etapaAtualIndex > 0) { 
-    // Verifica se a etapa anterior está liberada
-    const etapaId = etapaAtualIndex; // etapa anterior (índice)
+    const etapaId = etapaAtualIndex;
     if (!isEtapaLiberada(etapaId) && etapaId > 1) {
-      // Se não estiver liberada, pula para a primeira etapa disponível
       let primeiraLiberada = 0;
       for (let i = 0; i < getTotalEtapas(); i++) {
         if (isEtapaLiberada(i + 1) || i === 0) {
@@ -4617,7 +5603,6 @@ function concluirEtapa() {
     return;
   }
   
-  // Validação específica para cada etapa
   if (etapa.id === 1) {
     let todosRespondidos = true;
     let subEtapaFaltando = '';
@@ -4638,14 +5623,12 @@ function concluirEtapa() {
       return;
     }
     
-    // Análise da etapa 1
     const analise = analisarEtapa1(respostas);
     if (!analise.avancar) {
       mostrarStatus(`⚠️ ${analise.recomendacao}. ${analise.motivo}`, 'error');
       return;
     }
     
-    // Salva no histórico
     if (!processoAtual.historico) processoAtual.historico = [];
     processoAtual.historico.push({
       etapaId: etapa.id,
@@ -4685,8 +5668,6 @@ function concluirEtapa() {
     salvarProcesso();
     
     mostrarStatus(`✅ Etapa 1 concluída! Avançando para: Investigação Confirmatória`, 'success');
-    
-    // Avança para a próxima etapa
     etapaAtualIndex = 1;
     renderizarEtapa();
     renderizarHistorico();
@@ -4694,7 +5675,6 @@ function concluirEtapa() {
     return;
   }
   
-  // Para etapas 2, 3 e 4 - validação das sub-etapas
   if (etapa.id >= 2 && etapa.id <= 4) {
     const subEtapasKeys = Object.keys(SUB_ETAPAS_IC_ID_ARSH);
     let todosRespondidos = true;
@@ -4716,7 +5696,6 @@ function concluirEtapa() {
       return;
     }
     
-    // Salva no histórico
     if (!processoAtual.historico) processoAtual.historico = [];
     processoAtual.historico.push({
       etapaId: etapa.id,
@@ -4745,7 +5724,6 @@ function concluirEtapa() {
     
     const proxNome = etapa.id < 4 ? getEtapaAtual().nome : 'Próximas etapas';
     mostrarStatus(`✅ Etapa ${etapa.id} concluída! Avançando para: ${proxNome}`, 'success');
-    
     if (etapa.id < 4) {
       etapaAtualIndex = etapa.id;
     }
@@ -4755,7 +5733,6 @@ function concluirEtapa() {
     return;
   }
   
-  // Etapas 5, 6, 7 - ainda em desenvolvimento
   if (etapa.id >= 5 && etapa.id <= 7) {
     mostrarStatus(`Etapa ${etapa.id} em desenvolvimento.`, 'info');
     return;
@@ -4865,7 +5842,6 @@ function reprocessarEtapa() {
   processoAtual.flsData = { ...flsData };
   processoAtual.obsData = { ...obsData };
   processoAtual.resolucoesSelecionadas = resolucoes;
-  
   salvarProcesso();
   
   modoEdicao = false;
@@ -4969,14 +5945,10 @@ function carregarProcesso(id) {
   if (dadosProc.obsData) { obsData = { ...dadosProc.obsData }; }
   if (dadosProc.documentos) { documentosIA = dadosProc.documentos; renderizarDocumentos(); }
   
-  const resolucoes = dadosProc.resolucoesSelecionadas || ['CONAMA 420/2009', 'CEMA 129/2023', 'IN IAT 39/2025'];
+  const resolucoes = dadosProc.resolucoesSelecionadas || ['CONAMA 420/2009', 'CEMA 129/2023', 'IN IAT 39/2025', 'Portaria IAT nº 578/2026'];
   const checkboxes = document.querySelectorAll('#resolucaoCheckboxes input[type="checkbox"]');
   checkboxes.forEach(cb => {
-    if (cb.disabled) {
-      cb.checked = true;
-    } else {
-      cb.checked = resolucoes.includes(cb.value);
-    }
+    cb.checked = resolucoes.includes(cb.value);
     const label = cb.closest('label');
     if (cb.checked) { label.classList.add('checked'); } else { label.classList.remove('checked'); }
   });
@@ -4984,19 +5956,16 @@ function carregarProcesso(id) {
   
   document.getElementById('anoDisplay').textContent = getAnoCorrente();
   
-  // Determina a etapa atual baseada no histórico
   const historico = dadosProc.historico || [];
   let ultimaConcluida = 0;
   for (const h of historico) {
     if (h.etapaId > ultimaConcluida) ultimaConcluida = h.etapaId;
   }
   
-  // Se todas as 7 etapas foram concluídas, mostra a última
   if (ultimaConcluida >= 7) {
     etapaAtualIndex = 6;
   } else if (ultimaConcluida > 0 && ultimaConcluida < 7) {
-    // Se tem etapas concluídas, mostra a próxima etapa (liberada)
-    etapaAtualIndex = ultimaConcluida; // índice = etapaId (pois o índice é 0-based)
+    etapaAtualIndex = ultimaConcluida;
   } else {
     etapaAtualIndex = 0;
   }
@@ -5005,7 +5974,6 @@ function carregarProcesso(id) {
   etapaEditando = null;
   atualizarTitulo();
   
-  // Atualiza botão IA
   const btnIA = document.getElementById('btnProcessarIA');
   if (btnIA) {
     btnIA.disabled = documentosIA.length === 0;
@@ -5068,11 +6036,7 @@ function iniciarEdicaoEtapa(etapaId) {
   if (hist.resolucoes) {
     const checkboxes = document.querySelectorAll('#resolucaoCheckboxes input[type="checkbox"]');
     checkboxes.forEach(cb => {
-      if (cb.disabled) {
-        cb.checked = true;
-      } else {
-        cb.checked = hist.resolucoes.includes(cb.value);
-      }
+      cb.checked = hist.resolucoes.includes(cb.value);
       const label = cb.closest('label');
       if (cb.checked) { label.classList.add('checked'); } else { label.classList.remove('checked'); }
     });
@@ -5158,15 +6122,11 @@ function novoProcesso() {
     
     const checkboxes = document.querySelectorAll('#resolucaoCheckboxes input[type="checkbox"]');
     checkboxes.forEach(cb => {
-      if (cb.disabled) {
-        cb.checked = true;
-      } else {
-        cb.checked = cb.value === 'IN IAT 39/2025';
-      }
+      cb.checked = cb.value === 'CONAMA 420/2009' || cb.value === 'CEMA 129/2023' || cb.value === 'IN IAT 39/2025' || cb.value === 'Portaria IAT nº 578/2026';
       const label = cb.closest('label');
       if (cb.checked) { label.classList.add('checked'); } else { label.classList.remove('checked'); }
     });
-    document.getElementById('resolucaoSelecionadasLista').textContent = 'CONAMA 420/2009 | CEMA 129/2023 | IN IAT 39/2025';
+    document.getElementById('resolucaoSelecionadasLista').textContent = 'CONAMA 420/2009 | CEMA 129/2023 | IN IAT 39/2025 | Portaria IAT nº 578/2026';
     
     gerarProximoNumero();
     renderizarProgresso();
@@ -5182,10 +6142,7 @@ function iniciarSessao() {
   usuarioAtual = nome;
   document.getElementById('authLocalModal').style.display = 'none';
   
-  // Atualiza nome na home
   document.getElementById('homeUserName').textContent = nome;
-  
-  // Mostra a página inicial (home) e esconde as demais
   mostrarPagina('home');
   document.getElementById('userBar').style.display = 'flex';
   document.getElementById('userNameDisplay').innerHTML = `<i class="fas fa-user-circle"></i> ${nome}`;
@@ -5197,15 +6154,11 @@ function iniciarSessao() {
   
   const checkboxes = document.querySelectorAll('#resolucaoCheckboxes input[type="checkbox"]');
   checkboxes.forEach(cb => {
-    if (cb.disabled) {
-      cb.checked = true;
-    } else {
-      cb.checked = cb.value === 'IN IAT 39/2025';
-    }
+    cb.checked = cb.value === 'CONAMA 420/2009' || cb.value === 'CEMA 129/2023' || cb.value === 'IN IAT 39/2025' || cb.value === 'Portaria IAT nº 578/2026';
     const label = cb.closest('label');
     if (cb.checked) { label.classList.add('checked'); } else { label.classList.remove('checked'); }
   });
-  document.getElementById('resolucaoSelecionadasLista').textContent = 'CONAMA 420/2009 | CEMA 129/2023 | IN IAT 39/2025';
+  document.getElementById('resolucaoSelecionadasLista').textContent = 'CONAMA 420/2009 | CEMA 129/2023 | IN IAT 39/2025 | Portaria IAT nº 578/2026';
   
   processoAtual = null;
   etapaAtualIndex = 0;
@@ -5228,14 +6181,12 @@ function iniciarSessao() {
 // ============================================================
 
 function mostrarPagina(pagina) {
-  // Esconde todas as páginas
   document.getElementById('paginaHome').style.display = 'none';
   document.getElementById('paginaFormulario').style.display = 'none';
   document.getElementById('paginaAnaliseAP').style.display = 'none';
   document.getElementById('paginaAnaliseIC').style.display = 'none';
   document.getElementById('paginaAmostragem').style.display = 'none';
   
-  // Mostra a página solicitada
   if (pagina === 'home') {
     document.getElementById('paginaHome').style.display = 'block';
   } else if (pagina === 'formulario') {
@@ -5251,13 +6202,11 @@ function mostrarPagina(pagina) {
 
 function abrirFormulario() {
   mostrarPagina('formulario');
-  // Certifica que o formulário está pronto
   if (processoAtual) {
     renderizarProgresso();
     renderizarEtapa();
     renderizarHistorico();
   } else {
-    // Se não houver processo, cria um novo automaticamente
     const num = document.getElementById('gac_numero').value.trim();
     if (!num) {
       gerarProximoNumero();
@@ -5285,20 +6234,11 @@ function abrirFormulario() {
   }
 }
 
-function abrirAnaliseAP() {
-  mostrarPagina('analise-ap');
-}
-
-function abrirAnaliseIC() {
-  mostrarPagina('analise-ic');
-}
-
-function abrirAmostragem() {
-  mostrarPagina('amostragem');
-}
+function abrirAnaliseAP() { mostrarPagina('analise-ap'); }
+function abrirAnaliseIC() { mostrarPagina('analise-ic'); }
+function abrirAmostragem() { mostrarPagina('amostragem'); }
 
 function voltarHome() {
-  // Salva o progresso antes de voltar
   if (processoAtual) {
     salvarProgresso();
   }
@@ -5306,7 +6246,7 @@ function voltarHome() {
 }
 
 // ============================================================
-// FUNÇÕES IA - UPLOAD E PREENCHIMENTO AUTOMÁTICO
+// FUNÇÕES IA - UPLOAD E PREENCHIMENTO
 // ============================================================
 
 function renderizarDocumentos() {
@@ -5335,7 +6275,6 @@ function renderizarDocumentos() {
   });
   container.innerHTML = html;
   
-  // Atualiza botão IA
   const btnIA = document.getElementById('btnProcessarIA');
   if (btnIA) {
     const hasProcessed = documentosIA.some(d => d.status === 'concluido');
@@ -5350,7 +6289,6 @@ async function uploadDocumentos(files) {
     return;
   }
   
-  // Verifica se há backend disponível
   const backendDisponivel = await verificarBackend();
   
   for (const file of files) {
@@ -5366,7 +6304,6 @@ async function uploadDocumentos(files) {
     
     try {
       if (backendDisponivel) {
-        // Envia para o backend
         const formData = new FormData();
         formData.append('files', file);
         formData.append('processo_id', processoAtual.id);
@@ -5387,7 +6324,6 @@ async function uploadDocumentos(files) {
           docEntry.erro = 'Erro no upload';
         }
       } else {
-        // Modo offline - simula processamento
         docEntry.status = 'concluido';
         docEntry.paginas = Math.floor(Math.random() * 10) + 1;
         docEntry.trechos = Math.floor(Math.random() * 20) + 5;
@@ -5404,7 +6340,6 @@ async function uploadDocumentos(files) {
     salvarProcesso();
   }
   
-  // Verifica se todos foram processados
   const todosConcluidos = documentosIA.every(d => d.status === 'concluido');
   if (todosConcluidos && documentosIA.length > 0) {
     mostrarStatus(`✅ ${documentosIA.length} documento(s) processado(s)! Clique em "Preencher com IA"`, 'success');
@@ -5468,7 +6403,6 @@ async function preencherComIA() {
     const etapa = getEtapaAtual();
     const itens = [];
     
-    // Coleta todos os itens da etapa atual
     if (etapa.id === 1) {
       for (const key of Object.keys(CONFIG_ETAPAS.ap.subEtapas)) {
         const itensSub = getItensSubEtapa(1, key);
@@ -5476,8 +6410,7 @@ async function preencherComIA() {
           itens.push({
             id: item.id,
             label: item.label,
-            opcoes: item.opcoes,
-            baseLegal: getBaseLegal(item.id, 1)
+            opcoes: item.opcoes
           });
         }
       }
@@ -5488,8 +6421,7 @@ async function preencherComIA() {
           itens.push({
             id: item.id,
             label: item.label,
-            opcoes: item.opcoes,
-            baseLegal: getBaseLegal(item.id, etapa.id)
+            opcoes: item.opcoes
           });
         }
       }
@@ -5498,12 +6430,10 @@ async function preencherComIA() {
     barIA.style.width = '30%';
     mostrarStatus(`🔍 Analisando ${itens.length} itens com IA...`, 'ia');
     
-    // Simula processamento com IA
     const respostas = await processarItensComIA(itens, documentosProcessados);
     
     barIA.style.width = '80%';
     
-    // Aplica as respostas
     let count = 0;
     for (const item of itens) {
       const resposta = respostas[item.id];
@@ -5557,11 +6487,8 @@ async function preencherComIA() {
   }, 1000);
 }
 
-// Função para processar itens com IA (simulação ou real)
 async function processarItensComIA(itens, documentos) {
   const respostas = {};
-  
-  // Verifica se há backend disponível
   const backendDisponivel = await verificarBackend();
   
   if (backendDisponivel) {
@@ -5586,18 +6513,14 @@ async function processarItensComIA(itens, documentos) {
     }
   }
   
-  // Modo offline/simulação (fallback)
   for (const item of itens) {
-    // Simula uma resposta baseada no label do item
     const opcoes = item.opcoes || [];
     const opcoesValidas = opcoes.filter(o => o.grau !== undefined);
     
-    // Escolhe aleatoriamente uma opção (simula IA)
     let respostaEscolhida = '';
     let grau = 2;
     
     if (opcoesValidas.length > 0) {
-      // Prioriza opções com grau 1 ou 2 (mais prováveis)
       const opcoesPrioritarias = opcoesValidas.filter(o => o.grau === 1 || o.grau === 2);
       const opcao = opcoesPrioritarias.length > 0 
         ? opcoesPrioritarias[Math.floor(Math.random() * opcoesPrioritarias.length)]
@@ -5609,16 +6532,13 @@ async function processarItensComIA(itens, documentos) {
       respostaEscolhida = opcoes[Math.floor(Math.random() * opcoes.length)].valor;
     }
     
-    // Gera número de folha aleatório
     const fls = Math.floor(Math.random() * 50) + 1;
     
-    // Confiança baseada no grau
     let confianca = 0.7;
     if (grau === 1) confianca = 0.85 + Math.random() * 0.1;
     else if (grau === 2) confianca = 0.6 + Math.random() * 0.25;
     else confianca = 0.3 + Math.random() * 0.3;
     
-    // Trecho simulado
     const trechosSimulados = [
       `Conforme análise do documento, foi identificado que "${item.label}" apresenta as características descritas.`,
       `Os dados coletados indicam que "${item.label}" está em conformidade com os padrões estabelecidos.`,
@@ -5941,12 +6861,26 @@ function gerarPDFConsistencia() {
         const chaveObs = getChaveObs(1, item.id);
         const fls = flsDataLocal[chaveFls] || '';
         const obs = obsDataLocal[chaveObs] || '';
-        const baseLegal = getBaseLegal(item.id, 1);
+        
+        let baseLegalHtml = '-';
+        const baseLegalObj = BASES_LEGAIS_COMPLETAS[item.id];
+        if (baseLegalObj) {
+          const partes = [];
+          for (const resolucao of resolucoesSelecionadas) {
+            if (baseLegalObj[resolucao]) {
+              partes.push(`${resolucao}: ${baseLegalObj[resolucao].substring(0, 50)}...`);
+            }
+          }
+          if (partes.length > 0) {
+            baseLegalHtml = partes.join(' | ');
+          }
+        }
+        
         dadosTabelaItens.push([
           sigla,
           item.label,
           valor,
-          baseLegal,
+          baseLegalHtml,
           obs,
           fls,
           String(grau)
@@ -5987,7 +6921,6 @@ function gerarPDFConsistencia() {
     }
     yPos += 4;
     
-    // ITENS NÃO RESPONDIDOS
     escreverTitulo('4. ITENS NÃO RESPONDIDOS');
     yPos += 2;
     
@@ -6364,12 +7297,26 @@ function gerarPDFTecnico() {
         const chaveObs = getChaveObs(1, p.itemId);
         const fls = flsDataLocal[chaveFls] || '';
         const obs = obsDataLocal[chaveObs] || '';
-        const baseLegal = getBaseLegal(p.itemId, 1);
+        
+        let baseLegalHtml = '-';
+        const baseLegalObj = BASES_LEGAIS_COMPLETAS[p.itemId];
+        if (baseLegalObj) {
+          const partes = [];
+          for (const resolucao of resolucoesSelecionadas) {
+            if (baseLegalObj[resolucao]) {
+              partes.push(`${resolucao}: ${baseLegalObj[resolucao].substring(0, 40)}...`);
+            }
+          }
+          if (partes.length > 0) {
+            baseLegalHtml = partes.join(' | ');
+          }
+        }
+        
         return [
           p.subSigla || p.subEtapa || 'N/A',
           p.item || 'N/A',
           valor,
-          baseLegal,
+          baseLegalHtml,
           obs,
           fls,
           String(p.grau || '')
@@ -6406,7 +7353,7 @@ function gerarPDFTecnico() {
     
     let resumoConclusao = '';
     if (analise.avancar) {
-      resumoConclusao = `Com fundamento na análise técnica, verifica-se que a Avaliação Preliminar está em conformidade com as exigências legais (CONAMA 420/2009, CEMA 129/2023 e IN IAT 39/2025). A área foi classificada como "${analise.classificacaoArea}" com grau de risco "${analise.grauIncertezaGeral}". Não foram identificadas inconsistências significativas, sendo todos os itens avaliados com GRAU 1 (Baixo Risco). Recomenda-se o prosseguimento para a 2ª Etapa - Investigação Confirmatória (IC).`;
+      resumoConclusao = `Com fundamento na análise técnica, verifica-se que a Avaliação Preliminar está em conformidade com as exigências legais (${resolucaoTexto}). A área foi classificada como "${analise.classificacaoArea}" com grau de risco "${analise.grauIncertezaGeral}". Não foram identificadas inconsistências significativas, sendo todos os itens avaliados com GRAU 1 (Baixo Risco). Recomenda-se o prosseguimento para a 2ª Etapa - Investigação Confirmatória (IC).`;
     } else if (analise.grau2 > 0) {
       resumoConclusao = `Com fundamento na análise técnica, verifica-se que a Avaliação Preliminar apresenta lacunas que comprometem sua completude. Foram identificados ${analise.grau2} itens com GRAU 2 (Médio Risco) - peso total: ${analise.pesoGrau2}. As principais pendências estão relacionadas a: ${itensPendentes.slice(0,3).map(p => `"${p.item}"`).join(', ')}${itensPendentes.length > 3 ? ', entre outros' : ''}. O processo fica pendente de complementação, devendo a parte interessada ser notificada para apresentar as correções no prazo de ${analise.prazoTexto}.`;
     } else {
@@ -6468,15 +7415,11 @@ document.addEventListener('DOMContentLoaded', function() {
     
     const checkboxes = document.querySelectorAll('#resolucaoCheckboxes input[type="checkbox"]');
     checkboxes.forEach(cb => {
-      if (cb.disabled) {
-        cb.checked = true;
-      } else {
-        cb.checked = cb.value === 'IN IAT 39/2025';
-      }
+      cb.checked = cb.value === 'CONAMA 420/2009' || cb.value === 'CEMA 129/2023' || cb.value === 'IN IAT 39/2025' || cb.value === 'Portaria IAT nº 578/2026';
       const label = cb.closest('label');
       if (cb.checked) { label.classList.add('checked'); } else { label.classList.remove('checked'); }
     });
-    document.getElementById('resolucaoSelecionadasLista').textContent = 'CONAMA 420/2009 | CEMA 129/2023 | IN IAT 39/2025';
+    document.getElementById('resolucaoSelecionadasLista').textContent = 'CONAMA 420/2009 | CEMA 129/2023 | IN IAT 39/2025 | Portaria IAT nº 578/2026';
   }
   
   document.querySelectorAll('#mainForm input, #mainForm select').forEach(function(el) {
@@ -6491,7 +7434,6 @@ document.addEventListener('DOMContentLoaded', function() {
   document.getElementById('gac_numero').addEventListener('input', atualizarTitulo);
   document.getElementById('gac_prazo').addEventListener('input', atualizarPrazoExtenso);
   
-  // Configuração do Drag and Drop
   const dropZone = document.getElementById('dropZone');
   if (dropZone) {
     dropZone.addEventListener('dragover', (e) => {
@@ -6546,7 +7488,6 @@ window.numeroPorExtenso = numeroPorExtenso;
 window.atualizarResolucoesSelecionadas = atualizarResolucoesSelecionadas;
 window.getResolucoesSelecionadas = getResolucoesSelecionadas;
 window.getGrauIncerteza = getGrauIncerteza;
-window.getBaseLegal = getBaseLegal;
 window.getDecisao = getDecisao;
 window.getItensNaoRespondidos = getItensNaoRespondidos;
 window.uploadDocumentos = uploadDocumentos;
@@ -6561,6 +7502,14 @@ window.mostrarPagina = mostrarPagina;
 window.concluirEtapa = concluirEtapa;
 window.isEtapaLiberada = isEtapaLiberada;
 window.isEtapaConcluida = isEtapaConcluida;
+window.getBaseLegalPorResolucao = getBaseLegalPorResolucao;
+window.getBaseLegalCompleta = getBaseLegalCompleta;
+window.getResolucaoClass = getResolucaoClass;
+window.getResolucaoTipo = getResolucaoTipo;
+window.getResolucaoNome = getResolucaoNome;
+window.getResolucaoDescricao = getResolucaoDescricao;
+window.RESOLUCOES_CONFIG = RESOLUCOES_CONFIG;
+window.BASES_LEGAIS_COMPLETAS = BASES_LEGAIS_COMPLETAS;
 </script>
 </body>
 </html>
