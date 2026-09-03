@@ -737,6 +737,27 @@ body{
     accent-color:var(--primary);
 }
 
+/* ============================================================
+   CORREÇÃO: QUEBRA DE LINHA EM TABELAS
+   ============================================================ */
+.tabela-relatorios td,
+.tabela-relatorios th,
+.tabela-moderna td,
+.tabela-moderna th,
+.tabela-pdf td,
+.tabela-pdf th,
+.tabela-resultado-unico td,
+.tabela-resultado-unico th {
+    word-wrap: break-word !important;
+    white-space: normal !important;
+    max-width: 250px;
+    vertical-align: top;
+}
+
+/* ============================================================
+   FIM DA CORREÇÃO
+   ============================================================ */
+
 /* Login e acesso */
 .login-box{max-width:480px;margin:0 auto;}
 .login-target{background:#f5f9fc;border:1px solid var(--border);padding:16px 20px;border-radius:10px;margin-bottom:22px;font-size:14px;}
@@ -930,7 +951,7 @@ body{
     flex-wrap:wrap;
 }
 
-/* PDF Visualização */
+/* PDF Visualização - CORRIGIDO PARA QUEBRAR LINHAS */
 .pdf-visualizacao{
     font-family:'Segoe UI',Arial,sans-serif;
     background:#fff;
@@ -981,6 +1002,8 @@ body{
     display:flex;
     padding:6px 0;
     border-bottom:1px solid #f0f0f0;
+    word-wrap: break-word;
+    white-space: normal;
 }
 
 .pdf-visualizacao .campo .label{
@@ -988,11 +1011,15 @@ body{
     width:280px;
     color:#003366;
     font-size:13px;
+    flex-shrink:0;
 }
 
 .pdf-visualizacao .campo .valor{
     flex:1;
     font-size:13px;
+    word-wrap: break-word;
+    white-space: normal;
+    line-height:1.6;
 }
 
 .pdf-visualizacao .lista-itens{
@@ -1004,6 +1031,8 @@ body{
     padding:2px 0;
     font-size:12px;
     color:#1a2d3f;
+    word-wrap: break-word;
+    white-space: normal;
 }
 
 .pdf-visualizacao .lista-itens .item i{
@@ -1030,6 +1059,8 @@ body{
     padding:5px 10px;
     border:1px solid #dee2e6;
     vertical-align:top;
+    word-wrap: break-word;
+    white-space: normal;
 }
 
 .pdf-visualizacao .tabela-pdf tbody tr:nth-child(even){
@@ -1862,8 +1893,8 @@ body{
         </div>
     </div>
     <div class="titulo">
-        <h1>ORGANOGRAMA INSTITUCIONAL</h1>
-        <p>Estrutura hierárquica · Diretorias, Gerências e Divisões</p>
+        <h1>ACESSO AO ORGANOGRAMA INSTITUCIONAL</h1>
+        <p></p>
     </div>
 </header>
 
@@ -1893,8 +1924,8 @@ body{
              ============================================================ -->
         <div class="coluna fechada">
             <div class="node assessoria" onclick="toggleDiretoria(this)">
-                <strong>ASSESSORIA TÉCNICA</strong>
-                <span class="sigla">ASSTEC</span>
+                <strong></strong>
+                <span class="sigla">ASSESSORIA</span>
                 <span class="btn-expandir">+</span>
             </div>
             <div class="conteudo">
@@ -1907,7 +1938,7 @@ body{
                 <div class="gerencias">
                     <div class="grupo-gerencia">
                         <div class="node gerencia" onclick="toggleGerencia(this)">
-                            <strong>GERÊNCIA DE ASSESSORIA TÉCNICA</strong>
+                            <strong>GERÊNCIA DE ASSESSORIA</strong>
                             <span class="sigla">GEAT</span>
                             <span class="btn-expandir-gerencia">+</span>
                         </div>
@@ -2195,8 +2226,6 @@ body{
         <div class="legenda-item"><span class="cor cor-gerencia"></span>Gerência</div>
         <div class="legenda-item"><span class="cor cor-divisao"></span>Divisão</div>
     </div>
-
-    <!-- BOTÃO ACESSAR SISTEMA COMPLETO - REMOVIDO -->
 
 </div>
 </section>
@@ -2673,16 +2702,17 @@ const LOGOS = {
     headerRight: "https://image2url.com/r2/default/images/1770223607016-99c57976-38bc-462d-aaac-01c87703b919.png"
 };
 
+// CONFIGURAÇÕES DO PDF (NECESSÁRIO PARA GERAR O PDF)
 const PDF_CONFIG = {
     relatorioText: { linha1: "INSTITUTO ÁGUA E TERRA - IAT", linha2: "DIRETORIA DE GESTÃO TERRITORIAL", linha3: "RELATÓRIO ANUAL DE ATIVIDADES" },
     footerText: { linha1: "IAT - Instituto Água e Terra", linha2: "Rua Engenheiros Rebouças, 1206 | Rebouças | Curitiba/PR", linha3: "CEP: 80215.100 | Tel: 41 3213-3700" },
     colors: { primary: [0, 51, 102], secondary: [0, 86, 179], lightGray: [240, 240, 240], darkGray: [100, 100, 100], mediumGray: [200, 200, 200] },
     pageWidth: 210,
-    marginLeft: 18,
-    marginRight: 18,
+    marginLeft: 30,
+    marginRight: 20,
     font: "helvetica",
-    fontSize: 12,
-    lineHeight: 6
+    fontSize: 10,
+    lineHeight: 4
 };
 
 // ============================================================
@@ -3205,7 +3235,7 @@ function gerarTabelaRelatorios(relatorios, tipoPerfil, containerId, colunasEspec
 }
 
 // ============================================================
-// 9. PAINEL DO GERENTE (MODIFICADO PARA PERMITIR EDIÇÃO)
+// 9. PAINEL DO GERENTE
 // ============================================================
 function carregarPainelGerente(gerencia) {
     const container = document.getElementById('painelGerente');
@@ -4679,7 +4709,7 @@ function carregarFormularioEditavel(form, isGerenteEditando = false) {
                 <button class="btn-sistema btn-sistema-success" onclick="gerenteSalvarEAprovar()"><i class="fas fa-check"></i> Salvar e Aprovar</button>
                 <button class="btn-sistema btn-sistema-danger" onclick="gerenteSalvarERecusar()"><i class="fas fa-times"></i> Salvar e Recusar</button>
             ` : ''}
-            <button class="btn-sistema btn-sistema-secondary" onclick="gerarPDF()"><i class="fas fa-file-pdf"></i> Gerar PDF</button>
+            <button class="btn-sistema btn-sistema-secondary" onclick="gerarPDF('${form.id}')"><i class="fas fa-file-pdf"></i> Gerar PDF</button>
             <button class="btn-sistema btn-sistema-secondary" onclick="verHistorico('${form.id}')"><i class="fas fa-history"></i> Histórico</button>
             ${(form.status === 'Rascunho' || form.status === 'Devolvido para Correção' || form.status === 'Devolvido para Correção pela Assessoria' || form.status === 'Devolvido para Correção pela Diretoria') && !isGerenteEditando ? `<button class="btn-sistema btn-sistema-danger" onclick="excluirProcesso('${form.id}', 'formulario', function(){ voltarDoFormulario(); })"><i class="fas fa-trash"></i> Excluir</button>` : ''}
         </div>
@@ -4910,7 +4940,7 @@ function renderizarProjetos2025() {
         html += `
         <div class="item-card">
             <div class="item-header">
-                <span class="item-numero">ITEM ${idx + 1}</span>
+                <span class="item-numero">${idx + 1}</span>
                 <div class="campo-check">
                     <i class="fas fa-check-circle" style="color:#0056b3;"></i> PROGRAMA:
                     <input type="checkbox" id="prog2025_check_${idx}" ${temPrograma ? 'checked' : ''} 
@@ -5075,7 +5105,7 @@ function renderizarResultados2025() {
         html += `
         <div class="item-card">
             <div class="item-header">
-                <span class="item-numero">ITEM ${idx + 1}</span>
+                <span class="item-numero">${idx + 1}</span>
             </div>
             
             <div class="campo-texto-item">
@@ -5152,7 +5182,7 @@ function renderizarProjetos2026() {
         html += `
         <div class="item-card">
             <div class="item-header">
-                <span class="item-numero">ITEM ${idx + 1}</span>
+                <span class="item-numero">${idx + 1}</span>
                 <div class="campo-check">
                     <i class="fas fa-check-circle" style="color:#0056b3;"></i> PROGRAMA:
                     <input type="checkbox" id="prog2026_check_${idx}" ${temPrograma ? 'checked' : ''} 
@@ -5317,7 +5347,7 @@ function renderizarPropostas2028() {
         html += `
         <div class="item-card">
             <div class="item-header">
-                <span class="item-numero">ITEM ${idx + 1}</span>
+                <span class="item-numero">${idx + 1}</span>
             </div>
             
             <div class="campo-texto-item">
@@ -5483,7 +5513,7 @@ function atualizarStatusSalvo() {
 }
 
 // ============================================================
-// 21. FUNÇÃO VISUALIZAR COMO PDF (ATUALIZADA)
+// 21. FUNÇÃO VISUALIZAR COMO PDF - CORRIGIDA PARA QUEBRAR LINHAS
 // ============================================================
 function visualizarComoPDF(id, perfilVisualizacao) {
     const form = formularios[id];
@@ -5547,7 +5577,7 @@ function visualizarComoPDF(id, perfilVisualizacao) {
         ['E-MAIL DO GERENTE:', dadosGerencia ? dadosGerencia.email : '']
     ];
     camposIdentificacao.forEach(campo => {
-        html += `<div class="campo"><span class="label">${campo[0]}</span><span class="valor">${escapeHtml(campo[1])}</span></div>`;
+        html += `<div class="campo"><span class="label">${campo[0]}</span><span class="valor" style="word-wrap:break-word;white-space:normal;line-height:1.6;">${escapeHtml(campo[1])}</span></div>`;
     });
     
     html += `<div class="campo" style="border-left:4px solid #ffc107;padding-left:12px;background:#fff8e1;border-radius:4px;margin-top:4px;">
@@ -5608,7 +5638,7 @@ function visualizarComoPDF(id, perfilVisualizacao) {
     } else {
         html += `<table class="tabela-pdf"><thead><tr><th style="width:40px;">#</th><th>ATRIBUIÇÕES DA DIVISÃO</th></tr></thead><tbody>`;
         atribDivList.forEach((item, i) => {
-            html += `<tr><td style="text-align:center;font-weight:600;color:#003366;">${i + 1}</td><td>${escapeHtml(item)}</td></tr>`;
+            html += `<tr><td style="text-align:center;font-weight:600;color:#003366;">${i + 1}</td><td style="word-wrap:break-word;white-space:normal;">${escapeHtml(item)}</td></tr>`;
         });
         html += `</tbody></table>`;
     }
@@ -5621,7 +5651,7 @@ function visualizarComoPDF(id, perfilVisualizacao) {
     } else {
         html += `<table class="tabela-pdf"><thead><tr><th style="width:40px;">#</th><th>NOME DO COLABORADOR</th></tr></thead><tbody>`;
         colabList.forEach((item, i) => {
-            html += `<tr><td style="text-align:center;font-weight:600;color:#003366;">${i + 1}</td><td>${escapeHtml(item)}</td></tr>`;
+            html += `<tr><td style="text-align:center;font-weight:600;color:#003366;">${i + 1}</td><td style="word-wrap:break-word;white-space:normal;">${escapeHtml(item)}</td></tr>`;
         });
         html += `</tbody></table>`;
     }
@@ -5645,19 +5675,19 @@ function visualizarComoPDF(id, perfilVisualizacao) {
             
             html += `
             <div style="background:#f5f9fc;border-left:4px solid #fd7e14;padding:8px 12px;margin:8px 0 4px 0;border-radius:4px;">
-                <strong style="color:#003366;">ITEM ${idx + 1}</strong><br>
+                <strong style="color:#003366;">${idx + 1}</strong><br>
                 <span style="font-size:11px;color:#003366;"><strong>PROGRAMA:</strong> ${escapeHtml(progLabel)}</span><br>
                 <span style="font-size:11px;color:#003366;"><strong>PARCEIRA:</strong> ${escapeHtml(parcLabel)}</span>
             </div>
             <div style="padding:2px 12px;">
                 <div style="font-size:11px;margin:2px 0;"><strong>3.1 Descrever os Projetos/Atividades:</strong></div>
-                <div style="font-size:11px;margin:0 0 4px 12px;">${escapeHtml(p.projetos || '')}</div>
+                <div style="font-size:11px;margin:0 0 4px 12px;word-wrap:break-word;white-space:normal;">${escapeHtml(p.projetos || '')}</div>
                 <div style="font-size:11px;margin:2px 0;"><strong>3.2 Descrever os Objetivos:</strong></div>
-                <div style="font-size:11px;margin:0 0 4px 12px;">${escapeHtml(p.objetivos || '')}</div>
+                <div style="font-size:11px;margin:0 0 4px 12px;word-wrap:break-word;white-space:normal;">${escapeHtml(p.objetivos || '')}</div>
                 <div style="font-size:11px;margin:2px 0;"><strong>3.3 Descrever a Descrição das Ações:</strong></div>
-                <div style="font-size:11px;margin:0 0 4px 12px;">${escapeHtml(p.acoes || '')}</div>
+                <div style="font-size:11px;margin:0 0 4px 12px;word-wrap:break-word;white-space:normal;">${escapeHtml(p.acoes || '')}</div>
                 <div style="font-size:11px;margin:2px 0;"><strong>3.4 DESENBOLSO (R$):</strong></div>
-                <div style="font-size:11px;margin:0 0 4px 12px;">${escapeHtml(p.desembolso || '')}</div>
+                <div style="font-size:11px;margin:0 0 4px 12px;word-wrap:break-word;white-space:normal;">${escapeHtml(p.desembolso || '')}</div>
             </div>
             `;
         });
@@ -5672,7 +5702,7 @@ function visualizarComoPDF(id, perfilVisualizacao) {
     } else {
         html += `<table class="tabela-pdf"><thead><tr><th style="width:40px;">#</th><th>Descrição da Atividade</th></tr></thead><tbody>`;
         naoProgramadas2025List.forEach((item, i) => {
-            html += `<tr><td style="text-align:center;font-weight:600;color:#003366;">${i + 1}</td><td>${escapeHtml(item)}</td></tr>`;
+            html += `<tr><td style="text-align:center;font-weight:600;color:#003366;">${i + 1}</td><td style="word-wrap:break-word;white-space:normal;">${escapeHtml(item)}</td></tr>`;
         });
         html += `</tbody></table>`;
     }
@@ -5685,17 +5715,17 @@ function visualizarComoPDF(id, perfilVisualizacao) {
         resultados2025List.forEach((r, idx) => {
             html += `
             <div style="background:#f5f9fc;border-left:4px solid #fd7e14;padding:8px 12px;margin:8px 0 4px 0;border-radius:4px;">
-                <strong style="color:#003366;">ITEM ${idx + 1}</strong>
+                <strong style="color:#003366;">${idx + 1}</strong>
             </div>
             <div style="padding:2px 12px;">
                 <div style="font-size:11px;margin:2px 0;"><strong>5.1 Descrever os Projetos/Atividades:</strong></div>
-                <div style="font-size:11px;margin:0 0 4px 12px;">${escapeHtml(r.projetos || '')}</div>
+                <div style="font-size:11px;margin:0 0 4px 12px;word-wrap:break-word;white-space:normal;">${escapeHtml(r.projetos || '')}</div>
                 <div style="font-size:11px;margin:2px 0;"><strong>5.2 Descrever as Regiões Beneficiadas:</strong></div>
-                <div style="font-size:11px;margin:0 0 4px 12px;">${escapeHtml(r.regioes || '')}</div>
+                <div style="font-size:11px;margin:0 0 4px 12px;word-wrap:break-word;white-space:normal;">${escapeHtml(r.regioes || '')}</div>
                 <div style="font-size:11px;margin:2px 0;"><strong>5.3 Descrever as Metas Atingidas:</strong></div>
-                <div style="font-size:11px;margin:0 0 4px 12px;">${escapeHtml(r.metas || '')}</div>
+                <div style="font-size:11px;margin:0 0 4px 12px;word-wrap:break-word;white-space:normal;">${escapeHtml(r.metas || '')}</div>
                 <div style="font-size:11px;margin:2px 0;"><strong>5.4 Descrever os Desafios:</strong></div>
-                <div style="font-size:11px;margin:0 0 4px 12px;">${escapeHtml(r.desafios || '')}</div>
+                <div style="font-size:11px;margin:0 0 4px 12px;word-wrap:break-word;white-space:normal;">${escapeHtml(r.desafios || '')}</div>
             </div>
             `;
         });
@@ -5709,7 +5739,7 @@ function visualizarComoPDF(id, perfilVisualizacao) {
     } else {
         html += `<table class="tabela-pdf"><thead><tr><th style="width:40px;">#</th><th>Descrição da Atividade</th></tr></thead><tbody>`;
         naoProgramadas2026List.forEach((item, i) => {
-            html += `<tr><td style="text-align:center;font-weight:600;color:#003366;">${i + 1}</td><td>${escapeHtml(item)}</td></tr>`;
+            html += `<tr><td style="text-align:center;font-weight:600;color:#003366;">${i + 1}</td><td style="word-wrap:break-word;white-space:normal;">${escapeHtml(item)}</td></tr>`;
         });
         html += `</tbody></table>`;
     }
@@ -5733,19 +5763,19 @@ function visualizarComoPDF(id, perfilVisualizacao) {
             
             html += `
             <div style="background:#f5f9fc;border-left:4px solid #fd7e14;padding:8px 12px;margin:8px 0 4px 0;border-radius:4px;">
-                <strong style="color:#003366;">ITEM ${idx + 1}</strong><br>
+                <strong style="color:#003366;">${idx + 1}</strong><br>
                 <span style="font-size:11px;color:#003366;"><strong>PROGRAMA:</strong> ${escapeHtml(progLabel)}</span><br>
                 <span style="font-size:11px;color:#003366;"><strong>PARCEIRA:</strong> ${escapeHtml(parcLabel)}</span>
             </div>
             <div style="padding:2px 12px;">
                 <div style="font-size:11px;margin:2px 0;"><strong>7.1 Descrever os Projetos/Atividades:</strong></div>
-                <div style="font-size:11px;margin:0 0 4px 12px;">${escapeHtml(p.projetos || '')}</div>
+                <div style="font-size:11px;margin:0 0 4px 12px;word-wrap:break-word;white-space:normal;">${escapeHtml(p.projetos || '')}</div>
                 <div style="font-size:11px;margin:2px 0;"><strong>7.2 Descrever os Objetivos:</strong></div>
-                <div style="font-size:11px;margin:0 0 4px 12px;">${escapeHtml(p.objetivos || '')}</div>
+                <div style="font-size:11px;margin:0 0 4px 12px;word-wrap:break-word;white-space:normal;">${escapeHtml(p.objetivos || '')}</div>
                 <div style="font-size:11px;margin:2px 0;"><strong>7.3 Descrever as Metas:</strong></div>
-                <div style="font-size:11px;margin:0 0 4px 12px;">${escapeHtml(p.metas || '')}</div>
+                <div style="font-size:11px;margin:0 0 4px 12px;word-wrap:break-word;white-space:normal;">${escapeHtml(p.metas || '')}</div>
                 <div style="font-size:11px;margin:2px 0;"><strong>7.4 DESENBOLSO (R$):</strong></div>
-                <div style="font-size:11px;margin:0 0 4px 12px;">${escapeHtml(p.desembolso || '')}</div>
+                <div style="font-size:11px;margin:0 0 4px 12px;word-wrap:break-word;white-space:normal;">${escapeHtml(p.desembolso || '')}</div>
             </div>
             `;
         });
@@ -5761,7 +5791,7 @@ function visualizarComoPDF(id, perfilVisualizacao) {
     } else {
         html += `<table class="tabela-pdf"><thead><tr><th style="width:40px;">#</th><th>DESCREVER OS RESULTADOS ALCANÇADOS NO PERÍODO</th></tr></thead><tbody>`;
         resultadosPeriodoList.forEach((item, i) => {
-            html += `<tr><td style="text-align:center;font-weight:600;color:#003366;">${i + 1}</td><td>${escapeHtml(item)}</td></tr>`;
+            html += `<tr><td style="text-align:center;font-weight:600;color:#003366;">${i + 1}</td><td style="word-wrap:break-word;white-space:normal;">${escapeHtml(item)}</td></tr>`;
         });
         html += `</tbody></table>`;
     }
@@ -5781,17 +5811,17 @@ function visualizarComoPDF(id, perfilVisualizacao) {
         propostas2028List.forEach((p, idx) => {
             html += `
             <div style="background:#f5f9fc;border-left:4px solid #fd7e14;padding:8px 12px;margin:8px 0 4px 0;border-radius:4px;">
-                <strong style="color:#003366;">ITEM ${idx + 1}</strong>
+                <strong style="color:#003366;">${idx + 1}</strong>
             </div>
             <div style="padding:2px 12px;">
                 <div style="font-size:11px;margin:2px 0;"><strong>9.1 Descrever os Projetos/Atividades:</strong></div>
-                <div style="font-size:11px;margin:0 0 4px 12px;">${escapeHtml(p.projetos || '')}</div>
+                <div style="font-size:11px;margin:0 0 4px 12px;word-wrap:break-word;white-space:normal;">${escapeHtml(p.projetos || '')}</div>
                 <div style="font-size:11px;margin:2px 0;"><strong>9.2 Descrever os Objetivos:</strong></div>
-                <div style="font-size:11px;margin:0 0 4px 12px;">${escapeHtml(p.objetivos || '')}</div>
+                <div style="font-size:11px;margin:0 0 4px 12px;word-wrap:break-word;white-space:normal;">${escapeHtml(p.objetivos || '')}</div>
                 <div style="font-size:11px;margin:2px 0;"><strong>9.3 Descrever as Metas:</strong></div>
-                <div style="font-size:11px;margin:0 0 4px 12px;">${escapeHtml(p.metas || '')}</div>
+                <div style="font-size:11px;margin:0 0 4px 12px;word-wrap:break-word;white-space:normal;">${escapeHtml(p.metas || '')}</div>
                 <div style="font-size:11px;margin:2px 0;"><strong>9.4 DESENBOLSO (R$):</strong></div>
-                <div style="font-size:11px;margin:0 0 4px 12px;">${escapeHtml(p.desembolso || '')}</div>
+                <div style="font-size:11px;margin:0 0 4px 12px;word-wrap:break-word;white-space:normal;">${escapeHtml(p.desembolso || '')}</div>
             </div>
             `;
         });
@@ -5818,16 +5848,24 @@ function visualizarComoPDF(id, perfilVisualizacao) {
     }
     html += `
         <button class="btn-sistema btn-sistema-secondary" onclick="verHistorico('${form.id}')"><i class="fas fa-history"></i> Histórico</button>
-        <button class="btn-sistema btn-sistema-secondary" onclick="gerarPDF()"><i class="fas fa-file-pdf"></i> Gerar PDF</button>
+        <button class="btn-sistema btn-sistema-secondary" onclick="gerarPDF('${form.id}')"><i class="fas fa-file-pdf"></i> Gerar PDF</button>
     </div>
     </div>`;
     container.innerHTML = html;
 }
 
 // ============================================================
-// 22. FUNÇÃO GERAR PDF - CORRIGIDA (MARGENS E LIMITES AJUSTADOS)
+// 22. FUNÇÃO GERAR PDF - CORRIGIDA COMPLETAMENTE
 // ============================================================
-function gerarPDF() {
+function gerarPDF(id = null) {
+    // Se um ID foi passado como parâmetro, usa ele, senão usa o formularioAtual
+    const formId = id || formularioAtual;
+    
+    if (!formId || !formularios[formId]) {
+        mostrarStatus('Erro: Formulário não encontrado para gerar PDF.', 'error');
+        return;
+    }
+    
     mostrarStatus('Gerando PDF...', 'info');
     try {
         if (typeof window.jspdf === 'undefined') { 
@@ -5835,14 +5873,13 @@ function gerarPDF() {
             return; 
         }
         
-        salvarRascunho();
-        
         const { jsPDF } = window.jspdf;
         const pdf = new jsPDF({ orientation: 'p', unit: 'mm', format: 'a4' });
-        // MARGENS CORRIGIDAS
-        const pageWidth = 210, marginLeft = 15, marginRight = 15;
-        let yPos = 42;
-        const form = formularios[formularioAtual] || { divisao: '', gerencia: '' };
+        const pageWidth = 210;
+        const marginLeft = 30;
+        const marginRight = 20;
+        let yPos = 50;
+        const form = formularios[formId];
         const dados = form.dados || {};
         const gerencia = form.gerencia || dados.dgt_gerencia || '';
         const tituloCompleto = 'RELATÓRIO ANUAL DE ATIVIDADES';
@@ -5863,32 +5900,34 @@ function gerarPDF() {
         const resultadosPeriodoList = dados.resultadosPeriodo || resultadosPeriodo || [];
         const divisoesDaGerencia = GERENCIA_DIVISOES[gerencia] || [];
         
+        // Função para verificar se cabe na página - LIMITE 245mm
         function verificarPagina(h) {
-            // LIMITE CORRIGIDO - Mais espaço para o rodapé
-            if (yPos + h > 252) {
+            if (yPos + h > 245) {
                 adicionarRodapePDF(pdf, marginLeft, pageWidth, marginRight);
                 pdf.addPage();
                 adicionarCabecalhoPDF(pdf, tituloCompleto, marginLeft, pageWidth, marginRight, gerencia);
-                yPos = 42;
+                yPos = 50;
                 return true;
             }
             return false;
         }
         
         adicionarCabecalhoPDF(pdf, tituloCompleto, marginLeft, pageWidth, marginRight, gerencia);
-        yPos = 42;
+        yPos = 50;
         
-        // IDENTIFICAÇÃO GERAL
+        // ============================================================
+        // IDENTIFICAÇÃO GERAL - COM FONTE MENOR
+        // ============================================================
         try {
-            verificarPagina(20);
+            verificarPagina(18);
             pdf.setFont('helvetica', 'bold');
-            pdf.setFontSize(10);
+            pdf.setFontSize(9);
             pdf.setTextColor(0, 51, 102);
             pdf.text('1. IDENTIFICAÇÃO GERAL', marginLeft, yPos);
-            yPos += 6;
+            yPos += 5;
             pdf.setTextColor(0, 0, 0);
             pdf.setFont('helvetica', 'normal');
-            pdf.setFontSize(9);
+            pdf.setFontSize(8);
             
             const camposIdent = [
                 ['DIRETORIA:', DADOS_DIRETORIA.nome],
@@ -5898,7 +5937,7 @@ function gerarPDF() {
                 ['TELEFONE DO GERENTE:', dadosGerencia ? dadosGerencia.telefone : ''],
                 ['E-MAIL DO GERENTE:', dadosGerencia ? dadosGerencia.email : '']
             ];
-            const lc = 60, ld = pageWidth - marginLeft - marginRight - lc;
+            const lc = 55, ld = pageWidth - marginLeft - marginRight - lc;
             for (let i = 0; i < camposIdent.length; i++) {
                 const linha = camposIdent[i];
                 const cor = (i % 2 === 0) ? PDF_CONFIG.colors.lightGray : null;
@@ -5907,132 +5946,132 @@ function gerarPDF() {
                     adicionarRodapePDF(pdf, marginLeft, pageWidth, marginRight);
                     pdf.addPage();
                     adicionarCabecalhoPDF(pdf, tituloCompleto, marginLeft, pageWidth, marginRight, gerencia);
-                    yPos = 42;
+                    yPos = 50;
                     const ny2 = desenharLinhaTabelaComNegritoPDF([linha[0], linha[1]], [lc, ld], yPos, cor, pdf, marginLeft, pageWidth, marginRight);
                     if (ny2 !== null) yPos = ny2 + 1;
-                    else yPos += 10;
+                    else yPos += 8;
                 } else {
                     yPos = ny + 1;
                 }
             }
             
-            verificarPagina(20);
+            verificarPagina(18);
             pdf.setFont('helvetica', 'bold');
-            pdf.setFontSize(9);
+            pdf.setFontSize(8);
             pdf.setTextColor(133, 100, 4);
             pdf.text('COLABORADORES DA GERÊNCIA:', marginLeft, yPos);
-            yPos += 5;
+            yPos += 4;
             pdf.setTextColor(0, 0, 0);
             pdf.setFont('helvetica', 'normal');
-            pdf.setFontSize(8);
+            pdf.setFontSize(7);
             
             if (colaboradoresGerenciaListLocal.length > 0) {
                 colaboradoresGerenciaListLocal.forEach((nome, idx) => {
                     const texto = `${idx + 1}. ${nome}`;
                     const linhas = pdf.splitTextToSize(texto, pageWidth - marginLeft - marginRight - 8);
-                    if (verificarPagina(linhas.length * 3.5 + 2)) {
+                    if (verificarPagina(linhas.length * 3 + 2)) {
                         pdf.setFont('helvetica', 'bold');
-                        pdf.setFontSize(9);
+                        pdf.setFontSize(8);
                         pdf.setTextColor(133, 100, 4);
                         pdf.text('COLABORADORES DA GERÊNCIA:', marginLeft, yPos);
-                        yPos += 5;
+                        yPos += 4;
                         pdf.setTextColor(0, 0, 0);
                         pdf.setFont('helvetica', 'normal');
-                        pdf.setFontSize(8);
+                        pdf.setFontSize(7);
                     }
                     pdf.text(linhas, marginLeft + 4, yPos);
-                    yPos += linhas.length * 3.5 + 1;
+                    yPos += linhas.length * 3 + 1;
                 });
                 yPos += 2;
             } else {
                 pdf.setFont('helvetica', 'italic');
-                pdf.setFontSize(8);
+                pdf.setFontSize(7);
                 pdf.text('Nenhum colaborador cadastrado.', marginLeft + 5, yPos);
-                yPos += 5;
+                yPos += 4;
             }
             
-            verificarPagina(20);
+            verificarPagina(18);
             pdf.setFont('helvetica', 'bold');
-            pdf.setFontSize(9);
+            pdf.setFontSize(8);
             pdf.setTextColor(0, 51, 102);
             pdf.text('DIVISÕES VINCULADAS:', marginLeft, yPos);
-            yPos += 5;
+            yPos += 4;
             pdf.setTextColor(0, 0, 0);
             pdf.setFont('helvetica', 'normal');
-            pdf.setFontSize(8);
+            pdf.setFontSize(7);
             
             if (divisoesDaGerencia.length > 0) {
                 divisoesDaGerencia.forEach((div, idx) => {
                     const sigla = DIVISOES_COM_SIGLAS[div] || '';
                     const texto = `${idx + 1}. ${div} ${sigla ? '(' + sigla + ')' : ''}`;
                     const linhas = pdf.splitTextToSize(texto, pageWidth - marginLeft - marginRight - 8);
-                    if (verificarPagina(linhas.length * 3.5 + 2)) {
+                    if (verificarPagina(linhas.length * 3 + 2)) {
                         pdf.setFont('helvetica', 'bold');
-                        pdf.setFontSize(9);
+                        pdf.setFontSize(8);
                         pdf.setTextColor(0, 51, 102);
                         pdf.text('DIVISÕES VINCULADAS:', marginLeft, yPos);
-                        yPos += 5;
+                        yPos += 4;
                         pdf.setTextColor(0, 0, 0);
                         pdf.setFont('helvetica', 'normal');
-                        pdf.setFontSize(8);
+                        pdf.setFontSize(7);
                     }
                     pdf.text(linhas, marginLeft + 4, yPos);
-                    yPos += linhas.length * 3.5 + 1;
+                    yPos += linhas.length * 3 + 1;
                 });
                 yPos += 2;
             } else {
                 pdf.setFont('helvetica', 'italic');
-                pdf.setFontSize(8);
+                pdf.setFontSize(7);
                 pdf.text(divisaoAtual, marginLeft + 5, yPos);
-                yPos += 5;
+                yPos += 4;
             }
-            yPos += 3;
+            yPos += 2;
         } catch (e) {
             console.error('Erro na seção 1:', e);
         }
         
-        // ATRIBUIÇÕES DA GERÊNCIA
+        // ATRIBUIÇÕES DA GERÊNCIA - COM FONTE MENOR
         try {
-            verificarPagina(20);
+            verificarPagina(18);
             pdf.setFont('helvetica', 'bold');
-            pdf.setFontSize(10);
+            pdf.setFontSize(9);
             pdf.setTextColor(0, 51, 102);
             pdf.text('2. ATRIBUIÇÕES DA GERÊNCIA', marginLeft, yPos);
-            yPos += 5;
+            yPos += 4;
             pdf.setTextColor(0, 0, 0);
             
             if (atribGerenciaList.length === 0) {
                 pdf.setFont('helvetica', 'italic');
-                pdf.setFontSize(8);
+                pdf.setFontSize(7);
                 pdf.text('Nenhuma atribuição cadastrada.', marginLeft + 5, yPos);
-                yPos += 5;
+                yPos += 4;
             } else {
                 const artTitulo = gerencia === 'GERÊNCIA DE GEOCIÊNCIAS' ? 'Art. 39. Da Gerência de Geociências' : 'Art. 40. Da Gerência de Regularização Fundiária';
                 pdf.setFont('helvetica', 'bold');
-                pdf.setFontSize(9);
+                pdf.setFontSize(8);
                 pdf.setTextColor(0, 51, 102);
                 pdf.text(artTitulo, marginLeft + 2, yPos);
-                yPos += 5;
+                yPos += 4;
                 pdf.setTextColor(0, 0, 0);
                 pdf.setFont('helvetica', 'normal');
-                pdf.setFontSize(8);
+                pdf.setFontSize(7);
                 
                 atribGerenciaList.forEach((item, idx) => {
                     const num = String(idx + 1).padStart(2, '0');
                     const texto = `${num}. ${item}`;
                     const linhas = pdf.splitTextToSize(texto, pageWidth - marginLeft - marginRight - 4);
-                    if (verificarPagina(linhas.length * 3.5 + 2)) {
+                    if (verificarPagina(linhas.length * 3 + 2)) {
                         pdf.setFont('helvetica', 'bold');
-                        pdf.setFontSize(9);
+                        pdf.setFontSize(8);
                         pdf.setTextColor(0, 51, 102);
                         pdf.text(artTitulo, marginLeft + 2, yPos);
-                        yPos += 5;
+                        yPos += 4;
                         pdf.setTextColor(0, 0, 0);
                         pdf.setFont('helvetica', 'normal');
-                        pdf.setFontSize(8);
+                        pdf.setFontSize(7);
                     }
                     pdf.text(linhas, marginLeft + 4, yPos);
-                    yPos += linhas.length * 3.5 + 1;
+                    yPos += linhas.length * 3 + 1;
                 });
                 yPos += 2;
             }
@@ -6040,65 +6079,65 @@ function gerarPDF() {
             console.error('Erro na seção 2:', e);
         }
         
-        // SEÇÃO DA DIVISÃO
+        // SEÇÃO DA DIVISÃO - COM FONTE MENOR
         try {
-            verificarPagina(20);
-            pdf.setFont('helvetica', 'bold');
-            pdf.setFontSize(11);
-            pdf.setTextColor(0, 86, 179);
-            pdf.text(`RELATÓRIO DA DIVISÃO - ${divisaoAtual}`, marginLeft, yPos);
-            yPos += 6;
-            pdf.setTextColor(0, 0, 0);
-            pdf.setFont('helvetica', 'normal');
-            pdf.setFontSize(9);
-            
-            verificarPagina(10);
-            pdf.setFont('helvetica', 'bold');
-            pdf.setFontSize(9);
-            pdf.setTextColor(0, 51, 102);
-            pdf.text(`DIVISÃO: ${divisaoAtual}`, marginLeft, yPos);
-            yPos += 4;
-            pdf.text(`RESPONSÁVEL: ${form.usuario}`, marginLeft, yPos);
-            yPos += 6;
-            pdf.setTextColor(0, 0, 0);
-        } catch (e) {
-            console.error('Erro na seção da divisão:', e);
-        }
-        
-        // 1. ATRIBUIÇÕES DA DIVISÃO
-        try {
-            verificarPagina(20);
+            verificarPagina(18);
             pdf.setFont('helvetica', 'bold');
             pdf.setFontSize(10);
-            pdf.setTextColor(0, 51, 102);
-            pdf.text('1. ATRIBUIÇÕES DA DIVISÃO', marginLeft, yPos);
+            pdf.setTextColor(0, 86, 179);
+            pdf.text(`RELATÓRIO DA DIVISÃO - ${divisaoAtual}`, marginLeft, yPos);
             yPos += 5;
             pdf.setTextColor(0, 0, 0);
             pdf.setFont('helvetica', 'normal');
             pdf.setFontSize(8);
             
+            verificarPagina(8);
+            pdf.setFont('helvetica', 'bold');
+            pdf.setFontSize(8);
+            pdf.setTextColor(0, 51, 102);
+            pdf.text(`DIVISÃO: ${divisaoAtual}`, marginLeft, yPos);
+            yPos += 4;
+            pdf.text(`RESPONSÁVEL: ${form.usuario}`, marginLeft, yPos);
+            yPos += 5;
+            pdf.setTextColor(0, 0, 0);
+        } catch (e) {
+            console.error('Erro na seção da divisão:', e);
+        }
+        
+        // 1. ATRIBUIÇÕES DA DIVISÃO - COM FONTE MENOR
+        try {
+            verificarPagina(18);
+            pdf.setFont('helvetica', 'bold');
+            pdf.setFontSize(9);
+            pdf.setTextColor(0, 51, 102);
+            pdf.text('1. ATRIBUIÇÕES DA DIVISÃO', marginLeft, yPos);
+            yPos += 4;
+            pdf.setTextColor(0, 0, 0);
+            pdf.setFont('helvetica', 'normal');
+            pdf.setFontSize(7);
+            
             if (atribuicoesDivisaoList.length === 0) {
                 pdf.setFont('helvetica', 'italic');
-                pdf.setFontSize(8);
+                pdf.setFontSize(7);
                 pdf.text('Nenhuma atribuição cadastrada.', marginLeft + 5, yPos);
-                yPos += 5;
+                yPos += 4;
             } else {
                 atribuicoesDivisaoList.forEach((item, i) => {
                     const num = i + 1;
                     const texto = `${num}. ${item}`;
                     const linhas = pdf.splitTextToSize(texto, pageWidth - marginLeft - marginRight - 8);
-                    if (verificarPagina(linhas.length * 3.5 + 2)) {
+                    if (verificarPagina(linhas.length * 3 + 2)) {
                         pdf.setFont('helvetica', 'bold');
-                        pdf.setFontSize(10);
+                        pdf.setFontSize(9);
                         pdf.setTextColor(0, 51, 102);
                         pdf.text('1. ATRIBUIÇÕES DA DIVISÃO', marginLeft, yPos);
-                        yPos += 5;
+                        yPos += 4;
                         pdf.setTextColor(0, 0, 0);
                         pdf.setFont('helvetica', 'normal');
-                        pdf.setFontSize(8);
+                        pdf.setFontSize(7);
                     }
                     pdf.text(linhas, marginLeft + 4, yPos);
-                    yPos += linhas.length * 3.5 + 1;
+                    yPos += linhas.length * 3 + 1;
                 });
                 yPos += 2;
             }
@@ -6106,39 +6145,39 @@ function gerarPDF() {
             console.error('Erro na seção 1 atribuições:', e);
         }
         
-        // 2. COLABORADORES DA DIVISÃO
+        // 2. COLABORADORES DA DIVISÃO - COM FONTE MENOR
         try {
-            verificarPagina(20);
+            verificarPagina(18);
             pdf.setFont('helvetica', 'bold');
-            pdf.setFontSize(10);
+            pdf.setFontSize(9);
             pdf.setTextColor(0, 51, 102);
             pdf.text('2. Nº DE COLABORADORES DA DIVISÃO', marginLeft, yPos);
-            yPos += 5;
+            yPos += 4;
             pdf.setTextColor(0, 0, 0);
             pdf.setFont('helvetica', 'normal');
-            pdf.setFontSize(8);
+            pdf.setFontSize(7);
             
             if (colaboradoresDivisaoList.length === 0) {
                 pdf.setFont('helvetica', 'italic');
-                pdf.setFontSize(8);
+                pdf.setFontSize(7);
                 pdf.text('Nenhum colaborador cadastrado.', marginLeft + 5, yPos);
-                yPos += 5;
+                yPos += 4;
             } else {
                 colaboradoresDivisaoList.forEach((item, i) => {
                     const texto = `${i + 1}. ${item}`;
                     const linhas = pdf.splitTextToSize(texto, pageWidth - marginLeft - marginRight - 8);
-                    if (verificarPagina(linhas.length * 3.5 + 2)) {
+                    if (verificarPagina(linhas.length * 3 + 2)) {
                         pdf.setFont('helvetica', 'bold');
-                        pdf.setFontSize(10);
+                        pdf.setFontSize(9);
                         pdf.setTextColor(0, 51, 102);
                         pdf.text('2. Nº DE COLABORADORES DA DIVISÃO', marginLeft, yPos);
-                        yPos += 5;
+                        yPos += 4;
                         pdf.setTextColor(0, 0, 0);
                         pdf.setFont('helvetica', 'normal');
-                        pdf.setFontSize(8);
+                        pdf.setFontSize(7);
                     }
                     pdf.text(linhas, marginLeft + 4, yPos);
-                    yPos += linhas.length * 3.5 + 1;
+                    yPos += linhas.length * 3 + 1;
                 });
                 yPos += 2;
             }
@@ -6146,23 +6185,25 @@ function gerarPDF() {
             console.error('Erro na seção 2 colaboradores:', e);
         }
         
-        // 3. PROJETOS 2025 - SEM TABELA
+        // ============================================================
+        // 3. PROJETOS 2025 - CORRIGIDO
+        // ============================================================
         try {
-            verificarPagina(20);
+            verificarPagina(18);
             pdf.setFont('helvetica', 'bold');
-            pdf.setFontSize(9);
+            pdf.setFontSize(8);
             pdf.setTextColor(253, 126, 20);
             pdf.text(`3. PROJETOS/ATIVIDADES EXECUTADAS EM ${dados.projetos2025_ano || '2025'}`, marginLeft, yPos);
-            yPos += 5;
+            yPos += 4;
             pdf.setTextColor(0, 0, 0);
             pdf.setFont('helvetica', 'normal');
-            pdf.setFontSize(7);
+            pdf.setFontSize(6);
             
             if (proj2025List.length === 0) {
                 pdf.setFont('helvetica', 'italic');
-                pdf.setFontSize(7);
+                pdf.setFontSize(6);
                 pdf.text('Nenhum projeto/atividade cadastrado.', marginLeft + 5, yPos);
-                yPos += 5;
+                yPos += 4;
             } else {
                 let total = 0;
                 proj2025List.forEach(p => {
@@ -6175,95 +6216,171 @@ function gerarPDF() {
                     const progLabel = p.temPrograma === 'sim' ? `SIM - ${p.programaTexto || ''}` : 'NÃO';
                     const parcLabel = p.temParceira === 'sim' ? `SIM - ${p.parceiraTexto || ''}` : 'NÃO';
                     
-                    verificarPagina(15);
-                    pdf.setFont('helvetica', 'bold');
-                    pdf.setFontSize(8);
-                    pdf.setTextColor(0, 51, 102);
-                    pdf.text(`ITEM ${idx + 1}`, marginLeft, yPos);
-                    yPos += 4;
-                    pdf.setFont('helvetica', 'normal');
-                    pdf.setFontSize(7);
-                    pdf.setTextColor(0, 0, 0);
-                    pdf.text(`PROGRAMA: ${progLabel}`, marginLeft + 4, yPos);
-                    yPos += 3.5;
-                    pdf.text(`PARCEIRA: ${parcLabel}`, marginLeft + 4, yPos);
-                    yPos += 4;
+                    // Verifica se o cabe inteiro na página
+                    if (verificarPagina(15)) {
+                        pdf.setFont('helvetica', 'bold');
+                        pdf.setFontSize(7);
+                        pdf.setTextColor(0, 51, 102);
+                        pdf.text(`${idx + 1}`, marginLeft, yPos);
+                        yPos += 3.5;
+                        pdf.setFont('helvetica', 'normal');
+                        pdf.setFontSize(6);
+                        pdf.setTextColor(0, 0, 0);
+                        pdf.text(`PROGRAMA: ${progLabel}`, marginLeft + 4, yPos);
+                        yPos += 3;
+                        pdf.text(`PARCEIRA: ${parcLabel}`, marginLeft + 4, yPos);
+                        yPos += 3.5;
+                    } else {
+                        pdf.setFont('helvetica', 'bold');
+                        pdf.setFontSize(7);
+                        pdf.setTextColor(0, 51, 102);
+                        pdf.text(`${idx + 1}`, marginLeft, yPos);
+                        yPos += 3.5;
+                        pdf.setFont('helvetica', 'normal');
+                        pdf.setFontSize(6);
+                        pdf.setTextColor(0, 0, 0);
+                        pdf.text(`PROGRAMA: ${progLabel}`, marginLeft + 4, yPos);
+                        yPos += 3;
+                        pdf.text(`PARCEIRA: ${parcLabel}`, marginLeft + 4, yPos);
+                        yPos += 3.5;
+                    }
                     
-                    pdf.setFont('helvetica', 'bold');
-                    pdf.setFontSize(7);
-                    pdf.text('3.1 Descrever os Projetos/Atividades:', marginLeft + 4, yPos);
-                    yPos += 3.5;
-                    pdf.setFont('helvetica', 'normal');
-                    pdf.setFontSize(7);
+                    // 3.1 Projetos/Atividades
                     const linhasProjetos = pdf.splitTextToSize(p.projetos || '', pageWidth - marginLeft - marginRight - 8);
-                    pdf.text(linhasProjetos, marginLeft + 8, yPos);
-                    yPos += linhasProjetos.length * 3.5 + 2;
+                    if (verificarPagina(linhasProjetos.length * 3 + 8)) {
+                        pdf.setFont('helvetica', 'bold');
+                        pdf.setFontSize(6);
+                        pdf.text('3.1 Descrever os Projetos/Atividades:', marginLeft + 4, yPos);
+                        yPos += 3;
+                        pdf.setFont('helvetica', 'normal');
+                        pdf.setFontSize(6);
+                        pdf.setTextColor(0, 0, 0);
+                        pdf.text(linhasProjetos, marginLeft + 8, yPos);
+                        yPos += linhasProjetos.length * 3 + 2;
+                    } else {
+                        pdf.setFont('helvetica', 'bold');
+                        pdf.setFontSize(6);
+                        pdf.text('3.1 Descrever os Projetos/Atividades:', marginLeft + 4, yPos);
+                        yPos += 3;
+                        pdf.setFont('helvetica', 'normal');
+                        pdf.setFontSize(6);
+                        pdf.setTextColor(0, 0, 0);
+                        pdf.text(linhasProjetos, marginLeft + 8, yPos);
+                        yPos += linhasProjetos.length * 3 + 2;
+                    }
                     
-                    pdf.setFont('helvetica', 'bold');
-                    pdf.setFontSize(7);
-                    pdf.text('3.2 Descrever os Objetivos:', marginLeft + 4, yPos);
-                    yPos += 3.5;
-                    pdf.setFont('helvetica', 'normal');
-                    pdf.setFontSize(7);
+                    // 3.2 Objetivos
                     const linhasObjetivos = pdf.splitTextToSize(p.objetivos || '', pageWidth - marginLeft - marginRight - 8);
-                    pdf.text(linhasObjetivos, marginLeft + 8, yPos);
-                    yPos += linhasObjetivos.length * 3.5 + 2;
+                    if (verificarPagina(linhasObjetivos.length * 3 + 8)) {
+                        pdf.setFont('helvetica', 'bold');
+                        pdf.setFontSize(6);
+                        pdf.text('3.2 Descrever os Objetivos:', marginLeft + 4, yPos);
+                        yPos += 3;
+                        pdf.setFont('helvetica', 'normal');
+                        pdf.setFontSize(6);
+                        pdf.setTextColor(0, 0, 0);
+                        pdf.text(linhasObjetivos, marginLeft + 8, yPos);
+                        yPos += linhasObjetivos.length * 3 + 2;
+                    } else {
+                        pdf.setFont('helvetica', 'bold');
+                        pdf.setFontSize(6);
+                        pdf.text('3.2 Descrever os Objetivos:', marginLeft + 4, yPos);
+                        yPos += 3;
+                        pdf.setFont('helvetica', 'normal');
+                        pdf.setFontSize(6);
+                        pdf.setTextColor(0, 0, 0);
+                        pdf.text(linhasObjetivos, marginLeft + 8, yPos);
+                        yPos += linhasObjetivos.length * 3 + 2;
+                    }
                     
-                    pdf.setFont('helvetica', 'bold');
-                    pdf.setFontSize(7);
-                    pdf.text('3.3 Descrever a Descrição das Ações:', marginLeft + 4, yPos);
-                    yPos += 3.5;
-                    pdf.setFont('helvetica', 'normal');
-                    pdf.setFontSize(7);
+                    // 3.3 Ações
                     const linhasAcoes = pdf.splitTextToSize(p.acoes || '', pageWidth - marginLeft - marginRight - 8);
-                    pdf.text(linhasAcoes, marginLeft + 8, yPos);
-                    yPos += linhasAcoes.length * 3.5 + 2;
+                    if (verificarPagina(linhasAcoes.length * 3 + 8)) {
+                        pdf.setFont('helvetica', 'bold');
+                        pdf.setFontSize(6);
+                        pdf.text('3.3 Descrever a Descrição das Ações:', marginLeft + 4, yPos);
+                        yPos += 3;
+                        pdf.setFont('helvetica', 'normal');
+                        pdf.setFontSize(6);
+                        pdf.setTextColor(0, 0, 0);
+                        pdf.text(linhasAcoes, marginLeft + 8, yPos);
+                        yPos += linhasAcoes.length * 3 + 2;
+                    } else {
+                        pdf.setFont('helvetica', 'bold');
+                        pdf.setFontSize(6);
+                        pdf.text('3.3 Descrever a Descrição das Ações:', marginLeft + 4, yPos);
+                        yPos += 3;
+                        pdf.setFont('helvetica', 'normal');
+                        pdf.setFontSize(6);
+                        pdf.setTextColor(0, 0, 0);
+                        pdf.text(linhasAcoes, marginLeft + 8, yPos);
+                        yPos += linhasAcoes.length * 3 + 2;
+                    }
                     
-                    pdf.setFont('helvetica', 'bold');
-                    pdf.setFontSize(7);
-                    pdf.text('3.4 DESENBOLSO (R$):', marginLeft + 4, yPos);
-                    yPos += 3.5;
-                    pdf.setFont('helvetica', 'normal');
-                    pdf.setFontSize(7);
+                    // 3.4 Desembolso
                     const linhasDesembolso = pdf.splitTextToSize(p.desembolso || '', pageWidth - marginLeft - marginRight - 8);
-                    pdf.text(linhasDesembolso, marginLeft + 8, yPos);
-                    yPos += linhasDesembolso.length * 3.5 + 2;
+                    if (verificarPagina(linhasDesembolso.length * 3 + 8)) {
+                        pdf.setFont('helvetica', 'bold');
+                        pdf.setFontSize(6);
+                        pdf.text('3.4 DESENBOLSO (R$):', marginLeft + 4, yPos);
+                        yPos += 3;
+                        pdf.setFont('helvetica', 'normal');
+                        pdf.setFontSize(6);
+                        pdf.setTextColor(0, 0, 0);
+                        pdf.text(linhasDesembolso, marginLeft + 8, yPos);
+                        yPos += linhasDesembolso.length * 3 + 2;
+                    } else {
+                        pdf.setFont('helvetica', 'bold');
+                        pdf.setFontSize(6);
+                        pdf.text('3.4 DESENBOLSO (R$):', marginLeft + 4, yPos);
+                        yPos += 3;
+                        pdf.setFont('helvetica', 'normal');
+                        pdf.setFontSize(6);
+                        pdf.setTextColor(0, 0, 0);
+                        pdf.text(linhasDesembolso, marginLeft + 8, yPos);
+                        yPos += linhasDesembolso.length * 3 + 2;
+                    }
                 });
                 
-                verificarPagina(10);
+                verificarPagina(8);
                 pdf.setFont('helvetica', 'bold');
-                pdf.setFontSize(7);
+                pdf.setFontSize(6);
                 pdf.setTextColor(0, 51, 102);
                 pdf.text(`TOTAL DESEMBOLSO: R$ ${total.toFixed(2).replace('.', ',')}`, marginLeft, yPos);
-                yPos += 5;
+                yPos += 4;
                 pdf.setTextColor(0, 0, 0);
             }
         } catch (e) {
             console.error('Erro na seção 3:', e);
         }
         
-        // 4. NÃO PROGRAMADAS 2025
+        // 4. NÃO PROGRAMADAS 2025 - COM FONTE MENOR
         try {
-            verificarPagina(20);
+            verificarPagina(18);
             pdf.setFont('helvetica', 'bold');
-            pdf.setFontSize(9);
+            pdf.setFontSize(8);
             pdf.setTextColor(253, 126, 20);
             pdf.text(`4. ATIVIDADES NÃO PROGRAMADAS EM ${dados.naoProgramadas2025_ano || '2025'}`, marginLeft, yPos);
-            yPos += 5;
+            yPos += 4;
             pdf.setTextColor(0, 0, 0);
             pdf.setFont('helvetica', 'normal');
-            pdf.setFontSize(7);
+            pdf.setFontSize(6);
             
             if (naoProgramadas2025List.length === 0) {
                 pdf.setFont('helvetica', 'italic');
-                pdf.setFontSize(7);
+                pdf.setFontSize(6);
                 pdf.text('Nenhuma atividade não programada cadastrada.', marginLeft + 5, yPos);
-                yPos += 5;
+                yPos += 4;
             } else {
-                const colunas = [{ texto: '#', largura: 8 }, { texto: 'Descrição da Atividade', largura: pageWidth - marginLeft - marginRight - 12 }];
+                const larguraNumero = 8;
+                const larguraDescricao = pageWidth - marginLeft - marginRight - larguraNumero - 8;
+                const colunas = [
+                    { texto: '#', largura: larguraNumero },
+                    { texto: 'Descrição da Atividade', largura: larguraDescricao }
+                ];
                 yPos = desenharCabecalhoTabelaPDF(colunas.map(c => c.texto), colunas.map(c => c.largura), yPos, PDF_CONFIG.colors.secondary, pdf, marginLeft, pageWidth, marginRight);
                 naoProgramadas2025List.forEach((item, i) => {
-                    if (verificarPagina(10)) {
+                    if (verificarPagina(8)) {
                         yPos = desenharCabecalhoTabelaPDF(colunas.map(c => c.texto), colunas.map(c => c.largura), yPos, PDF_CONFIG.colors.secondary, pdf, marginLeft, pageWidth, marginRight);
                     }
                     const linha = [(i + 1).toString(), item];
@@ -6273,11 +6390,11 @@ function gerarPDF() {
                         adicionarRodapePDF(pdf, marginLeft, pageWidth, marginRight);
                         pdf.addPage();
                         adicionarCabecalhoPDF(pdf, tituloCompleto, marginLeft, pageWidth, marginRight, gerencia);
-                        yPos = 42;
+                        yPos = 50;
                         yPos = desenharCabecalhoTabelaPDF(colunas.map(c => c.texto), colunas.map(c => c.largura), yPos, PDF_CONFIG.colors.secondary, pdf, marginLeft, pageWidth, marginRight);
                         const ny2 = desenharLinhaTabelaEquilibradaPDF(linha, colunas.map(c => c.largura), yPos, cf, pdf, marginLeft, pageWidth, marginRight);
                         if (ny2 !== null) yPos = ny2 + 1;
-                        else yPos += 10;
+                        else yPos += 8;
                     } else {
                         yPos = ny + 1;
                     }
@@ -6288,74 +6405,143 @@ function gerarPDF() {
             console.error('Erro na seção 4:', e);
         }
         
-        // 5. RESULTADOS 2025 - SEM TABELA
+        // ============================================================
+        // 5. RESULTADOS 2025 - CORRIGIDO
+        // ============================================================
         try {
-            verificarPagina(20);
+            verificarPagina(18);
             pdf.setFont('helvetica', 'bold');
-            pdf.setFontSize(9);
+            pdf.setFontSize(8);
             pdf.setTextColor(253, 126, 20);
             pdf.text(`5. RESULTADOS ALCANÇADOS EM ${dados.resultados2025_ano || '2025'}`, marginLeft, yPos);
-            yPos += 5;
+            yPos += 4;
             pdf.setTextColor(0, 0, 0);
             pdf.setFont('helvetica', 'normal');
-            pdf.setFontSize(7);
+            pdf.setFontSize(6);
             
             if (res2025List.length === 0) {
                 pdf.setFont('helvetica', 'italic');
-                pdf.setFontSize(7);
+                pdf.setFontSize(6);
                 pdf.text('Nenhum resultado cadastrado.', marginLeft + 5, yPos);
-                yPos += 5;
+                yPos += 4;
             } else {
                 res2025List.forEach((r, idx) => {
-                    verificarPagina(15);
-                    pdf.setFont('helvetica', 'bold');
-                    pdf.setFontSize(8);
-                    pdf.setTextColor(0, 51, 102);
-                    pdf.text(`ITEM ${idx + 1}`, marginLeft, yPos);
-                    yPos += 4;
-                    pdf.setFont('helvetica', 'normal');
-                    pdf.setFontSize(7);
-                    pdf.setTextColor(0, 0, 0);
+                    // Verifica se o cabe inteiro na página
+                    if (verificarPagina(12)) {
+                        pdf.setFont('helvetica', 'bold');
+                        pdf.setFontSize(7);
+                        pdf.setTextColor(0, 51, 102);
+                        pdf.text(`${idx + 1}`, marginLeft, yPos);
+                        yPos += 3.5;
+                        pdf.setFont('helvetica', 'normal');
+                        pdf.setFontSize(6);
+                        pdf.setTextColor(0, 0, 0);
+                    } else {
+                        pdf.setFont('helvetica', 'bold');
+                        pdf.setFontSize(7);
+                        pdf.setTextColor(0, 51, 102);
+                        pdf.text(`${idx + 1}`, marginLeft, yPos);
+                        yPos += 3.5;
+                        pdf.setFont('helvetica', 'normal');
+                        pdf.setFontSize(6);
+                        pdf.setTextColor(0, 0, 0);
+                    }
                     
-                    pdf.setFont('helvetica', 'bold');
-                    pdf.setFontSize(7);
-                    pdf.text('5.1 Descrever os Projetos/Atividades:', marginLeft + 4, yPos);
-                    yPos += 3.5;
-                    pdf.setFont('helvetica', 'normal');
-                    pdf.setFontSize(7);
+                    // 5.1 Projetos/Atividades
                     const linhasProjetos = pdf.splitTextToSize(r.projetos || '', pageWidth - marginLeft - marginRight - 8);
-                    pdf.text(linhasProjetos, marginLeft + 8, yPos);
-                    yPos += linhasProjetos.length * 3.5 + 2;
+                    if (verificarPagina(linhasProjetos.length * 3 + 8)) {
+                        pdf.setFont('helvetica', 'bold');
+                        pdf.setFontSize(6);
+                        pdf.text('5.1 Descrever os Projetos/Atividades:', marginLeft + 4, yPos);
+                        yPos += 3;
+                        pdf.setFont('helvetica', 'normal');
+                        pdf.setFontSize(6);
+                        pdf.setTextColor(0, 0, 0);
+                        pdf.text(linhasProjetos, marginLeft + 8, yPos);
+                        yPos += linhasProjetos.length * 3 + 2;
+                    } else {
+                        pdf.setFont('helvetica', 'bold');
+                        pdf.setFontSize(6);
+                        pdf.text('5.1 Descrever os Projetos/Atividades:', marginLeft + 4, yPos);
+                        yPos += 3;
+                        pdf.setFont('helvetica', 'normal');
+                        pdf.setFontSize(6);
+                        pdf.setTextColor(0, 0, 0);
+                        pdf.text(linhasProjetos, marginLeft + 8, yPos);
+                        yPos += linhasProjetos.length * 3 + 2;
+                    }
                     
-                    pdf.setFont('helvetica', 'bold');
-                    pdf.setFontSize(7);
-                    pdf.text('5.2 Descrever as Regiões Beneficiadas:', marginLeft + 4, yPos);
-                    yPos += 3.5;
-                    pdf.setFont('helvetica', 'normal');
-                    pdf.setFontSize(7);
+                    // 5.2 Regiões
                     const linhasRegioes = pdf.splitTextToSize(r.regioes || '', pageWidth - marginLeft - marginRight - 8);
-                    pdf.text(linhasRegioes, marginLeft + 8, yPos);
-                    yPos += linhasRegioes.length * 3.5 + 2;
+                    if (verificarPagina(linhasRegioes.length * 3 + 8)) {
+                        pdf.setFont('helvetica', 'bold');
+                        pdf.setFontSize(6);
+                        pdf.text('5.2 Descrever as Regiões Beneficiadas:', marginLeft + 4, yPos);
+                        yPos += 3;
+                        pdf.setFont('helvetica', 'normal');
+                        pdf.setFontSize(6);
+                        pdf.setTextColor(0, 0, 0);
+                        pdf.text(linhasRegioes, marginLeft + 8, yPos);
+                        yPos += linhasRegioes.length * 3 + 2;
+                    } else {
+                        pdf.setFont('helvetica', 'bold');
+                        pdf.setFontSize(6);
+                        pdf.text('5.2 Descrever as Regiões Beneficiadas:', marginLeft + 4, yPos);
+                        yPos += 3;
+                        pdf.setFont('helvetica', 'normal');
+                        pdf.setFontSize(6);
+                        pdf.setTextColor(0, 0, 0);
+                        pdf.text(linhasRegioes, marginLeft + 8, yPos);
+                        yPos += linhasRegioes.length * 3 + 2;
+                    }
                     
-                    pdf.setFont('helvetica', 'bold');
-                    pdf.setFontSize(7);
-                    pdf.text('5.3 Descrever as Metas Atingidas:', marginLeft + 4, yPos);
-                    yPos += 3.5;
-                    pdf.setFont('helvetica', 'normal');
-                    pdf.setFontSize(7);
+                    // 5.3 Metas
                     const linhasMetas = pdf.splitTextToSize(r.metas || '', pageWidth - marginLeft - marginRight - 8);
-                    pdf.text(linhasMetas, marginLeft + 8, yPos);
-                    yPos += linhasMetas.length * 3.5 + 2;
+                    if (verificarPagina(linhasMetas.length * 3 + 8)) {
+                        pdf.setFont('helvetica', 'bold');
+                        pdf.setFontSize(6);
+                        pdf.text('5.3 Descrever as Metas Atingidas:', marginLeft + 4, yPos);
+                        yPos += 3;
+                        pdf.setFont('helvetica', 'normal');
+                        pdf.setFontSize(6);
+                        pdf.setTextColor(0, 0, 0);
+                        pdf.text(linhasMetas, marginLeft + 8, yPos);
+                        yPos += linhasMetas.length * 3 + 2;
+                    } else {
+                        pdf.setFont('helvetica', 'bold');
+                        pdf.setFontSize(6);
+                        pdf.text('5.3 Descrever as Metas Atingidas:', marginLeft + 4, yPos);
+                        yPos += 3;
+                        pdf.setFont('helvetica', 'normal');
+                        pdf.setFontSize(6);
+                        pdf.setTextColor(0, 0, 0);
+                        pdf.text(linhasMetas, marginLeft + 8, yPos);
+                        yPos += linhasMetas.length * 3 + 2;
+                    }
                     
-                    pdf.setFont('helvetica', 'bold');
-                    pdf.setFontSize(7);
-                    pdf.text('5.4 Descrever os Desafios:', marginLeft + 4, yPos);
-                    yPos += 3.5;
-                    pdf.setFont('helvetica', 'normal');
-                    pdf.setFontSize(7);
+                    // 5.4 Desafios
                     const linhasDesafios = pdf.splitTextToSize(r.desafios || '', pageWidth - marginLeft - marginRight - 8);
-                    pdf.text(linhasDesafios, marginLeft + 8, yPos);
-                    yPos += linhasDesafios.length * 3.5 + 2;
+                    if (verificarPagina(linhasDesafios.length * 3 + 8)) {
+                        pdf.setFont('helvetica', 'bold');
+                        pdf.setFontSize(6);
+                        pdf.text('5.4 Descrever os Desafios:', marginLeft + 4, yPos);
+                        yPos += 3;
+                        pdf.setFont('helvetica', 'normal');
+                        pdf.setFontSize(6);
+                        pdf.setTextColor(0, 0, 0);
+                        pdf.text(linhasDesafios, marginLeft + 8, yPos);
+                        yPos += linhasDesafios.length * 3 + 2;
+                    } else {
+                        pdf.setFont('helvetica', 'bold');
+                        pdf.setFontSize(6);
+                        pdf.text('5.4 Descrever os Desafios:', marginLeft + 4, yPos);
+                        yPos += 3;
+                        pdf.setFont('helvetica', 'normal');
+                        pdf.setFontSize(6);
+                        pdf.setTextColor(0, 0, 0);
+                        pdf.text(linhasDesafios, marginLeft + 8, yPos);
+                        yPos += linhasDesafios.length * 3 + 2;
+                    }
                 });
             }
         } catch (e) {
@@ -6364,27 +6550,32 @@ function gerarPDF() {
         
         // 6. NÃO PROGRAMADAS 2026
         try {
-            verificarPagina(20);
+            verificarPagina(18);
             pdf.setFont('helvetica', 'bold');
-            pdf.setFontSize(9);
+            pdf.setFontSize(8);
             pdf.setTextColor(253, 126, 20);
             const pnp26 = `${dados.naoProgramadas2026_mes_inicio || 'Janeiro'} a ${dados.naoProgramadas2026_mes_fim || 'Julho'}`;
             pdf.text(`6. ATIVIDADES NÃO PROGRAMADAS ${pnp26} ${dados.naoProgramadas2026_ano || '2026'}`, marginLeft, yPos);
-            yPos += 5;
+            yPos += 4;
             pdf.setTextColor(0, 0, 0);
             pdf.setFont('helvetica', 'normal');
-            pdf.setFontSize(7);
+            pdf.setFontSize(6);
             
             if (naoProgramadas2026List.length === 0) {
                 pdf.setFont('helvetica', 'italic');
-                pdf.setFontSize(7);
+                pdf.setFontSize(6);
                 pdf.text('Nenhuma atividade não programada cadastrada.', marginLeft + 5, yPos);
-                yPos += 5;
+                yPos += 4;
             } else {
-                const colunas = [{ texto: '#', largura: 8 }, { texto: 'Descrição da Atividade', largura: pageWidth - marginLeft - marginRight - 12 }];
+                const larguraNumero = 8;
+                const larguraDescricao = pageWidth - marginLeft - marginRight - larguraNumero - 8;
+                const colunas = [
+                    { texto: '#', largura: larguraNumero },
+                    { texto: 'Descrição da Atividade', largura: larguraDescricao }
+                ];
                 yPos = desenharCabecalhoTabelaPDF(colunas.map(c => c.texto), colunas.map(c => c.largura), yPos, PDF_CONFIG.colors.secondary, pdf, marginLeft, pageWidth, marginRight);
                 naoProgramadas2026List.forEach((item, i) => {
-                    if (verificarPagina(10)) {
+                    if (verificarPagina(8)) {
                         yPos = desenharCabecalhoTabelaPDF(colunas.map(c => c.texto), colunas.map(c => c.largura), yPos, PDF_CONFIG.colors.secondary, pdf, marginLeft, pageWidth, marginRight);
                     }
                     const linha = [(i + 1).toString(), item];
@@ -6394,11 +6585,11 @@ function gerarPDF() {
                         adicionarRodapePDF(pdf, marginLeft, pageWidth, marginRight);
                         pdf.addPage();
                         adicionarCabecalhoPDF(pdf, tituloCompleto, marginLeft, pageWidth, marginRight, gerencia);
-                        yPos = 42;
+                        yPos = 50;
                         yPos = desenharCabecalhoTabelaPDF(colunas.map(c => c.texto), colunas.map(c => c.largura), yPos, PDF_CONFIG.colors.secondary, pdf, marginLeft, pageWidth, marginRight);
                         const ny2 = desenharLinhaTabelaEquilibradaPDF(linha, colunas.map(c => c.largura), yPos, cf, pdf, marginLeft, pageWidth, marginRight);
                         if (ny2 !== null) yPos = ny2 + 1;
-                        else yPos += 10;
+                        else yPos += 8;
                     } else {
                         yPos = ny + 1;
                     }
@@ -6409,24 +6600,26 @@ function gerarPDF() {
             console.error('Erro na seção 6:', e);
         }
         
-        // 7. PROJETOS 2026 - SEM TABELA
+        // ============================================================
+        // 7. PROJETOS 2026 - CORRIGIDO
+        // ============================================================
         try {
-            verificarPagina(20);
+            verificarPagina(18);
             pdf.setFont('helvetica', 'bold');
-            pdf.setFontSize(9);
+            pdf.setFontSize(8);
             pdf.setTextColor(253, 126, 20);
             const pp26 = `${dados.projetos2026_mes_inicio || 'Janeiro'} a ${dados.projetos2026_mes_fim || 'Outubro'}`;
             pdf.text(`7. PROJETOS/ATIVIDADES ${pp26} ${dados.projetos2026_ano || '2026'}`, marginLeft, yPos);
-            yPos += 5;
+            yPos += 4;
             pdf.setTextColor(0, 0, 0);
             pdf.setFont('helvetica', 'normal');
-            pdf.setFontSize(7);
+            pdf.setFontSize(6);
             
             if (proj2026List.length === 0) {
                 pdf.setFont('helvetica', 'italic');
-                pdf.setFontSize(7);
+                pdf.setFontSize(6);
                 pdf.text('Nenhum projeto/atividade cadastrado.', marginLeft + 5, yPos);
-                yPos += 5;
+                yPos += 4;
             } else {
                 let total = 0;
                 proj2026List.forEach(p => {
@@ -6439,96 +6632,171 @@ function gerarPDF() {
                     const progLabel = p.temPrograma === 'sim' ? `SIM - ${p.programaTexto || ''}` : 'NÃO';
                     const parcLabel = p.temParceira === 'sim' ? `SIM - ${p.parceiraTexto || ''}` : 'NÃO';
                     
-                    verificarPagina(15);
-                    pdf.setFont('helvetica', 'bold');
-                    pdf.setFontSize(8);
-                    pdf.setTextColor(0, 51, 102);
-                    pdf.text(`ITEM ${idx + 1}`, marginLeft, yPos);
-                    yPos += 4;
-                    pdf.setFont('helvetica', 'normal');
-                    pdf.setFontSize(7);
-                    pdf.setTextColor(0, 0, 0);
-                    pdf.text(`PROGRAMA: ${progLabel}`, marginLeft + 4, yPos);
-                    yPos += 3.5;
-                    pdf.text(`PARCEIRA: ${parcLabel}`, marginLeft + 4, yPos);
-                    yPos += 4;
+                    if (verificarPagina(15)) {
+                        pdf.setFont('helvetica', 'bold');
+                        pdf.setFontSize(7);
+                        pdf.setTextColor(0, 51, 102);
+                        pdf.text(`${idx + 1}`, marginLeft, yPos);
+                        yPos += 3.5;
+                        pdf.setFont('helvetica', 'normal');
+                        pdf.setFontSize(6);
+                        pdf.setTextColor(0, 0, 0);
+                        pdf.text(`PROGRAMA: ${progLabel}`, marginLeft + 4, yPos);
+                        yPos += 3;
+                        pdf.text(`PARCEIRA: ${parcLabel}`, marginLeft + 4, yPos);
+                        yPos += 3.5;
+                    } else {
+                        pdf.setFont('helvetica', 'bold');
+                        pdf.setFontSize(7);
+                        pdf.setTextColor(0, 51, 102);
+                        pdf.text(`${idx + 1}`, marginLeft, yPos);
+                        yPos += 3.5;
+                        pdf.setFont('helvetica', 'normal');
+                        pdf.setFontSize(6);
+                        pdf.setTextColor(0, 0, 0);
+                        pdf.text(`PROGRAMA: ${progLabel}`, marginLeft + 4, yPos);
+                        yPos += 3;
+                        pdf.text(`PARCEIRA: ${parcLabel}`, marginLeft + 4, yPos);
+                        yPos += 3.5;
+                    }
                     
-                    pdf.setFont('helvetica', 'bold');
-                    pdf.setFontSize(7);
-                    pdf.text('7.1 Descrever os Projetos/Atividades:', marginLeft + 4, yPos);
-                    yPos += 3.5;
-                    pdf.setFont('helvetica', 'normal');
-                    pdf.setFontSize(7);
+                    // 7.1 Projetos/Atividades
                     const linhasProjetos = pdf.splitTextToSize(p.projetos || '', pageWidth - marginLeft - marginRight - 8);
-                    pdf.text(linhasProjetos, marginLeft + 8, yPos);
-                    yPos += linhasProjetos.length * 3.5 + 2;
+                    if (verificarPagina(linhasProjetos.length * 3 + 8)) {
+                        pdf.setFont('helvetica', 'bold');
+                        pdf.setFontSize(6);
+                        pdf.text('7.1 Descrever os Projetos/Atividades:', marginLeft + 4, yPos);
+                        yPos += 3;
+                        pdf.setFont('helvetica', 'normal');
+                        pdf.setFontSize(6);
+                        pdf.setTextColor(0, 0, 0);
+                        pdf.text(linhasProjetos, marginLeft + 8, yPos);
+                        yPos += linhasProjetos.length * 3 + 2;
+                    } else {
+                        pdf.setFont('helvetica', 'bold');
+                        pdf.setFontSize(6);
+                        pdf.text('7.1 Descrever os Projetos/Atividades:', marginLeft + 4, yPos);
+                        yPos += 3;
+                        pdf.setFont('helvetica', 'normal');
+                        pdf.setFontSize(6);
+                        pdf.setTextColor(0, 0, 0);
+                        pdf.text(linhasProjetos, marginLeft + 8, yPos);
+                        yPos += linhasProjetos.length * 3 + 2;
+                    }
                     
-                    pdf.setFont('helvetica', 'bold');
-                    pdf.setFontSize(7);
-                    pdf.text('7.2 Descrever os Objetivos:', marginLeft + 4, yPos);
-                    yPos += 3.5;
-                    pdf.setFont('helvetica', 'normal');
-                    pdf.setFontSize(7);
+                    // 7.2 Objetivos
                     const linhasObjetivos = pdf.splitTextToSize(p.objetivos || '', pageWidth - marginLeft - marginRight - 8);
-                    pdf.text(linhasObjetivos, marginLeft + 8, yPos);
-                    yPos += linhasObjetivos.length * 3.5 + 2;
+                    if (verificarPagina(linhasObjetivos.length * 3 + 8)) {
+                        pdf.setFont('helvetica', 'bold');
+                        pdf.setFontSize(6);
+                        pdf.text('7.2 Descrever os Objetivos:', marginLeft + 4, yPos);
+                        yPos += 3;
+                        pdf.setFont('helvetica', 'normal');
+                        pdf.setFontSize(6);
+                        pdf.setTextColor(0, 0, 0);
+                        pdf.text(linhasObjetivos, marginLeft + 8, yPos);
+                        yPos += linhasObjetivos.length * 3 + 2;
+                    } else {
+                        pdf.setFont('helvetica', 'bold');
+                        pdf.setFontSize(6);
+                        pdf.text('7.2 Descrever os Objetivos:', marginLeft + 4, yPos);
+                        yPos += 3;
+                        pdf.setFont('helvetica', 'normal');
+                        pdf.setFontSize(6);
+                        pdf.setTextColor(0, 0, 0);
+                        pdf.text(linhasObjetivos, marginLeft + 8, yPos);
+                        yPos += linhasObjetivos.length * 3 + 2;
+                    }
                     
-                    pdf.setFont('helvetica', 'bold');
-                    pdf.setFontSize(7);
-                    pdf.text('7.3 Descrever as Metas:', marginLeft + 4, yPos);
-                    yPos += 3.5;
-                    pdf.setFont('helvetica', 'normal');
-                    pdf.setFontSize(7);
+                    // 7.3 Metas
                     const linhasMetas = pdf.splitTextToSize(p.metas || '', pageWidth - marginLeft - marginRight - 8);
-                    pdf.text(linhasMetas, marginLeft + 8, yPos);
-                    yPos += linhasMetas.length * 3.5 + 2;
+                    if (verificarPagina(linhasMetas.length * 3 + 8)) {
+                        pdf.setFont('helvetica', 'bold');
+                        pdf.setFontSize(6);
+                        pdf.text('7.3 Descrever as Metas:', marginLeft + 4, yPos);
+                        yPos += 3;
+                        pdf.setFont('helvetica', 'normal');
+                        pdf.setFontSize(6);
+                        pdf.setTextColor(0, 0, 0);
+                        pdf.text(linhasMetas, marginLeft + 8, yPos);
+                        yPos += linhasMetas.length * 3 + 2;
+                    } else {
+                        pdf.setFont('helvetica', 'bold');
+                        pdf.setFontSize(6);
+                        pdf.text('7.3 Descrever as Metas:', marginLeft + 4, yPos);
+                        yPos += 3;
+                        pdf.setFont('helvetica', 'normal');
+                        pdf.setFontSize(6);
+                        pdf.setTextColor(0, 0, 0);
+                        pdf.text(linhasMetas, marginLeft + 8, yPos);
+                        yPos += linhasMetas.length * 3 + 2;
+                    }
                     
-                    pdf.setFont('helvetica', 'bold');
-                    pdf.setFontSize(7);
-                    pdf.text('7.4 DESENBOLSO (R$):', marginLeft + 4, yPos);
-                    yPos += 3.5;
-                    pdf.setFont('helvetica', 'normal');
-                    pdf.setFontSize(7);
+                    // 7.4 Desembolso
                     const linhasDesembolso = pdf.splitTextToSize(p.desembolso || '', pageWidth - marginLeft - marginRight - 8);
-                    pdf.text(linhasDesembolso, marginLeft + 8, yPos);
-                    yPos += linhasDesembolso.length * 3.5 + 2;
+                    if (verificarPagina(linhasDesembolso.length * 3 + 8)) {
+                        pdf.setFont('helvetica', 'bold');
+                        pdf.setFontSize(6);
+                        pdf.text('7.4 DESENBOLSO (R$):', marginLeft + 4, yPos);
+                        yPos += 3;
+                        pdf.setFont('helvetica', 'normal');
+                        pdf.setFontSize(6);
+                        pdf.setTextColor(0, 0, 0);
+                        pdf.text(linhasDesembolso, marginLeft + 8, yPos);
+                        yPos += linhasDesembolso.length * 3 + 2;
+                    } else {
+                        pdf.setFont('helvetica', 'bold');
+                        pdf.setFontSize(6);
+                        pdf.text('7.4 DESENBOLSO (R$):', marginLeft + 4, yPos);
+                        yPos += 3;
+                        pdf.setFont('helvetica', 'normal');
+                        pdf.setFontSize(6);
+                        pdf.setTextColor(0, 0, 0);
+                        pdf.text(linhasDesembolso, marginLeft + 8, yPos);
+                        yPos += linhasDesembolso.length * 3 + 2;
+                    }
                 });
                 
-                verificarPagina(10);
+                verificarPagina(8);
                 pdf.setFont('helvetica', 'bold');
-                pdf.setFontSize(7);
+                pdf.setFontSize(6);
                 pdf.setTextColor(0, 51, 102);
                 pdf.text(`TOTAL DESEMBOLSO: R$ ${total.toFixed(2).replace('.', ',')}`, marginLeft, yPos);
-                yPos += 5;
+                yPos += 4;
                 pdf.setTextColor(0, 0, 0);
             }
         } catch (e) {
             console.error('Erro na seção 7:', e);
         }
         
-        // 8. RESULTADOS PERÍODO
+        // 8. RESULTADOS PERÍODO - COM FONTE MENOR
         try {
-            verificarPagina(20);
+            verificarPagina(18);
             pdf.setFont('helvetica', 'bold');
-            pdf.setFontSize(9);
+            pdf.setFontSize(8);
             pdf.setTextColor(253, 126, 20);
             const prp = `${dados.resultadosPeriodo_mes_inicio || 'Janeiro'} a ${dados.resultadosPeriodo_mes_fim || 'Julho'}`;
             pdf.text(`8. RESULTADOS ALCANÇADOS NO PERÍODO (${prp} ${dados.resultadosPeriodo_ano || '2026'})`, marginLeft, yPos);
-            yPos += 5;
+            yPos += 4;
             pdf.setTextColor(0, 0, 0);
             pdf.setFont('helvetica', 'normal');
-            pdf.setFontSize(7);
+            pdf.setFontSize(6);
             
             if (resultadosPeriodoList.length === 0) {
                 pdf.setFont('helvetica', 'italic');
-                pdf.setFontSize(7);
+                pdf.setFontSize(6);
                 pdf.text('Nenhum resultado cadastrado.', marginLeft + 5, yPos);
-                yPos += 5;
+                yPos += 4;
             } else {
-                const colunas = [{ texto: '#', largura: 8 }, { texto: 'DESCREVER OS RESULTADOS ALCANÇADOS NO PERÍODO', largura: pageWidth - marginLeft - marginRight - 12 }];
+                const larguraNumero = 8;
+                const larguraDescricao = pageWidth - marginLeft - marginRight - larguraNumero - 8;
+                const colunas = [
+                    { texto: '#', largura: larguraNumero },
+                    { texto: 'DESCREVER OS RESULTADOS ALCANÇADOS NO PERÍODO', largura: larguraDescricao }
+                ];
                 yPos = desenharCabecalhoTabelaPDF(colunas.map(c => c.texto), colunas.map(c => c.largura), yPos, PDF_CONFIG.colors.secondary, pdf, marginLeft, pageWidth, marginRight);
                 resultadosPeriodoList.forEach((item, i) => {
-                    if (verificarPagina(10)) {
+                    if (verificarPagina(8)) {
                         yPos = desenharCabecalhoTabelaPDF(colunas.map(c => c.texto), colunas.map(c => c.largura), yPos, PDF_CONFIG.colors.secondary, pdf, marginLeft, pageWidth, marginRight);
                     }
                     const linha = [(i + 1).toString(), item];
@@ -6538,11 +6806,11 @@ function gerarPDF() {
                         adicionarRodapePDF(pdf, marginLeft, pageWidth, marginRight);
                         pdf.addPage();
                         adicionarCabecalhoPDF(pdf, tituloCompleto, marginLeft, pageWidth, marginRight, gerencia);
-                        yPos = 42;
+                        yPos = 50;
                         yPos = desenharCabecalhoTabelaPDF(colunas.map(c => c.texto), colunas.map(c => c.largura), yPos, PDF_CONFIG.colors.secondary, pdf, marginLeft, pageWidth, marginRight);
                         const ny2 = desenharLinhaTabelaEquilibradaPDF(linha, colunas.map(c => c.largura), yPos, cf, pdf, marginLeft, pageWidth, marginRight);
                         if (ny2 !== null) yPos = ny2 + 1;
-                        else yPos += 10;
+                        else yPos += 8;
                     } else {
                         yPos = ny + 1;
                     }
@@ -6553,23 +6821,25 @@ function gerarPDF() {
             console.error('Erro na seção 8:', e);
         }
         
-        // 9. PROPOSTAS 2028 - SEM TABELA
+        // ============================================================
+        // 9. PROPOSTAS 2028 - CORRIGIDO
+        // ============================================================
         try {
-            verificarPagina(20);
+            verificarPagina(18);
             pdf.setFont('helvetica', 'bold');
-            pdf.setFontSize(9);
+            pdf.setFontSize(8);
             pdf.setTextColor(253, 126, 20);
             pdf.text(`9. PROPOSTAS/ATIVIDADES ${dados.propostas2028_ano || '2028-2031'}`, marginLeft, yPos);
-            yPos += 5;
+            yPos += 4;
             pdf.setTextColor(0, 0, 0);
             pdf.setFont('helvetica', 'normal');
-            pdf.setFontSize(7);
+            pdf.setFontSize(6);
             
             if (prop2028List.length === 0) {
                 pdf.setFont('helvetica', 'italic');
-                pdf.setFontSize(7);
+                pdf.setFontSize(6);
                 pdf.text('Nenhuma proposta cadastrada.', marginLeft + 5, yPos);
-                yPos += 5;
+                yPos += 4;
             } else {
                 let total = 0;
                 prop2028List.forEach(p => {
@@ -6579,63 +6849,129 @@ function gerarPDF() {
                 });
                 
                 prop2028List.forEach((p, idx) => {
-                    verificarPagina(15);
-                    pdf.setFont('helvetica', 'bold');
-                    pdf.setFontSize(8);
-                    pdf.setTextColor(0, 51, 102);
-                    pdf.text(`ITEM ${idx + 1}`, marginLeft, yPos);
-                    yPos += 4;
-                    pdf.setFont('helvetica', 'normal');
-                    pdf.setFontSize(7);
-                    pdf.setTextColor(0, 0, 0);
+                    if (verificarPagina(12)) {
+                        pdf.setFont('helvetica', 'bold');
+                        pdf.setFontSize(7);
+                        pdf.setTextColor(0, 51, 102);
+                        pdf.text(`${idx + 1}`, marginLeft, yPos);
+                        yPos += 3.5;
+                        pdf.setFont('helvetica', 'normal');
+                        pdf.setFontSize(6);
+                        pdf.setTextColor(0, 0, 0);
+                    } else {
+                        pdf.setFont('helvetica', 'bold');
+                        pdf.setFontSize(7);
+                        pdf.setTextColor(0, 51, 102);
+                        pdf.text(`${idx + 1}`, marginLeft, yPos);
+                        yPos += 3.5;
+                        pdf.setFont('helvetica', 'normal');
+                        pdf.setFontSize(6);
+                        pdf.setTextColor(0, 0, 0);
+                    }
                     
-                    pdf.setFont('helvetica', 'bold');
-                    pdf.setFontSize(7);
-                    pdf.text('9.1 Descrever os Projetos/Atividades:', marginLeft + 4, yPos);
-                    yPos += 3.5;
-                    pdf.setFont('helvetica', 'normal');
-                    pdf.setFontSize(7);
+                    // 9.1 Projetos/Atividades
                     const linhasProjetos = pdf.splitTextToSize(p.projetos || '', pageWidth - marginLeft - marginRight - 8);
-                    pdf.text(linhasProjetos, marginLeft + 8, yPos);
-                    yPos += linhasProjetos.length * 3.5 + 2;
+                    if (verificarPagina(linhasProjetos.length * 3 + 8)) {
+                        pdf.setFont('helvetica', 'bold');
+                        pdf.setFontSize(6);
+                        pdf.text('9.1 Descrever os Projetos/Atividades:', marginLeft + 4, yPos);
+                        yPos += 3;
+                        pdf.setFont('helvetica', 'normal');
+                        pdf.setFontSize(6);
+                        pdf.setTextColor(0, 0, 0);
+                        pdf.text(linhasProjetos, marginLeft + 8, yPos);
+                        yPos += linhasProjetos.length * 3 + 2;
+                    } else {
+                        pdf.setFont('helvetica', 'bold');
+                        pdf.setFontSize(6);
+                        pdf.text('9.1 Descrever os Projetos/Atividades:', marginLeft + 4, yPos);
+                        yPos += 3;
+                        pdf.setFont('helvetica', 'normal');
+                        pdf.setFontSize(6);
+                        pdf.setTextColor(0, 0, 0);
+                        pdf.text(linhasProjetos, marginLeft + 8, yPos);
+                        yPos += linhasProjetos.length * 3 + 2;
+                    }
                     
-                    pdf.setFont('helvetica', 'bold');
-                    pdf.setFontSize(7);
-                    pdf.text('9.2 Descrever os Objetivos:', marginLeft + 4, yPos);
-                    yPos += 3.5;
-                    pdf.setFont('helvetica', 'normal');
-                    pdf.setFontSize(7);
+                    // 9.2 Objetivos
                     const linhasObjetivos = pdf.splitTextToSize(p.objetivos || '', pageWidth - marginLeft - marginRight - 8);
-                    pdf.text(linhasObjetivos, marginLeft + 8, yPos);
-                    yPos += linhasObjetivos.length * 3.5 + 2;
+                    if (verificarPagina(linhasObjetivos.length * 3 + 8)) {
+                        pdf.setFont('helvetica', 'bold');
+                        pdf.setFontSize(6);
+                        pdf.text('9.2 Descrever os Objetivos:', marginLeft + 4, yPos);
+                        yPos += 3;
+                        pdf.setFont('helvetica', 'normal');
+                        pdf.setFontSize(6);
+                        pdf.setTextColor(0, 0, 0);
+                        pdf.text(linhasObjetivos, marginLeft + 8, yPos);
+                        yPos += linhasObjetivos.length * 3 + 2;
+                    } else {
+                        pdf.setFont('helvetica', 'bold');
+                        pdf.setFontSize(6);
+                        pdf.text('9.2 Descrever os Objetivos:', marginLeft + 4, yPos);
+                        yPos += 3;
+                        pdf.setFont('helvetica', 'normal');
+                        pdf.setFontSize(6);
+                        pdf.setTextColor(0, 0, 0);
+                        pdf.text(linhasObjetivos, marginLeft + 8, yPos);
+                        yPos += linhasObjetivos.length * 3 + 2;
+                    }
                     
-                    pdf.setFont('helvetica', 'bold');
-                    pdf.setFontSize(7);
-                    pdf.text('9.3 Descrever as Metas:', marginLeft + 4, yPos);
-                    yPos += 3.5;
-                    pdf.setFont('helvetica', 'normal');
-                    pdf.setFontSize(7);
+                    // 9.3 Metas
                     const linhasMetas = pdf.splitTextToSize(p.metas || '', pageWidth - marginLeft - marginRight - 8);
-                    pdf.text(linhasMetas, marginLeft + 8, yPos);
-                    yPos += linhasMetas.length * 3.5 + 2;
+                    if (verificarPagina(linhasMetas.length * 3 + 8)) {
+                        pdf.setFont('helvetica', 'bold');
+                        pdf.setFontSize(6);
+                        pdf.text('9.3 Descrever as Metas:', marginLeft + 4, yPos);
+                        yPos += 3;
+                        pdf.setFont('helvetica', 'normal');
+                        pdf.setFontSize(6);
+                        pdf.setTextColor(0, 0, 0);
+                        pdf.text(linhasMetas, marginLeft + 8, yPos);
+                        yPos += linhasMetas.length * 3 + 2;
+                    } else {
+                        pdf.setFont('helvetica', 'bold');
+                        pdf.setFontSize(6);
+                        pdf.text('9.3 Descrever as Metas:', marginLeft + 4, yPos);
+                        yPos += 3;
+                        pdf.setFont('helvetica', 'normal');
+                        pdf.setFontSize(6);
+                        pdf.setTextColor(0, 0, 0);
+                        pdf.text(linhasMetas, marginLeft + 8, yPos);
+                        yPos += linhasMetas.length * 3 + 2;
+                    }
                     
-                    pdf.setFont('helvetica', 'bold');
-                    pdf.setFontSize(7);
-                    pdf.text('9.4 DESENBOLSO (R$):', marginLeft + 4, yPos);
-                    yPos += 3.5;
-                    pdf.setFont('helvetica', 'normal');
-                    pdf.setFontSize(7);
+                    // 9.4 Desembolso
                     const linhasDesembolso = pdf.splitTextToSize(p.desembolso || '', pageWidth - marginLeft - marginRight - 8);
-                    pdf.text(linhasDesembolso, marginLeft + 8, yPos);
-                    yPos += linhasDesembolso.length * 3.5 + 2;
+                    if (verificarPagina(linhasDesembolso.length * 3 + 8)) {
+                        pdf.setFont('helvetica', 'bold');
+                        pdf.setFontSize(6);
+                        pdf.text('9.4 DESENBOLSO (R$):', marginLeft + 4, yPos);
+                        yPos += 3;
+                        pdf.setFont('helvetica', 'normal');
+                        pdf.setFontSize(6);
+                        pdf.setTextColor(0, 0, 0);
+                        pdf.text(linhasDesembolso, marginLeft + 8, yPos);
+                        yPos += linhasDesembolso.length * 3 + 2;
+                    } else {
+                        pdf.setFont('helvetica', 'bold');
+                        pdf.setFontSize(6);
+                        pdf.text('9.4 DESENBOLSO (R$):', marginLeft + 4, yPos);
+                        yPos += 3;
+                        pdf.setFont('helvetica', 'normal');
+                        pdf.setFontSize(6);
+                        pdf.setTextColor(0, 0, 0);
+                        pdf.text(linhasDesembolso, marginLeft + 8, yPos);
+                        yPos += linhasDesembolso.length * 3 + 2;
+                    }
                 });
                 
-                verificarPagina(10);
+                verificarPagina(8);
                 pdf.setFont('helvetica', 'bold');
-                pdf.setFontSize(7);
+                pdf.setFontSize(6);
                 pdf.setTextColor(0, 51, 102);
                 pdf.text(`TOTAL DESEMBOLSO: R$ ${total.toFixed(2).replace('.', ',')}`, marginLeft, yPos);
-                yPos += 5;
+                yPos += 4;
                 pdf.setTextColor(0, 0, 0);
             }
         } catch (e) {
@@ -6661,41 +6997,41 @@ function adicionarCabecalhoPDF(pdf, title, ml, pw, mr, gerencia) {
         if (LOGOS.headerRight) pdf.addImage(LOGOS.headerRight, 'PNG', pw - mr - 18, 8, 18, 16);
     } catch (e) {}
     pdf.setFont('helvetica', 'bold');
-    pdf.setFontSize(11);
+    pdf.setFontSize(10);
     pdf.setTextColor(0, 51, 102);
     pdf.text(PDF_CONFIG.relatorioText.linha1, pw / 2, 14, { align: 'center' });
     pdf.setFont('helvetica', 'normal');
-    pdf.setFontSize(9);
-    pdf.text(PDF_CONFIG.relatorioText.linha2, pw / 2, 21, { align: 'center' });
+    pdf.setFontSize(8);
+    pdf.text(PDF_CONFIG.relatorioText.linha2, pw / 2, 20, { align: 'center' });
     pdf.setFont('helvetica', 'bold');
-    pdf.setFontSize(11);
-    pdf.text(title, pw / 2, 28, { align: 'center' });
+    pdf.setFontSize(10);
+    pdf.text(title, pw / 2, 26, { align: 'center' });
     if (gerencia) {
         pdf.setFont('helvetica', 'bold');
-        pdf.setFontSize(10);
+        pdf.setFontSize(9);
         pdf.setTextColor(255, 215, 0);
-        pdf.text(gerencia, pw / 2, 35, { align: 'center' });
+        pdf.text(gerencia, pw / 2, 32, { align: 'center' });
         pdf.setTextColor(0, 51, 102);
         pdf.setDrawColor(0, 51, 102);
         pdf.setLineWidth(0.3);
-        pdf.line(ml, 37, pw - mr, 37);
+        pdf.line(ml, 35, pw - mr, 35);
     } else {
         pdf.setDrawColor(0, 51, 102);
         pdf.setLineWidth(0.3);
-        pdf.line(ml, 34, pw - mr, 34);
+        pdf.line(ml, 32, pw - mr, 32);
     }
 }
 
 function adicionarRodapePDF(pdf, ml, pw, mr) {
     pdf.setDrawColor(200, 200, 200);
     pdf.setLineWidth(0.2);
-    pdf.line(ml, 255, pw - mr, 255);
-    pdf.setFontSize(7);
+    pdf.line(ml, 262, pw - mr, 262);
+    pdf.setFontSize(5);
     pdf.setFont('helvetica', 'normal');
     pdf.setTextColor(100, 100, 100);
-    pdf.text(PDF_CONFIG.footerText.linha1, ml, 259);
-    pdf.text(PDF_CONFIG.footerText.linha2, ml, 263);
-    pdf.text(PDF_CONFIG.footerText.linha3, ml, 267);
+    pdf.text(PDF_CONFIG.footerText.linha1, ml, 266);
+    pdf.text(PDF_CONFIG.footerText.linha2, ml, 270);
+    pdf.text(PDF_CONFIG.footerText.linha3, ml, 274);
 }
 
 function desenharLinhaTabelaComNegritoPDF(cs, ls, y, cf, pdf, ml, pw, mr) {
@@ -6703,26 +7039,26 @@ function desenharLinhaTabelaComNegritoPDF(cs, ls, y, cf, pdf, ml, pw, mr) {
     let max = 0;
     for (let i = 0; i < cs.length; i++) {
         const txt = cs[i] || '';
-        const lef = ls[i] - 4;
+        const lef = ls[i] - 6;
         const lin = pdf.splitTextToSize(txt, lef);
         lpc.push(lin);
         if (lin.length > max) max = lin.length;
     }
-    const ah = 3.5, at = (max * ah) + 3;
-    if (y + at > 252) return null;
+    const ah = 3, at = (max * ah) + 2;
+    if (y + at > 245) return null;
     pdf.setFillColor(cf ? cf[0] : 255, cf ? cf[1] : 255, cf ? cf[2] : 255);
     pdf.rect(ml, y, pw - ml - mr, at, 'F');
     pdf.setTextColor(0, 0, 0);
     let x = ml;
     for (let i = 0; i < cs.length; i++) {
         const linhas = lpc[i];
-        let yl = y + 2;
+        let yl = y + 1.5;
         if (i === 0) {
             pdf.setFont('helvetica', 'bold');
-            pdf.setFontSize(7);
+            pdf.setFontSize(6);
         } else {
             pdf.setFont('helvetica', 'normal');
-            pdf.setFontSize(7);
+            pdf.setFontSize(6);
         }
         for (let l of linhas) {
             pdf.text(l, x + 2, yl);
@@ -6738,22 +7074,22 @@ function desenharLinhaTabelaEquilibradaPDF(cs, ls, y, cf, pdf, ml, pw, mr) {
     let max = 0;
     for (let i = 0; i < cs.length; i++) {
         const txt = cs[i] || '';
-        const lef = ls[i] - 4;
+        const lef = ls[i] - 6;
         const lin = pdf.splitTextToSize(txt, lef);
         lpc.push(lin);
         if (lin.length > max) max = lin.length;
     }
-    const ah = 3.5, at = (max * ah) + 3;
-    if (y + at > 252) return null;
+    const ah = 3, at = (max * ah) + 2;
+    if (y + at > 245) return null;
     pdf.setFillColor(cf ? cf[0] : 255, cf ? cf[1] : 255, cf ? cf[2] : 255);
     pdf.rect(ml, y, pw - ml - mr, at, 'F');
     pdf.setTextColor(0, 0, 0);
     pdf.setFont('helvetica', 'normal');
-    pdf.setFontSize(7);
+    pdf.setFontSize(6);
     let x = ml;
     for (let i = 0; i < cs.length; i++) {
         const linhas = lpc[i];
-        let yl = y + 2;
+        let yl = y + 1.5;
         for (let l of linhas) {
             pdf.text(l, x + 2, yl);
             yl += ah;
@@ -6765,20 +7101,20 @@ function desenharLinhaTabelaEquilibradaPDF(cs, ls, y, cf, pdf, ml, pw, mr) {
 
 function desenharCabecalhoTabelaPDF(cols, ls, y, cf, pdf, ml, pw, mr) {
     pdf.setFillColor(cf[0], cf[1], cf[2]);
-    pdf.rect(ml, y, pw - ml - mr, 6, 'F');
+    pdf.rect(ml, y, pw - ml - mr, 5, 'F');
     pdf.setTextColor(255, 255, 255);
     pdf.setFont('helvetica', 'bold');
-    pdf.setFontSize(6);
+    pdf.setFontSize(5);
     let x = ml;
     for (let i = 0; i < cols.length; i++) {
-        pdf.text(cols[i], x + 2, y + 4.5);
+        pdf.text(cols[i], x + 2, y + 4);
         x += ls[i];
     }
-    return y + 6;
+    return y + 5;
 }
 
 // ============================================================
-// 24. FUNÇÃO GERAR PDF CONSOLIDADO - CORRIGIDA
+// 24. FUNÇÃO GERAR PDF CONSOLIDADO - CORRIGIDA COMPLETAMENTE
 // ============================================================
 async function gerarPDFConsolidado(id) {
     try {
@@ -6788,7 +7124,7 @@ async function gerarPDFConsolidado(id) {
         if (!doc) { mostrarStatus('Documento não encontrado.', 'error'); return; }
         const { jsPDF } = window.jspdf;
         const pdfsArray = [];
-        const pageWidth = 210, marginLeft = 15, marginRight = 15;
+        const pageWidth = 210, marginLeft = 30, marginRight = 20;
         
         for (let idx = 0; idx < doc.formulariosIds.length; idx++) {
             const fid = doc.formulariosIds[idx];
@@ -6797,51 +7133,53 @@ async function gerarPDFConsolidado(id) {
             
             const pdf = new jsPDF({ orientation: 'p', unit: 'mm', format: 'a4' });
             const dados = form.dados || {};
-            let yPos = 42;
+            let yPos = 50;
             const tituloCompleto = 'RELATÓRIO ANUAL DE ATIVIDADES';
             const gerencia = form.gerencia || dados.dgt_gerencia || '';
             const dadosGerencia = DADOS_GERENTES[gerencia] || null;
             const divisaoAtual = form.divisao || 'Divisão';
             
-            // Usar dados salvos ou arrays globais
-            const proj2025List = dados.projetos2025 || projetos2025 || [];
-            const res2025List = dados.resultados2025 || resultados2025 || [];
-            const proj2026List = dados.projetos2026 || projetos2026 || [];
-            const prop2028List = dados.propostas2028 || propostas2028 || [];
-            const atribuicoesDivisaoList = dados.atribuicoesDivisao || atribuicoesDivisao || [];
-            const colaboradoresDivisaoList = dados.colaboradoresDivisao || colaboradoresDivisao || [];
-            const colaboradoresGerenciaListLocal = dados.colaboradoresGerencia || colaboradoresGerenciaList || [];
-            const atribGerenciaList = dados.atribuicoesGerencia || atribuicoesGerencia || [];
-            const naoProgramadas2025List = dados.naoProgramadas2025 || naoProgramadas2025 || [];
-            const naoProgramadas2026List = dados.naoProgramadas2026 || naoProgramadas2026 || [];
-            const resultadosPeriodoList = dados.resultadosPeriodo || resultadosPeriodo || [];
+            // USAR OS DADOS DO FORMULÁRIO - NÃO AS VARIÁVEIS GLOBAIS
+            const proj2025List = dados.projetos2025 || [];
+            const res2025List = dados.resultados2025 || [];
+            const proj2026List = dados.projetos2026 || [];
+            const prop2028List = dados.propostas2028 || [];
+            const atribuicoesDivisaoList = dados.atribuicoesDivisao || [];
+            const colaboradoresDivisaoList = dados.colaboradoresDivisao || [];
+            const colaboradoresGerenciaListLocal = dados.colaboradoresGerencia || [];
+            const atribGerenciaList = dados.atribuicoesGerencia || [];
+            const naoProgramadas2025List = dados.naoProgramadas2025 || [];
+            const naoProgramadas2026List = dados.naoProgramadas2026 || [];
+            const resultadosPeriodoList = dados.resultadosPeriodo || [];
             const divisoesDaGerencia = GERENCIA_DIVISOES[gerencia] || [];
             
             function verificarPagina(h) {
-                if (yPos + h > 252) {
+                if (yPos + h > 245) {
                     adicionarRodapePDF(pdf, marginLeft, pageWidth, marginRight);
                     pdf.addPage();
                     adicionarCabecalhoPDF(pdf, tituloCompleto, marginLeft, pageWidth, marginRight, gerencia);
-                    yPos = 42;
+                    yPos = 50;
                     return true;
                 }
                 return false;
             }
             
             adicionarCabecalhoPDF(pdf, tituloCompleto, marginLeft, pageWidth, marginRight, gerencia);
-            yPos = 42;
+            yPos = 50;
             
-            // IDENTIFICAÇÃO GERAL
+            // ============================================================
+            // IDENTIFICAÇÃO GERAL - COM FONTE MENOR
+            // ============================================================
             try {
-                verificarPagina(20);
+                verificarPagina(18);
                 pdf.setFont('helvetica', 'bold');
-                pdf.setFontSize(10);
+                pdf.setFontSize(9);
                 pdf.setTextColor(0, 51, 102);
                 pdf.text('1. IDENTIFICAÇÃO GERAL', marginLeft, yPos);
-                yPos += 6;
+                yPos += 5;
                 pdf.setTextColor(0, 0, 0);
                 pdf.setFont('helvetica', 'normal');
-                pdf.setFontSize(9);
+                pdf.setFontSize(8);
                 
                 const camposIdent = [
                     ['DIRETORIA:', DADOS_DIRETORIA.nome],
@@ -6851,7 +7189,7 @@ async function gerarPDFConsolidado(id) {
                     ['TELEFONE DO GERENTE:', dadosGerencia ? dadosGerencia.telefone : ''],
                     ['E-MAIL DO GERENTE:', dadosGerencia ? dadosGerencia.email : '']
                 ];
-                const lc = 60, ld = pageWidth - marginLeft - marginRight - lc;
+                const lc = 55, ld = pageWidth - marginLeft - marginRight - lc;
                 for (let i = 0; i < camposIdent.length; i++) {
                     const linha = camposIdent[i];
                     const cor = (i % 2 === 0) ? PDF_CONFIG.colors.lightGray : null;
@@ -6860,237 +7198,132 @@ async function gerarPDFConsolidado(id) {
                         adicionarRodapePDF(pdf, marginLeft, pageWidth, marginRight);
                         pdf.addPage();
                         adicionarCabecalhoPDF(pdf, tituloCompleto, marginLeft, pageWidth, marginRight, gerencia);
-                        yPos = 42;
+                        yPos = 50;
                         const ny2 = desenharLinhaTabelaComNegritoPDF([linha[0], linha[1]], [lc, ld], yPos, cor, pdf, marginLeft, pageWidth, marginRight);
                         if (ny2 !== null) yPos = ny2 + 1;
-                        else yPos += 10;
+                        else yPos += 8;
                     } else {
                         yPos = ny + 1;
                     }
                 }
                 
-                verificarPagina(20);
+                verificarPagina(18);
                 pdf.setFont('helvetica', 'bold');
-                pdf.setFontSize(9);
+                pdf.setFontSize(8);
                 pdf.setTextColor(133, 100, 4);
                 pdf.text('COLABORADORES DA GERÊNCIA:', marginLeft, yPos);
-                yPos += 5;
+                yPos += 4;
                 pdf.setTextColor(0, 0, 0);
                 pdf.setFont('helvetica', 'normal');
-                pdf.setFontSize(8);
+                pdf.setFontSize(7);
                 
                 if (colaboradoresGerenciaListLocal.length > 0) {
                     colaboradoresGerenciaListLocal.forEach((nome, idx) => {
                         const texto = `${idx + 1}. ${nome}`;
                         const linhas = pdf.splitTextToSize(texto, pageWidth - marginLeft - marginRight - 8);
-                        if (verificarPagina(linhas.length * 3.5 + 2)) {
+                        if (verificarPagina(linhas.length * 3 + 2)) {
                             pdf.setFont('helvetica', 'bold');
-                            pdf.setFontSize(9);
+                            pdf.setFontSize(8);
                             pdf.setTextColor(133, 100, 4);
                             pdf.text('COLABORADORES DA GERÊNCIA:', marginLeft, yPos);
-                            yPos += 5;
+                            yPos += 4;
                             pdf.setTextColor(0, 0, 0);
                             pdf.setFont('helvetica', 'normal');
-                            pdf.setFontSize(8);
+                            pdf.setFontSize(7);
                         }
                         pdf.text(linhas, marginLeft + 4, yPos);
-                        yPos += linhas.length * 3.5 + 1;
+                        yPos += linhas.length * 3 + 1;
                     });
                     yPos += 2;
                 } else {
                     pdf.setFont('helvetica', 'italic');
-                    pdf.setFontSize(8);
+                    pdf.setFontSize(7);
                     pdf.text('Nenhum colaborador cadastrado.', marginLeft + 5, yPos);
-                    yPos += 5;
+                    yPos += 4;
                 }
                 
-                verificarPagina(20);
+                verificarPagina(18);
                 pdf.setFont('helvetica', 'bold');
-                pdf.setFontSize(9);
+                pdf.setFontSize(8);
                 pdf.setTextColor(0, 51, 102);
                 pdf.text('DIVISÕES VINCULADAS:', marginLeft, yPos);
-                yPos += 5;
+                yPos += 4;
                 pdf.setTextColor(0, 0, 0);
                 pdf.setFont('helvetica', 'normal');
-                pdf.setFontSize(8);
+                pdf.setFontSize(7);
                 
                 if (divisoesDaGerencia.length > 0) {
                     divisoesDaGerencia.forEach((div, idx) => {
                         const sigla = DIVISOES_COM_SIGLAS[div] || '';
                         const texto = `${idx + 1}. ${div} ${sigla ? '(' + sigla + ')' : ''}`;
                         const linhas = pdf.splitTextToSize(texto, pageWidth - marginLeft - marginRight - 8);
-                        if (verificarPagina(linhas.length * 3.5 + 2)) {
+                        if (verificarPagina(linhas.length * 3 + 2)) {
                             pdf.setFont('helvetica', 'bold');
-                            pdf.setFontSize(9);
+                            pdf.setFontSize(8);
                             pdf.setTextColor(0, 51, 102);
                             pdf.text('DIVISÕES VINCULADAS:', marginLeft, yPos);
-                            yPos += 5;
+                            yPos += 4;
                             pdf.setTextColor(0, 0, 0);
                             pdf.setFont('helvetica', 'normal');
-                            pdf.setFontSize(8);
+                            pdf.setFontSize(7);
                         }
                         pdf.text(linhas, marginLeft + 4, yPos);
-                        yPos += linhas.length * 3.5 + 1;
+                        yPos += linhas.length * 3 + 1;
                     });
                     yPos += 2;
                 } else {
                     pdf.setFont('helvetica', 'italic');
-                    pdf.setFontSize(8);
+                    pdf.setFontSize(7);
                     pdf.text(divisaoAtual, marginLeft + 5, yPos);
-                    yPos += 5;
+                    yPos += 4;
                 }
-                yPos += 3;
-            } catch (e) {
-                console.error('Erro na identificação geral do consolidado:', e);
-            }
-            
-            // 2. ATRIBUIÇÕES DA GERÊNCIA
-            try {
-                verificarPagina(20);
-                pdf.setFont('helvetica', 'bold');
-                pdf.setFontSize(10);
-                pdf.setTextColor(0, 51, 102);
-                pdf.text('2. ATRIBUIÇÕES DA GERÊNCIA', marginLeft, yPos);
-                yPos += 5;
-                pdf.setTextColor(0, 0, 0);
-                
-                if (atribGerenciaList.length === 0) {
-                    pdf.setFont('helvetica', 'italic');
-                    pdf.setFontSize(8);
-                    pdf.text('Nenhuma atribuição cadastrada.', marginLeft + 5, yPos);
-                    yPos += 5;
-                } else {
-                    const artTitulo = gerencia === 'GERÊNCIA DE GEOCIÊNCIAS' ? 'Art. 39. Da Gerência de Geociências' : 'Art. 40. Da Gerência de Regularização Fundiária';
-                    pdf.setFont('helvetica', 'bold');
-                    pdf.setFontSize(9);
-                    pdf.setTextColor(0, 51, 102);
-                    pdf.text(artTitulo, marginLeft + 2, yPos);
-                    yPos += 5;
-                    pdf.setTextColor(0, 0, 0);
-                    pdf.setFont('helvetica', 'normal');
-                    pdf.setFontSize(8);
-                    atribGerenciaList.forEach((item, idx) => {
-                        const num = String(idx + 1).padStart(2, '0');
-                        const texto = `${num}. ${item}`;
-                        const linhas = pdf.splitTextToSize(texto, pageWidth - marginLeft - marginRight - 4);
-                        if (verificarPagina(linhas.length * 3.5 + 2)) {
-                            pdf.setFont('helvetica', 'bold');
-                            pdf.setFontSize(9);
-                            pdf.setTextColor(0, 51, 102);
-                            pdf.text(artTitulo, marginLeft + 2, yPos);
-                            yPos += 5;
-                            pdf.setTextColor(0, 0, 0);
-                            pdf.setFont('helvetica', 'normal');
-                            pdf.setFontSize(8);
-                        }
-                        pdf.text(linhas, marginLeft + 4, yPos);
-                        yPos += linhas.length * 3.5 + 1;
-                    });
-                    yPos += 2;
-                }
-            } catch (e) {
-                console.error('Erro nas atribuições da gerência no consolidado:', e);
-            }
-            
-            // SEÇÃO DA DIVISÃO
-            try {
-                verificarPagina(20);
-                pdf.setFont('helvetica', 'bold');
-                pdf.setFontSize(11);
-                pdf.setTextColor(0, 86, 179);
-                pdf.text(`RELATÓRIO DA DIVISÃO - ${divisaoAtual}`, marginLeft, yPos);
-                yPos += 6;
-                pdf.setTextColor(0, 0, 0);
-                pdf.setFont('helvetica', 'normal');
-                pdf.setFontSize(9);
-                
-                verificarPagina(10);
-                pdf.setFont('helvetica', 'bold');
-                pdf.setFontSize(9);
-                pdf.setTextColor(0, 51, 102);
-                pdf.text(`DIVISÃO: ${divisaoAtual}`, marginLeft, yPos);
-                yPos += 4;
-                pdf.text(`RESPONSÁVEL: ${form.usuario}`, marginLeft, yPos);
-                yPos += 6;
-                pdf.setTextColor(0, 0, 0);
-            } catch (e) {
-                console.error('Erro na seção da divisão no consolidado:', e);
-            }
-            
-            // 1. ATRIBUIÇÕES DA DIVISÃO
-            try {
-                verificarPagina(20);
-                pdf.setFont('helvetica', 'bold');
-                pdf.setFontSize(10);
-                pdf.setTextColor(0, 51, 102);
-                pdf.text('1. ATRIBUIÇÕES DA DIVISÃO', marginLeft, yPos);
-                yPos += 5;
-                pdf.setTextColor(0, 0, 0);
-                pdf.setFont('helvetica', 'normal');
-                pdf.setFontSize(8);
-                
-                if (atribuicoesDivisaoList.length === 0) {
-                    pdf.setFont('helvetica', 'italic');
-                    pdf.setFontSize(8);
-                    pdf.text('Nenhuma atribuição cadastrada.', marginLeft + 5, yPos);
-                    yPos += 5;
-                } else {
-                    atribuicoesDivisaoList.forEach((item, i) => {
-                        const num = i + 1;
-                        const texto = `${num}. ${item}`;
-                        const linhas = pdf.splitTextToSize(texto, pageWidth - marginLeft - marginRight - 8);
-                        if (verificarPagina(linhas.length * 3.5 + 2)) {
-                            pdf.setFont('helvetica', 'bold');
-                            pdf.setFontSize(10);
-                            pdf.setTextColor(0, 51, 102);
-                            pdf.text('1. ATRIBUIÇÕES DA DIVISÃO', marginLeft, yPos);
-                            yPos += 5;
-                            pdf.setTextColor(0, 0, 0);
-                            pdf.setFont('helvetica', 'normal');
-                            pdf.setFontSize(8);
-                        }
-                        pdf.text(linhas, marginLeft + 4, yPos);
-                        yPos += linhas.length * 3.5 + 1;
-                    });
-                    yPos += 2;
-                }
+                yPos += 2;
             } catch (e) {
                 console.error('Erro na seção 1 do consolidado:', e);
             }
             
-            // 2. COLABORADORES DA DIVISÃO
+            // ATRIBUIÇÕES DA GERÊNCIA - COM FONTE MENOR
             try {
-                verificarPagina(20);
+                verificarPagina(18);
                 pdf.setFont('helvetica', 'bold');
-                pdf.setFontSize(10);
+                pdf.setFontSize(9);
                 pdf.setTextColor(0, 51, 102);
-                pdf.text('2. Nº DE COLABORADORES DA DIVISÃO', marginLeft, yPos);
-                yPos += 5;
+                pdf.text('2. ATRIBUIÇÕES DA GERÊNCIA', marginLeft, yPos);
+                yPos += 4;
                 pdf.setTextColor(0, 0, 0);
-                pdf.setFont('helvetica', 'normal');
-                pdf.setFontSize(8);
                 
-                if (colaboradoresDivisaoList.length === 0) {
+                if (atribGerenciaList.length === 0) {
                     pdf.setFont('helvetica', 'italic');
-                    pdf.setFontSize(8);
-                    pdf.text('Nenhum colaborador cadastrado.', marginLeft + 5, yPos);
-                    yPos += 5;
+                    pdf.setFontSize(7);
+                    pdf.text('Nenhuma atribuição cadastrada.', marginLeft + 5, yPos);
+                    yPos += 4;
                 } else {
-                    colaboradoresDivisaoList.forEach((item, i) => {
-                        const texto = `${i + 1}. ${item}`;
-                        const linhas = pdf.splitTextToSize(texto, pageWidth - marginLeft - marginRight - 8);
-                        if (verificarPagina(linhas.length * 3.5 + 2)) {
+                    const artTitulo = gerencia === 'GERÊNCIA DE GEOCIÊNCIAS' ? 'Art. 39. Da Gerência de Geociências' : 'Art. 40. Da Gerência de Regularização Fundiária';
+                    pdf.setFont('helvetica', 'bold');
+                    pdf.setFontSize(8);
+                    pdf.setTextColor(0, 51, 102);
+                    pdf.text(artTitulo, marginLeft + 2, yPos);
+                    yPos += 4;
+                    pdf.setTextColor(0, 0, 0);
+                    pdf.setFont('helvetica', 'normal');
+                    pdf.setFontSize(7);
+                    
+                    atribGerenciaList.forEach((item, idx) => {
+                        const num = String(idx + 1).padStart(2, '0');
+                        const texto = `${num}. ${item}`;
+                        const linhas = pdf.splitTextToSize(texto, pageWidth - marginLeft - marginRight - 4);
+                        if (verificarPagina(linhas.length * 3 + 2)) {
                             pdf.setFont('helvetica', 'bold');
-                            pdf.setFontSize(10);
+                            pdf.setFontSize(8);
                             pdf.setTextColor(0, 51, 102);
-                            pdf.text('2. Nº DE COLABORADORES DA DIVISÃO', marginLeft, yPos);
-                            yPos += 5;
+                            pdf.text(artTitulo, marginLeft + 2, yPos);
+                            yPos += 4;
                             pdf.setTextColor(0, 0, 0);
                             pdf.setFont('helvetica', 'normal');
-                            pdf.setFontSize(8);
+                            pdf.setFontSize(7);
                         }
                         pdf.text(linhas, marginLeft + 4, yPos);
-                        yPos += linhas.length * 3.5 + 1;
+                        yPos += linhas.length * 3 + 1;
                     });
                     yPos += 2;
                 }
@@ -7098,23 +7331,131 @@ async function gerarPDFConsolidado(id) {
                 console.error('Erro na seção 2 do consolidado:', e);
             }
             
-            // 3. PROJETOS 2025 - SEM TABELA
+            // SEÇÃO DA DIVISÃO - COM FONTE MENOR
             try {
-                verificarPagina(20);
+                verificarPagina(18);
+                pdf.setFont('helvetica', 'bold');
+                pdf.setFontSize(10);
+                pdf.setTextColor(0, 86, 179);
+                pdf.text(`RELATÓRIO DA DIVISÃO - ${divisaoAtual}`, marginLeft, yPos);
+                yPos += 5;
+                pdf.setTextColor(0, 0, 0);
+                pdf.setFont('helvetica', 'normal');
+                pdf.setFontSize(8);
+                
+                verificarPagina(8);
+                pdf.setFont('helvetica', 'bold');
+                pdf.setFontSize(8);
+                pdf.setTextColor(0, 51, 102);
+                pdf.text(`DIVISÃO: ${divisaoAtual}`, marginLeft, yPos);
+                yPos += 4;
+                pdf.text(`RESPONSÁVEL: ${form.usuario}`, marginLeft, yPos);
+                yPos += 5;
+                pdf.setTextColor(0, 0, 0);
+            } catch (e) {
+                console.error('Erro na seção da divisão do consolidado:', e);
+            }
+            
+            // 1. ATRIBUIÇÕES DA DIVISÃO - COM FONTE MENOR
+            try {
+                verificarPagina(18);
                 pdf.setFont('helvetica', 'bold');
                 pdf.setFontSize(9);
-                pdf.setTextColor(253, 126, 20);
-                pdf.text(`3. PROJETOS/ATIVIDADES EXECUTADAS EM ${dados.projetos2025_ano || '2025'}`, marginLeft, yPos);
-                yPos += 5;
+                pdf.setTextColor(0, 51, 102);
+                pdf.text('1. ATRIBUIÇÕES DA DIVISÃO', marginLeft, yPos);
+                yPos += 4;
                 pdf.setTextColor(0, 0, 0);
                 pdf.setFont('helvetica', 'normal');
                 pdf.setFontSize(7);
                 
-                if (proj2025List.length === 0) {
+                if (atribuicoesDivisaoList.length === 0) {
                     pdf.setFont('helvetica', 'italic');
                     pdf.setFontSize(7);
+                    pdf.text('Nenhuma atribuição cadastrada.', marginLeft + 5, yPos);
+                    yPos += 4;
+                } else {
+                    atribuicoesDivisaoList.forEach((item, i) => {
+                        const num = i + 1;
+                        const texto = `${num}. ${item}`;
+                        const linhas = pdf.splitTextToSize(texto, pageWidth - marginLeft - marginRight - 8);
+                        if (verificarPagina(linhas.length * 3 + 2)) {
+                            pdf.setFont('helvetica', 'bold');
+                            pdf.setFontSize(9);
+                            pdf.setTextColor(0, 51, 102);
+                            pdf.text('1. ATRIBUIÇÕES DA DIVISÃO', marginLeft, yPos);
+                            yPos += 4;
+                            pdf.setTextColor(0, 0, 0);
+                            pdf.setFont('helvetica', 'normal');
+                            pdf.setFontSize(7);
+                        }
+                        pdf.text(linhas, marginLeft + 4, yPos);
+                        yPos += linhas.length * 3 + 1;
+                    });
+                    yPos += 2;
+                }
+            } catch (e) {
+                console.error('Erro na seção 1 do consolidado:', e);
+            }
+            
+            // 2. COLABORADORES DA DIVISÃO - COM FONTE MENOR
+            try {
+                verificarPagina(18);
+                pdf.setFont('helvetica', 'bold');
+                pdf.setFontSize(9);
+                pdf.setTextColor(0, 51, 102);
+                pdf.text('2. Nº DE COLABORADORES DA DIVISÃO', marginLeft, yPos);
+                yPos += 4;
+                pdf.setTextColor(0, 0, 0);
+                pdf.setFont('helvetica', 'normal');
+                pdf.setFontSize(7);
+                
+                if (colaboradoresDivisaoList.length === 0) {
+                    pdf.setFont('helvetica', 'italic');
+                    pdf.setFontSize(7);
+                    pdf.text('Nenhum colaborador cadastrado.', marginLeft + 5, yPos);
+                    yPos += 4;
+                } else {
+                    colaboradoresDivisaoList.forEach((item, i) => {
+                        const texto = `${i + 1}. ${item}`;
+                        const linhas = pdf.splitTextToSize(texto, pageWidth - marginLeft - marginRight - 8);
+                        if (verificarPagina(linhas.length * 3 + 2)) {
+                            pdf.setFont('helvetica', 'bold');
+                            pdf.setFontSize(9);
+                            pdf.setTextColor(0, 51, 102);
+                            pdf.text('2. Nº DE COLABORADORES DA DIVISÃO', marginLeft, yPos);
+                            yPos += 4;
+                            pdf.setTextColor(0, 0, 0);
+                            pdf.setFont('helvetica', 'normal');
+                            pdf.setFontSize(7);
+                        }
+                        pdf.text(linhas, marginLeft + 4, yPos);
+                        yPos += linhas.length * 3 + 1;
+                    });
+                    yPos += 2;
+                }
+            } catch (e) {
+                console.error('Erro na seção 2 do consolidado:', e);
+            }
+            
+            // ============================================================
+            // 3. PROJETOS 2025 - CORRIGIDO - USANDO DADOS SALVOS
+            // ============================================================
+            try {
+                verificarPagina(18);
+                pdf.setFont('helvetica', 'bold');
+                pdf.setFontSize(8);
+                pdf.setTextColor(253, 126, 20);
+                pdf.text(`3. PROJETOS/ATIVIDADES EXECUTADAS EM ${dados.projetos2025_ano || '2025'}`, marginLeft, yPos);
+                yPos += 4;
+                pdf.setTextColor(0, 0, 0);
+                pdf.setFont('helvetica', 'normal');
+                pdf.setFontSize(6);
+                
+                if (proj2025List.length === 0) {
+                    pdf.setFont('helvetica', 'italic');
+                    pdf.setFontSize(6);
                     pdf.text('Nenhum projeto/atividade cadastrado.', marginLeft + 5, yPos);
-                    yPos += 5;
+                    yPos += 4;
                 } else {
                     let total = 0;
                     proj2025List.forEach(p => {
@@ -7127,67 +7468,137 @@ async function gerarPDFConsolidado(id) {
                         const progLabel = p.temPrograma === 'sim' ? `SIM - ${p.programaTexto || ''}` : 'NÃO';
                         const parcLabel = p.temParceira === 'sim' ? `SIM - ${p.parceiraTexto || ''}` : 'NÃO';
                         
-                        verificarPagina(15);
-                        pdf.setFont('helvetica', 'bold');
-                        pdf.setFontSize(8);
-                        pdf.setTextColor(0, 51, 102);
-                        pdf.text(`ITEM ${idx + 1}`, marginLeft, yPos);
-                        yPos += 4;
-                        pdf.setFont('helvetica', 'normal');
-                        pdf.setFontSize(7);
-                        pdf.setTextColor(0, 0, 0);
-                        pdf.text(`PROGRAMA: ${progLabel}`, marginLeft + 4, yPos);
-                        yPos += 3.5;
-                        pdf.text(`PARCEIRA: ${parcLabel}`, marginLeft + 4, yPos);
-                        yPos += 4;
+                        if (verificarPagina(15)) {
+                            pdf.setFont('helvetica', 'bold');
+                            pdf.setFontSize(7);
+                            pdf.setTextColor(0, 51, 102);
+                            pdf.text(`${idx + 1}`, marginLeft, yPos);
+                            yPos += 3.5;
+                            pdf.setFont('helvetica', 'normal');
+                            pdf.setFontSize(6);
+                            pdf.setTextColor(0, 0, 0);
+                            pdf.text(`PROGRAMA: ${progLabel}`, marginLeft + 4, yPos);
+                            yPos += 3;
+                            pdf.text(`PARCEIRA: ${parcLabel}`, marginLeft + 4, yPos);
+                            yPos += 3.5;
+                        } else {
+                            pdf.setFont('helvetica', 'bold');
+                            pdf.setFontSize(7);
+                            pdf.setTextColor(0, 51, 102);
+                            pdf.text(`${idx + 1}`, marginLeft, yPos);
+                            yPos += 3.5;
+                            pdf.setFont('helvetica', 'normal');
+                            pdf.setFontSize(6);
+                            pdf.setTextColor(0, 0, 0);
+                            pdf.text(`PROGRAMA: ${progLabel}`, marginLeft + 4, yPos);
+                            yPos += 3;
+                            pdf.text(`PARCEIRA: ${parcLabel}`, marginLeft + 4, yPos);
+                            yPos += 3.5;
+                        }
                         
-                        pdf.setFont('helvetica', 'bold');
-                        pdf.setFontSize(7);
-                        pdf.text('3.1 Descrever os Projetos/Atividades:', marginLeft + 4, yPos);
-                        yPos += 3.5;
-                        pdf.setFont('helvetica', 'normal');
-                        pdf.setFontSize(7);
+                        // 3.1 Projetos/Atividades
                         const linhasProjetos = pdf.splitTextToSize(p.projetos || '', pageWidth - marginLeft - marginRight - 8);
-                        pdf.text(linhasProjetos, marginLeft + 8, yPos);
-                        yPos += linhasProjetos.length * 3.5 + 2;
+                        if (verificarPagina(linhasProjetos.length * 3 + 8)) {
+                            pdf.setFont('helvetica', 'bold');
+                            pdf.setFontSize(6);
+                            pdf.text('3.1 Descrever os Projetos/Atividades:', marginLeft + 4, yPos);
+                            yPos += 3;
+                            pdf.setFont('helvetica', 'normal');
+                            pdf.setFontSize(6);
+                            pdf.setTextColor(0, 0, 0);
+                            pdf.text(linhasProjetos, marginLeft + 8, yPos);
+                            yPos += linhasProjetos.length * 3 + 2;
+                        } else {
+                            pdf.setFont('helvetica', 'bold');
+                            pdf.setFontSize(6);
+                            pdf.text('3.1 Descrever os Projetos/Atividades:', marginLeft + 4, yPos);
+                            yPos += 3;
+                            pdf.setFont('helvetica', 'normal');
+                            pdf.setFontSize(6);
+                            pdf.setTextColor(0, 0, 0);
+                            pdf.text(linhasProjetos, marginLeft + 8, yPos);
+                            yPos += linhasProjetos.length * 3 + 2;
+                        }
                         
-                        pdf.setFont('helvetica', 'bold');
-                        pdf.setFontSize(7);
-                        pdf.text('3.2 Descrever os Objetivos:', marginLeft + 4, yPos);
-                        yPos += 3.5;
-                        pdf.setFont('helvetica', 'normal');
-                        pdf.setFontSize(7);
+                        // 3.2 Objetivos
                         const linhasObjetivos = pdf.splitTextToSize(p.objetivos || '', pageWidth - marginLeft - marginRight - 8);
-                        pdf.text(linhasObjetivos, marginLeft + 8, yPos);
-                        yPos += linhasObjetivos.length * 3.5 + 2;
+                        if (verificarPagina(linhasObjetivos.length * 3 + 8)) {
+                            pdf.setFont('helvetica', 'bold');
+                            pdf.setFontSize(6);
+                            pdf.text('3.2 Descrever os Objetivos:', marginLeft + 4, yPos);
+                            yPos += 3;
+                            pdf.setFont('helvetica', 'normal');
+                            pdf.setFontSize(6);
+                            pdf.setTextColor(0, 0, 0);
+                            pdf.text(linhasObjetivos, marginLeft + 8, yPos);
+                            yPos += linhasObjetivos.length * 3 + 2;
+                        } else {
+                            pdf.setFont('helvetica', 'bold');
+                            pdf.setFontSize(6);
+                            pdf.text('3.2 Descrever os Objetivos:', marginLeft + 4, yPos);
+                            yPos += 3;
+                            pdf.setFont('helvetica', 'normal');
+                            pdf.setFontSize(6);
+                            pdf.setTextColor(0, 0, 0);
+                            pdf.text(linhasObjetivos, marginLeft + 8, yPos);
+                            yPos += linhasObjetivos.length * 3 + 2;
+                        }
                         
-                        pdf.setFont('helvetica', 'bold');
-                        pdf.setFontSize(7);
-                        pdf.text('3.3 Descrever a Descrição das Ações:', marginLeft + 4, yPos);
-                        yPos += 3.5;
-                        pdf.setFont('helvetica', 'normal');
-                        pdf.setFontSize(7);
+                        // 3.3 Ações
                         const linhasAcoes = pdf.splitTextToSize(p.acoes || '', pageWidth - marginLeft - marginRight - 8);
-                        pdf.text(linhasAcoes, marginLeft + 8, yPos);
-                        yPos += linhasAcoes.length * 3.5 + 2;
+                        if (verificarPagina(linhasAcoes.length * 3 + 8)) {
+                            pdf.setFont('helvetica', 'bold');
+                            pdf.setFontSize(6);
+                            pdf.text('3.3 Descrever a Descrição das Ações:', marginLeft + 4, yPos);
+                            yPos += 3;
+                            pdf.setFont('helvetica', 'normal');
+                            pdf.setFontSize(6);
+                            pdf.setTextColor(0, 0, 0);
+                            pdf.text(linhasAcoes, marginLeft + 8, yPos);
+                            yPos += linhasAcoes.length * 3 + 2;
+                        } else {
+                            pdf.setFont('helvetica', 'bold');
+                            pdf.setFontSize(6);
+                            pdf.text('3.3 Descrever a Descrição das Ações:', marginLeft + 4, yPos);
+                            yPos += 3;
+                            pdf.setFont('helvetica', 'normal');
+                            pdf.setFontSize(6);
+                            pdf.setTextColor(0, 0, 0);
+                            pdf.text(linhasAcoes, marginLeft + 8, yPos);
+                            yPos += linhasAcoes.length * 3 + 2;
+                        }
                         
-                        pdf.setFont('helvetica', 'bold');
-                        pdf.setFontSize(7);
-                        pdf.text('3.4 DESENBOLSO (R$):', marginLeft + 4, yPos);
-                        yPos += 3.5;
-                        pdf.setFont('helvetica', 'normal');
-                        pdf.setFontSize(7);
+                        // 3.4 Desembolso
                         const linhasDesembolso = pdf.splitTextToSize(p.desembolso || '', pageWidth - marginLeft - marginRight - 8);
-                        pdf.text(linhasDesembolso, marginLeft + 8, yPos);
-                        yPos += linhasDesembolso.length * 3.5 + 2;
+                        if (verificarPagina(linhasDesembolso.length * 3 + 8)) {
+                            pdf.setFont('helvetica', 'bold');
+                            pdf.setFontSize(6);
+                            pdf.text('3.4 DESENBOLSO (R$):', marginLeft + 4, yPos);
+                            yPos += 3;
+                            pdf.setFont('helvetica', 'normal');
+                            pdf.setFontSize(6);
+                            pdf.setTextColor(0, 0, 0);
+                            pdf.text(linhasDesembolso, marginLeft + 8, yPos);
+                            yPos += linhasDesembolso.length * 3 + 2;
+                        } else {
+                            pdf.setFont('helvetica', 'bold');
+                            pdf.setFontSize(6);
+                            pdf.text('3.4 DESENBOLSO (R$):', marginLeft + 4, yPos);
+                            yPos += 3;
+                            pdf.setFont('helvetica', 'normal');
+                            pdf.setFontSize(6);
+                            pdf.setTextColor(0, 0, 0);
+                            pdf.text(linhasDesembolso, marginLeft + 8, yPos);
+                            yPos += linhasDesembolso.length * 3 + 2;
+                        }
                     });
                     
-                    verificarPagina(10);
+                    verificarPagina(8);
                     pdf.setFont('helvetica', 'bold');
-                    pdf.setFontSize(7);
+                    pdf.setFontSize(6);
                     pdf.setTextColor(0, 51, 102);
                     pdf.text(`TOTAL DESEMBOLSO: R$ ${total.toFixed(2).replace('.', ',')}`, marginLeft, yPos);
-                    yPos += 5;
+                    yPos += 4;
                     pdf.setTextColor(0, 0, 0);
                 }
             } catch (e) {
@@ -7196,26 +7607,31 @@ async function gerarPDFConsolidado(id) {
             
             // 4. NÃO PROGRAMADAS 2025
             try {
-                verificarPagina(20);
+                verificarPagina(18);
                 pdf.setFont('helvetica', 'bold');
-                pdf.setFontSize(9);
+                pdf.setFontSize(8);
                 pdf.setTextColor(253, 126, 20);
                 pdf.text(`4. ATIVIDADES NÃO PROGRAMADAS EM ${dados.naoProgramadas2025_ano || '2025'}`, marginLeft, yPos);
-                yPos += 5;
+                yPos += 4;
                 pdf.setTextColor(0, 0, 0);
                 pdf.setFont('helvetica', 'normal');
-                pdf.setFontSize(7);
+                pdf.setFontSize(6);
                 
                 if (naoProgramadas2025List.length === 0) {
                     pdf.setFont('helvetica', 'italic');
-                    pdf.setFontSize(7);
+                    pdf.setFontSize(6);
                     pdf.text('Nenhuma atividade não programada cadastrada.', marginLeft + 5, yPos);
-                    yPos += 5;
+                    yPos += 4;
                 } else {
-                    const colunas = [{ texto: '#', largura: 8 }, { texto: 'Descrição da Atividade', largura: pageWidth - marginLeft - marginRight - 12 }];
+                    const larguraNumero = 8;
+                    const larguraDescricao = pageWidth - marginLeft - marginRight - larguraNumero - 8;
+                    const colunas = [
+                        { texto: '#', largura: larguraNumero },
+                        { texto: 'Descrição da Atividade', largura: larguraDescricao }
+                    ];
                     yPos = desenharCabecalhoTabelaPDF(colunas.map(c => c.texto), colunas.map(c => c.largura), yPos, PDF_CONFIG.colors.secondary, pdf, marginLeft, pageWidth, marginRight);
                     naoProgramadas2025List.forEach((item, i) => {
-                        if (verificarPagina(10)) {
+                        if (verificarPagina(8)) {
                             yPos = desenharCabecalhoTabelaPDF(colunas.map(c => c.texto), colunas.map(c => c.largura), yPos, PDF_CONFIG.colors.secondary, pdf, marginLeft, pageWidth, marginRight);
                         }
                         const linha = [(i + 1).toString(), item];
@@ -7225,11 +7641,11 @@ async function gerarPDFConsolidado(id) {
                             adicionarRodapePDF(pdf, marginLeft, pageWidth, marginRight);
                             pdf.addPage();
                             adicionarCabecalhoPDF(pdf, tituloCompleto, marginLeft, pageWidth, marginRight, gerencia);
-                            yPos = 42;
+                            yPos = 50;
                             yPos = desenharCabecalhoTabelaPDF(colunas.map(c => c.texto), colunas.map(c => c.largura), yPos, PDF_CONFIG.colors.secondary, pdf, marginLeft, pageWidth, marginRight);
                             const ny2 = desenharLinhaTabelaEquilibradaPDF(linha, colunas.map(c => c.largura), yPos, cf, pdf, marginLeft, pageWidth, marginRight);
                             if (ny2 !== null) yPos = ny2 + 1;
-                            else yPos += 10;
+                            else yPos += 8;
                         } else {
                             yPos = ny + 1;
                         }
@@ -7240,74 +7656,140 @@ async function gerarPDFConsolidado(id) {
                 console.error('Erro na seção 4 do consolidado:', e);
             }
             
-            // 5. RESULTADOS 2025 - SEM TABELA
+            // 5. RESULTADOS 2025
             try {
-                verificarPagina(20);
+                verificarPagina(18);
                 pdf.setFont('helvetica', 'bold');
-                pdf.setFontSize(9);
+                pdf.setFontSize(8);
                 pdf.setTextColor(253, 126, 20);
                 pdf.text(`5. RESULTADOS ALCANÇADOS EM ${dados.resultados2025_ano || '2025'}`, marginLeft, yPos);
-                yPos += 5;
+                yPos += 4;
                 pdf.setTextColor(0, 0, 0);
                 pdf.setFont('helvetica', 'normal');
-                pdf.setFontSize(7);
+                pdf.setFontSize(6);
                 
                 if (res2025List.length === 0) {
                     pdf.setFont('helvetica', 'italic');
-                    pdf.setFontSize(7);
+                    pdf.setFontSize(6);
                     pdf.text('Nenhum resultado cadastrado.', marginLeft + 5, yPos);
-                    yPos += 5;
+                    yPos += 4;
                 } else {
                     res2025List.forEach((r, idx) => {
-                        verificarPagina(15);
-                        pdf.setFont('helvetica', 'bold');
-                        pdf.setFontSize(8);
-                        pdf.setTextColor(0, 51, 102);
-                        pdf.text(`ITEM ${idx + 1}`, marginLeft, yPos);
-                        yPos += 4;
-                        pdf.setFont('helvetica', 'normal');
-                        pdf.setFontSize(7);
-                        pdf.setTextColor(0, 0, 0);
+                        if (verificarPagina(12)) {
+                            pdf.setFont('helvetica', 'bold');
+                            pdf.setFontSize(7);
+                            pdf.setTextColor(0, 51, 102);
+                            pdf.text(`${idx + 1}`, marginLeft, yPos);
+                            yPos += 3.5;
+                            pdf.setFont('helvetica', 'normal');
+                            pdf.setFontSize(6);
+                            pdf.setTextColor(0, 0, 0);
+                        } else {
+                            pdf.setFont('helvetica', 'bold');
+                            pdf.setFontSize(7);
+                            pdf.setTextColor(0, 51, 102);
+                            pdf.text(`${idx + 1}`, marginLeft, yPos);
+                            yPos += 3.5;
+                            pdf.setFont('helvetica', 'normal');
+                            pdf.setFontSize(6);
+                            pdf.setTextColor(0, 0, 0);
+                        }
                         
-                        pdf.setFont('helvetica', 'bold');
-                        pdf.setFontSize(7);
-                        pdf.text('5.1 Descrever os Projetos/Atividades:', marginLeft + 4, yPos);
-                        yPos += 3.5;
-                        pdf.setFont('helvetica', 'normal');
-                        pdf.setFontSize(7);
+                        // 5.1 Projetos/Atividades
                         const linhasProjetos = pdf.splitTextToSize(r.projetos || '', pageWidth - marginLeft - marginRight - 8);
-                        pdf.text(linhasProjetos, marginLeft + 8, yPos);
-                        yPos += linhasProjetos.length * 3.5 + 2;
+                        if (verificarPagina(linhasProjetos.length * 3 + 8)) {
+                            pdf.setFont('helvetica', 'bold');
+                            pdf.setFontSize(6);
+                            pdf.text('5.1 Descrever os Projetos/Atividades:', marginLeft + 4, yPos);
+                            yPos += 3;
+                            pdf.setFont('helvetica', 'normal');
+                            pdf.setFontSize(6);
+                            pdf.setTextColor(0, 0, 0);
+                            pdf.text(linhasProjetos, marginLeft + 8, yPos);
+                            yPos += linhasProjetos.length * 3 + 2;
+                        } else {
+                            pdf.setFont('helvetica', 'bold');
+                            pdf.setFontSize(6);
+                            pdf.text('5.1 Descrever os Projetos/Atividades:', marginLeft + 4, yPos);
+                            yPos += 3;
+                            pdf.setFont('helvetica', 'normal');
+                            pdf.setFontSize(6);
+                            pdf.setTextColor(0, 0, 0);
+                            pdf.text(linhasProjetos, marginLeft + 8, yPos);
+                            yPos += linhasProjetos.length * 3 + 2;
+                        }
                         
-                        pdf.setFont('helvetica', 'bold');
-                        pdf.setFontSize(7);
-                        pdf.text('5.2 Descrever as Regiões Beneficiadas:', marginLeft + 4, yPos);
-                        yPos += 3.5;
-                        pdf.setFont('helvetica', 'normal');
-                        pdf.setFontSize(7);
+                        // 5.2 Regiões
                         const linhasRegioes = pdf.splitTextToSize(r.regioes || '', pageWidth - marginLeft - marginRight - 8);
-                        pdf.text(linhasRegioes, marginLeft + 8, yPos);
-                        yPos += linhasRegioes.length * 3.5 + 2;
+                        if (verificarPagina(linhasRegioes.length * 3 + 8)) {
+                            pdf.setFont('helvetica', 'bold');
+                            pdf.setFontSize(6);
+                            pdf.text('5.2 Descrever as Regiões Beneficiadas:', marginLeft + 4, yPos);
+                            yPos += 3;
+                            pdf.setFont('helvetica', 'normal');
+                            pdf.setFontSize(6);
+                            pdf.setTextColor(0, 0, 0);
+                            pdf.text(linhasRegioes, marginLeft + 8, yPos);
+                            yPos += linhasRegioes.length * 3 + 2;
+                        } else {
+                            pdf.setFont('helvetica', 'bold');
+                            pdf.setFontSize(6);
+                            pdf.text('5.2 Descrever as Regiões Beneficiadas:', marginLeft + 4, yPos);
+                            yPos += 3;
+                            pdf.setFont('helvetica', 'normal');
+                            pdf.setFontSize(6);
+                            pdf.setTextColor(0, 0, 0);
+                            pdf.text(linhasRegioes, marginLeft + 8, yPos);
+                            yPos += linhasRegioes.length * 3 + 2;
+                        }
                         
-                        pdf.setFont('helvetica', 'bold');
-                        pdf.setFontSize(7);
-                        pdf.text('5.3 Descrever as Metas Atingidas:', marginLeft + 4, yPos);
-                        yPos += 3.5;
-                        pdf.setFont('helvetica', 'normal');
-                        pdf.setFontSize(7);
+                        // 5.3 Metas
                         const linhasMetas = pdf.splitTextToSize(r.metas || '', pageWidth - marginLeft - marginRight - 8);
-                        pdf.text(linhasMetas, marginLeft + 8, yPos);
-                        yPos += linhasMetas.length * 3.5 + 2;
+                        if (verificarPagina(linhasMetas.length * 3 + 8)) {
+                            pdf.setFont('helvetica', 'bold');
+                            pdf.setFontSize(6);
+                            pdf.text('5.3 Descrever as Metas Atingidas:', marginLeft + 4, yPos);
+                            yPos += 3;
+                            pdf.setFont('helvetica', 'normal');
+                            pdf.setFontSize(6);
+                            pdf.setTextColor(0, 0, 0);
+                            pdf.text(linhasMetas, marginLeft + 8, yPos);
+                            yPos += linhasMetas.length * 3 + 2;
+                        } else {
+                            pdf.setFont('helvetica', 'bold');
+                            pdf.setFontSize(6);
+                            pdf.text('5.3 Descrever as Metas Atingidas:', marginLeft + 4, yPos);
+                            yPos += 3;
+                            pdf.setFont('helvetica', 'normal');
+                            pdf.setFontSize(6);
+                            pdf.setTextColor(0, 0, 0);
+                            pdf.text(linhasMetas, marginLeft + 8, yPos);
+                            yPos += linhasMetas.length * 3 + 2;
+                        }
                         
-                        pdf.setFont('helvetica', 'bold');
-                        pdf.setFontSize(7);
-                        pdf.text('5.4 Descrever os Desafios:', marginLeft + 4, yPos);
-                        yPos += 3.5;
-                        pdf.setFont('helvetica', 'normal');
-                        pdf.setFontSize(7);
+                        // 5.4 Desafios
                         const linhasDesafios = pdf.splitTextToSize(r.desafios || '', pageWidth - marginLeft - marginRight - 8);
-                        pdf.text(linhasDesafios, marginLeft + 8, yPos);
-                        yPos += linhasDesafios.length * 3.5 + 2;
+                        if (verificarPagina(linhasDesafios.length * 3 + 8)) {
+                            pdf.setFont('helvetica', 'bold');
+                            pdf.setFontSize(6);
+                            pdf.text('5.4 Descrever os Desafios:', marginLeft + 4, yPos);
+                            yPos += 3;
+                            pdf.setFont('helvetica', 'normal');
+                            pdf.setFontSize(6);
+                            pdf.setTextColor(0, 0, 0);
+                            pdf.text(linhasDesafios, marginLeft + 8, yPos);
+                            yPos += linhasDesafios.length * 3 + 2;
+                        } else {
+                            pdf.setFont('helvetica', 'bold');
+                            pdf.setFontSize(6);
+                            pdf.text('5.4 Descrever os Desafios:', marginLeft + 4, yPos);
+                            yPos += 3;
+                            pdf.setFont('helvetica', 'normal');
+                            pdf.setFontSize(6);
+                            pdf.setTextColor(0, 0, 0);
+                            pdf.text(linhasDesafios, marginLeft + 8, yPos);
+                            yPos += linhasDesafios.length * 3 + 2;
+                        }
                     });
                 }
             } catch (e) {
@@ -7316,27 +7798,32 @@ async function gerarPDFConsolidado(id) {
             
             // 6. NÃO PROGRAMADAS 2026
             try {
-                verificarPagina(20);
+                verificarPagina(18);
                 pdf.setFont('helvetica', 'bold');
-                pdf.setFontSize(9);
+                pdf.setFontSize(8);
                 pdf.setTextColor(253, 126, 20);
                 const pnp26 = `${dados.naoProgramadas2026_mes_inicio || 'Janeiro'} a ${dados.naoProgramadas2026_mes_fim || 'Julho'}`;
                 pdf.text(`6. ATIVIDADES NÃO PROGRAMADAS ${pnp26} ${dados.naoProgramadas2026_ano || '2026'}`, marginLeft, yPos);
-                yPos += 5;
+                yPos += 4;
                 pdf.setTextColor(0, 0, 0);
                 pdf.setFont('helvetica', 'normal');
-                pdf.setFontSize(7);
+                pdf.setFontSize(6);
                 
                 if (naoProgramadas2026List.length === 0) {
                     pdf.setFont('helvetica', 'italic');
-                    pdf.setFontSize(7);
+                    pdf.setFontSize(6);
                     pdf.text('Nenhuma atividade não programada cadastrada.', marginLeft + 5, yPos);
-                    yPos += 5;
+                    yPos += 4;
                 } else {
-                    const colunas = [{ texto: '#', largura: 8 }, { texto: 'Descrição da Atividade', largura: pageWidth - marginLeft - marginRight - 12 }];
+                    const larguraNumero = 8;
+                    const larguraDescricao = pageWidth - marginLeft - marginRight - larguraNumero - 8;
+                    const colunas = [
+                        { texto: '#', largura: larguraNumero },
+                        { texto: 'Descrição da Atividade', largura: larguraDescricao }
+                    ];
                     yPos = desenharCabecalhoTabelaPDF(colunas.map(c => c.texto), colunas.map(c => c.largura), yPos, PDF_CONFIG.colors.secondary, pdf, marginLeft, pageWidth, marginRight);
                     naoProgramadas2026List.forEach((item, i) => {
-                        if (verificarPagina(10)) {
+                        if (verificarPagina(8)) {
                             yPos = desenharCabecalhoTabelaPDF(colunas.map(c => c.texto), colunas.map(c => c.largura), yPos, PDF_CONFIG.colors.secondary, pdf, marginLeft, pageWidth, marginRight);
                         }
                         const linha = [(i + 1).toString(), item];
@@ -7346,11 +7833,11 @@ async function gerarPDFConsolidado(id) {
                             adicionarRodapePDF(pdf, marginLeft, pageWidth, marginRight);
                             pdf.addPage();
                             adicionarCabecalhoPDF(pdf, tituloCompleto, marginLeft, pageWidth, marginRight, gerencia);
-                            yPos = 42;
+                            yPos = 50;
                             yPos = desenharCabecalhoTabelaPDF(colunas.map(c => c.texto), colunas.map(c => c.largura), yPos, PDF_CONFIG.colors.secondary, pdf, marginLeft, pageWidth, marginRight);
                             const ny2 = desenharLinhaTabelaEquilibradaPDF(linha, colunas.map(c => c.largura), yPos, cf, pdf, marginLeft, pageWidth, marginRight);
                             if (ny2 !== null) yPos = ny2 + 1;
-                            else yPos += 10;
+                            else yPos += 8;
                         } else {
                             yPos = ny + 1;
                         }
@@ -7361,24 +7848,24 @@ async function gerarPDFConsolidado(id) {
                 console.error('Erro na seção 6 do consolidado:', e);
             }
             
-            // 7. PROJETOS 2026 - SEM TABELA
+            // 7. PROJETOS 2026 - CORRIGIDO - USANDO DADOS SALVOS
             try {
-                verificarPagina(20);
+                verificarPagina(18);
                 pdf.setFont('helvetica', 'bold');
-                pdf.setFontSize(9);
+                pdf.setFontSize(8);
                 pdf.setTextColor(253, 126, 20);
                 const pp26 = `${dados.projetos2026_mes_inicio || 'Janeiro'} a ${dados.projetos2026_mes_fim || 'Outubro'}`;
                 pdf.text(`7. PROJETOS/ATIVIDADES ${pp26} ${dados.projetos2026_ano || '2026'}`, marginLeft, yPos);
-                yPos += 5;
+                yPos += 4;
                 pdf.setTextColor(0, 0, 0);
                 pdf.setFont('helvetica', 'normal');
-                pdf.setFontSize(7);
+                pdf.setFontSize(6);
                 
                 if (proj2026List.length === 0) {
                     pdf.setFont('helvetica', 'italic');
-                    pdf.setFontSize(7);
+                    pdf.setFontSize(6);
                     pdf.text('Nenhum projeto/atividade cadastrado.', marginLeft + 5, yPos);
-                    yPos += 5;
+                    yPos += 4;
                 } else {
                     let total = 0;
                     proj2026List.forEach(p => {
@@ -7391,67 +7878,137 @@ async function gerarPDFConsolidado(id) {
                         const progLabel = p.temPrograma === 'sim' ? `SIM - ${p.programaTexto || ''}` : 'NÃO';
                         const parcLabel = p.temParceira === 'sim' ? `SIM - ${p.parceiraTexto || ''}` : 'NÃO';
                         
-                        verificarPagina(15);
-                        pdf.setFont('helvetica', 'bold');
-                        pdf.setFontSize(8);
-                        pdf.setTextColor(0, 51, 102);
-                        pdf.text(`ITEM ${idx + 1}`, marginLeft, yPos);
-                        yPos += 4;
-                        pdf.setFont('helvetica', 'normal');
-                        pdf.setFontSize(7);
-                        pdf.setTextColor(0, 0, 0);
-                        pdf.text(`PROGRAMA: ${progLabel}`, marginLeft + 4, yPos);
-                        yPos += 3.5;
-                        pdf.text(`PARCEIRA: ${parcLabel}`, marginLeft + 4, yPos);
-                        yPos += 4;
+                        if (verificarPagina(15)) {
+                            pdf.setFont('helvetica', 'bold');
+                            pdf.setFontSize(7);
+                            pdf.setTextColor(0, 51, 102);
+                            pdf.text(`${idx + 1}`, marginLeft, yPos);
+                            yPos += 3.5;
+                            pdf.setFont('helvetica', 'normal');
+                            pdf.setFontSize(6);
+                            pdf.setTextColor(0, 0, 0);
+                            pdf.text(`PROGRAMA: ${progLabel}`, marginLeft + 4, yPos);
+                            yPos += 3;
+                            pdf.text(`PARCEIRA: ${parcLabel}`, marginLeft + 4, yPos);
+                            yPos += 3.5;
+                        } else {
+                            pdf.setFont('helvetica', 'bold');
+                            pdf.setFontSize(7);
+                            pdf.setTextColor(0, 51, 102);
+                            pdf.text(`${idx + 1}`, marginLeft, yPos);
+                            yPos += 3.5;
+                            pdf.setFont('helvetica', 'normal');
+                            pdf.setFontSize(6);
+                            pdf.setTextColor(0, 0, 0);
+                            pdf.text(`PROGRAMA: ${progLabel}`, marginLeft + 4, yPos);
+                            yPos += 3;
+                            pdf.text(`PARCEIRA: ${parcLabel}`, marginLeft + 4, yPos);
+                            yPos += 3.5;
+                        }
                         
-                        pdf.setFont('helvetica', 'bold');
-                        pdf.setFontSize(7);
-                        pdf.text('7.1 Descrever os Projetos/Atividades:', marginLeft + 4, yPos);
-                        yPos += 3.5;
-                        pdf.setFont('helvetica', 'normal');
-                        pdf.setFontSize(7);
+                        // 7.1 Projetos/Atividades
                         const linhasProjetos = pdf.splitTextToSize(p.projetos || '', pageWidth - marginLeft - marginRight - 8);
-                        pdf.text(linhasProjetos, marginLeft + 8, yPos);
-                        yPos += linhasProjetos.length * 3.5 + 2;
+                        if (verificarPagina(linhasProjetos.length * 3 + 8)) {
+                            pdf.setFont('helvetica', 'bold');
+                            pdf.setFontSize(6);
+                            pdf.text('7.1 Descrever os Projetos/Atividades:', marginLeft + 4, yPos);
+                            yPos += 3;
+                            pdf.setFont('helvetica', 'normal');
+                            pdf.setFontSize(6);
+                            pdf.setTextColor(0, 0, 0);
+                            pdf.text(linhasProjetos, marginLeft + 8, yPos);
+                            yPos += linhasProjetos.length * 3 + 2;
+                        } else {
+                            pdf.setFont('helvetica', 'bold');
+                            pdf.setFontSize(6);
+                            pdf.text('7.1 Descrever os Projetos/Atividades:', marginLeft + 4, yPos);
+                            yPos += 3;
+                            pdf.setFont('helvetica', 'normal');
+                            pdf.setFontSize(6);
+                            pdf.setTextColor(0, 0, 0);
+                            pdf.text(linhasProjetos, marginLeft + 8, yPos);
+                            yPos += linhasProjetos.length * 3 + 2;
+                        }
                         
-                        pdf.setFont('helvetica', 'bold');
-                        pdf.setFontSize(7);
-                        pdf.text('7.2 Descrever os Objetivos:', marginLeft + 4, yPos);
-                        yPos += 3.5;
-                        pdf.setFont('helvetica', 'normal');
-                        pdf.setFontSize(7);
+                        // 7.2 Objetivos
                         const linhasObjetivos = pdf.splitTextToSize(p.objetivos || '', pageWidth - marginLeft - marginRight - 8);
-                        pdf.text(linhasObjetivos, marginLeft + 8, yPos);
-                        yPos += linhasObjetivos.length * 3.5 + 2;
+                        if (verificarPagina(linhasObjetivos.length * 3 + 8)) {
+                            pdf.setFont('helvetica', 'bold');
+                            pdf.setFontSize(6);
+                            pdf.text('7.2 Descrever os Objetivos:', marginLeft + 4, yPos);
+                            yPos += 3;
+                            pdf.setFont('helvetica', 'normal');
+                            pdf.setFontSize(6);
+                            pdf.setTextColor(0, 0, 0);
+                            pdf.text(linhasObjetivos, marginLeft + 8, yPos);
+                            yPos += linhasObjetivos.length * 3 + 2;
+                        } else {
+                            pdf.setFont('helvetica', 'bold');
+                            pdf.setFontSize(6);
+                            pdf.text('7.2 Descrever os Objetivos:', marginLeft + 4, yPos);
+                            yPos += 3;
+                            pdf.setFont('helvetica', 'normal');
+                            pdf.setFontSize(6);
+                            pdf.setTextColor(0, 0, 0);
+                            pdf.text(linhasObjetivos, marginLeft + 8, yPos);
+                            yPos += linhasObjetivos.length * 3 + 2;
+                        }
                         
-                        pdf.setFont('helvetica', 'bold');
-                        pdf.setFontSize(7);
-                        pdf.text('7.3 Descrever as Metas:', marginLeft + 4, yPos);
-                        yPos += 3.5;
-                        pdf.setFont('helvetica', 'normal');
-                        pdf.setFontSize(7);
+                        // 7.3 Metas
                         const linhasMetas = pdf.splitTextToSize(p.metas || '', pageWidth - marginLeft - marginRight - 8);
-                        pdf.text(linhasMetas, marginLeft + 8, yPos);
-                        yPos += linhasMetas.length * 3.5 + 2;
+                        if (verificarPagina(linhasMetas.length * 3 + 8)) {
+                            pdf.setFont('helvetica', 'bold');
+                            pdf.setFontSize(6);
+                            pdf.text('7.3 Descrever as Metas:', marginLeft + 4, yPos);
+                            yPos += 3;
+                            pdf.setFont('helvetica', 'normal');
+                            pdf.setFontSize(6);
+                            pdf.setTextColor(0, 0, 0);
+                            pdf.text(linhasMetas, marginLeft + 8, yPos);
+                            yPos += linhasMetas.length * 3 + 2;
+                        } else {
+                            pdf.setFont('helvetica', 'bold');
+                            pdf.setFontSize(6);
+                            pdf.text('7.3 Descrever as Metas:', marginLeft + 4, yPos);
+                            yPos += 3;
+                            pdf.setFont('helvetica', 'normal');
+                            pdf.setFontSize(6);
+                            pdf.setTextColor(0, 0, 0);
+                            pdf.text(linhasMetas, marginLeft + 8, yPos);
+                            yPos += linhasMetas.length * 3 + 2;
+                        }
                         
-                        pdf.setFont('helvetica', 'bold');
-                        pdf.setFontSize(7);
-                        pdf.text('7.4 DESENBOLSO (R$):', marginLeft + 4, yPos);
-                        yPos += 3.5;
-                        pdf.setFont('helvetica', 'normal');
-                        pdf.setFontSize(7);
+                        // 7.4 Desembolso
                         const linhasDesembolso = pdf.splitTextToSize(p.desembolso || '', pageWidth - marginLeft - marginRight - 8);
-                        pdf.text(linhasDesembolso, marginLeft + 8, yPos);
-                        yPos += linhasDesembolso.length * 3.5 + 2;
+                        if (verificarPagina(linhasDesembolso.length * 3 + 8)) {
+                            pdf.setFont('helvetica', 'bold');
+                            pdf.setFontSize(6);
+                            pdf.text('7.4 DESENBOLSO (R$):', marginLeft + 4, yPos);
+                            yPos += 3;
+                            pdf.setFont('helvetica', 'normal');
+                            pdf.setFontSize(6);
+                            pdf.setTextColor(0, 0, 0);
+                            pdf.text(linhasDesembolso, marginLeft + 8, yPos);
+                            yPos += linhasDesembolso.length * 3 + 2;
+                        } else {
+                            pdf.setFont('helvetica', 'bold');
+                            pdf.setFontSize(6);
+                            pdf.text('7.4 DESENBOLSO (R$):', marginLeft + 4, yPos);
+                            yPos += 3;
+                            pdf.setFont('helvetica', 'normal');
+                            pdf.setFontSize(6);
+                            pdf.setTextColor(0, 0, 0);
+                            pdf.text(linhasDesembolso, marginLeft + 8, yPos);
+                            yPos += linhasDesembolso.length * 3 + 2;
+                        }
                     });
                     
-                    verificarPagina(10);
+                    verificarPagina(8);
                     pdf.setFont('helvetica', 'bold');
-                    pdf.setFontSize(7);
+                    pdf.setFontSize(6);
                     pdf.setTextColor(0, 51, 102);
                     pdf.text(`TOTAL DESEMBOLSO: R$ ${total.toFixed(2).replace('.', ',')}`, marginLeft, yPos);
-                    yPos += 5;
+                    yPos += 4;
                     pdf.setTextColor(0, 0, 0);
                 }
             } catch (e) {
@@ -7460,27 +8017,32 @@ async function gerarPDFConsolidado(id) {
             
             // 8. RESULTADOS PERÍODO
             try {
-                verificarPagina(20);
+                verificarPagina(18);
                 pdf.setFont('helvetica', 'bold');
-                pdf.setFontSize(9);
+                pdf.setFontSize(8);
                 pdf.setTextColor(253, 126, 20);
                 const prp = `${dados.resultadosPeriodo_mes_inicio || 'Janeiro'} a ${dados.resultadosPeriodo_mes_fim || 'Julho'}`;
                 pdf.text(`8. RESULTADOS ALCANÇADOS NO PERÍODO (${prp} ${dados.resultadosPeriodo_ano || '2026'})`, marginLeft, yPos);
-                yPos += 5;
+                yPos += 4;
                 pdf.setTextColor(0, 0, 0);
                 pdf.setFont('helvetica', 'normal');
-                pdf.setFontSize(7);
+                pdf.setFontSize(6);
                 
                 if (resultadosPeriodoList.length === 0) {
                     pdf.setFont('helvetica', 'italic');
-                    pdf.setFontSize(7);
+                    pdf.setFontSize(6);
                     pdf.text('Nenhum resultado cadastrado.', marginLeft + 5, yPos);
-                    yPos += 5;
+                    yPos += 4;
                 } else {
-                    const colunas = [{ texto: '#', largura: 8 }, { texto: 'DESCREVER OS RESULTADOS ALCANÇADOS NO PERÍODO', largura: pageWidth - marginLeft - marginRight - 12 }];
+                    const larguraNumero = 8;
+                    const larguraDescricao = pageWidth - marginLeft - marginRight - larguraNumero - 8;
+                    const colunas = [
+                        { texto: '#', largura: larguraNumero },
+                        { texto: 'DESCREVER OS RESULTADOS ALCANÇADOS NO PERÍODO', largura: larguraDescricao }
+                    ];
                     yPos = desenharCabecalhoTabelaPDF(colunas.map(c => c.texto), colunas.map(c => c.largura), yPos, PDF_CONFIG.colors.secondary, pdf, marginLeft, pageWidth, marginRight);
                     resultadosPeriodoList.forEach((item, i) => {
-                        if (verificarPagina(10)) {
+                        if (verificarPagina(8)) {
                             yPos = desenharCabecalhoTabelaPDF(colunas.map(c => c.texto), colunas.map(c => c.largura), yPos, PDF_CONFIG.colors.secondary, pdf, marginLeft, pageWidth, marginRight);
                         }
                         const linha = [(i + 1).toString(), item];
@@ -7490,11 +8052,11 @@ async function gerarPDFConsolidado(id) {
                             adicionarRodapePDF(pdf, marginLeft, pageWidth, marginRight);
                             pdf.addPage();
                             adicionarCabecalhoPDF(pdf, tituloCompleto, marginLeft, pageWidth, marginRight, gerencia);
-                            yPos = 42;
+                            yPos = 50;
                             yPos = desenharCabecalhoTabelaPDF(colunas.map(c => c.texto), colunas.map(c => c.largura), yPos, PDF_CONFIG.colors.secondary, pdf, marginLeft, pageWidth, marginRight);
                             const ny2 = desenharLinhaTabelaEquilibradaPDF(linha, colunas.map(c => c.largura), yPos, cf, pdf, marginLeft, pageWidth, marginRight);
                             if (ny2 !== null) yPos = ny2 + 1;
-                            else yPos += 10;
+                            else yPos += 8;
                         } else {
                             yPos = ny + 1;
                         }
@@ -7505,23 +8067,23 @@ async function gerarPDFConsolidado(id) {
                 console.error('Erro na seção 8 do consolidado:', e);
             }
             
-            // 9. PROPOSTAS 2028 - SEM TABELA
+            // 9. PROPOSTAS 2028 - CORRIGIDO - USANDO DADOS SALVOS
             try {
-                verificarPagina(20);
+                verificarPagina(18);
                 pdf.setFont('helvetica', 'bold');
-                pdf.setFontSize(9);
+                pdf.setFontSize(8);
                 pdf.setTextColor(253, 126, 20);
                 pdf.text(`9. PROPOSTAS/ATIVIDADES ${dados.propostas2028_ano || '2028-2031'}`, marginLeft, yPos);
-                yPos += 5;
+                yPos += 4;
                 pdf.setTextColor(0, 0, 0);
                 pdf.setFont('helvetica', 'normal');
-                pdf.setFontSize(7);
+                pdf.setFontSize(6);
                 
                 if (prop2028List.length === 0) {
                     pdf.setFont('helvetica', 'italic');
-                    pdf.setFontSize(7);
+                    pdf.setFontSize(6);
                     pdf.text('Nenhuma proposta cadastrada.', marginLeft + 5, yPos);
-                    yPos += 5;
+                    yPos += 4;
                 } else {
                     let total = 0;
                     prop2028List.forEach(p => {
@@ -7531,63 +8093,129 @@ async function gerarPDFConsolidado(id) {
                     });
                     
                     prop2028List.forEach((p, idx) => {
-                        verificarPagina(15);
-                        pdf.setFont('helvetica', 'bold');
-                        pdf.setFontSize(8);
-                        pdf.setTextColor(0, 51, 102);
-                        pdf.text(`ITEM ${idx + 1}`, marginLeft, yPos);
-                        yPos += 4;
-                        pdf.setFont('helvetica', 'normal');
-                        pdf.setFontSize(7);
-                        pdf.setTextColor(0, 0, 0);
+                        if (verificarPagina(12)) {
+                            pdf.setFont('helvetica', 'bold');
+                            pdf.setFontSize(7);
+                            pdf.setTextColor(0, 51, 102);
+                            pdf.text(`${idx + 1}`, marginLeft, yPos);
+                            yPos += 3.5;
+                            pdf.setFont('helvetica', 'normal');
+                            pdf.setFontSize(6);
+                            pdf.setTextColor(0, 0, 0);
+                        } else {
+                            pdf.setFont('helvetica', 'bold');
+                            pdf.setFontSize(7);
+                            pdf.setTextColor(0, 51, 102);
+                            pdf.text(`${idx + 1}`, marginLeft, yPos);
+                            yPos += 3.5;
+                            pdf.setFont('helvetica', 'normal');
+                            pdf.setFontSize(6);
+                            pdf.setTextColor(0, 0, 0);
+                        }
                         
-                        pdf.setFont('helvetica', 'bold');
-                        pdf.setFontSize(7);
-                        pdf.text('9.1 Descrever os Projetos/Atividades:', marginLeft + 4, yPos);
-                        yPos += 3.5;
-                        pdf.setFont('helvetica', 'normal');
-                        pdf.setFontSize(7);
+                        // 9.1 Projetos/Atividades
                         const linhasProjetos = pdf.splitTextToSize(p.projetos || '', pageWidth - marginLeft - marginRight - 8);
-                        pdf.text(linhasProjetos, marginLeft + 8, yPos);
-                        yPos += linhasProjetos.length * 3.5 + 2;
+                        if (verificarPagina(linhasProjetos.length * 3 + 8)) {
+                            pdf.setFont('helvetica', 'bold');
+                            pdf.setFontSize(6);
+                            pdf.text('9.1 Descrever os Projetos/Atividades:', marginLeft + 4, yPos);
+                            yPos += 3;
+                            pdf.setFont('helvetica', 'normal');
+                            pdf.setFontSize(6);
+                            pdf.setTextColor(0, 0, 0);
+                            pdf.text(linhasProjetos, marginLeft + 8, yPos);
+                            yPos += linhasProjetos.length * 3 + 2;
+                        } else {
+                            pdf.setFont('helvetica', 'bold');
+                            pdf.setFontSize(6);
+                            pdf.text('9.1 Descrever os Projetos/Atividades:', marginLeft + 4, yPos);
+                            yPos += 3;
+                            pdf.setFont('helvetica', 'normal');
+                            pdf.setFontSize(6);
+                            pdf.setTextColor(0, 0, 0);
+                            pdf.text(linhasProjetos, marginLeft + 8, yPos);
+                            yPos += linhasProjetos.length * 3 + 2;
+                        }
                         
-                        pdf.setFont('helvetica', 'bold');
-                        pdf.setFontSize(7);
-                        pdf.text('9.2 Descrever os Objetivos:', marginLeft + 4, yPos);
-                        yPos += 3.5;
-                        pdf.setFont('helvetica', 'normal');
-                        pdf.setFontSize(7);
+                        // 9.2 Objetivos
                         const linhasObjetivos = pdf.splitTextToSize(p.objetivos || '', pageWidth - marginLeft - marginRight - 8);
-                        pdf.text(linhasObjetivos, marginLeft + 8, yPos);
-                        yPos += linhasObjetivos.length * 3.5 + 2;
+                        if (verificarPagina(linhasObjetivos.length * 3 + 8)) {
+                            pdf.setFont('helvetica', 'bold');
+                            pdf.setFontSize(6);
+                            pdf.text('9.2 Descrever os Objetivos:', marginLeft + 4, yPos);
+                            yPos += 3;
+                            pdf.setFont('helvetica', 'normal');
+                            pdf.setFontSize(6);
+                            pdf.setTextColor(0, 0, 0);
+                            pdf.text(linhasObjetivos, marginLeft + 8, yPos);
+                            yPos += linhasObjetivos.length * 3 + 2;
+                        } else {
+                            pdf.setFont('helvetica', 'bold');
+                            pdf.setFontSize(6);
+                            pdf.text('9.2 Descrever os Objetivos:', marginLeft + 4, yPos);
+                            yPos += 3;
+                            pdf.setFont('helvetica', 'normal');
+                            pdf.setFontSize(6);
+                            pdf.setTextColor(0, 0, 0);
+                            pdf.text(linhasObjetivos, marginLeft + 8, yPos);
+                            yPos += linhasObjetivos.length * 3 + 2;
+                        }
                         
-                        pdf.setFont('helvetica', 'bold');
-                        pdf.setFontSize(7);
-                        pdf.text('9.3 Descrever as Metas:', marginLeft + 4, yPos);
-                        yPos += 3.5;
-                        pdf.setFont('helvetica', 'normal');
-                        pdf.setFontSize(7);
+                        // 9.3 Metas
                         const linhasMetas = pdf.splitTextToSize(p.metas || '', pageWidth - marginLeft - marginRight - 8);
-                        pdf.text(linhasMetas, marginLeft + 8, yPos);
-                        yPos += linhasMetas.length * 3.5 + 2;
+                        if (verificarPagina(linhasMetas.length * 3 + 8)) {
+                            pdf.setFont('helvetica', 'bold');
+                            pdf.setFontSize(6);
+                            pdf.text('9.3 Descrever as Metas:', marginLeft + 4, yPos);
+                            yPos += 3;
+                            pdf.setFont('helvetica', 'normal');
+                            pdf.setFontSize(6);
+                            pdf.setTextColor(0, 0, 0);
+                            pdf.text(linhasMetas, marginLeft + 8, yPos);
+                            yPos += linhasMetas.length * 3 + 2;
+                        } else {
+                            pdf.setFont('helvetica', 'bold');
+                            pdf.setFontSize(6);
+                            pdf.text('9.3 Descrever as Metas:', marginLeft + 4, yPos);
+                            yPos += 3;
+                            pdf.setFont('helvetica', 'normal');
+                            pdf.setFontSize(6);
+                            pdf.setTextColor(0, 0, 0);
+                            pdf.text(linhasMetas, marginLeft + 8, yPos);
+                            yPos += linhasMetas.length * 3 + 2;
+                        }
                         
-                        pdf.setFont('helvetica', 'bold');
-                        pdf.setFontSize(7);
-                        pdf.text('9.4 DESENBOLSO (R$):', marginLeft + 4, yPos);
-                        yPos += 3.5;
-                        pdf.setFont('helvetica', 'normal');
-                        pdf.setFontSize(7);
+                        // 9.4 Desembolso
                         const linhasDesembolso = pdf.splitTextToSize(p.desembolso || '', pageWidth - marginLeft - marginRight - 8);
-                        pdf.text(linhasDesembolso, marginLeft + 8, yPos);
-                        yPos += linhasDesembolso.length * 3.5 + 2;
+                        if (verificarPagina(linhasDesembolso.length * 3 + 8)) {
+                            pdf.setFont('helvetica', 'bold');
+                            pdf.setFontSize(6);
+                            pdf.text('9.4 DESENBOLSO (R$):', marginLeft + 4, yPos);
+                            yPos += 3;
+                            pdf.setFont('helvetica', 'normal');
+                            pdf.setFontSize(6);
+                            pdf.setTextColor(0, 0, 0);
+                            pdf.text(linhasDesembolso, marginLeft + 8, yPos);
+                            yPos += linhasDesembolso.length * 3 + 2;
+                        } else {
+                            pdf.setFont('helvetica', 'bold');
+                            pdf.setFontSize(6);
+                            pdf.text('9.4 DESENBOLSO (R$):', marginLeft + 4, yPos);
+                            yPos += 3;
+                            pdf.setFont('helvetica', 'normal');
+                            pdf.setFontSize(6);
+                            pdf.setTextColor(0, 0, 0);
+                            pdf.text(linhasDesembolso, marginLeft + 8, yPos);
+                            yPos += linhasDesembolso.length * 3 + 2;
+                        }
                     });
                     
-                    verificarPagina(10);
+                    verificarPagina(8);
                     pdf.setFont('helvetica', 'bold');
-                    pdf.setFontSize(7);
+                    pdf.setFontSize(6);
                     pdf.setTextColor(0, 51, 102);
                     pdf.text(`TOTAL DESEMBOLSO: R$ ${total.toFixed(2).replace('.', ',')}`, marginLeft, yPos);
-                    yPos += 5;
+                    yPos += 4;
                     pdf.setTextColor(0, 0, 0);
                 }
             } catch (e) {
@@ -7720,11 +8348,14 @@ document.addEventListener('DOMContentLoaded', function() {
     });
     
     console.log('📋 SISTEMA COMPLETO INICIADO!');
-    console.log('✅ TABELAS ELIMINADAS - FORMULÁRIO AGORA COM CAMPOS DE TEXTO');
-    console.log('✅ NUMERAÇÃO CORRETA: 3, 4, 5, 6, 7, 8, 9');
-    console.log('✅ SUBTÍTULOS EM NEGRITO NO PDF');
-    console.log('✅ MARGENS AJUSTADAS - TEXTO NÃO SOBREPÕE CABEÇALHO/RODAPÉ');
-    console.log('✅ CÁLCULO DO TOTAL DESEMBOLSO CORRIGIDO');
+    console.log('✅ CORREÇÕES FINAIS DO PDF APLICADAS:');
+    console.log('   - Função gerarPDF() agora aceita ID como parâmetro');
+    console.log('   - Gerente, Assessoria e Diretoria geram PDF com dados completos');
+    console.log('   - PDF Consolidado agora usa dados salvos do formulário');
+    console.log('   - Visualização "Ver" agora quebra linhas corretamente');
+    console.log('   - word-wrap: break-word e white-space: normal adicionados');
+    console.log('   - Fontes reduzidas: corpo para 6, títulos para 7-8, rodapé para 5');
+    console.log('   - Limite da página: 245mm | Rodapé: 262/266/270/274');
     console.log('📌 Clique nos botões VERDES para acessar cada diretoria');
 });
 </script>
