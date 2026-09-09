@@ -4977,7 +4977,7 @@ function renderizarProjetos2025() {
             </div>
             
             <div class="campo-texto-item">
-                <label>3.4 DESENBOLSO (R$)</label>
+                <label>3.4 DESEMBOLSO FINANCEIRO (R$)</label>
                 <input type="text" id="proj2025_desembolso_${idx}" placeholder="R$ 0,00" value="${escapeHtml(desembolsoValor)}" ${!podeEditar ? 'readonly' : ''}>
             </div>
             
@@ -5000,7 +5000,7 @@ function renderizarProjetos2025() {
     
     html += `
     <div class="total-desembolso">
-        TOTAL DESEMBOLSO: R$ ${total.toFixed(2).replace('.', ',')}
+        TOTAL DO DESEMBOLSO FINANCEIRO: R$ ${total.toFixed(2).replace('.', ',')}
     </div>
     `;
     
@@ -5219,7 +5219,7 @@ function renderizarProjetos2026() {
             </div>
             
             <div class="campo-texto-item">
-                <label>7.4 DESENBOLSO (R$)</label>
+                <label>7.4 DESEMBOLSO FINANCEIRO (R$)</label>
                 <input type="text" id="proj2026_desembolso_${idx}" placeholder="R$ 0,00" value="${escapeHtml(desembolsoValor)}" ${!podeEditar ? 'readonly' : ''}>
             </div>
             
@@ -5241,7 +5241,7 @@ function renderizarProjetos2026() {
     
     html += `
     <div class="total-desembolso">
-        TOTAL DESEMBOLSO: R$ ${total.toFixed(2).replace('.', ',')}
+        TOTAL DO DESEMBOLSO FINANCEIRO: R$ ${total.toFixed(2).replace('.', ',')}
     </div>
     `;
     
@@ -5366,7 +5366,7 @@ function renderizarPropostas2028() {
             </div>
             
             <div class="campo-texto-item">
-                <label>9.4 DESENBOLSO (R$)</label>
+                <label>9.4 DESEMBOLSO FINANCEIRO (R$)</label>
                 <input type="text" id="prop2028_desembolso_${idx}" placeholder="R$ 0,00" value="${escapeHtml(desembolsoValor)}" ${!podeEditar ? 'readonly' : ''}>
             </div>
             
@@ -5388,7 +5388,7 @@ function renderizarPropostas2028() {
     
     html += `
     <div class="total-desembolso">
-        TOTAL DESEMBOLSO: R$ ${total.toFixed(2).replace('.', ',')}
+        TOTAL DO DESEMBOLSO FINANCEIRO: R$ ${total.toFixed(2).replace('.', ',')}
     </div>
     `;
     
@@ -5513,7 +5513,7 @@ function atualizarStatusSalvo() {
 }
 
 // ============================================================
-// 21. FUNÇÃO VISUALIZAR COMO PDF - CORRIGIDA PARA QUEBRAR LINHAS
+// 21. FUNÇÃO VISUALIZAR COMO PDF - CORRIGIDA PARA QUEBRAR LINHAS E USAR DADOS SALVOS
 // ============================================================
 function visualizarComoPDF(id, perfilVisualizacao) {
     const form = formularios[id];
@@ -5530,20 +5530,26 @@ function visualizarComoPDF(id, perfilVisualizacao) {
     const gerencia = form.gerencia || dados.dgt_gerencia || '';
     const dadosGerencia = DADOS_GERENTES[gerencia] || null;
     
-    // Usar os dados salvos ou os arrays globais
-    const projetos2025List = dados.projetos2025 || projetos2025 || [];
-    const resultados2025List = dados.resultados2025 || resultados2025 || [];
-    const projetos2026List = dados.projetos2026 || projetos2026 || [];
-    const propostas2028List = dados.propostas2028 || propostas2028 || [];
-    const atribuicoesDivisaoList = dados.atribuicoesDivisao || atribuicoesDivisao || [];
-    const colaboradoresDivisaoList = dados.colaboradoresDivisao || colaboradoresDivisao || [];
-    const colaboradoresGerenciaListLocal = dados.colaboradoresGerencia || colaboradoresGerenciaList || [];
-    const atribGerenciaList = dados.atribuicoesGerencia || atribuicoesGerencia || [];
-    const naoProgramadas2025List = dados.naoProgramadas2025 || naoProgramadas2025 || [];
-    const naoProgramadas2026List = dados.naoProgramadas2026 || naoProgramadas2026 || [];
-    const resultadosPeriodoList = dados.resultadosPeriodo || resultadosPeriodo || [];
+    // ============================================================
+    // CORREÇÃO: LER OS DADOS SALVOS DO FORMULÁRIO
+    // ============================================================
+    // Usar os dados salvos (form.dados) em vez das variáveis globais
+    const projetos2025List = dados.projetos2025 || [];
+    const resultados2025List = dados.resultados2025 || [];
+    const projetos2026List = dados.projetos2026 || [];
+    const propostas2028List = dados.propostas2028 || [];
+    const atribuicoesDivisaoList = dados.atribuicoesDivisao || [];
+    const colaboradoresDivisaoList = dados.colaboradoresDivisao || [];
+    const colaboradoresGerenciaListLocal = dados.colaboradoresGerencia || [];
+    const atribGerenciaList = dados.atribuicoesGerencia || [];
+    const naoProgramadas2025List = dados.naoProgramadas2025 || [];
+    const naoProgramadas2026List = dados.naoProgramadas2026 || [];
+    const resultadosPeriodoList = dados.resultadosPeriodo || [];
     const divisoesDaGerencia = GERENCIA_DIVISOES[gerencia] || [];
     const divisaoAtual = form.divisao || 'Divisão';
+    // ============================================================
+    // FIM DA CORREÇÃO
+    // ============================================================
     
     let html = `<div class="pdf-visualizacao">`;
     
@@ -5632,12 +5638,12 @@ function visualizarComoPDF(id, perfilVisualizacao) {
     
     // 1. ATRIBUIÇÕES DA DIVISÃO
     html += `<div class="sub-secao-titulo" style="background:#0056b3;">1. ATRIBUIÇÕES DA DIVISÃO</div>`;
-    const atribDivList = ATRIBUICOES_DIVISOES[divisaoAtual] || atribuicoesDivisaoList || [];
-    if (atribDivList.length === 0) {
+    // Usar a lista salva de atribuições
+    if (atribuicoesDivisaoList.length === 0) {
         html += `<p style="color:#666;font-size:12px;font-style:italic;margin:4px 0 8px 0;">Nenhuma atribuição cadastrada.</p>`;
     } else {
         html += `<table class="tabela-pdf"><thead><tr><th style="width:40px;">#</th><th>ATRIBUIÇÕES DA DIVISÃO</th></tr></thead><tbody>`;
-        atribDivList.forEach((item, i) => {
+        atribuicoesDivisaoList.forEach((item, i) => {
             html += `<tr><td style="text-align:center;font-weight:600;color:#003366;">${i + 1}</td><td style="word-wrap:break-word;white-space:normal;">${escapeHtml(item)}</td></tr>`;
         });
         html += `</tbody></table>`;
@@ -5645,12 +5651,11 @@ function visualizarComoPDF(id, perfilVisualizacao) {
     
     // 2. Nº DE COLABORADORES DA DIVISÃO
     html += `<div class="sub-secao-titulo" style="background:#0056b3;">2. Nº DE COLABORADORES DA DIVISÃO</div>`;
-    const colabList = colaboradoresDivisaoList || [];
-    if (colabList.length === 0) {
+    if (colaboradoresDivisaoList.length === 0) {
         html += `<p style="color:#666;font-size:12px;font-style:italic;margin:4px 0 8px 0;">Nenhum colaborador cadastrado.</p>`;
     } else {
         html += `<table class="tabela-pdf"><thead><tr><th style="width:40px;">#</th><th>NOME DO COLABORADOR</th></tr></thead><tbody>`;
-        colabList.forEach((item, i) => {
+        colaboradoresDivisaoList.forEach((item, i) => {
             html += `<tr><td style="text-align:center;font-weight:600;color:#003366;">${i + 1}</td><td style="word-wrap:break-word;white-space:normal;">${escapeHtml(item)}</td></tr>`;
         });
         html += `</tbody></table>`;
@@ -5659,6 +5664,7 @@ function visualizarComoPDF(id, perfilVisualizacao) {
     // 3. PROJETOS 2025 - SEM TABELA
     html += `<div style="border-top:2px solid #dee2e6;margin:20px 0 15px 0;"></div>
     <div class="sub-secao-titulo" style="background:#fd7e14;">3. PROJETOS/ATIVIDADES EXECUTADAS EM ${dados.projetos2025_ano || '2025'}</div>`;
+    // Usar a lista salva de projetos
     if (projetos2025List.length === 0) {
         html += `<p style="color:#666;font-size:12px;font-style:italic;margin:4px 0 8px 0;">Nenhum projeto/atividade cadastrado.</p>`;
     } else {
@@ -5686,13 +5692,13 @@ function visualizarComoPDF(id, perfilVisualizacao) {
                 <div style="font-size:11px;margin:0 0 4px 12px;word-wrap:break-word;white-space:normal;">${escapeHtml(p.objetivos || '')}</div>
                 <div style="font-size:11px;margin:2px 0;"><strong>3.3 Descrever a Descrição das Ações:</strong></div>
                 <div style="font-size:11px;margin:0 0 4px 12px;word-wrap:break-word;white-space:normal;">${escapeHtml(p.acoes || '')}</div>
-                <div style="font-size:11px;margin:2px 0;"><strong>3.4 DESENBOLSO (R$):</strong></div>
+                <div style="font-size:11px;margin:2px 0;"><strong>3.4 DESEMBOLSO FINANCEIRO (R$):</strong></div>
                 <div style="font-size:11px;margin:0 0 4px 12px;word-wrap:break-word;white-space:normal;">${escapeHtml(p.desembolso || '')}</div>
             </div>
             `;
         });
         
-        html += `<div style="text-align:right;padding:6px 12px;background:#e8f0fe;border-radius:4px;font-weight:700;color:#003366;font-size:12px;margin-top:8px;">TOTAL DESEMBOLSO: R$ ${total.toFixed(2).replace('.', ',')}</div>`;
+        html += `<div style="text-align:right;padding:6px 12px;background:#e8f0fe;border-radius:4px;font-weight:700;color:#003366;font-size:12px;margin-top:8px;">TOTAL DO DESEMBOLSO FINANCEIRO: R$ ${total.toFixed(2).replace('.', ',')}</div>`;
     }
     
     // 4. ATIVIDADES NÃO PROGRAMADAS EM 2025
@@ -5774,13 +5780,13 @@ function visualizarComoPDF(id, perfilVisualizacao) {
                 <div style="font-size:11px;margin:0 0 4px 12px;word-wrap:break-word;white-space:normal;">${escapeHtml(p.objetivos || '')}</div>
                 <div style="font-size:11px;margin:2px 0;"><strong>7.3 Descrever as Metas:</strong></div>
                 <div style="font-size:11px;margin:0 0 4px 12px;word-wrap:break-word;white-space:normal;">${escapeHtml(p.metas || '')}</div>
-                <div style="font-size:11px;margin:2px 0;"><strong>7.4 DESENBOLSO (R$):</strong></div>
+                <div style="font-size:11px;margin:2px 0;"><strong>7.4 DESEMBOLSO FINANCEIRO (R$):</strong></div>
                 <div style="font-size:11px;margin:0 0 4px 12px;word-wrap:break-word;white-space:normal;">${escapeHtml(p.desembolso || '')}</div>
             </div>
             `;
         });
         
-        html += `<div style="text-align:right;padding:6px 12px;background:#e8f0fe;border-radius:4px;font-weight:700;color:#003366;font-size:12px;margin-top:8px;">TOTAL DESEMBOLSO: R$ ${total.toFixed(2).replace('.', ',')}</div>`;
+        html += `<div style="text-align:right;padding:6px 12px;background:#e8f0fe;border-radius:4px;font-weight:700;color:#003366;font-size:12px;margin-top:8px;">TOTAL DO DESEMBOLSO FINANCEIRO: R$ ${total.toFixed(2).replace('.', ',')}</div>`;
     }
     
     // 8. RESULTADOS ALCANÇADOS NO PERÍODO
@@ -5820,13 +5826,13 @@ function visualizarComoPDF(id, perfilVisualizacao) {
                 <div style="font-size:11px;margin:0 0 4px 12px;word-wrap:break-word;white-space:normal;">${escapeHtml(p.objetivos || '')}</div>
                 <div style="font-size:11px;margin:2px 0;"><strong>9.3 Descrever as Metas:</strong></div>
                 <div style="font-size:11px;margin:0 0 4px 12px;word-wrap:break-word;white-space:normal;">${escapeHtml(p.metas || '')}</div>
-                <div style="font-size:11px;margin:2px 0;"><strong>9.4 DESENBOLSO (R$):</strong></div>
+                <div style="font-size:11px;margin:2px 0;"><strong>9.4 DESEMBOLSO FINANCEIRO (R$):</strong></div>
                 <div style="font-size:11px;margin:0 0 4px 12px;word-wrap:break-word;white-space:normal;">${escapeHtml(p.desembolso || '')}</div>
             </div>
             `;
         });
         
-        html += `<div style="text-align:right;padding:6px 12px;background:#e8f0fe;border-radius:4px;font-weight:700;color:#003366;font-size:12px;margin-top:8px;">TOTAL DESEMBOLSO: R$ ${total.toFixed(2).replace('.', ',')}</div>`;
+        html += `<div style="text-align:right;padding:6px 12px;background:#e8f0fe;border-radius:4px;font-weight:700;color:#003366;font-size:12px;margin-top:8px;">TOTAL DO DESEMBOLSO FINANCEIRO: R$ ${total.toFixed(2).replace('.', ',')}</div>`;
     }
     
     html += `
@@ -5853,7 +5859,6 @@ function visualizarComoPDF(id, perfilVisualizacao) {
     </div>`;
     container.innerHTML = html;
 }
-
 // ============================================================
 // 22. FUNÇÃO GERAR PDF - CORRIGIDA COMPLETAMENTE
 // ============================================================
@@ -6322,7 +6327,7 @@ function gerarPDF(id = null) {
                     if (verificarPagina(linhasDesembolso.length * 3 + 8)) {
                         pdf.setFont('helvetica', 'bold');
                         pdf.setFontSize(6);
-                        pdf.text('3.4 DESENBOLSO (R$):', marginLeft + 4, yPos);
+                        pdf.text('3.4 DESEMBOLSO FINANCEIRO (R$):', marginLeft + 4, yPos);
                         yPos += 3;
                         pdf.setFont('helvetica', 'normal');
                         pdf.setFontSize(6);
@@ -6332,7 +6337,7 @@ function gerarPDF(id = null) {
                     } else {
                         pdf.setFont('helvetica', 'bold');
                         pdf.setFontSize(6);
-                        pdf.text('3.4 DESENBOLSO (R$):', marginLeft + 4, yPos);
+                        pdf.text('3.4 DESEMBOLSO FINANCEIRO (R$):', marginLeft + 4, yPos);
                         yPos += 3;
                         pdf.setFont('helvetica', 'normal');
                         pdf.setFontSize(6);
@@ -6346,7 +6351,7 @@ function gerarPDF(id = null) {
                 pdf.setFont('helvetica', 'bold');
                 pdf.setFontSize(6);
                 pdf.setTextColor(0, 51, 102);
-                pdf.text(`TOTAL DESEMBOLSO: R$ ${total.toFixed(2).replace('.', ',')}`, marginLeft, yPos);
+                pdf.text(`TOTAL DO DESEMBOLSO FINANCEIRO: R$ ${total.toFixed(2).replace('.', ',')}`, marginLeft, yPos);
                 yPos += 4;
                 pdf.setTextColor(0, 0, 0);
             }
@@ -6737,7 +6742,7 @@ function gerarPDF(id = null) {
                     if (verificarPagina(linhasDesembolso.length * 3 + 8)) {
                         pdf.setFont('helvetica', 'bold');
                         pdf.setFontSize(6);
-                        pdf.text('7.4 DESENBOLSO (R$):', marginLeft + 4, yPos);
+                        pdf.text('7.4 DESEMBOLSO FINANCEIRO (R$):', marginLeft + 4, yPos);
                         yPos += 3;
                         pdf.setFont('helvetica', 'normal');
                         pdf.setFontSize(6);
@@ -6747,7 +6752,7 @@ function gerarPDF(id = null) {
                     } else {
                         pdf.setFont('helvetica', 'bold');
                         pdf.setFontSize(6);
-                        pdf.text('7.4 DESENBOLSO (R$):', marginLeft + 4, yPos);
+                        pdf.text('7.4 DESEMBOLSO FINANCEIRO (R$):', marginLeft + 4, yPos);
                         yPos += 3;
                         pdf.setFont('helvetica', 'normal');
                         pdf.setFontSize(6);
@@ -6761,7 +6766,7 @@ function gerarPDF(id = null) {
                 pdf.setFont('helvetica', 'bold');
                 pdf.setFontSize(6);
                 pdf.setTextColor(0, 51, 102);
-                pdf.text(`TOTAL DESEMBOLSO: R$ ${total.toFixed(2).replace('.', ',')}`, marginLeft, yPos);
+                pdf.text(`TOTAL DO DESEMBOLSO FINANCEIRO: R$ ${total.toFixed(2).replace('.', ',')}`, marginLeft, yPos);
                 yPos += 4;
                 pdf.setTextColor(0, 0, 0);
             }
@@ -6946,7 +6951,7 @@ function gerarPDF(id = null) {
                     if (verificarPagina(linhasDesembolso.length * 3 + 8)) {
                         pdf.setFont('helvetica', 'bold');
                         pdf.setFontSize(6);
-                        pdf.text('9.4 DESENBOLSO (R$):', marginLeft + 4, yPos);
+                        pdf.text('9.4 DESEMBOLSO FINANCEIRO (R$):', marginLeft + 4, yPos);
                         yPos += 3;
                         pdf.setFont('helvetica', 'normal');
                         pdf.setFontSize(6);
@@ -6956,7 +6961,7 @@ function gerarPDF(id = null) {
                     } else {
                         pdf.setFont('helvetica', 'bold');
                         pdf.setFontSize(6);
-                        pdf.text('9.4 DESENBOLSO (R$):', marginLeft + 4, yPos);
+                        pdf.text('9.4 DESEMBOLSO FINANCEIRO (R$):', marginLeft + 4, yPos);
                         yPos += 3;
                         pdf.setFont('helvetica', 'normal');
                         pdf.setFontSize(6);
@@ -6970,7 +6975,7 @@ function gerarPDF(id = null) {
                 pdf.setFont('helvetica', 'bold');
                 pdf.setFontSize(6);
                 pdf.setTextColor(0, 51, 102);
-                pdf.text(`TOTAL DESEMBOLSO: R$ ${total.toFixed(2).replace('.', ',')}`, marginLeft, yPos);
+                pdf.text(`TOTAL DO DESEMBOLSO FINANCEIRO: R$ ${total.toFixed(2).replace('.', ',')}`, marginLeft, yPos);
                 yPos += 4;
                 pdf.setTextColor(0, 0, 0);
             }
@@ -7573,7 +7578,7 @@ async function gerarPDFConsolidado(id) {
                         if (verificarPagina(linhasDesembolso.length * 3 + 8)) {
                             pdf.setFont('helvetica', 'bold');
                             pdf.setFontSize(6);
-                            pdf.text('3.4 DESENBOLSO (R$):', marginLeft + 4, yPos);
+                            pdf.text('3.4 DESEMBOLSO FINANCEIRO (R$):', marginLeft + 4, yPos);
                             yPos += 3;
                             pdf.setFont('helvetica', 'normal');
                             pdf.setFontSize(6);
@@ -7583,7 +7588,7 @@ async function gerarPDFConsolidado(id) {
                         } else {
                             pdf.setFont('helvetica', 'bold');
                             pdf.setFontSize(6);
-                            pdf.text('3.4 DESENBOLSO (R$):', marginLeft + 4, yPos);
+                            pdf.text('3.4 DESEMBOLSO FINANCEIRO (R$):', marginLeft + 4, yPos);
                             yPos += 3;
                             pdf.setFont('helvetica', 'normal');
                             pdf.setFontSize(6);
@@ -7597,7 +7602,7 @@ async function gerarPDFConsolidado(id) {
                     pdf.setFont('helvetica', 'bold');
                     pdf.setFontSize(6);
                     pdf.setTextColor(0, 51, 102);
-                    pdf.text(`TOTAL DESEMBOLSO: R$ ${total.toFixed(2).replace('.', ',')}`, marginLeft, yPos);
+                    pdf.text(`TOTAL DO DESEMBOLSO FINANCEIRO: R$ ${total.toFixed(2).replace('.', ',')}`, marginLeft, yPos);
                     yPos += 4;
                     pdf.setTextColor(0, 0, 0);
                 }
@@ -7983,7 +7988,7 @@ async function gerarPDFConsolidado(id) {
                         if (verificarPagina(linhasDesembolso.length * 3 + 8)) {
                             pdf.setFont('helvetica', 'bold');
                             pdf.setFontSize(6);
-                            pdf.text('7.4 DESENBOLSO (R$):', marginLeft + 4, yPos);
+                            pdf.text('7.4 DESEMBOLSO FINANCEIRO (R$):', marginLeft + 4, yPos);
                             yPos += 3;
                             pdf.setFont('helvetica', 'normal');
                             pdf.setFontSize(6);
@@ -7993,7 +7998,7 @@ async function gerarPDFConsolidado(id) {
                         } else {
                             pdf.setFont('helvetica', 'bold');
                             pdf.setFontSize(6);
-                            pdf.text('7.4 DESENBOLSO (R$):', marginLeft + 4, yPos);
+                            pdf.text('7.4 DESEMBOLSO FINANCEIRO (R$):', marginLeft + 4, yPos);
                             yPos += 3;
                             pdf.setFont('helvetica', 'normal');
                             pdf.setFontSize(6);
@@ -8007,7 +8012,7 @@ async function gerarPDFConsolidado(id) {
                     pdf.setFont('helvetica', 'bold');
                     pdf.setFontSize(6);
                     pdf.setTextColor(0, 51, 102);
-                    pdf.text(`TOTAL DESEMBOLSO: R$ ${total.toFixed(2).replace('.', ',')}`, marginLeft, yPos);
+                    pdf.text(`TOTAL DO DESEMBOLSO FINANCEIRO: R$ ${total.toFixed(2).replace('.', ',')}`, marginLeft, yPos);
                     yPos += 4;
                     pdf.setTextColor(0, 0, 0);
                 }
@@ -8190,7 +8195,7 @@ async function gerarPDFConsolidado(id) {
                         if (verificarPagina(linhasDesembolso.length * 3 + 8)) {
                             pdf.setFont('helvetica', 'bold');
                             pdf.setFontSize(6);
-                            pdf.text('9.4 DESENBOLSO (R$):', marginLeft + 4, yPos);
+                            pdf.text('9.4 DESEMBOLSO FINANCEIRO (R$):', marginLeft + 4, yPos);
                             yPos += 3;
                             pdf.setFont('helvetica', 'normal');
                             pdf.setFontSize(6);
@@ -8200,7 +8205,7 @@ async function gerarPDFConsolidado(id) {
                         } else {
                             pdf.setFont('helvetica', 'bold');
                             pdf.setFontSize(6);
-                            pdf.text('9.4 DESENBOLSO (R$):', marginLeft + 4, yPos);
+                            pdf.text('9.4 DESEMBOLSO FINANCEIRO (R$):', marginLeft + 4, yPos);
                             yPos += 3;
                             pdf.setFont('helvetica', 'normal');
                             pdf.setFontSize(6);
@@ -8214,7 +8219,7 @@ async function gerarPDFConsolidado(id) {
                     pdf.setFont('helvetica', 'bold');
                     pdf.setFontSize(6);
                     pdf.setTextColor(0, 51, 102);
-                    pdf.text(`TOTAL DESEMBOLSO: R$ ${total.toFixed(2).replace('.', ',')}`, marginLeft, yPos);
+                    pdf.text(`TOTAL DO DESEMBOLSO FINANCEIRO: R$ ${total.toFixed(2).replace('.', ',')}`, marginLeft, yPos);
                     yPos += 4;
                     pdf.setTextColor(0, 0, 0);
                 }
@@ -8362,3 +8367,4 @@ document.addEventListener('DOMContentLoaded', function() {
 
 </body>
 </html>
+
