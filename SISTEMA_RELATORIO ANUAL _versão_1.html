@@ -4942,7 +4942,7 @@ function renderizarProjetos2025() {
             <div class="item-header">
                 <span class="item-numero">${idx + 1}</span>
                 <div class="campo-check">
-                    <i class="fas fa-check-circle" style="color:#0056b3;"></i> PROGRAMA:
+                    <i class="fas fa-check-circle" style="color:#0056b3;"></i> PROGRAMA DE FINANCIAMENTO:
                     <input type="checkbox" id="prog2025_check_${idx}" ${temPrograma ? 'checked' : ''} 
                            onchange="toggleCampoPrograma2025(${idx})">
                     <span style="font-size:11px;color:var(--text-light);font-weight:400;">${temPrograma ? 'SIM' : 'NÃO'}</span>
@@ -4951,7 +4951,7 @@ function renderizarProjetos2025() {
                            ${!temPrograma ? 'disabled' : ''}>
                 </div>
                 <div class="campo-check">
-                    <i class="fas fa-handshake" style="color:#0056b3;"></i> PARCEIRA:
+                    <i class="fas fa-handshake" style="color:#0056b3;"></i> PARCERIA:
                     <input type="checkbox" id="parc2025_check_${idx}" ${temParceira ? 'checked' : ''} 
                            onchange="toggleCampoParceira2025(${idx})">
                     <span style="font-size:11px;color:var(--text-light);font-weight:400;">${temParceira ? 'SIM' : 'NÃO'}</span>
@@ -5184,7 +5184,7 @@ function renderizarProjetos2026() {
             <div class="item-header">
                 <span class="item-numero">${idx + 1}</span>
                 <div class="campo-check">
-                    <i class="fas fa-check-circle" style="color:#0056b3;"></i> PROGRAMA:
+                    <i class="fas fa-check-circle" style="color:#0056b3;"></i> PROGRAMA DE FINANCIAMENTO:
                     <input type="checkbox" id="prog2026_check_${idx}" ${temPrograma ? 'checked' : ''} 
                            onchange="toggleCampoPrograma2026(${idx})">
                     <span style="font-size:11px;color:var(--text-light);font-weight:400;">${temPrograma ? 'SIM' : 'NÃO'}</span>
@@ -5193,7 +5193,7 @@ function renderizarProjetos2026() {
                            ${!temPrograma ? 'disabled' : ''}>
                 </div>
                 <div class="campo-check">
-                    <i class="fas fa-handshake" style="color:#0056b3;"></i> PARCEIRA:
+                    <i class="fas fa-handshake" style="color:#0056b3;"></i> PARCERIA:
                     <input type="checkbox" id="parc2026_check_${idx}" ${temParceira ? 'checked' : ''} 
                            onchange="toggleCampoParceira2026(${idx})">
                     <span style="font-size:11px;color:var(--text-light);font-weight:400;">${temParceira ? 'SIM' : 'NÃO'}</span>
@@ -5682,8 +5682,8 @@ function visualizarComoPDF(id, perfilVisualizacao) {
             html += `
             <div style="background:#f5f9fc;border-left:4px solid #fd7e14;padding:8px 12px;margin:8px 0 4px 0;border-radius:4px;">
                 <strong style="color:#003366;">${idx + 1}</strong><br>
-                <span style="font-size:11px;color:#003366;"><strong>PROGRAMA:</strong> ${escapeHtml(progLabel)}</span><br>
-                <span style="font-size:11px;color:#003366;"><strong>PARCEIRA:</strong> ${escapeHtml(parcLabel)}</span>
+                <span style="font-size:11px;color:#003366;"><strong>PROGRAMA DE FINANCIAMENTO:</strong> ${escapeHtml(progLabel)}</span><br>
+                <span style="font-size:11px;color:#003366;"><strong>PARCERIA:</strong> ${escapeHtml(parcLabel)}</span>
             </div>
             <div style="padding:2px 12px;">
                 <div style="font-size:11px;margin:2px 0;"><strong>3.1 Descrever os Projetos/Atividades:</strong></div>
@@ -5770,8 +5770,8 @@ function visualizarComoPDF(id, perfilVisualizacao) {
             html += `
             <div style="background:#f5f9fc;border-left:4px solid #fd7e14;padding:8px 12px;margin:8px 0 4px 0;border-radius:4px;">
                 <strong style="color:#003366;">${idx + 1}</strong><br>
-                <span style="font-size:11px;color:#003366;"><strong>PROGRAMA:</strong> ${escapeHtml(progLabel)}</span><br>
-                <span style="font-size:11px;color:#003366;"><strong>PARCEIRA:</strong> ${escapeHtml(parcLabel)}</span>
+                <span style="font-size:11px;color:#003366;"><strong>PROGRAMA DE FINANCIAMENTO:</strong> ${escapeHtml(progLabel)}</span><br>
+                <span style="font-size:11px;color:#003366;"><strong>PARCERIA:</strong> ${escapeHtml(parcLabel)}</span>
             </div>
             <div style="padding:2px 12px;">
                 <div style="font-size:11px;margin:2px 0;"><strong>7.1 Descrever os Projetos/Atividades:</strong></div>
@@ -6231,9 +6231,9 @@ function gerarPDF(id = null) {
                         pdf.setFont('helvetica', 'normal');
                         pdf.setFontSize(6);
                         pdf.setTextColor(0, 0, 0);
-                        pdf.text(`PROGRAMA: ${progLabel}`, marginLeft + 4, yPos);
+                        pdf.text(`PROGRAMA DE FINANCIAMENTO: ${progLabel}`, marginLeft + 4, yPos);
                         yPos += 3;
-                        pdf.text(`PARCEIRA: ${parcLabel}`, marginLeft + 4, yPos);
+                        pdf.text(`PARCERIA: ${parcLabel}`, marginLeft + 4, yPos);
                         yPos += 3.5;
                     } else {
                         pdf.setFont('helvetica', 'bold');
@@ -6244,9 +6244,9 @@ function gerarPDF(id = null) {
                         pdf.setFont('helvetica', 'normal');
                         pdf.setFontSize(6);
                         pdf.setTextColor(0, 0, 0);
-                        pdf.text(`PROGRAMA: ${progLabel}`, marginLeft + 4, yPos);
+                        pdf.text(`PROGRAMA DE FINANCIAMENTO: ${progLabel}`, marginLeft + 4, yPos);
                         yPos += 3;
-                        pdf.text(`PARCEIRA: ${parcLabel}`, marginLeft + 4, yPos);
+                        pdf.text(`PARCERIA: ${parcLabel}`, marginLeft + 4, yPos);
                         yPos += 3.5;
                     }
                     
@@ -6646,9 +6646,9 @@ function gerarPDF(id = null) {
                         pdf.setFont('helvetica', 'normal');
                         pdf.setFontSize(6);
                         pdf.setTextColor(0, 0, 0);
-                        pdf.text(`PROGRAMA: ${progLabel}`, marginLeft + 4, yPos);
+                        pdf.text(`PROGRAMA DE FINANCIAMENTO: ${progLabel}`, marginLeft + 4, yPos);
                         yPos += 3;
-                        pdf.text(`PARCEIRA: ${parcLabel}`, marginLeft + 4, yPos);
+                        pdf.text(`PARCERIA: ${parcLabel}`, marginLeft + 4, yPos);
                         yPos += 3.5;
                     } else {
                         pdf.setFont('helvetica', 'bold');
@@ -6659,9 +6659,9 @@ function gerarPDF(id = null) {
                         pdf.setFont('helvetica', 'normal');
                         pdf.setFontSize(6);
                         pdf.setTextColor(0, 0, 0);
-                        pdf.text(`PROGRAMA: ${progLabel}`, marginLeft + 4, yPos);
+                        pdf.text(`PROGRAMA DE FINANCIAMENTO: ${progLabel}`, marginLeft + 4, yPos);
                         yPos += 3;
-                        pdf.text(`PARCEIRA: ${parcLabel}`, marginLeft + 4, yPos);
+                        pdf.text(`PARCERIA: ${parcLabel}`, marginLeft + 4, yPos);
                         yPos += 3.5;
                     }
                     
@@ -7482,9 +7482,9 @@ async function gerarPDFConsolidado(id) {
                             pdf.setFont('helvetica', 'normal');
                             pdf.setFontSize(6);
                             pdf.setTextColor(0, 0, 0);
-                            pdf.text(`PROGRAMA: ${progLabel}`, marginLeft + 4, yPos);
+                            pdf.text(`PROGRAMA DE FINANCIAMENTO: ${progLabel}`, marginLeft + 4, yPos);
                             yPos += 3;
-                            pdf.text(`PARCEIRA: ${parcLabel}`, marginLeft + 4, yPos);
+                            pdf.text(`PARCERIA: ${parcLabel}`, marginLeft + 4, yPos);
                             yPos += 3.5;
                         } else {
                             pdf.setFont('helvetica', 'bold');
@@ -7495,9 +7495,9 @@ async function gerarPDFConsolidado(id) {
                             pdf.setFont('helvetica', 'normal');
                             pdf.setFontSize(6);
                             pdf.setTextColor(0, 0, 0);
-                            pdf.text(`PROGRAMA: ${progLabel}`, marginLeft + 4, yPos);
+                            pdf.text(`PROGRAMA DE FINANCIAMENTO: ${progLabel}`, marginLeft + 4, yPos);
                             yPos += 3;
-                            pdf.text(`PARCEIRA: ${parcLabel}`, marginLeft + 4, yPos);
+                            pdf.text(`PARCERIA: ${parcLabel}`, marginLeft + 4, yPos);
                             yPos += 3.5;
                         }
                         
@@ -7892,9 +7892,9 @@ async function gerarPDFConsolidado(id) {
                             pdf.setFont('helvetica', 'normal');
                             pdf.setFontSize(6);
                             pdf.setTextColor(0, 0, 0);
-                            pdf.text(`PROGRAMA: ${progLabel}`, marginLeft + 4, yPos);
+                            pdf.text(`PROGRAMA DE FINANCIAMENTO: ${progLabel}`, marginLeft + 4, yPos);
                             yPos += 3;
-                            pdf.text(`PARCEIRA: ${parcLabel}`, marginLeft + 4, yPos);
+                            pdf.text(`PARCERIA: ${parcLabel}`, marginLeft + 4, yPos);
                             yPos += 3.5;
                         } else {
                             pdf.setFont('helvetica', 'bold');
@@ -7905,9 +7905,9 @@ async function gerarPDFConsolidado(id) {
                             pdf.setFont('helvetica', 'normal');
                             pdf.setFontSize(6);
                             pdf.setTextColor(0, 0, 0);
-                            pdf.text(`PROGRAMA: ${progLabel}`, marginLeft + 4, yPos);
+                            pdf.text(`PROGRAMA DE FINANCIAMENTO: ${progLabel}`, marginLeft + 4, yPos);
                             yPos += 3;
-                            pdf.text(`PARCEIRA: ${parcLabel}`, marginLeft + 4, yPos);
+                            pdf.text(`PARCERIA: ${parcLabel}`, marginLeft + 4, yPos);
                             yPos += 3.5;
                         }
                         
@@ -8367,4 +8367,3 @@ document.addEventListener('DOMContentLoaded', function() {
 
 </body>
 </html>
-
