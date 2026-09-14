@@ -1804,7 +1804,7 @@ function carregarFormularioEditavel(form, isGerenteEditando = false) {
         <div class="secao-titulo"><i class="fas fa-tasks"></i> ATRIBUIÇÕES DA GERÊNCIA</div>
         ${atribuicoesGerHtml}
         <div style="border-top:3px solid #003366;margin:25px 0 20px 0;opacity:.3;"></div>
-        <div class="secao-titulo" style="background:#0056b3;"><i class="fas fa-folder-open"></i> RELATÓRIO DA DIVISÃO - ${divisaoAtualForm}</div>
+        <div class="secao-titulo" style="background:#0056b3;"><i class="fas fa-folder-open"></i> RELATÓRIO - ${divisaoAtualForm}</div>
         <div class="sub-secao-titulo"><i class="fas fa-user-tie"></i> RESPONSÁVEL</div>
         <table class="tabela-responsavel">
             <thead><tr><th style="width:45%;">Nome do Responsável</th><th style="width:30%;">Grau de Instrução</th><th style="width:25%;">Função</th></tr></thead>
@@ -2398,7 +2398,7 @@ function visualizarComoPDF(id, perfilVisualizacao) {
         html += `</div>`;
     }
     html += `<div style="border-top:3px solid #003366;margin:25px 0 20px 0;opacity:.3;"></div>
-    <div class="secao-titulo" style="background:#0056b3;">RELATÓRIO DA DIVISÃO - ${divisaoAtualView}</div>`;
+    <div class="secao-titulo" style="background:#0056b3;">RELATÓRIO - ${divisaoAtualView}</div>`;
     html += `<div class="sub-secao-titulo" style="background:#0056b3;">RESPONSÁVEL</div>
     <table class="tabela-pdf"><thead><tr>
         <th style="width:45%;">Nome do Responsável</th><th style="width:30%;">Grau de Instrução</th><th style="width:25%;">Função</th>
@@ -2704,7 +2704,7 @@ function gerarPDF(id = null) {
         // RELATÓRIO DIVISÃO
         verificarPagina(18);
         pdf.setFont('helvetica', 'bold'); pdf.setFontSize(10); pdf.setTextColor(0, 86, 179);
-        pdf.text(`RELATÓRIO DA DIVISÃO - ${divisaoAtualPDF}`, marginLeft, yPos); yPos += 5;
+        pdf.text(`RELATÓRIO - ${divisaoAtualPDF}`, marginLeft, yPos); yPos += 5;
         pdf.setTextColor(0, 0, 0); pdf.setFont('helvetica', 'normal'); pdf.setFontSize(8);
         
         // RESPONSÁVEL
@@ -3209,7 +3209,7 @@ async function gerarPDFConsolidado(id) {
             // RELATÓRIO DIVISÃO
             verificarPagina(18);
             pdf.setFont('helvetica', 'bold'); pdf.setFontSize(10); pdf.setTextColor(0, 86, 179);
-            pdf.text(`RELATÓRIO DA DIVISÃO - ${divisaoAtualPDF}`, marginLeft, yPos); yPos += 5;
+            pdf.text(`RELATÓRIO - ${divisaoAtualPDF}`, marginLeft, yPos); yPos += 5;
             pdf.setTextColor(0, 0, 0); pdf.setFont('helvetica', 'normal'); pdf.setFontSize(8);
             
             // RESPONSÁVEL
