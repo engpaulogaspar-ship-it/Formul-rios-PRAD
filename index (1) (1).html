@@ -2579,8 +2579,8 @@ function gerarPDF(id = null) {
         const { jsPDF } = window.jspdf;
         const pdf = new jsPDF({ orientation: 'p', unit: 'mm', format: 'a4' });
         const pageWidth = 210, marginLeft = 30, marginRight = 20;
-        const LIMITE_Y = 260;   // ⚠️ AJUSTADO: era 245
-        const RODAPE_Y = 282;   // ⚠️ AJUSTADO: rodapé desenhado mais embaixo
+        const LIMITE_Y = 248;   // ⚠️ AJUSTADO: era 245
+        const RODAPE_Y = 280;   // ⚠️ AJUSTADO: rodapé desenhado mais embaixo
         let yPos = 50;
         const form = formularios[formId];
         const dados = form.dados || {};
@@ -2606,6 +2606,10 @@ function gerarPDF(id = null) {
                 adicionarRodapePDF(pdf, marginLeft, pageWidth, marginRight, RODAPE_Y);
                 pdf.addPage();
                 adicionarCabecalhoPDF(pdf, tituloCompleto, marginLeft, pageWidth, marginRight, gerencia);
+                // ✅ RESET DE COR/FONTE APÓS QUEBRA DE PÁGINA
+                pdf.setTextColor(0, 0, 0);
+                pdf.setFont('helvetica', 'normal');
+                pdf.setFontSize(6);
                 yPos = 50;
                 return true;
             }
@@ -2626,6 +2630,10 @@ function gerarPDF(id = null) {
                 try { pdf.addImage(foto, 'JPEG', xAtual, yAtual, fw, fh); } catch(e) {}
                 xAtual += fw + gap; fotosNaLinha++;
             });
+            // ✅ RESET DE COR/FONTE APÓS FOTOS
+            pdf.setTextColor(0, 0, 0);
+            pdf.setFont('helvetica', 'normal');
+            pdf.setFontSize(6);
             return yAtual + fh + 2;
         }
         adicionarCabecalhoPDF(pdf, tituloCompleto, marginLeft, pageWidth, marginRight, gerencia);
@@ -2643,8 +2651,7 @@ function gerarPDF(id = null) {
             const cor = (i % 2 === 0) ? PDF_CONFIG.colors.lightGray : null;
             const ny = desenharLinhaTabelaComNegritoPDF([linha[0], linha[1]], [lc, ld], yPos, cor, pdf, marginLeft, pageWidth, marginRight);
             if (ny === null) {
-                adicionarRodapePDF(pdf, marginLeft, pageWidth, marginRight, RODAPE_Y); pdf.addPage();
-                adicionarCabecalhoPDF(pdf, tituloCompleto, marginLeft, pageWidth, marginRight, gerencia); yPos = 50;
+                adicionarRodapePDF(pdf, marginLeft, pageWidth, marginRight, RODAPE_Y); pdf.addPage(); adicionarCabecalhoPDF(pdf, tituloCompleto, marginLeft, pageWidth, marginRight, gerencia); pdf.setTextColor(0, 0, 0); pdf.setFont('helvetica', 'normal'); pdf.setFontSize(6); yPos = 50;
                 const ny2 = desenharLinhaTabelaComNegritoPDF([linha[0], linha[1]], [lc, ld], yPos, cor, pdf, marginLeft, pageWidth, marginRight);
                 if (ny2 !== null) yPos = ny2 + 1; else yPos += 8;
             } else yPos = ny + 1;
@@ -2955,19 +2962,23 @@ function adicionarCabecalhoPDF(pdf, title, ml, pw, mr, gerencia) {
     pdf.setFontSize(6);
 }
 function adicionarRodapePDF(pdf, ml, pw, mr, yRef) {
-    const y = yRef || 282;
+    const y = yRef || 280;
     pdf.setDrawColor(200, 200, 200); pdf.setLineWidth(0.2);
     pdf.line(ml, y, pw - mr, y);
     pdf.setFontSize(5); pdf.setFont('helvetica', 'normal'); pdf.setTextColor(100, 100, 100);
     pdf.text(PDF_CONFIG.footerText.linha1, ml, y + 4);
     pdf.text(PDF_CONFIG.footerText.linha2, ml, y + 8);
     pdf.text(PDF_CONFIG.footerText.linha3, ml, y + 12);
+    // ✅ RESET DE COR APÓS O RODAPÉ
+    pdf.setTextColor(0, 0, 0);
+    pdf.setFont('helvetica', 'normal');
+    pdf.setFontSize(6);
 }
 function desenharLinhaTabelaComNegritoPDF(cs, ls, y, cf, pdf, ml, pw, mr) {
     const lpc = []; let max = 0;
     for (let i = 0; i < cs.length; i++) { const lin = pdf.splitTextToSize(cs[i] || '', ls[i] - 6); lpc.push(lin); if (lin.length > max) max = lin.length; }
     const ah = 3, at = (max * ah) + 2;
-    if (y + at > 270) return null;
+    if (y + at > 248) return null;
     pdf.setFillColor(cf ? cf[0] : 255, cf ? cf[1] : 255, cf ? cf[2] : 255);
     pdf.rect(ml, y, pw - ml - mr, at, 'F');
     pdf.setTextColor(0, 0, 0);
@@ -2985,7 +2996,7 @@ function desenharLinhaTabelaEquilibradaPDF(cs, ls, y, cf, pdf, ml, pw, mr) {
     const lpc = []; let max = 0;
     for (let i = 0; i < cs.length; i++) { const lin = pdf.splitTextToSize(cs[i] || '', ls[i] - 6); lpc.push(lin); if (lin.length > max) max = lin.length; }
     const ah = 3, at = (max * ah) + 2;
-    if (y + at > 270) return null;
+    if (y + at > 248) return null;
     pdf.setFillColor(cf ? cf[0] : 255, cf ? cf[1] : 255, cf ? cf[2] : 255);
     pdf.rect(ml, y, pw - ml - mr, at, 'F');
     pdf.setTextColor(0, 0, 0);
@@ -3078,8 +3089,8 @@ async function gerarPDFConsolidado(id) {
         const { jsPDF } = window.jspdf;
         const pdfsArray = [];
         const pageWidth = 210, marginLeft = 30, marginRight = 20;
-        const LIMITE_Y = 270;
-        const RODAPE_Y = 282;
+        const LIMITE_Y = 248;
+        const RODAPE_Y = 280;
         for (let idxF = 0; idxF < doc.formulariosIds.length; idxF++) {
             const fid = doc.formulariosIds[idxF];
             const form = formularios[fid];
@@ -3129,10 +3140,11 @@ async function gerarPDFConsolidado(id) {
                     try { pdf.addImage(foto, 'JPEG', xAtual, yAtual, fw, fh); } catch(e) {}
                     xAtual += fw + gap; fotosNaLinha++;
                 });
-                    // ✅ RESET DE COR/FONTE APÓS FOTOS
+                // ✅ RESET DE COR/FONTE APÓS FOTOS
                 pdf.setTextColor(0, 0, 0);
                 pdf.setFont('helvetica', 'normal');
                 pdf.setFontSize(6);
+                return yAtual + fh + 2;
                 return yAtual + fh + 2;
             }
             adicionarCabecalhoPDF(pdf, tituloCompleto, marginLeft, pageWidth, marginRight, gerencia);
