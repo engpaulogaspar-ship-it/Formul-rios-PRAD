@@ -2307,9 +2307,9 @@ function renderizarPropostas2028() {
                 <textarea id="prop2028_objetivos_${idx}" rows="2" placeholder="Descrever..." ${!podeEditarGlobal ? 'readonly' : ''}>${escapeHtml(p.objetivos || '')}</textarea></div>
             <div class="campo-texto-item"><label>9.4 Descrição das Metas</label>
                 <textarea id="prop2028_metas_${idx}" rows="2" placeholder="Descrever..." ${!podeEditarGlobal ? 'readonly' : ''}>${escapeHtml(p.metas || '')}</textarea></div>
-            <div class="campo-texto-item"><label>9.5 INDICADORES</label>
+            <div class="campo-texto-item"><label>9.5 INDICADORES DE RESULTADOS</label>
                 <textarea id="prop2028_indicadores_${idx}" rows="2" placeholder="Descrever..." ${!podeEditarGlobal ? 'readonly' : ''}>${escapeHtml(p.indicadores || '')}</textarea></div>
-            <div class="campo-texto-item"><label>9.6 DESEMBOLSO FINANCEIRO (R$)</label>
+            <div class="campo-texto-item"><label>9.6 ESTIMATIVA DE DESENBOLSO FINANCEIRO (R$)</label>
                 <input type="text" id="prop2028_desembolso_${idx}" placeholder="R$ 0,00" value="${escapeHtml(p.desembolso || '')}" ${!podeEditarGlobal ? 'readonly' : ''}></div>
             <div class="item-acoes">${podeEditarGlobal ? `<button type="button" class="btn-remover-linha" onclick="removerProposta2028(${idx})"><i class="fas fa-trash"></i> Remover Item</button>` : ''}</div>
         </div><div class="item-separador"></div>`;
@@ -2909,7 +2909,7 @@ function gerarPDF(id = null) {
             prop2028List.forEach((p, idx) => {
                 pdf.setFont('helvetica', 'bold'); pdf.setFontSize(7); pdf.setTextColor(0, 51, 102); pdf.text(`${idx + 1}`, marginLeft, yPos); yPos += 3.5;
                 pdf.setFont('helvetica', 'normal'); pdf.setFontSize(6); pdf.setTextColor(0, 0, 0);
-                const campos = [['9.1 Título do Projeto:', p.titulo],['9.2 Descrição:', p.descricao],['9.3 Objetivos:', p.objetivos],['9.4 Metas:', p.metas],['9.5 INDICADORES:', p.indicadores],['9.6 DESEMBOLSO FINANCEIRO (R$):', p.desembolso]];
+                const campos = [['9.1 Título do Projeto:', p.titulo],['9.2 Descrição:', p.descricao],['9.3 Objetivos:', p.objetivos],['9.4 Metas:', p.metas],['9.5 INDICADORES DE RESULTADOS:', p.indicadores],['9.6 ESTIMATIVA DE DESENBOLSO FINANCEIRO (R$):', p.desembolso]];
                 campos.forEach(([label, val]) => {
                     const linhas = pdf.splitTextToSize(val || '', pageWidth - marginLeft - marginRight - 8);
                     pdf.setFont('helvetica', 'bold'); pdf.setFontSize(6); pdf.text(label, marginLeft + 4, yPos); yPos += 3;
@@ -3378,7 +3378,7 @@ async function gerarPDFConsolidado(id) {
                 prop2028List.forEach((p, idx) => {
                     pdf.setFont('helvetica', 'bold'); pdf.setFontSize(7); pdf.setTextColor(0, 51, 102); pdf.text(`${idx + 1}`, marginLeft, yPos); yPos += 3.5;
                     pdf.setFont('helvetica', 'normal'); pdf.setFontSize(6); pdf.setTextColor(0, 0, 0);
-                    const campos = [['9.1 Título:', p.titulo],['9.2 Descrição:', p.descricao],['9.3 Objetivos:', p.objetivos],['9.4 Metas:', p.metas],['9.5 Indicadores:', p.indicadores],['9.6 Desembolso:', p.desembolso]];
+                    const campos = [['9.1 Título:', p.titulo],['9.2 Descrição:', p.descricao],['9.3 Objetivos:', p.objetivos],['9.4 Metas:', p.metas],['9.5 Indicadores:', p.indicadores],['9.6 ESTIMATIVA DE DESENBOLSO FINANCEIRO:', p.desembolso]];
                     campos.forEach(([label, val]) => { const linhas = pdf.splitTextToSize(val || '', pageWidth - marginLeft - marginRight - 8); pdf.setFont('helvetica', 'bold'); pdf.setFontSize(6); pdf.text(label, marginLeft + 4, yPos); yPos += 3; pdf.setFont('helvetica', 'normal'); pdf.setFontSize(6); pdf.text(linhas, marginLeft + 8, yPos); yPos += linhas.length * 3 + 2; });
                 });
                 verificarPagina(8);
