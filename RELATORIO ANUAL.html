@@ -30,7 +30,6 @@
     --transition:all 0.25s cubic-bezier(0.4,0,0.2,1);
 }
 
-/* Modo escuro */
 body.dark-mode{
     --bg:#0f1720;
     --card-bg:#1a2634;
@@ -47,10 +46,11 @@ body{
     color:var(--texto);
     min-height:100vh;
     transition:background 0.3s, color 0.3s;
+    overflow-x:hidden;
 }
 
 /* ============================================================
-   TOPO (HEADER) - SEMPRE VISÍVEL
+   HEADER
    ============================================================ */
 .header-iat{
     background:var(--card-bg);
@@ -78,6 +78,12 @@ body{
     display:flex;
     align-items:center;
     gap:18px;
+    cursor:pointer;
+    transition:var(--transition);
+}
+
+.logo-container:hover{
+    transform:scale(1.02);
 }
 
 .logo-iat{
@@ -123,7 +129,6 @@ body.dark-mode .logo-sub{
     color:#4cd18e;
 }
 
-/* Ações do topo (modo escuro) */
 .header-actions{
     display:flex;
     align-items:center;
@@ -177,6 +182,82 @@ body.dark-mode .logo-sub{
 .barra-info i{
     color:#ffd700;
     font-size:14px;
+}
+
+/* ============================================================
+   BARRA DE NAVEGAÇÃO (só aparece quando sistema aberto)
+   ============================================================ */
+.barra-nav{
+    background:var(--card-bg);
+    padding:14px 40px;
+    display:none;
+    align-items:center;
+    justify-content:space-between;
+    border-bottom:2px solid var(--iat-azul);
+    box-shadow:0 4px 12px rgba(0,0,0,0.05);
+    position:sticky;
+    top:103px;
+    z-index:99;
+    transition:background 0.3s;
+}
+
+.barra-nav.ativa{
+    display:flex;
+}
+
+.btn-voltar{
+    background:linear-gradient(135deg,#0a3d6b,#1976c9);
+    color:#fff;
+    border:none;
+    padding:10px 22px;
+    border-radius:10px;
+    font-size:14px;
+    font-weight:700;
+    cursor:pointer;
+    transition:var(--transition);
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+}
+
+.btn-voltar:hover{
+    transform:translateX(-3px);
+    box-shadow:0 6px 20px rgba(10,61,107,0.3);
+}
+
+.sistema-titulo-nav{
+    font-size:16px;
+    font-weight:700;
+    color:var(--texto);
+    display:flex;
+    align-items:center;
+    gap:10px;
+}
+
+.sistema-titulo-nav i{
+    color:var(--iat-azul);
+    font-size:20px;
+}
+
+.btn-abrir-nova-aba{
+    background:var(--card-bg);
+    color:var(--iat-azul-claro);
+    border:2px solid var(--iat-azul-claro);
+    padding:8px 18px;
+    border-radius:10px;
+    font-size:13px;
+    font-weight:700;
+    cursor:pointer;
+    transition:var(--transition);
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+    text-decoration:none;
+}
+
+.btn-abrir-nova-aba:hover{
+    background:var(--iat-azul-claro);
+    color:#fff;
 }
 
 /* ============================================================
@@ -384,6 +465,29 @@ body.dark-mode .card-feature i{
 }
 
 /* ============================================================
+   ÁREA DO IFRAME (sistema embutido)
+   ============================================================ */
+.iframe-container{
+    display:none;
+    width:100%;
+    height:calc(100vh - 200px);
+    padding:0;
+    background:var(--bg);
+}
+
+.iframe-container.ativo{
+    display:block;
+}
+
+.iframe-sistema{
+    width:100%;
+    height:100%;
+    border:none;
+    background:#fff;
+    display:block;
+}
+
+/* ============================================================
    RODAPÉ
    ============================================================ */
 .rodape{
@@ -417,27 +521,20 @@ body.dark-mode .rodape strong{
     .bem-vindo h1{font-size:24px;}
     .bem-vindo p{font-size:14px;}
     .barra-info{padding:10px 20px;font-size:12px;}
+    .barra-nav{padding:12px 20px;top:90px;flex-direction:column;gap:10px;align-items:stretch;}
+    .btn-voltar, .btn-abrir-nova-aba{justify-content:center;}
 }
 
 @media(max-width:600px){
-    .header-iat{
-        flex-direction:column;
-        gap:14px;
-        text-align:center;
-    }
-    .header-actions{
-        width:100%;
-        justify-content:center;
-    }
+    .header-iat{flex-direction:column;gap:14px;text-align:center;}
+    .header-actions{width:100%;justify-content:center;}
     .sistema-card{padding:24px 20px;}
     .card-icon{width:60px;height:60px;font-size:28px;}
     .card-titulo{font-size:18px;}
-    .card-footer{
-        flex-direction:column;
-        gap:12px;
-        align-items:stretch;
-    }
+    .card-footer{flex-direction:column;gap:12px;align-items:stretch;}
     .btn-acessar{justify-content:center;}
+    .sistema-titulo-nav{font-size:14px;}
+    .iframe-container{height:calc(100vh - 260px);}
 }
 
 /* Animação do indicador "ao vivo" */
@@ -464,7 +561,7 @@ body.dark-mode .rodape strong{
      HEADER
      ============================================================ -->
 <header class="header-iat">
-    <div class="logo-container">
+    <div class="logo-container" onclick="voltarAoPortal()" title="Voltar ao Portal">
         <img src="https://upload.wikimedia.org/wikipedia/pt/b/ba/Logo_IAT_PR.png" alt="Logo IAT" class="logo-iat">
         <div class="logo-texto">
             <span class="logo-titulo">INSTITUTO ÁGUA E TERRA</span>
@@ -480,9 +577,9 @@ body.dark-mode .rodape strong{
 </header>
 
 <!-- ============================================================
-     BARRA DE DATA/HORA
+     BARRA DE DATA/HORA (só aparece quando NÃO tem sistema aberto)
      ============================================================ -->
-<div class="barra-info">
+<div class="barra-info" id="barraInfo">
     <div class="barra-info-item">
         <span class="live-dot"></span>
         <i class="fas fa-calendar-day"></i>
@@ -499,13 +596,29 @@ body.dark-mode .rodape strong{
 </div>
 
 <!-- ============================================================
-     CONTEÚDO PRINCIPAL
+     BARRA DE NAVEGAÇÃO (aparece quando sistema aberto)
      ============================================================ -->
-<main class="main-container">
+<div class="barra-nav" id="barraNav">
+    <button class="btn-voltar" onclick="voltarAoPortal()">
+        <i class="fas fa-arrow-left"></i> Voltar ao Portal
+    </button>
+    <div class="sistema-titulo-nav">
+        <i class="fas fa-window-maximize" id="iconeSistemaNav"></i>
+        <span id="tituloSistemaNav">Sistema</span>
+    </div>
+    <a href="#" target="_blank" class="btn-abrir-nova-aba" id="btnNovaAba">
+        <i class="fas fa-external-link-alt"></i> Abrir em nova aba
+    </a>
+</div>
+
+<!-- ============================================================
+     CONTEÚDO PRINCIPAL (cards)
+     ============================================================ -->
+<main class="main-container" id="mainContainer">
 
     <div class="bem-vindo">
         <h1>Bem-vindo ao <span>Portal IAT</span></h1>
-        <p>Escolha abaixo um dos sistemas disponíveis para o Instituto Água e Terra. Cada sistema abre em uma nova aba, mantendo este portal sempre disponível para você.</p>
+        <p>Escolha abaixo um dos sistemas disponíveis para o Instituto Água e Terra. O sistema abrirá aqui dentro, e você poderá voltar ao portal quando quiser.</p>
     </div>
 
     <div class="cards-grid">
@@ -530,9 +643,9 @@ body.dark-mode .rodape strong{
                     <i class="fas fa-eye"></i>
                     <span id="contadorRelatorio">0</span> acessos
                 </span>
-                <a href="SISTEMA_RELATORIO ANUAL _versão_2.html" target="_blank" class="btn-acessar btn-relatorio" onclick="event.stopPropagation(); registrarAcesso('relatorio');">
+                <button class="btn-acessar btn-relatorio" onclick="event.stopPropagation(); abrirSistema('relatorio');">
                     Acessar Sistema <i class="fas fa-arrow-right"></i>
-                </a>
+                </button>
             </div>
         </div>
 
@@ -556,9 +669,9 @@ body.dark-mode .rodape strong{
                     <i class="fas fa-eye"></i>
                     <span id="contadorPdf">0</span> acessos
                 </span>
-                <a href="pdf.html" target="_blank" class="btn-acessar btn-pdf" onclick="event.stopPropagation(); registrarAcesso('pdf');">
+                <button class="btn-acessar btn-pdf" onclick="event.stopPropagation(); abrirSistema('pdf');">
                     Acessar Sistema <i class="fas fa-arrow-right"></i>
-                </a>
+                </button>
             </div>
         </div>
 
@@ -567,9 +680,16 @@ body.dark-mode .rodape strong{
 </main>
 
 <!-- ============================================================
+     ÁREA DO IFRAME (sistema embutido)
+     ============================================================ -->
+<div class="iframe-container" id="iframeContainer">
+    <iframe class="iframe-sistema" id="iframeSistema" src="about:blank" title="Sistema IAT"></iframe>
+</div>
+
+<!-- ============================================================
      RODAPÉ
      ============================================================ -->
-<footer class="rodape">
+<footer class="rodape" id="rodape">
     <p><strong>Portal IAT</strong> • Instituto Água e Terra</p>
     <p>Rua Engenheiros Rebouças, 1206 | Rebouças | Curitiba/PR • CEP: 80215.100 • Tel: 41 3213-3700</p>
     <p style="margin-top:8px;font-size:12px;opacity:0.7;">© <span id="anoAtual"></span> IAT - Todos os direitos reservados</p>
@@ -577,21 +697,31 @@ body.dark-mode .rodape strong{
 
 <script>
 // ============================================================
+// CONFIGURAÇÃO DOS SISTEMAS
+// ============================================================
+const SISTEMAS = {
+    'relatorio': {
+        arquivo: 'SISTEMA_RELATORIO ANUAL _versão_2.html',
+        titulo: 'Relatório Anual',
+        icone: 'fas fa-clipboard-list'
+    },
+    'pdf': {
+        arquivo: 'pdf.html',
+        titulo: 'Conversor de PDF',
+        icone: 'fas fa-file-pdf'
+    }
+};
+
+// ============================================================
 // DATA E HORA EM TEMPO REAL
 // ============================================================
 function atualizarDataHora() {
     const agora = new Date();
-    
-    // Data (ex: "segunda-feira, 15 de setembro de 2026")
     const opcoesData = { weekday: 'long', day: '2-digit', month: 'long', year: 'numeric' };
     const dataFormatada = agora.toLocaleDateString('pt-BR', opcoesData);
-    
-    // Hora (ex: "14:35:42")
     const horaFormatada = agora.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
-    
     const elData = document.getElementById('dataAtual');
     const elHora = document.getElementById('horaAtual');
-    
     if (elData) elData.textContent = dataFormatada.charAt(0).toUpperCase() + dataFormatada.slice(1);
     if (elHora) elHora.textContent = horaFormatada;
 }
@@ -602,15 +732,9 @@ function atualizarDataHora() {
 function alternarModoEscuro() {
     document.body.classList.toggle('dark-mode');
     const ativo = document.body.classList.contains('dark-mode');
-    
-    // Salva a preferência
     localStorage.setItem('portal_iat_darkmode', ativo ? '1' : '0');
-    
-    // Troca o ícone
     const icone = document.getElementById('iconeModo');
-    if (icone) {
-        icone.className = ativo ? 'fas fa-sun' : 'fas fa-moon';
-    }
+    if (icone) icone.className = ativo ? 'fas fa-sun' : 'fas fa-moon';
 }
 
 function carregarModoEscuro() {
@@ -636,28 +760,79 @@ function registrarAcesso(sistema) {
 function atualizarContadores() {
     const elRelatorio = document.getElementById('contadorRelatorio');
     const elPdf = document.getElementById('contadorPdf');
-    
-    if (elRelatorio) {
-        const total = localStorage.getItem('portal_iat_acessos_relatorio') || '0';
-        elRelatorio.textContent = total;
-    }
-    if (elPdf) {
-        const total = localStorage.getItem('portal_iat_acessos_pdf') || '0';
-        elPdf.textContent = total;
-    }
+    if (elRelatorio) elRelatorio.textContent = localStorage.getItem('portal_iat_acessos_relatorio') || '0';
+    if (elPdf) elPdf.textContent = localStorage.getItem('portal_iat_acessos_pdf') || '0';
 }
 
 // ============================================================
-// ABRIR SISTEMA (usado quando clica no CARD, não no botão)
+// ABRIR SISTEMA (dentro do iframe)
 // ============================================================
 function abrirSistema(sistema) {
-    // Se o usuário clicou no card (não no botão), abre o sistema
-    if (sistema === 'relatorio') {
-        registrarAcesso('relatorio');
-        window.open('SISTEMA_RELATORIO ANUAL _versão_2.html', '_blank');
-    } else if (sistema === 'pdf') {
-        registrarAcesso('pdf');
-        window.open('pdf.html', '_blank');
+    const config = SISTEMAS[sistema];
+    if (!config) return;
+    
+    // Registra acesso
+    registrarAcesso(sistema);
+    
+    // Salva estado no localStorage (para persistir ao recarregar)
+    localStorage.setItem('portal_iat_sistema_ativo', sistema);
+    
+    // Esconde os cards e a barra de data/hora
+    document.getElementById('mainContainer').style.display = 'none';
+    document.getElementById('barraInfo').style.display = 'none';
+    document.getElementById('rodape').style.display = 'none';
+    
+    // Mostra a barra de navegação e o iframe
+    document.getElementById('barraNav').classList.add('ativa');
+    document.getElementById('iframeContainer').classList.add('ativo');
+    
+    // Ajusta o título da barra de navegação
+    document.getElementById('tituloSistemaNav').textContent = config.titulo;
+    document.getElementById('iconeSistemaNav').className = config.icone;
+    
+    // Configura o botão "Abrir em nova aba"
+    const btnNovaAba = document.getElementById('btnNovaAba');
+    btnNovaAba.href = config.arquivo;
+    
+    // Carrega o sistema no iframe
+    const iframe = document.getElementById('iframeSistema');
+    iframe.src = config.arquivo;
+    
+    // Scroll para o topo
+    window.scrollTo(0, 0);
+}
+
+// ============================================================
+// VOLTAR AO PORTAL
+// ============================================================
+function voltarAoPortal() {
+    // Remove o estado salvo
+    localStorage.removeItem('portal_iat_sistema_ativo');
+    
+    // Mostra os cards e a barra de data/hora
+    document.getElementById('mainContainer').style.display = 'block';
+    document.getElementById('barraInfo').style.display = 'flex';
+    document.getElementById('rodape').style.display = 'block';
+    
+    // Esconde a barra de navegação e o iframe
+    document.getElementById('barraNav').classList.remove('ativa');
+    document.getElementById('iframeContainer').classList.remove('ativo');
+    
+    // Limpa o iframe (para parar o sistema)
+    const iframe = document.getElementById('iframeSistema');
+    iframe.src = 'about:blank';
+    
+    // Scroll para o topo
+    window.scrollTo(0, 0);
+}
+
+// ============================================================
+// RESTAURAR ESTADO AO RECARREGAR
+// ============================================================
+function restaurarEstado() {
+    const sistemaAtivo = localStorage.getItem('portal_iat_sistema_ativo');
+    if (sistemaAtivo && SISTEMAS[sistemaAtivo]) {
+        abrirSistema(sistemaAtivo);
     }
 }
 
@@ -677,15 +852,15 @@ document.addEventListener('DOMContentLoaded', function() {
     atualizarDataHora();
     atualizarContadores();
     atualizarAno();
+    restaurarEstado(); // Restaura o último sistema aberto (se houver)
     
-    // Atualiza a hora a cada segundo
     setInterval(atualizarDataHora, 1000);
     
     console.log('🏢 PORTAL IAT INICIADO');
-    console.log('   • Data/Hora em tempo real');
-    console.log('   • Modo escuro (preferência salva)');
-    console.log('   • Contador de acessos');
-    console.log('   • Sistema: ' + (localStorage.getItem('portal_iat_darkmode') === '1' ? 'DARK MODE' : 'LIGHT MODE'));
+    console.log('   • Modo embutido (iframe)');
+    console.log('   • Botão "Voltar ao Portal" disponível');
+    console.log('   • Estado persistente (recarregar mantém o sistema aberto)');
+    console.log('   • Atalho: Ctrl+Shift+D alterna modo escuro');
 });
 
 // Atalho de teclado: Ctrl + Shift + D alterna modo escuro
@@ -693,6 +868,16 @@ document.addEventListener('keydown', function(e) {
     if (e.ctrlKey && e.shiftKey && e.key === 'D') {
         e.preventDefault();
         alternarModoEscuro();
+    }
+});
+
+// Atalho: ESC volta ao portal
+document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+        const iframeAtivo = document.getElementById('iframeContainer').classList.contains('ativo');
+        if (iframeAtivo) {
+            voltarAoPortal();
+        }
     }
 });
 </script>
