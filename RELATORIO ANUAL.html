@@ -107,6 +107,10 @@ body.dark-mode .logo-iat{
     line-height:1.1;
 }
 
+body.dark-mode .logo-titulo{
+    color:#5fa8e8;
+}
+
 .logo-sub{
     font-size:12px;
     font-weight:600;
@@ -115,60 +119,15 @@ body.dark-mode .logo-iat{
     text-transform:uppercase;
 }
 
-.portal-title{
-    font-size:14px;
-    color:var(--texto-suave);
-    font-weight:500;
-    margin-top:2px;
-    letter-spacing:0.3px;
+body.dark-mode .logo-sub{
+    color:#4cd18e;
 }
 
-/* Ações do topo (usuário, modo escuro, sair) */
+/* Ações do topo (modo escuro) */
 .header-actions{
     display:flex;
     align-items:center;
     gap:14px;
-}
-
-.user-info{
-    display:flex;
-    align-items:center;
-    gap:10px;
-    padding:8px 16px;
-    background:var(--bg);
-    border-radius:30px;
-    border:1px solid var(--borda);
-    transition:var(--transition);
-}
-
-.user-avatar{
-    width:34px;
-    height:34px;
-    border-radius:50%;
-    background:var(--iat-gradient);
-    color:#fff;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    font-weight:700;
-    font-size:14px;
-    flex-shrink:0;
-}
-
-.user-nome{
-    font-size:14px;
-    font-weight:600;
-    color:var(--texto);
-    max-width:180px;
-    overflow:hidden;
-    text-overflow:ellipsis;
-    white-space:nowrap;
-}
-
-.user-perfil{
-    font-size:11px;
-    color:var(--texto-suave);
-    font-weight:500;
 }
 
 .btn-header{
@@ -191,11 +150,6 @@ body.dark-mode .logo-iat{
     color:#fff;
     border-color:var(--iat-azul-claro);
     transform:translateY(-2px);
-}
-
-.btn-header.btn-sair:hover{
-    background:#dc3545;
-    border-color:#dc3545;
 }
 
 /* ============================================================
@@ -367,6 +321,10 @@ body.dark-mode .logo-iat{
     font-size:10px;
 }
 
+body.dark-mode .card-feature i{
+    color:#4cd18e;
+}
+
 .card-footer{
     display:flex;
     justify-content:space-between;
@@ -447,147 +405,6 @@ body.dark-mode .rodape strong{
 }
 
 /* ============================================================
-   MODAL DE LOGIN
-   ============================================================ */
-.login-overlay{
-    position:fixed;
-    top:0; left:0;
-    width:100%; height:100%;
-    background:linear-gradient(135deg,var(--iat-azul-escuro),var(--iat-verde));
-    z-index:9999;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    padding:20px;
-}
-
-.login-overlay.oculto{
-    display:none;
-}
-
-.login-card{
-    background:#fff;
-    border-radius:24px;
-    padding:48px 44px;
-    width:100%;
-    max-width:440px;
-    box-shadow:0 24px 60px rgba(0,0,0,0.3);
-    text-align:center;
-    animation:fadeInLogin 0.5s ease;
-}
-
-@keyframes fadeInLogin{
-    from{opacity:0;transform:translateY(-20px) scale(0.95);}
-    to{opacity:1;transform:translateY(0) scale(1);}
-}
-
-.login-logo{
-    height:70px;
-    margin-bottom:16px;
-}
-
-.login-titulo{
-    font-size:24px;
-    font-weight:800;
-    color:var(--iat-azul);
-    margin-bottom:4px;
-    letter-spacing:-0.5px;
-}
-
-.login-sub{
-    font-size:14px;
-    color:var(--texto-suave);
-    margin-bottom:28px;
-}
-
-.login-campo{
-    text-align:left;
-    margin-bottom:16px;
-}
-
-.login-campo label{
-    display:block;
-    font-size:13px;
-    font-weight:700;
-    color:var(--texto);
-    margin-bottom:6px;
-}
-
-.login-campo input{
-    width:100%;
-    padding:14px 16px;
-    border:2px solid var(--borda);
-    border-radius:10px;
-    font-size:15px;
-    outline:none;
-    transition:var(--transition);
-    background:#fafcfe;
-    color:var(--texto);
-}
-
-.login-campo input:focus{
-    border-color:var(--iat-azul-claro);
-    box-shadow:0 0 0 4px rgba(25,118,201,0.12);
-    background:#fff;
-}
-
-.login-erro{
-    display:none;
-    background:#fef2f2;
-    border:1px solid #fbc5c5;
-    color:#b91c1c;
-    padding:12px 16px;
-    border-radius:10px;
-    font-size:13px;
-    margin-bottom:16px;
-    text-align:left;
-}
-
-.login-btn{
-    width:100%;
-    padding:14px;
-    border-radius:10px;
-    border:none;
-    background:var(--iat-gradient);
-    color:#fff;
-    font-size:15px;
-    font-weight:700;
-    cursor:pointer;
-    transition:var(--transition);
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    gap:8px;
-}
-
-.login-btn:hover{
-    transform:translateY(-2px);
-    box-shadow:0 8px 20px rgba(0,102,161,0.3);
-}
-
-.login-links{
-    margin-top:20px;
-    font-size:13px;
-    color:var(--texto-suave);
-}
-
-.login-links button{
-    background:none;
-    border:none;
-    color:var(--iat-azul-claro);
-    font-weight:700;
-    cursor:pointer;
-    text-decoration:underline;
-    font-size:13px;
-    padding:0;
-    margin:0 3px;
-}
-
-.login-links button:hover{
-    color:var(--iat-verde);
-}
-
-/* ============================================================
    RESPONSIVO
    ============================================================ */
 @media(max-width:900px){
@@ -596,12 +413,10 @@ body.dark-mode .rodape strong{
     .logo-titulo{font-size:18px;}
     .logo-iat{height:48px;}
     .logo-sub{font-size:10px;letter-spacing:1px;}
-    .portal-title{font-size:12px;}
     .main-container{padding:30px 20px 60px;}
     .bem-vindo h1{font-size:24px;}
     .bem-vindo p{font-size:14px;}
     .barra-info{padding:10px 20px;font-size:12px;}
-    .user-nome{max-width:100px;}
 }
 
 @media(max-width:600px){
@@ -613,12 +428,7 @@ body.dark-mode .rodape strong{
     .header-actions{
         width:100%;
         justify-content:center;
-        flex-wrap:wrap;
     }
-    .user-info{
-        padding:6px 12px;
-    }
-    .user-nome{max-width:120px;font-size:13px;}
     .sistema-card{padding:24px 20px;}
     .card-icon{width:60px;height:60px;font-size:28px;}
     .card-titulo{font-size:18px;}
@@ -628,14 +438,12 @@ body.dark-mode .rodape strong{
         align-items:stretch;
     }
     .btn-acessar{justify-content:center;}
-    .login-card{padding:36px 24px;}
-    .login-titulo{font-size:20px;}
 }
 
-/* Animações */
+/* Animação do indicador "ao vivo" */
 @keyframes pulse{
     0%, 100%{opacity:1;}
-    50%{opacity:0.5;}
+    50%{opacity:0.4;}
 }
 
 .live-dot{
@@ -646,47 +454,16 @@ body.dark-mode .rodape strong{
     background:#20c997;
     animation:pulse 2s infinite;
     margin-right:6px;
+    box-shadow:0 0 8px #20c997;
 }
 </style>
 </head>
 <body>
 
 <!-- ============================================================
-     TELA DE LOGIN (aparece se não estiver logado)
+     HEADER
      ============================================================ -->
-<div class="login-overlay" id="loginOverlay">
-    <div class="login-card">
-        <img src="https://upload.wikimedia.org/wikipedia/pt/b/ba/Logo_IAT_PR.png" alt="Logo IAT" class="login-logo">
-        <h1 class="login-titulo">Portal IAT</h1>
-        <p class="login-sub">Instituto Água e Terra - Central de Sistemas</p>
-        
-        <div class="login-erro" id="loginErro"></div>
-        
-        <div class="login-campo">
-            <label for="loginUsuario"><i class="fas fa-user"></i> Usuário</label>
-            <input type="text" id="loginUsuario" placeholder="Digite seu usuário" autocomplete="username">
-        </div>
-        
-        <div class="login-campo">
-            <label for="loginSenha"><i class="fas fa-lock"></i> Senha</label>
-            <input type="password" id="loginSenha" placeholder="Digite sua senha" autocomplete="current-password">
-        </div>
-        
-        <button class="login-btn" onclick="fazerLogin()">
-            <i class="fas fa-sign-in-alt"></i> Entrar no Portal
-        </button>
-        
-        <div class="login-links">
-            <span id="linkTextoLogin">Ainda não tem acesso?</span>
-            <button onclick="alternarModoLogin()" id="btnAlternarModo">Cadastrar novo usuário</button>
-        </div>
-    </div>
-</div>
-
-<!-- ============================================================
-     HEADER (aparece após login)
-     ============================================================ -->
-<header class="header-iat" id="headerPrincipal" style="display:none;">
+<header class="header-iat">
     <div class="logo-container">
         <img src="https://upload.wikimedia.org/wikipedia/pt/b/ba/Logo_IAT_PR.png" alt="Logo IAT" class="logo-iat">
         <div class="logo-texto">
@@ -696,20 +473,8 @@ body.dark-mode .rodape strong{
     </div>
     
     <div class="header-actions">
-        <div class="user-info">
-            <div class="user-avatar" id="userAvatar">U</div>
-            <div>
-                <div class="user-nome" id="userNome">Usuário</div>
-                <div class="user-perfil" id="userPerfil">Servidor IAT</div>
-            </div>
-        </div>
-        
         <button class="btn-header" onclick="alternarModoEscuro()" title="Alternar modo escuro/claro">
             <i class="fas fa-moon" id="iconeModo"></i>
-        </button>
-        
-        <button class="btn-header btn-sair" onclick="fazerLogout()" title="Sair do sistema">
-            <i class="fas fa-sign-out-alt"></i>
         </button>
     </div>
 </header>
@@ -717,7 +482,7 @@ body.dark-mode .rodape strong{
 <!-- ============================================================
      BARRA DE DATA/HORA
      ============================================================ -->
-<div class="barra-info" id="barraInfo" style="display:none;">
+<div class="barra-info">
     <div class="barra-info-item">
         <span class="live-dot"></span>
         <i class="fas fa-calendar-day"></i>
@@ -729,14 +494,14 @@ body.dark-mode .rodape strong{
     </div>
     <div class="barra-info-item">
         <i class="fas fa-shield-alt"></i>
-        <span>Sessão segura</span>
+        <span>Acesso interno IAT</span>
     </div>
 </div>
 
 <!-- ============================================================
      CONTEÚDO PRINCIPAL
      ============================================================ -->
-<main class="main-container" id="mainContainer" style="display:none;">
+<main class="main-container">
 
     <div class="bem-vindo">
         <h1>Bem-vindo ao <span>Portal IAT</span></h1>
@@ -804,11 +569,133 @@ body.dark-mode .rodape strong{
 <!-- ============================================================
      RODAPÉ
      ============================================================ -->
-<footer class="rodape" id="rodape" style="display:none;">
+<footer class="rodape">
     <p><strong>Portal IAT</strong> • Instituto Água e Terra</p>
     <p>Rua Engenheiros Rebouças, 1206 | Rebouças | Curitiba/PR • CEP: 80215.100 • Tel: 41 3213-3700</p>
     <p style="margin-top:8px;font-size:12px;opacity:0.7;">© <span id="anoAtual"></span> IAT - Todos os direitos reservados</p>
 </footer>
+
+<script>
+// ============================================================
+// DATA E HORA EM TEMPO REAL
+// ============================================================
+function atualizarDataHora() {
+    const agora = new Date();
+    
+    // Data (ex: "segunda-feira, 15 de setembro de 2026")
+    const opcoesData = { weekday: 'long', day: '2-digit', month: 'long', year: 'numeric' };
+    const dataFormatada = agora.toLocaleDateString('pt-BR', opcoesData);
+    
+    // Hora (ex: "14:35:42")
+    const horaFormatada = agora.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+    
+    const elData = document.getElementById('dataAtual');
+    const elHora = document.getElementById('horaAtual');
+    
+    if (elData) elData.textContent = dataFormatada.charAt(0).toUpperCase() + dataFormatada.slice(1);
+    if (elHora) elHora.textContent = horaFormatada;
+}
+
+// ============================================================
+// MODO ESCURO
+// ============================================================
+function alternarModoEscuro() {
+    document.body.classList.toggle('dark-mode');
+    const ativo = document.body.classList.contains('dark-mode');
+    
+    // Salva a preferência
+    localStorage.setItem('portal_iat_darkmode', ativo ? '1' : '0');
+    
+    // Troca o ícone
+    const icone = document.getElementById('iconeModo');
+    if (icone) {
+        icone.className = ativo ? 'fas fa-sun' : 'fas fa-moon';
+    }
+}
+
+function carregarModoEscuro() {
+    const salvo = localStorage.getItem('portal_iat_darkmode');
+    if (salvo === '1') {
+        document.body.classList.add('dark-mode');
+        const icone = document.getElementById('iconeModo');
+        if (icone) icone.className = 'fas fa-sun';
+    }
+}
+
+// ============================================================
+// CONTADOR DE ACESSOS
+// ============================================================
+function registrarAcesso(sistema) {
+    const chave = 'portal_iat_acessos_' + sistema;
+    let total = parseInt(localStorage.getItem(chave) || '0');
+    total++;
+    localStorage.setItem(chave, total.toString());
+    atualizarContadores();
+}
+
+function atualizarContadores() {
+    const elRelatorio = document.getElementById('contadorRelatorio');
+    const elPdf = document.getElementById('contadorPdf');
+    
+    if (elRelatorio) {
+        const total = localStorage.getItem('portal_iat_acessos_relatorio') || '0';
+        elRelatorio.textContent = total;
+    }
+    if (elPdf) {
+        const total = localStorage.getItem('portal_iat_acessos_pdf') || '0';
+        elPdf.textContent = total;
+    }
+}
+
+// ============================================================
+// ABRIR SISTEMA (usado quando clica no CARD, não no botão)
+// ============================================================
+function abrirSistema(sistema) {
+    // Se o usuário clicou no card (não no botão), abre o sistema
+    if (sistema === 'relatorio') {
+        registrarAcesso('relatorio');
+        window.open('SISTEMA_RELATORIO ANUAL _versão_2.html', '_blank');
+    } else if (sistema === 'pdf') {
+        registrarAcesso('pdf');
+        window.open('pdf.html', '_blank');
+    }
+}
+
+// ============================================================
+// ANO ATUAL NO RODAPÉ
+// ============================================================
+function atualizarAno() {
+    const el = document.getElementById('anoAtual');
+    if (el) el.textContent = new Date().getFullYear();
+}
+
+// ============================================================
+// INICIALIZAÇÃO
+// ============================================================
+document.addEventListener('DOMContentLoaded', function() {
+    carregarModoEscuro();
+    atualizarDataHora();
+    atualizarContadores();
+    atualizarAno();
+    
+    // Atualiza a hora a cada segundo
+    setInterval(atualizarDataHora, 1000);
+    
+    console.log('🏢 PORTAL IAT INICIADO');
+    console.log('   • Data/Hora em tempo real');
+    console.log('   • Modo escuro (preferência salva)');
+    console.log('   • Contador de acessos');
+    console.log('   • Sistema: ' + (localStorage.getItem('portal_iat_darkmode') === '1' ? 'DARK MODE' : 'LIGHT MODE'));
+});
+
+// Atalho de teclado: Ctrl + Shift + D alterna modo escuro
+document.addEventListener('keydown', function(e) {
+    if (e.ctrlKey && e.shiftKey && e.key === 'D') {
+        e.preventDefault();
+        alternarModoEscuro();
+    }
+});
+</script>
 
 </body>
 </html>
